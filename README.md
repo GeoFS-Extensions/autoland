@@ -17,3 +17,5 @@
 This AP++ and FMC can be used just as the previous ones. [This video](https://www.youtube.com/watch?v=xzLkkoTBRQY) outlines how the old AP++ and FMC could be used. When you open GeoFS, you can load a route into the FMC and fly like normal.  However, it is now possible to have the autopilot land for you. This was made possible by some tinkering around in the scripts. Currently, you have to use an FMC route to land automatically, but this will be changed in the upcoming future. Premade routes are being made and will be uploaded shortly.
 
 For instructions on making an autoland route, look [here](https://docs.google.com/document/d/1F4ybxKhG5QYbvifkP2A9epeX30FT6SfWLM5l7KKaSts/edit?usp=sharing).
+
+A video on how to use the new FMC and AP++ is currently in the works and will be released soon.
