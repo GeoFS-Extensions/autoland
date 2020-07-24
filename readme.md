@@ -3,7 +3,7 @@
 ## How to install
 
 1. Install extentions.zip
-2. Extract both .js files
+2. Extract the code folder.
 3. Install TamperMonkey on your browser.
 4. Press the plus button in the top right.
 5. Delete everything that automatically fills in the code space.
