@@ -1,5 +1,0 @@
-Added routes for KTPA and KMIA
-Patched small bugs in preparation for the major public release
-Added new waypoint coordinates
-Got VNAV and proper distance working again
-Optimized response times
