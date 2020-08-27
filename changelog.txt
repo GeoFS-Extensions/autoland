@@ -1,2 +1,0 @@
-Got VNAV and proper distance working one more time
-Prepared scripts for the addition of the sound package and autogear
