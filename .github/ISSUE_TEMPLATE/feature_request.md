@@ -3,14 +3,16 @@ name: Feature request
 about: Suggest an idea for this project
 title: ''
 labels: enhancement
-assignees: ''
+assignees: Featherway
 
 ---
 
-**What do you want to be added to Autoland?**
+**Is your feature request related to a problem? If so, please explain.**
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-**Why do you want this feature in autoland?**
 
-**What benefit does this have to the end experience?**
+**What would you like added?**
+Simple enough.
 
-**Any other details go here**
+
+**Are there alternatives you've considered? If so, please list them.**

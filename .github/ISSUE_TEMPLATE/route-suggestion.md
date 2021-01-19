@@ -2,7 +2,7 @@
 name: Route Suggestion
 about: Describe this issue template's purpose here.
 title: ''
-labels: routes
+labels: ''
 assignees: ''
 
 ---
