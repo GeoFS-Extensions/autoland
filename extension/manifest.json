@@ -17,7 +17,7 @@
   }],
   "content_scripts": [{
     "js": ["scriptsLoader.js"],
-    "matches": ["https://www.geo-fs.com/geofs.php", "http://www.geo-fs.com/geofs.php"],
+    "matches": ["*://www.geo-fs.com/geofs.php"],
     "run_at": "document_end",
     "all_frames": true
   }],

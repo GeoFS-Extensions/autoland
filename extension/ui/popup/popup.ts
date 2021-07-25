@@ -8,26 +8,20 @@ interface buttons {
 	fmc: HTMLElement
 }
 
-var ap: boolean = false
-var fmc: boolean = false
-var buttons: buttons = getCurrentButtonState()
+var ap = false
+var fmc = false
+var buttons = getCurrentButtonState()
 var options: popupState
 
-function flipBool (toFlip: "ap" | "fmc"): boolean {
-	var flipped: boolean
-
+function flipBool (toFlip: "ap" | "fmc"): void {
 	if (toFlip == "ap") {
-		flipped = !ap
-		ap = flipped
-		if (fmc) {
+		ap = !ap
+		if (ap && fmc) {
 			flipBool("fmc")
 		}
 	} else {
-		flipped = !fmc
-		fmc = flipped
+		fmc = !fmc
 	}
-
-	return flipped
 }
 
 function writeStateToMemory(state: popupState): popupState {
