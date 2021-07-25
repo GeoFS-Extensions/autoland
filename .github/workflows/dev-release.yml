@@ -1,0 +1,26 @@
+name: Dev release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  job_1:
+    name: Publish to CWS
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repo
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Upload to CWS
+        run: |
+          npm install --save-dev cws-publish
+          npx cws-publish ${{ secrets.CLIENT_ID }} ${{ secrets.CLIENT_SECRET }} ${{ secrets.REFRESH_TOKEN }} ./build/extension.zip bffkdfflidpfamapjgbgclffijnlgcph --testers

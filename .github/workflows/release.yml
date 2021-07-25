@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  job_1:
+    name: Publish to CWS
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Check out
+        uses: actions/checkout@v2
+
+      - name: Zip whole repo
+        uses: vimtor/action-zip@v1
+        with:
+          files: ./
+          dest: build/repo.zip
+
+      - name: Create release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          draft: true
+          title: NAME THIS ASAP
+          automatic_release_tag: latest
+          files: |
+            ./build/extension.zip
+            ./build/repo.zip
+
+      - name: Upload to CWS
+        uses: mnao305/chrome-extension-upload@1.1.1
+        with:
+          file-path: build/extension.zip
+          extension-id: hogefuga(EXTENSION_ID)
+          client-id: ${{ secrets.CLIENT_ID_MAIN }}
+          client-secret: ${{ secrets.CLIENT_SECRET_MAIN }}
+          refresh-token: ${{ secrets.REFRESH_TOKEN_MAIN }}

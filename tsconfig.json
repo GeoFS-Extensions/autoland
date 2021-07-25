@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "none",
+        "esModuleInterop": true,
+        "target": "es5",
+        "noImplicitAny": true,
+        "lib": ["DOM", "es6"],
+        "alwaysStrict": true
+    },
+    "ignore": [
+        "geofs_types.d.ts"
+    ],
+    "types": [
+        "chrome",
+        "jquery"
+    ]
+}

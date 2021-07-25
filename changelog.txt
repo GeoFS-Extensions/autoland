@@ -1,3 +1,0 @@
-Transitioned both readme and routes.md to html files for ease of access
-Rewrote the readme
-Added 5 new routes and reformatted the previous 26 routes to fix the distance bug

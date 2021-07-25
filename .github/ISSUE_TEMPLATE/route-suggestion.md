@@ -3,7 +3,7 @@ name: Route Suggestion
 about: Describe this issue template's purpose here.
 title: ''
 labels: routes
-assignees: Featherway
+assignees: 'slap-py'
 
 ---
 

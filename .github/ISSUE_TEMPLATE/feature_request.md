@@ -1,9 +1,9 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Suggestions
 title: ''
 labels: enhancement
-assignees: Featherway
+assignees: 'Featherway'
 
 ---
 
