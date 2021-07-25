@@ -16,12 +16,15 @@
     "matches": ["*://www.geo-fs.com/*"]
   }],
   "content_scripts": [{
-    "js": ["scriptsLoader.js"],
+    "js": ["scripts/scriptsLoader.js"],
     "matches": ["*://www.geo-fs.com/geofs.php"],
     "run_at": "document_end",
     "all_frames": true
   }],
   "permissions": [
     "storage"
-  ]
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
 }

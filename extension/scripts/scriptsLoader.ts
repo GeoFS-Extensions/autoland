@@ -32,7 +32,6 @@ function runScripts(options: options) {
 }
 
 chrome.runtime.sendMessage({
-    name: "geoContentScript",
     needsData: true
 }, (resp) => {
     runScripts(resp.options)

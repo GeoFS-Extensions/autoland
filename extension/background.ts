@@ -3,22 +3,20 @@ interface options {
 	fmc: boolean
 }
 
-var options: options = getCurrentOptions()
+var options = getCurrentOptions()
 
 function getCurrentOptions(): options {
-	var data: options
 	chrome.storage.sync.get("options", (items) => {
 		if (items.options) {
-			data = items.options
+			options = items.options
 		} else {
-			data = {
+			options = {
 				ap: false,
 				fmc: false
 			}
 		}
 	})
-
-	return data
+	return
 }
 
 // update cache when storage changes
@@ -27,9 +25,6 @@ chrome.storage.onChanged.addListener(() => {
 })
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-	if (msg.name != "geoContentScript") {
-		return
-	}
 	if (msg.needsData) {
 		sendResponse({options: options})
 	}

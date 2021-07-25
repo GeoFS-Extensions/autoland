@@ -10,7 +10,7 @@ interface buttons {
 
 var ap = false
 var fmc = false
-var buttons = getCurrentButtonState()
+var buttons: buttons
 var options: popupState
 
 function flipBool (toFlip: "ap" | "fmc"): void {
@@ -29,17 +29,13 @@ function writeStateToMemory(state: popupState): popupState {
 	return state
 }
 
-function readStateFromMemory(): popupState {
+// TODO: this function returns undefined because the background script hasn't responded
+function askBackgroundForOptions(): popupState {
 	var data: popupState
-	chrome.storage.sync.get("options", (items) => {
-		if (items.options) {
-			data = items.options
-		} else {
-			data = {
-				ap: false,
-				fmc: false
-			}
-		}
+	chrome.runtime.sendMessage({
+		needsData: true
+	}, (resp) => {
+		data = resp.options
 	})
 
 	return data
@@ -86,19 +82,24 @@ function updateButtons(buttons: buttons, bools: popupState): buttons {
 }
 
 window.onload = () => {
-	options = readStateFromMemory()
+	options = askBackgroundForOptions()
+	buttons = getCurrentButtonState()
+	console.log(options)
+	console.log(buttons)
+	updateButtons(buttons, options)
+
+
+	buttons.ap.addEventListener("click", () => {
+		flipBool("ap")
+		options = getCurrentPopupState()
+		updateButtons(buttons, options)
+		writeStateToMemory(options)
+	})
+
+	buttons.fmc.addEventListener("click", () => {
+		flipBool("fmc")
+		options = getCurrentPopupState()
+		updateButtons(buttons, options)
+		writeStateToMemory(options)
+	})
 }
-
-buttons.ap.addEventListener("click", () => {
-	flipBool("ap")
-	options = getCurrentPopupState()
-	updateButtons(buttons, options)
-	writeStateToMemory(options)
-})
-
-buttons.fmc.addEventListener("click", () => {
-	flipBool("fmc")
-	options = getCurrentPopupState()
-	updateButtons(buttons, options)
-	writeStateToMemory(options)
-})
