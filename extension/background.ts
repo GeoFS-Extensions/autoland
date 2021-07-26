@@ -16,36 +16,19 @@ function getStorageData(name: string): Promise<any> {
 	});
 }
 
-async function readState(): Promise<popupState> {
+async function readState(): Promise<PopupState> {
 	let data;
 	await getStorageData("options").then(val => {
 		data = val;
 	});
-	return data as popupState
+	return data as PopupState;
 }
 
-var options: popupState
+var options: PopupState;
 (async function() {
 	options = await readState();
 })()
 
-
-/**
- * Add one of the autoland modules
- * @param {string} name The name of the js file, without the .js extension
- */
-const addModule = (name: string) => {
-	if (name == "ap") {
-		name = "ap++"
-	}
-	let scriptTag = document.createElement('script');
-	scriptTag.src = chrome.runtime.getURL(`${name}.js`);
-	scriptTag.id = name.toUpperCase();
-	scriptTag.type = "module";
-	scriptTag.classList.add("autoland-extension-scripts");
-	scriptTag.onload = () => {scriptTag.remove()};
-	(document.head || document.documentElement).appendChild(scriptTag);
-};
 
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async () => {
@@ -60,6 +43,7 @@ chrome.tabs.onCreated.addListener((tab) => {
 		return;
 	}
 	// the tab is definitely a geo tab
+	
 	let keys = Object.keys(options) as Array<keyof options>;
 	for (let i = 0; i < keys.length; i++) {
 		let key = keys[i];
@@ -67,10 +51,12 @@ chrome.tabs.onCreated.addListener((tab) => {
 		if (options[key]) {
 			chrome.scripting.executeScript({
 				target: {tabId: tab.id, allFrames: true},
-				func: (name: any): void => {
+				func: (args: any[]): void => {
+					let name = args[0];
 					switch (name) {
 						case 'ap':
-							name = 'ap++'
+							name = 'ap++';
+							break;
 					}
 					let scriptTag = document.createElement('script');
 					scriptTag.src = chrome.runtime.getURL(`${name}.js`);

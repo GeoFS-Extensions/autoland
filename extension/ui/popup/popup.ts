@@ -1,31 +1,22 @@
-interface popupState {
+interface PopupState {
 	ap: boolean
 	fmc: boolean
 }
 
-interface buttons {
+interface Buttons {
 	ap: HTMLElement,
 	fmc: HTMLElement
 }
 
-var ap = false
-var fmc = false
-var buttons: buttons
-var options: popupState
-
-function flipBool (toFlip: "ap" | "fmc"): void {
-	if (toFlip == "ap") {
-		ap = !ap
-		if (ap && fmc) {
-			flipBool("fmc")
-		}
-	} else {
-		fmc = !fmc
-	}
+const emptyButtons = (): Buttons => {
+    return {
+        ap: undefined,
+        fmc: undefined
+    }
 }
 
 // src: modified https://developer.chrome.com/docs/extensions/reference/storage/
-function getStorageSyncData(name: string): Promise<any> {
+const GetStorageSyncData = (name: string): Promise<any> => {
 	return new Promise((resolve, reject) => {
 		chrome.storage.sync.get([name], (items) => {
 		if (chrome.runtime.lastError) {
@@ -36,77 +27,50 @@ function getStorageSyncData(name: string): Promise<any> {
 	});
 }
 
-async function readStateFromMemory(): Promise<popupState> {
-	let data;
-	await getStorageSyncData("options").then(val => {
-		data = val;
-	});
-	return data as popupState
+const getOptions = async (): Promise<PopupState> => {
+    let data: PopupState;
+    await GetStorageSyncData("options").then(val => {
+        data = val;
+    });
+    return data;
 }
 
-function writeStateToMemory(state: popupState): popupState {
-	chrome.storage.sync.set({options: state}, () => {})
-	return state
+const setOptions = (options: PopupState): PopupState => {
+    chrome.storage.sync.set({options: options}, () => {})
+    return options;
 }
 
-function getCurrentButtonState(): buttons {
-	return {
-		ap: document.getElementById("apbutton"),
-		fmc: document.getElementById("fmcbutton")
-	}
+const getButtons = (): Buttons => {
+    let buttons = emptyButtons();
+    (Object.keys(buttons) as Array<keyof Buttons>).forEach(key => {
+        buttons[key] = document.querySelector(`${key}button`);
+    });
+    return buttons;
 }
 
-function getCurrentPopupState(): popupState {
-	return {
-		ap: ap,
-		fmc: fmc
-	}
-}
-
-function hideOrShowFMCButton(show: boolean, button: HTMLElement): void {
-	if (show) {
-		button.style.display = ""
-	} else {
-		button.style.display = "none"
-	}
-}
-
-function updateButtons(buttons: buttons, bools: popupState):buttons {
-	if (bools.ap) {
-		buttons.ap.className = "running"
-		hideOrShowFMCButton(true, buttons.fmc)
-	} else {
-		buttons.ap.className = "button"
-		hideOrShowFMCButton(false, buttons.fmc)
-	}
-
-	if (bools.fmc) {
-		buttons.fmc.className = "running"
-	} else {
-		buttons.fmc.className = "button"
-	}
-	return getCurrentButtonState()
+const UpdateButtons = (buttons: Buttons, options: PopupState) => {
+    (Object.keys(buttons) as Array<keyof Buttons>).forEach(key => {
+        if (options[key]) {
+            buttons[key].className = 'running';
+            if(key == 'ap') buttons.fmc.style.display = '';
+        } else {
+            buttons[key].className = 'button';
+            if(key == 'ap') {
+                buttons.fmc.style.display = 'none';
+                options = setOptions({...options, fmc: false});
+            };
+        }
+    });
 }
 
 window.onload = async () => {
-	options = await readStateFromMemory()
-	buttons = getCurrentButtonState()
-	console.log(options)
-	console.log(buttons)
-	updateButtons(buttons, options)
+    let buttons = getButtons();
+    let options = await getOptions();
 
-
-	buttons.ap.addEventListener("click", () => {
-		flipBool("ap")
-		options = getCurrentPopupState()
-		updateButtons(buttons, options)
-		writeStateToMemory(options)
-	})
-
-	buttons.fmc.addEventListener("click", () => {
-		flipBool("fmc")
-		options = getCurrentPopupState()
-		updateButtons(buttons, options)
-		writeStateToMemory(options)
-	})
+    (Object.keys(buttons) as Array<keyof Buttons>).forEach(key => {
+        buttons[key].addEventListener("click", () => {
+            options = setOptions({...options, [key]: !options[key]}); // works until we add sound
+            UpdateButtons(buttons, options);
+        });
+    });
 }
