@@ -7,8 +7,10 @@
         "lib": ["DOM", "es5"],
         "alwaysStrict": true
     },
-    "ignore": [
-        "geofs_types.d.ts"
+    "exclude": [
+        "geofs_types.d.ts",
+        "extension/*",
+        "node_modules/*"
     ],
     "types": [
         "chrome",
