@@ -1,12 +1,11 @@
 // copy extension to build env
 import * as fs from 'fs'
 import * as fse from 'fs-extra'
+import * as rem from 'find-remove'
 import pkg from 'async';
-import { zip } from 'zip-a-folder';
 const { series } = pkg;
 import pkhg from 'child_process'
 const { exec } = pkhg
-import * as del from 'del'
 
 function deleteFolderRecursive(path) {
 	if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
@@ -24,11 +23,12 @@ function deleteFolderRecursive(path) {
 	}
 };
 
-deleteFolderRecursive('build/extension')
+deleteFolderRecursive('build')
 
-fse.copySync('extension/', 'build/extension')
+fse.copySync('extension/', 'build')
 
 series([
-	() => exec('npx tsc'),
-	() => exec('cd build/extension')
+	() => exec('npx tsc')
 ])
+
+rem.default('/build', {extensions: ['.ts']})
