@@ -6,6 +6,7 @@ import { zip } from 'zip-a-folder';
 const { series } = pkg;
 import pkhg from 'child_process'
 const { exec } = pkhg
+import * as del from 'del'
 
 function deleteFolderRecursive(path) {
 	if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
@@ -25,19 +26,9 @@ function deleteFolderRecursive(path) {
 
 deleteFolderRecursive('build/extension')
 
-
 fse.copySync('extension/', 'build/extension')
 
-
 series([
-	() => exec('npx tsc')
+	() => exec('npx tsc'),
+	() => exec('cd build/extension')
 ])
-
-
-class zipper {
-	static async main() {
-		await zip('build/extension', 'build/extension.zip');
-	}
-}
-
-zipper.main()
