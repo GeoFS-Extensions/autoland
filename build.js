@@ -1,7 +1,6 @@
 // copy extension to build env
 import * as fs from 'fs'
 import * as fse from 'fs-extra'
-import * as rem from 'find-remove'
 import pkg from 'async';
 const { series } = pkg;
 import pkhg from 'child_process'
@@ -31,4 +30,4 @@ series([
 	() => exec('npx tsc')
 ])
 
-rem.default('/build', {extensions: ['.ts']})
+// TODO: delete the .ts files in build dir
