@@ -8,8 +8,7 @@ p {
   margin: 0px;
 }
 
-.button {
-  background-color: #c75858;
+button {
   transition-duration: .4s;
   color: #FFFFFF;
   border: none;
@@ -20,24 +19,20 @@ p {
   margin-bottom: 2px;
 }
 
-.button:hover {
+.off {
+  background-color: #c75858;
+}
+
+.off:hover {
   background-color: #FFFFFF;
   color: #c75858;
 }
 
-.running {
+.on {
   background-color: #51cf53;
-  transition-duration: .4s;
-  color: #FFFFFF;
-  border: none;
-  font-family: Big Shoulders Stencil Text;
-  font-size: 20px;
-  outline: none;
-  border: 0;
-  margin-bottom: 2px;
 }
 
-.running:hover {
+.on:hover {
   background-color: #FFFFFF;
   color: #51cf53
 }

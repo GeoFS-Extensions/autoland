@@ -53,7 +53,10 @@ jobs:
           rm -rf extension
 
       - name: Compile TS files
-        run: npx tsc
+          run: |
+          npx tsc
+          rm -f build/extension/*.ts
+          rm -f build/extension/**/*.ts
 
       - name: Upload build env as artifact
         uses: actions/upload-artifact@v2

@@ -18,8 +18,8 @@ function getStorageData(name: string): Promise<any> {
 
 async function readState(): Promise<PopupState> {
 	let data;
-	await getStorageData("options").then(val => {
-		data = val;
+	await getStorageData('options').then(val => {
+		data = val.options;
 	});
 	return data as PopupState;
 }
@@ -51,6 +51,7 @@ chrome.tabs.onCreated.addListener((tab) => {
 		if (options[key]) {
 			chrome.scripting.executeScript({
 				target: {tabId: tab.id, allFrames: true},
+				// @ts-ignore because @types/chrome is probably not updated to manifest v3
 				func: (args: any[]): void => {
 					let name = args[0];
 					switch (name) {
@@ -60,9 +61,7 @@ chrome.tabs.onCreated.addListener((tab) => {
 					}
 					let scriptTag = document.createElement('script');
 					scriptTag.src = chrome.runtime.getURL(`${name}.js`);
-					scriptTag.id = name.toUpperCase();
-					scriptTag.type = "module";
-					scriptTag.classList.add("autoland-extension-scripts");
+					scriptTag.type = 'module';
 					scriptTag.onload = () => {scriptTag.remove()};
 					(document.head || document.documentElement).appendChild(scriptTag);
 				},
@@ -70,6 +69,7 @@ chrome.tabs.onCreated.addListener((tab) => {
 			});
 		}
 	}
+
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {

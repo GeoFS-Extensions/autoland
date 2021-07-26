@@ -1,5 +1,5 @@
 interface PopupState {
-	ap: boolean
+	ap: boolean,
 	fmc: boolean
 }
 
@@ -29,8 +29,8 @@ const GetStorageSyncData = (name: string): Promise<any> => {
 
 const getOptions = async (): Promise<PopupState> => {
     let data: PopupState;
-    await GetStorageSyncData("options").then(val => {
-        data = val;
+    await GetStorageSyncData('options').then(val => {
+        data = val.options;
     });
     return data;
 }
@@ -43,7 +43,7 @@ const setOptions = (options: PopupState): PopupState => {
 const getButtons = (): Buttons => {
     let buttons = emptyButtons();
     (Object.keys(buttons) as Array<keyof Buttons>).forEach(key => {
-        buttons[key] = document.querySelector(`${key}button`);
+        buttons[key] = document.querySelector(`#${key}button`);
     });
     return buttons;
 }
@@ -51,13 +51,13 @@ const getButtons = (): Buttons => {
 const UpdateButtons = (buttons: Buttons, options: PopupState) => {
     (Object.keys(buttons) as Array<keyof Buttons>).forEach(key => {
         if (options[key]) {
-            buttons[key].className = 'running';
+            buttons[key].className = 'on';
             if(key == 'ap') buttons.fmc.style.display = '';
         } else {
-            buttons[key].className = 'button';
+            buttons[key].className = 'off';
             if(key == 'ap') {
                 buttons.fmc.style.display = 'none';
-                options = setOptions({...options, fmc: false});
+                options = setOptions({ap: false, fmc: false});
             };
         }
     });
@@ -66,9 +66,9 @@ const UpdateButtons = (buttons: Buttons, options: PopupState) => {
 window.onload = async () => {
     let buttons = getButtons();
     let options = await getOptions();
-
+    UpdateButtons(buttons, options);
     (Object.keys(buttons) as Array<keyof Buttons>).forEach(key => {
-        buttons[key].addEventListener("click", () => {
+        buttons[key].addEventListener('click', () => {
             options = setOptions({...options, [key]: !options[key]}); // works until we add sound
             UpdateButtons(buttons, options);
         });

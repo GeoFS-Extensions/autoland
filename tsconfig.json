@@ -4,7 +4,7 @@
         "esModuleInterop": true,
         "target": "es5",
         "noImplicitAny": true,
-        "lib": ["DOM", "es6"],
+        "lib": ["DOM", "es5"],
         "alwaysStrict": true
     },
     "ignore": [
