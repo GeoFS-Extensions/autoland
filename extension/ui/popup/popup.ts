@@ -24,21 +24,19 @@ function flipBool (toFlip: "ap" | "fmc"): void {
 	}
 }
 
+function askBackgroundScriptForOptions(): Promise<popupState> {
+	return new Promise((resolve, reject) => {
+		chrome.runtime.sendMessage({
+			needsData: true
+		}, (resp) => {
+			resolve(resp.options)
+		})
+	})
+}
+
 function writeStateToMemory(state: popupState): popupState {
 	chrome.storage.sync.set({options: state}, () => {})
 	return state
-}
-
-// TODO: this function returns undefined because the background script hasn't responded
-function askBackgroundForOptions(): popupState {
-	var data: popupState
-	chrome.runtime.sendMessage({
-		needsData: true
-	}, (resp) => {
-		data = resp.options
-	})
-
-	return data
 }
 
 function getCurrentButtonState(): buttons {
@@ -82,7 +80,10 @@ function updateButtons(buttons: buttons, bools: popupState): buttons {
 }
 
 window.onload = () => {
-	options = askBackgroundForOptions()
+	askBackgroundScriptForOptions().then((param) => {
+		console.log(param)
+		options = param
+	})
 	buttons = getCurrentButtonState()
 	console.log(options)
 	console.log(buttons)
