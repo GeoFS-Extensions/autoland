@@ -24,14 +24,24 @@ function flipBool (toFlip: "ap" | "fmc"): void {
 	}
 }
 
-function askBackgroundScriptForOptions(): Promise<popupState> {
+// src: modified https://developer.chrome.com/docs/extensions/reference/storage/
+function getStorageSyncData(name: string): Promise<any> {
 	return new Promise((resolve, reject) => {
-		chrome.runtime.sendMessage({
-			needsData: true
-		}, (resp) => {
-			resolve(resp.options)
-		})
-	})
+		chrome.storage.sync.get([name], (items) => {
+		if (chrome.runtime.lastError) {
+			return reject(chrome.runtime.lastError);
+		}
+		resolve(items);
+		});
+	});
+}
+
+async function readStateFromMemory(): Promise<popupState> {
+	let data;
+	await getStorageSyncData("options").then(val => {
+		data = val;
+	});
+	return data as popupState
 }
 
 function writeStateToMemory(state: popupState): popupState {
@@ -61,7 +71,7 @@ function hideOrShowFMCButton(show: boolean, button: HTMLElement): void {
 	}
 }
 
-function updateButtons(buttons: buttons, bools: popupState): buttons {
+function updateButtons(buttons: buttons, bools: popupState):buttons {
 	if (bools.ap) {
 		buttons.ap.className = "running"
 		hideOrShowFMCButton(true, buttons.fmc)
@@ -75,15 +85,11 @@ function updateButtons(buttons: buttons, bools: popupState): buttons {
 	} else {
 		buttons.fmc.className = "button"
 	}
-	
 	return getCurrentButtonState()
 }
 
-window.onload = () => {
-	askBackgroundScriptForOptions().then((param) => {
-		console.log(param)
-		options = param
-	})
+window.onload = async () => {
+	options = await readStateFromMemory()
 	buttons = getCurrentButtonState()
 	console.log(options)
 	console.log(buttons)

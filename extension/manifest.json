@@ -15,14 +15,10 @@
     "resources": ["scripts/ap++.js", "scripts/fmc.js"],
     "matches": ["*://www.geo-fs.com/*"]
   }],
-  "content_scripts": [{
-    "js": ["scripts/scriptsLoader.js"],
-    "matches": ["*://www.geo-fs.com/geofs.php"],
-    "run_at": "document_end",
-    "all_frames": true
-  }],
   "permissions": [
-    "storage"
+    "storage",
+    "tabs",
+    "scripting"
   ],
   "background": {
     "service_worker": "background.js"
