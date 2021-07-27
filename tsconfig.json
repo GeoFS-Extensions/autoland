@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"module": "none",
+		"esModuleInterop": true,
+		"target": "es5",
+		"noImplicitAny": true,
+		"lib": [
+			"DOM",
+			"es5"
+		],
+		"alwaysStrict": true
+	},
+	"include": [
+		"routes/routes.ts"
+	],
+	"types": [
+		"chrome",
+		"jquery"
+	]
+}
