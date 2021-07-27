@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "build action",
   "main": "build.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
-    "build": "npm i && node build.js"
+    "test": "npm i --save-dev && node test.js",
+    "build": "npm i --save-dev && node build.js"
   },
   "repository": {
     "type": "git",
@@ -18,10 +19,11 @@
     "url": "https://github.com/GeoFS-Autoland/dev-autoland/issues"
   },
   "homepage": "https://github.com/GeoFS-Autoland/dev-autoland#readme",
-  "dependencies": {
+  "devDependencies": {
     "@types/chrome": "0.0.148",
     "@types/jquery": "^3.5.6",
     "fs-extra": "^10.0.0",
+    "html-validator": "^5.1.17",
     "typescript": "^4.3.5"
   }
 }

@@ -1,0 +1,251 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "https://html-validate.org/schemas/elements.json",
+    "version": "1.0",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "type": "string"
+        }
+    },
+    "patternProperties": {
+        "^.*$": {
+            "type": "object",
+            "properties": {
+                "inherit": {
+                    "title": "Inherit from another element",
+                    "description": "Most properties from the parent element will be copied onto this one",
+                    "type": "string"
+                },
+                "embedded": {
+                    "title": "Mark this element as belonging in the embedded content category",
+                    "$ref": "#/definitions/contentCategory"
+                },
+                "flow": {
+                    "title": "Mark this element as belonging in the flow content category",
+                    "$ref": "#/definitions/contentCategory"
+                },
+                "heading": {
+                    "title": "Mark this element as belonging in the heading content category",
+                    "$ref": "#/definitions/contentCategory"
+                },
+                "interactive": {
+                    "title": "Mark this element as belonging in the interactive content category",
+                    "$ref": "#/definitions/contentCategory"
+                },
+                "metadata": {
+                    "title": "Mark this element as belonging in the metadata content category",
+                    "$ref": "#/definitions/contentCategory"
+                },
+                "phrasing": {
+                    "title": "Mark this element as belonging in the phrasing content category",
+                    "$ref": "#/definitions/contentCategory"
+                },
+                "sectioning": {
+                    "title": "Mark this element as belonging in the sectioning content category",
+                    "$ref": "#/definitions/contentCategory"
+                },
+                "deprecated": {
+                    "title": "Mark element as deprecated",
+                    "description": "Deprecated elements should not be used. If a message is provided it will be included in the error",
+                    "anyOf": [
+                        { "type": "boolean" },
+                        { "type": "string" },
+                        { "$ref": "#/definitions/deprecatedElement" }
+                    ]
+                },
+                "foreign": {
+                    "title": "Mark element as foreign",
+                    "description": "Foreign elements are elements which have a start and end tag but is otherwize not parsed",
+                    "type": "boolean"
+                },
+                "void": {
+                    "title": "Mark element as void",
+                    "description": "Void elements are elements which cannot have content and thus must not use an end tag",
+                    "type": "boolean"
+                },
+                "transparent": {
+                    "title": "Mark element as transparent",
+                    "description": "Transparent elements follows the same content model as its parent, i.e. the content must be allowed in the parent.",
+                    "type": "boolean"
+                },
+                "implicitClosed": {
+                    "title": "List of elements which implicitly closes this element",
+                    "description": "Some elements are automatically closed when another start tag occurs",
+                    "type": "array",
+                    "items": { "type": "string" }
+                },
+                "scriptSupporting": {
+                    "title": "Mark element as script-supporting",
+                    "description": "Script-supporting elements are elements which can be inserted where othersise not permitted to assist in templating",
+                    "type": "boolean"
+                },
+                "form": {
+                    "title": "Mark element as a submittable form element",
+                    "type": "boolean"
+                },
+                "deprecatedAttributes": {
+                    "title": "List of deprecated attributes",
+                    "type": "array",
+                    "items": { "type": "string" }
+                },
+                "requiredAttributes": {
+                    "title": "List of required attributes",
+                    "type": "array",
+                    "items": { "type": "string" }
+                },
+                "attributes": {
+                    "title": "List of known attributes and allowed values",
+                    "$ref": "#/definitions/PermittedAttribute"
+                },
+                "permittedContent": {
+                    "title": "List of elements or categories allowed as content in this element",
+                    "$ref": "#/definitions/Permitted"
+                },
+                "permittedDescendants": {
+                    "title": "List of elements or categories allowed as descendants in this element",
+                    "$ref": "#/definitions/Permitted"
+                },
+                "permittedOrder": {
+                    "title": "Required order of child elements",
+                    "$ref": "#/definitions/PermittedOrder"
+                },
+                "requiredAncestors": {
+                    "title": "List of required ancestor elements",
+                    "$ref": "#/definitions/RequiredAncestors"
+                },
+                "requiredContent": {
+                    "title": "List of required content elements",
+                    "$ref": "#/definitions/RequiredContent"
+                }
+            },
+            "additionalProperties": true
+        }
+    },
+    "definitions": {
+        "contentCategory": {
+            "anyOf": [{ "type": "boolean" }, { "$ref": "#/definitions/expression" }]
+        },
+        "expression": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "string",
+                    "enum": ["isDescendant", "hasAttribute", "matchAttribute"]
+                },
+                {
+                    "anyOf": [{ "type": "string" }, { "$ref": "#/definitions/operation" }]
+                }
+            ]
+        },
+        "operation": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "string",
+                    "enum": ["!=", "="]
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "deprecatedElement": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "title": "A short text message shown next to the regular error message."
+                },
+                "documentation": {
+                    "type": "string",
+                    "title": "An extended markdown formatted message shown with the contextual rule documentation."
+                },
+                "source": {
+                    "type": "string",
+                    "title": "Element source, e.g. what standard or library deprecated this element.",
+                    "default": "html5"
+                }
+            }
+        },
+        "Permitted": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/definitions/PermittedGroup"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "$ref": "#/definitions/PermittedGroup"
+                    }
+                ]
+            }
+        },
+        "PermittedAttribute": {
+            "type": "object",
+            "patternProperties": {
+                "^.*$": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "anyOf": [{ "type": "string" }, { "regexp": true }]
+                    }
+                }
+            }
+        },
+        "PermittedGroup": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "exclude": {
+                    "anyOf": [
+                        {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                }
+            }
+        },
+        "PermittedOrder": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "RequiredAncestors": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "RequiredContent": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}
