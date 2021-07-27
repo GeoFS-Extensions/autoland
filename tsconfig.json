@@ -2,15 +2,16 @@
     "compilerOptions": {
         "module": "none",
         "esModuleInterop": true,
-        "target": "es5",
+        "target": "esnext",
         "noImplicitAny": true,
-        "lib": ["DOM", "es5"],
+        "lib": [
+            "DOM",
+            "es5"
+        ],
         "alwaysStrict": true
     },
-    "exclude": [
-        "geofs_types.d.ts",
-        "extension/*",
-        "node_modules/*"
+    "include": [
+        "build/**/*"
     ],
     "types": [
         "chrome",

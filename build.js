@@ -1,10 +1,7 @@
-// copy extension to build env
-import * as fs from 'fs'
-import * as fse from 'fs-extra'
-import pkg from 'async';
-const { series } = pkg;
-import pkhg from 'child_process'
-const { exec } = pkhg
+const fs = require('fs')
+const fse = require('fs-extra')
+const series = require('async').series
+const exec = require('child_process').exec
 
 function deleteFolderRecursive(path) {
 	if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
