@@ -50,6 +50,8 @@ const getButtons = (): Buttons => {
 
 const UpdateButtons = (buttons: Buttons, options: PopupState) => {
     (Object.keys(buttons) as Array<keyof Buttons>).forEach(key => {
+        console.log(key)
+        console.log(options[key])
         if (options[key]) {
             buttons[key].className = 'on';
             if(key == 'ap') buttons.fmc.style.display = '';
@@ -66,6 +68,12 @@ const UpdateButtons = (buttons: Buttons, options: PopupState) => {
 window.onload = async () => {
     let buttons = getButtons();
     let options = await getOptions();
+    if (options == undefined) {
+        options = setOptions({
+            ap: false,
+            fmc: false
+        })
+    }
     UpdateButtons(buttons, options);
     (Object.keys(buttons) as Array<keyof Buttons>).forEach(key => {
         buttons[key].addEventListener('click', () => {

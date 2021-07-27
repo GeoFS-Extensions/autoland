@@ -16,15 +16,18 @@ function getStorageData(name: string): Promise<any> {
 	});
 }
 
-async function readState(): Promise<PopupState> {
+async function readState(): Promise<options> {
 	let data;
 	await getStorageData('options').then(val => {
 		data = val.options;
 	});
-	return data as PopupState;
+	return data as options;
 }
 
-var options: PopupState;
+var options: options = {
+	ap: false,
+	fmc: false
+};
 (async function() {
 	options = await readState();
 })()

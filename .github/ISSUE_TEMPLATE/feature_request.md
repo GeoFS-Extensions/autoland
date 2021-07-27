@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggestions
-title: ''
+title: 'FEATURE:'
 labels: enhancement
 assignees: 'Featherway'
 
