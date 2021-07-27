@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+		<Placemark>
+			<name>CYVR</name>
+			<description>Departure airport</description>
+			<Point>
+				<coordinates>-123.1839981,49.193901,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>TOTIM</name>
+			<description/>
+			<Point>
+				<coordinates>-123.04995,49.1879</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>5.3 nm</name>
+			<LineString>
+				<coordinates>-123.1839981,49.193901  -123.04995,49.1879</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>EASTD</name>
+			<description/>
+			<Point>
+				<coordinates>-122.68657,48.80991</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>26.8 nm</name>
+			<LineString>
+				<coordinates>-123.04995,49.1879  -122.68657,48.80991</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>CFFVN</name>
+			<description/>
+			<Point>
+				<coordinates>-122.59479,48.72692</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>6.2 nm</name>
+			<LineString>
+				<coordinates>-122.68657,48.80991  -122.59479,48.72692</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>YAVUR</name>
+			<description/>
+			<Point>
+				<coordinates>-123.1177402,48.06974,4000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>44.6 nm</name>
+			<LineString>
+				<coordinates>-122.59479,48.72692  -123.1177402,48.06974</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>HELZR</name>
+			<description/>
+			<Point>
+				<coordinates>-122.30614,47.64795,4000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>41.4 nm</name>
+			<LineString>
+				<coordinates>-123.1177402,48.06974  -122.30614,47.64795</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>KARFO</name>
+			<description/>
+			<Point>
+				<coordinates>-122.30651,47.60598,3200</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>2.5 nm</name>
+			<LineString>
+				<coordinates>-122.30614,47.64795  -122.30651,47.60598</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>DGLAS</name>
+			<description/>
+			<Point>
+				<coordinates>-122.3071,47.53766,1900</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>4.1 nm</name>
+			<LineString>
+				<coordinates>-122.30651,47.60598  -122.3071,47.53766</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>RW16L</name>
+			<description/>
+			<Point>
+				<coordinates>-122.3078658,47.4551621,190</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>5.0 nm</name>
+			<LineString>
+				<coordinates>-122.3071,47.53766  -122.3078658,47.4551621</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BUTTER</name>
+			<description/>
+			<Point>
+				<coordinates>-122.3082119,47.4314467,190</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>1.4 nm</name>
+			<LineString>
+				<coordinates>-122.3078658,47.4551621  -122.3082119,47.4314467</coordinates>
+			</LineString>
+		</Placemark>
+	</Document>
+</kml>

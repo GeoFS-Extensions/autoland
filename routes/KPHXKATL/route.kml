@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+		<Placemark>
+			<name>KPHX</name>
+			<description>Departure airport</description>
+			<Point>
+				<coordinates>-112.012001,33.4342994,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>DELSE</name>
+			<description/>
+			<Point>
+				<coordinates>-111.95788,33.44078</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>2.7 nm</name>
+			<LineString>
+				<coordinates>-112.012001,33.4342994  -111.95788,33.44078</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>MAXXO</name>
+			<description/>
+			<Point>
+				<coordinates>-106.69661,34.39398</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>268.4 nm</name>
+			<LineString>
+				<coordinates>-111.95788,33.44078  -106.69661,34.39398</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>IRW</name>
+			<description/>
+			<Point>
+				<coordinates>-97.60923,35.3586</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>451.3 nm</name>
+			<LineString>
+				<coordinates>-106.69661,34.39398  -97.60923,35.3586</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>FSM</name>
+			<description/>
+			<Point>
+				<coordinates>-94.27153,35.38842</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>163.5 nm</name>
+			<LineString>
+				<coordinates>-97.60923,35.3586  -94.27153,35.38842</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>MEM</name>
+			<description/>
+			<Point>
+				<coordinates>-89.9832,35.01511</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>211.6 nm</name>
+			<LineString>
+				<coordinates>-94.27153,35.38842  -89.9832,35.01511</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>HUTCC</name>
+			<description/>
+			<Point>
+				<coordinates>-87.42878,34.6321</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>128.0 nm</name>
+			<LineString>
+				<coordinates>-89.9832,35.01511  -87.42878,34.6321</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>KNSAW</name>
+			<description/>
+			<Point>
+				<coordinates>-87.09867,34.57138</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>16.7 nm</name>
+			<LineString>
+				<coordinates>-87.42878,34.6321  -87.09867,34.57138</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>RUSSA</name>
+			<description/>
+			<Point>
+				<coordinates>-86.93741,34.54363</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>8.1 nm</name>
+			<LineString>
+				<coordinates>-87.09867,34.57138  -86.93741,34.54363</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ARRBE</name>
+			<description/>
+			<Point>
+				<coordinates>-84.71944,33.63437,4000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>123.1 nm</name>
+			<LineString>
+				<coordinates>-86.93741,34.54363  -84.71944,33.63437</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>HRDEY</name>
+			<description/>
+			<Point>
+				<coordinates>-84.65018,33.63451,4000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>3.5 nm</name>
+			<LineString>
+				<coordinates>-84.71944,33.63437  -84.65018,33.63451</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>VINII</name>
+			<description/>
+			<Point>
+				<coordinates>-84.54984,33.63465,2700</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>5.0 nm</name>
+			<LineString>
+				<coordinates>-84.65018,33.63451  -84.54984,33.63465</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>RW9L</name>
+			<description/>
+			<Point>
+				<coordinates>-84.4376131,33.6347099,880</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>5.6 nm</name>
+			<LineString>
+				<coordinates>-84.54984,33.63465  -84.4376131,33.6347099</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BUTTER</name>
+			<description/>
+			<Point>
+				<coordinates>-84.4092536,33.6347491,880</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>1.4 nm</name>
+			<LineString>
+				<coordinates>-84.4376131,33.6347099  -84.4092536,33.6347491</coordinates>
+			</LineString>
+		</Placemark>
+	</Document>
+</kml>

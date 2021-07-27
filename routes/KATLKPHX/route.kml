@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+		<Placemark>
+			<name>KATL</name>
+			<description>Departure airport</description>
+			<Point>
+				<coordinates>-84.4281005,33.6366996,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>USUCI</name>
+			<description/>
+			<Point>
+				<coordinates>-84.3918,33.64679</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>1.9 nm</name>
+			<LineString>
+				<coordinates>-84.4281005,33.6366996  -84.3918,33.64679</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>VUZ</name>
+			<description/>
+			<Point>
+				<coordinates>-86.89984,33.67013</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>125.4 nm</name>
+			<LineString>
+				<coordinates>-84.3918,33.64679  -86.89984,33.67013</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>SQS</name>
+			<description/>
+			<Point>
+				<coordinates>-90.27735,33.46385</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>169.5 nm</name>
+			<LineString>
+				<coordinates>-86.89984,33.67013  -90.27735,33.46385</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>TXK</name>
+			<description/>
+			<Point>
+				<coordinates>-94.07324,33.51388</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>190.1 nm</name>
+			<LineString>
+				<coordinates>-90.27735,33.46385  -94.07324,33.51388</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>SPS</name>
+			<description/>
+			<Point>
+				<coordinates>-98.59347,33.98729</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>227.5 nm</name>
+			<LineString>
+				<coordinates>-94.07324,33.51388  -98.59347,33.98729</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>TURKI</name>
+			<description/>
+			<Point>
+				<coordinates>-101.06084,34.30093</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>124.1 nm</name>
+			<LineString>
+				<coordinates>-98.59347,33.98729  -101.06084,34.30093</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>CNX</name>
+			<description/>
+			<Point>
+				<coordinates>-105.67801,34.36702</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>229.0 nm</name>
+			<LineString>
+				<coordinates>-101.06084,34.30093  -105.67801,34.36702</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>JAGAL</name>
+			<description/>
+			<Point>
+				<coordinates>-111.81289,33.44048,3000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>310.8 nm</name>
+			<LineString>
+				<coordinates>-105.67801,34.36702  -111.81289,33.44048</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>PRUNN</name>
+			<description/>
+			<Point>
+				<coordinates>-111.87889,33.44064,3000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>3.3 nm</name>
+			<LineString>
+				<coordinates>-111.81289,33.44048  -111.87889,33.44064</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>DELSE</name>
+			<description/>
+			<Point>
+				<coordinates>-111.95788,33.44078,1740</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>4.0 nm</name>
+			<LineString>
+				<coordinates>-111.87889,33.44064  -111.95788,33.44078</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>RW26</name>
+			<description/>
+			<Point>
+				<coordinates>-112.0024577,33.4408524,1000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>2.2 nm</name>
+			<LineString>
+				<coordinates>-111.95788,33.44078  -112.0024577,33.4408524</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BUTTER</name>
+			<description/>
+			<Point>
+				<coordinates>-112.0268235,33.4410761,1000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>1.2 nm</name>
+			<LineString>
+				<coordinates>-112.0024577,33.4408524  -112.0268235,33.4410761</coordinates>
+			</LineString>
+		</Placemark>
+	</Document>
+</kml>

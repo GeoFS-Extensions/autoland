@@ -1,0 +1,90 @@
+[
+	{
+		"dep": "KMIA",
+		"arr": "KEYW",
+		"folder": "KMIAKEYW",
+		"extrainfo": {
+			"takeoffRW": "8R",
+			"landingRW": "27",
+			"landingFieldElevation": 3,
+			"cruiseAlt": 16000
+		}
+	},
+	{
+		"dep": "KEYW",
+		"arr": "KMIA",
+		"folder": "KEYWKMIA",
+		"extrainfo": {
+			"takeoffRW": "9",
+			"landingRW": "26L",
+			"landingFieldElevation": 10,
+			"cruiseAlt": 16000
+		}
+	},
+	{
+		"dep": "CYVR",
+		"arr": "KSEA",
+		"folder": "CYVRKSEA",
+		"extrainfo": {
+			"takeoffRW": "8L",
+			"landingRW": "16L",
+			"landingFieldElevation": 433,
+			"cruiseAlt": 31000
+		}
+	},
+	{
+		"dep": "KPHX",
+		"arr": "KATL",
+		"folder": "KPHXKATL",
+		"extrainfo": {
+			"takeoffRW": "8",
+			"landingRW": "9L",
+			"landingFieldElevation": 1027,
+			"cruiseAlt": 36000
+		}
+	},
+	{
+		"dep": "KATL",
+		"arr": "KPHX",
+		"folder": "KATLKPHX",
+		"extrainfo": {
+			"takeoffRW": "8R",
+			"landingRW": "26",
+			"landingFieldElevation": 1135,
+			"cruiseAlt": 36000
+		}
+	},
+	{
+		"dep": "SKBO",
+		"arr": "SKBQ",
+		"folder": "SKBOSKBQ",
+		"extrainfo": {
+			"takeoffRW": "13L",
+			"landingRW": "05",
+			"landingFieldElevation": 102,
+			"cruiseAlt": 32000
+		}
+	},
+	{
+		"dep": "SKBO",
+		"arr": "EGLL",
+		"folder": "SKBOEGLL",
+		"extrainfo": {
+			"takeoffRW": "13L",
+			"landingRW": "09R",
+			"landingFieldElevation": 82,
+			"cruiseAlt": 34000
+		}
+	},
+	{
+		"dep": "SKRG",
+		"arr": "SKSM",
+		"folder": "SKRGSKSM",
+		"extrainfo": {
+			"takeoffRW": "01",
+			"landingRW": "01",
+			"landingFieldElevation": 22,
+			"cruiseAlt": 28000
+		}
+	}
+]

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+		<Placemark>
+			<name>KMIA</name>
+			<description>Departure airport</description>
+			<Point>
+				<coordinates>-80.2906036,25.7931995,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>CONST</name>
+			<description/>
+			<Point>
+				<coordinates>-80.2197,25.80407</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>3.9 nm</name>
+			<LineString>
+				<coordinates>-80.2906036,25.7931995  -80.2197,25.80407</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>DICKI</name>
+			<description/>
+			<Point>
+				<coordinates>-80.17454,25.55489</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>15.2 nm</name>
+			<LineString>
+				<coordinates>-80.2197,25.80407  -80.17454,25.55489</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>MNATE</name>
+			<description/>
+			<Point>
+				<coordinates>-80.52403,24.97932</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>39.4 nm</name>
+			<LineString>
+				<coordinates>-80.17454,25.55489  -80.52403,24.97932</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>WATUR</name>
+			<description/>
+			<Point>
+				<coordinates>-80.9682,24.75795</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>27.6 nm</name>
+			<LineString>
+				<coordinates>-80.52403,24.97932  -80.9682,24.75795</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BURPY</name>
+			<description/>
+			<Point>
+				<coordinates>-81.55125,24.55802,1500</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>34.0 nm</name>
+			<LineString>
+				<coordinates>-80.9682,24.75795  -81.55125,24.55802</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>KEYCY</name>
+			<description/>
+			<Point>
+				<coordinates>-81.67004,24.55697,1500</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>6.5 nm</name>
+			<LineString>
+				<coordinates>-81.55125,24.55802  -81.67004,24.55697</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>RW27</name>
+			<description/>
+			<Point>
+				<coordinates>-81.7617835,24.5560821,-140</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>5.0 nm</name>
+			<LineString>
+				<coordinates>-81.67004,24.55697  -81.7617835,24.5560821</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BUTTER</name>
+			<description/>
+			<Point>
+				<coordinates>-81.7665552,24.5560394,-140</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>0.3 nm</name>
+			<LineString>
+				<coordinates>-81.7617835,24.5560821  -81.7665552,24.5560394</coordinates>
+			</LineString>
+		</Placemark>
+	</Document>
+</kml>

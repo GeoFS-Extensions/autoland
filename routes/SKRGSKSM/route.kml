@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+		<Placemark>
+			<name>SKRG</name>
+			<description>Departure airport</description>
+			<Point>
+				<coordinates>-75.4231,6.16454,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>KOXEV</name>
+			<description/>
+			<Point>
+				<coordinates>-75.4232,6.205370000000002</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>2.5 nm</name>
+			<LineString>
+				<coordinates>-75.4231,6.16454  -75.4232,6.205370000000002</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>SIREV</name>
+			<description/>
+			<Point>
+				<coordinates>-75.2435,6.293040000000005</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>12.0 nm</name>
+			<LineString>
+				<coordinates>-75.4232,6.205370000000002  -75.2435,6.293040000000005</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>XONUD</name>
+			<description/>
+			<Point>
+				<coordinates>-75.2435,6.459710000000001</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>10.0 nm</name>
+			<LineString>
+				<coordinates>-75.2435,6.293040000000005  -75.2435,6.459710000000001</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BIVIG</name>
+			<description/>
+			<Point>
+				<coordinates>-75.195,7.020830000000004</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>33.8 nm</name>
+			<LineString>
+				<coordinates>-75.2435,6.459710000000001  -75.195,7.020830000000004</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>SERVO</name>
+			<description/>
+			<Point>
+				<coordinates>-75.0897,7.715559999999996</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>42.2 nm</name>
+			<LineString>
+				<coordinates>-75.195,7.020830000000004  -75.0897,7.715559999999996</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ESDEB</name>
+			<description/>
+			<Point>
+				<coordinates>-74.8169,8.793890000000005</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>66.8 nm</name>
+			<LineString>
+				<coordinates>-75.0897,7.715559999999996  -74.8169,8.793890000000005</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>TODAD</name>
+			<description/>
+			<Point>
+				<coordinates>-74.7703,9.498329999999996</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>42.4 nm</name>
+			<LineString>
+				<coordinates>-74.8169,8.793890000000005  -74.7703,9.498329999999996</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ISOTO</name>
+			<description/>
+			<Point>
+				<coordinates>-74.6144,9.926389999999998</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>27.3 nm</name>
+			<LineString>
+				<coordinates>-74.7703,9.498329999999996  -74.6144,9.926389999999998</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>DARNI</name>
+			<description/>
+			<Point>
+				<coordinates>-74.5314,10.154399999999995</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>14.5 nm</name>
+			<LineString>
+				<coordinates>-74.6144,9.926389999999998  -74.5314,10.154399999999995</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>UMKIR</name>
+			<description/>
+			<Point>
+				<coordinates>-74.4272,10.439700000000002</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>18.2 nm</name>
+			<LineString>
+				<coordinates>-74.5314,10.154399999999995  -74.4272,10.439700000000002</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>EGOKU</name>
+			<description/>
+			<Point>
+				<coordinates>-74.3494,10.652199999999993</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>13.6 nm</name>
+			<LineString>
+				<coordinates>-74.4272,10.439700000000002  -74.3494,10.652199999999993</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>VUMBA</name>
+			<description/>
+			<Point>
+				<coordinates>-74.3014,10.784199999999998</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>8.4 nm</name>
+			<LineString>
+				<coordinates>-74.3494,10.652199999999993  -74.3014,10.784199999999998</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ROBIB</name>
+			<description/>
+			<Point>
+				<coordinates>-74.2281,11.002899999999997</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>13.8 nm</name>
+			<LineString>
+				<coordinates>-74.3014,10.784199999999998  -74.2281,11.002899999999997</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>LIXUM</name>
+			<description/>
+			<Point>
+				<coordinates>-74.2287,11.0287,2000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>1.5 nm</name>
+			<LineString>
+				<coordinates>-74.2281,11.002899999999997  -74.2287,11.0287</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>RW01</name>
+			<description/>
+			<Point>
+				<coordinates>-74.2306461877081,11.120118542118908,-120</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>5.5 nm</name>
+			<LineString>
+				<coordinates>-74.2287,11.0287  -74.2306461877081,11.120118542118908</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BUTTER</name>
+			<description/>
+			<Point>
+				<coordinates>-74.23080635148165,11.127168356852605,-120</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>0.4 nm</name>
+			<LineString>
+				<coordinates>-74.2306461877081,11.120118542118908  -74.23080635148165,11.127168356852605</coordinates>
+			</LineString>
+		</Placemark>
+	</Document>
+</kml>

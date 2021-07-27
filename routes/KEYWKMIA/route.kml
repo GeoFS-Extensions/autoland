@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+		<Placemark>
+			<name>KEYW</name>
+			<description>Departure airport</description>
+			<Point>
+				<coordinates>-81.7595977,24.5561008,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>MNATE</name>
+			<description/>
+			<Point>
+				<coordinates>-80.52403,24.97932</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>72.0 nm</name>
+			<LineString>
+				<coordinates>-81.7595977,24.5561008  -80.52403,24.97932</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>EONNS</name>
+			<description/>
+			<Point>
+				<coordinates>-79.98684,25.29672</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>34.9 nm</name>
+			<LineString>
+				<coordinates>-80.52403,24.97932  -79.98684,25.29672</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>SKIWX</name>
+			<description/>
+			<Point>
+				<coordinates>-79.5,25.60833</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>32.4 nm</name>
+			<LineString>
+				<coordinates>-79.98684,25.29672  -79.5,25.60833</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ZILBI</name>
+			<description/>
+			<Point>
+				<coordinates>-79.99278,25.81313,3000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>29.4 nm</name>
+			<LineString>
+				<coordinates>-79.5,25.60833  -79.99278,25.81313</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BASHO</name>
+			<description/>
+			<Point>
+				<coordinates>-80.09932,25.80893,3000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>5.8 nm</name>
+			<LineString>
+				<coordinates>-79.99278,25.81313  -80.09932,25.80893</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>AGLER</name>
+			<description/>
+			<Point>
+				<coordinates>-80.18066,25.80566,1600</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>4.4 nm</name>
+			<LineString>
+				<coordinates>-80.09932,25.80893  -80.18066,25.80566</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>CONST</name>
+			<description/>
+			<Point>
+				<coordinates>-80.2197,25.80407,900</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>2.1 nm</name>
+			<LineString>
+				<coordinates>-80.18066,25.80566  -80.2197,25.80407</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>RW26L</name>
+			<description/>
+			<Point>
+				<coordinates>-80.279097,25.801628,-130</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>3.2 nm</name>
+			<LineString>
+				<coordinates>-80.2197,25.80407  -80.279097,25.801628</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BUTTER</name>
+			<description/>
+			<Point>
+				<coordinates>-80.301117,25.800715,-130</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>1.2 nm</name>
+			<LineString>
+				<coordinates>-80.279097,25.801628  -80.301117,25.800715</coordinates>
+			</LineString>
+		</Placemark>
+	</Document>
+</kml>

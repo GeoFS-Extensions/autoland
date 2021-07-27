@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+		<Placemark>
+			<name>SKBO</name>
+			<description>Departure airport</description>
+			<Point>
+				<coordinates>-74.1469,4.70159,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>ISINU</name>
+			<description/>
+			<Point>
+				<coordinates>-74.1042,4.6771499999999975</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>2.9 nm</name>
+			<LineString>
+				<coordinates>-74.1469,4.70159  -74.1042,4.6771499999999975</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ARC01</name>
+			<description/>
+			<Point>
+				<coordinates>-74.0881,4.698539999999994</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>1.6 nm</name>
+			<LineString>
+				<coordinates>-74.1042,4.6771499999999975  -74.0881,4.698539999999994</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>VARAV</name>
+			<description/>
+			<Point>
+				<coordinates>-74.1397,4.84778</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>9.5 nm</name>
+			<LineString>
+				<coordinates>-74.0881,4.698539999999994  -74.1397,4.84778</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BOC54</name>
+			<description/>
+			<Point>
+				<coordinates>-74.1446,5.078770000000006</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>13.9 nm</name>
+			<LineString>
+				<coordinates>-74.1397,4.84778  -74.1446,5.078770000000006</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>GEPSO</name>
+			<description/>
+			<Point>
+				<coordinates>-74.1061,5.419719999999998</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>20.6 nm</name>
+			<LineString>
+				<coordinates>-74.1446,5.078770000000006  -74.1061,5.419719999999998</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ILSEV</name>
+			<description/>
+			<Point>
+				<coordinates>-73.995,6.015829999999994</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>36.4 nm</name>
+			<LineString>
+				<coordinates>-74.1061,5.419719999999998  -73.995,6.015829999999994</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>AKSOK</name>
+			<description/>
+			<Point>
+				<coordinates>-73.9114,6.463059999999999</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>27.3 nm</name>
+			<LineString>
+				<coordinates>-73.995,6.015829999999994  -73.9114,6.463059999999999</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>MA04</name>
+			<description/>
+			<Point>
+				<coordinates>-73.8137,7.013959999999997</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>33.6 nm</name>
+			<LineString>
+				<coordinates>-73.9114,6.463059999999999  -73.8137,7.013959999999997</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>NEDOR</name>
+			<description/>
+			<Point>
+				<coordinates>-73.8342,7.386390000000006</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>22.4 nm</name>
+			<LineString>
+				<coordinates>-73.8137,7.013959999999997  -73.8342,7.386390000000006</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>LOKOV</name>
+			<description/>
+			<Point>
+				<coordinates>-73.8869,8.046109999999999</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>39.7 nm</name>
+			<LineString>
+				<coordinates>-73.8342,7.386390000000006  -73.8869,8.046109999999999</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>DEXOX</name>
+			<description/>
+			<Point>
+				<coordinates>-73.9264,8.538889999999995</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>29.7 nm</name>
+			<LineString>
+				<coordinates>-73.8869,8.046109999999999  -73.9264,8.538889999999995</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>KAGEM</name>
+			<description/>
+			<Point>
+				<coordinates>-73.9047,9.423609999999996</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>53.1 nm</name>
+			<LineString>
+				<coordinates>-73.9264,8.538889999999995  -73.9047,9.423609999999996</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>UGOSA</name>
+			<description/>
+			<Point>
+				<coordinates>-73.5906,9.73778</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>26.5 nm</name>
+			<LineString>
+				<coordinates>-73.9047,9.423609999999996  -73.5906,9.73778</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ETEGU</name>
+			<description/>
+			<Point>
+				<coordinates>-73.3427,10.177400000000006</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>30.2 nm</name>
+			<LineString>
+				<coordinates>-73.5906,9.73778  -73.3427,10.177400000000006</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>VOVNI</name>
+			<description/>
+			<Point>
+				<coordinates>-73.1205,10.529300000000006</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>24.9 nm</name>
+			<LineString>
+				<coordinates>-73.3427,10.177400000000006  -73.1205,10.529300000000006</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>LM035</name>
+			<description/>
+			<Point>
+				<coordinates>-72.8875,10.877700000000004</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>25.0 nm</name>
+			<LineString>
+				<coordinates>-73.1205,10.529300000000006  -72.8875,10.877700000000004</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>VUPUS</name>
+			<description/>
+			<Point>
+				<coordinates>-72.6956,11.311300000000003</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>28.4 nm</name>
+			<LineString>
+				<coordinates>-72.8875,10.877700000000004  -72.6956,11.311300000000003</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>D026T</name>
+			<description/>
+			<Point>
+				<coordinates>-72.3792,11.546800000000005</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>23.4 nm</name>
+			<LineString>
+				<coordinates>-72.6956,11.311300000000003  -72.3792,11.546800000000005</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>OSUNA</name>
+			<description/>
+			<Point>
+				<coordinates>-71.6614,11.946699999999993</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>48.6 nm</name>
+			<LineString>
+				<coordinates>-72.3792,11.546800000000005  -71.6614,11.946699999999993</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>CHAVE</name>
+			<description/>
+			<Point>
+				<coordinates>-70.7628,12.502200000000002</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>62.4 nm</name>
+			<LineString>
+				<coordinates>-71.6614,11.946699999999993  -70.7628,12.502200000000002</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>TUGUL</name>
+			<description/>
+			<Point>
+				<coordinates>-70.132,12.903899999999993</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>44.1 nm</name>
+			<LineString>
+				<coordinates>-70.7628,12.502200000000002  -70.132,12.903899999999993</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ONDAS</name>
+			<description/>
+			<Point>
+				<coordinates>-69.3903,13.041399999999996</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>44.2 nm</name>
+			<LineString>
+				<coordinates>-70.132,12.903899999999993  -69.3903,13.041399999999996</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>KERLI</name>
+			<description/>
+			<Point>
+				<coordinates>-69.123,13.299000000000007</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>22.0 nm</name>
+			<LineString>
+				<coordinates>-69.3903,13.041399999999996  -69.123,13.299000000000007</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>OLAXA</name>
+			<description/>
+			<Point>
+				<coordinates>-68.34,13.828299999999999</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>55.7 nm</name>
+			<LineString>
+				<coordinates>-69.123,13.299000000000007  -68.34,13.828299999999999</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>VODIN</name>
+			<description/>
+			<Point>
+				<coordinates>-67.3044,14.5608</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>74.6 nm</name>
+			<LineString>
+				<coordinates>-68.34,13.828299999999999  -67.3044,14.5608</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ILMET</name>
+			<description/>
+			<Point>
+				<coordinates>-66.1167,15.049400000000006</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>74.9 nm</name>
+			<LineString>
+				<coordinates>-67.3044,14.5608  -66.1167,15.049400000000006</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>RAYAS</name>
+			<description/>
+			<Point>
+				<coordinates>-65.4886,15.687899999999999</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>52.9 nm</name>
+			<LineString>
+				<coordinates>-66.1167,15.049400000000006  -65.4886,15.687899999999999</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ANNER</name>
+			<description/>
+			<Point>
+				<coordinates>-64.943,16.2367</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>45.6 nm</name>
+			<LineString>
+				<coordinates>-65.4886,15.687899999999999  -64.943,16.2367</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>PORQE</name>
+			<description/>
+			<Point>
+				<coordinates>-64.0145,17.159999999999997</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>77.0 nm</name>
+			<LineString>
+				<coordinates>-64.943,16.2367  -64.0145,17.159999999999997</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>DANDE</name>
+			<description/>
+			<Point>
+				<coordinates>-63.66470000000001,17.504199999999997</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>28.8 nm</name>
+			<LineString>
+				<coordinates>-64.0145,17.159999999999997  -63.66470000000001,17.504199999999997</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BOPAT</name>
+			<description/>
+			<Point>
+				<coordinates>-63.225899999999996,17.9062</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>34.8 nm</name>
+			<LineString>
+				<coordinates>-63.66470000000001,17.504199999999997  -63.225899999999996,17.9062</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>MNOLO</name>
+			<description/>
+			<Point>
+				<coordinates>-62.802099999999996,18.345600000000005</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>35.8 nm</name>
+			<LineString>
+				<coordinates>-63.225899999999996,17.9062  -62.802099999999996,18.345600000000005</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>NEYDU</name>
+			<description/>
+			<Point>
+				<coordinates>-62.1525,18.9726</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>52.8 nm</name>
+			<LineString>
+				<coordinates>-62.802099999999996,18.345600000000005  -62.1525,18.9726</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>OBIKE</name>
+			<description/>
+			<Point>
+				<coordinates>-61.7672,19.341300000000004</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>31.1 nm</name>
+			<LineString>
+				<coordinates>-62.1525,18.9726  -61.7672,19.341300000000004</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>RKDIA</name>
+			<description/>
+			<Point>
+				<coordinates>-60,21</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>140.9 nm</name>
+			<LineString>
+				<coordinates>-61.7672,19.341300000000004  -60,21</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>2755N</name>
+			<description/>
+			<Point>
+				<coordinates>-55,27</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>452.8 nm</name>
+			<LineString>
+				<coordinates>-60,21  -55,27</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>3150N</name>
+			<description/>
+			<Point>
+				<coordinates>-50,31</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>355.8 nm</name>
+			<LineString>
+				<coordinates>-55,27  -50,31</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>3545N</name>
+			<description/>
+			<Point>
+				<coordinates>-45,35</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>347.9 nm</name>
+			<LineString>
+				<coordinates>-50,31  -45,35</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>3840N</name>
+			<description/>
+			<Point>
+				<coordinates>-40,38</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>301.1 nm</name>
+			<LineString>
+				<coordinates>-45,35  -40,38</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>4035N</name>
+			<description/>
+			<Point>
+				<coordinates>-35,40</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>262.4 nm</name>
+			<LineString>
+				<coordinates>-40,38  -35,40</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>KOLIT</name>
+			<description/>
+			<Point>
+				<coordinates>-33.38920000000002,40.54859999999999</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>80.8 nm</name>
+			<LineString>
+				<coordinates>-35,40  -33.38920000000002,40.54859999999999</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>LUKAL</name>
+			<description/>
+			<Point>
+				<coordinates>-32.35579999999999,41.25310000000002</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>63.2 nm</name>
+			<LineString>
+				<coordinates>-33.38920000000002,40.54859999999999  -32.35579999999999,41.25310000000002</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>4330N</name>
+			<description/>
+			<Point>
+				<coordinates>-30,43</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>148.4 nm</name>
+			<LineString>
+				<coordinates>-32.35579999999999,41.25310000000002  -30,43</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>4525N</name>
+			<description/>
+			<Point>
+				<coordinates>-25,45</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>247.1 nm</name>
+			<LineString>
+				<coordinates>-30,43  -25,45</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>H4524</name>
+			<description/>
+			<Point>
+				<coordinates>-24,45.5</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>51.9 nm</name>
+			<LineString>
+				<coordinates>-25,45  -24,45.5</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>H4623</name>
+			<description/>
+			<Point>
+				<coordinates>-23,46.5</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>73.1 nm</name>
+			<LineString>
+				<coordinates>-24,45.5  -23,46.5</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>H4720</name>
+			<description/>
+			<Point>
+				<coordinates>-20,47.5</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>136.8 nm</name>
+			<LineString>
+				<coordinates>-23,46.5  -20,47.5</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>H4816</name>
+			<description/>
+			<Point>
+				<coordinates>-16,48.5</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>171.6 nm</name>
+			<LineString>
+				<coordinates>-20,47.5  -16,48.5</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BEDRA</name>
+			<description/>
+			<Point>
+				<coordinates>-15,49</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>49.7 nm</name>
+			<LineString>
+				<coordinates>-16,48.5  -15,49</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BIMGO</name>
+			<description/>
+			<Point>
+				<coordinates>-14,49.5</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>49.4 nm</name>
+			<LineString>
+				<coordinates>-15,49  -14,49.5</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ODANU</name>
+			<description/>
+			<Point>
+				<coordinates>-12.5,49.91669999999999</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>63.4 nm</name>
+			<LineString>
+				<coordinates>-14,49.5  -12.5,49.91669999999999</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>LULOX</name>
+			<description/>
+			<Point>
+				<coordinates>-8,50.36670000000001</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>175.3 nm</name>
+			<LineString>
+				<coordinates>-12.5,49.91669999999999  -8,50.36670000000001</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>PAVLO</name>
+			<description/>
+			<Point>
+				<coordinates>-5.895559999999989,50.93469999999999</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>87.1 nm</name>
+			<LineString>
+				<coordinates>-8,50.36670000000001  -5.895559999999989,50.93469999999999</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ELRAG</name>
+			<description/>
+			<Point>
+				<coordinates>-5.105829999999997,51.17439999999999</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>33.1 nm</name>
+			<LineString>
+				<coordinates>-5.895559999999989,50.93469999999999  -5.105829999999997,51.17439999999999</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>KESUP</name>
+			<description/>
+			<Point>
+				<coordinates>-3.6547199999999975,51.32560000000001,25000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>55.3 nm</name>
+			<LineString>
+				<coordinates>-5.105829999999997,51.17439999999999  -3.6547199999999975,51.32560000000001</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>ROTLU</name>
+			<description/>
+			<Point>
+				<coordinates>-2.7840300000000013,51.30850000000001,15000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>32.7 nm</name>
+			<LineString>
+				<coordinates>-3.6547199999999975,51.32560000000001  -2.7840300000000013,51.30850000000001</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BAXUN</name>
+			<description/>
+			<Point>
+				<coordinates>-2.439879999999988,51.32650000000001,15000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>13.0 nm</name>
+			<LineString>
+				<coordinates>-2.7840300000000013,51.30850000000001  -2.439879999999988,51.32650000000001</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BEDEK</name>
+			<description/>
+			<Point>
+				<coordinates>-1.5586099999999874,51.3708,12000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>33.2 nm</name>
+			<LineString>
+				<coordinates>-2.439879999999988,51.32650000000001  -1.5586099999999874,51.3708</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>APPR</name>
+			<description/>
+			<Point>
+				<coordinates>-0.97976,51.45657,8000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>22.3 nm</name>
+			<LineString>
+				<coordinates>-1.5586099999999874,51.3708  -0.97976,51.45657</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>FINAL</name>
+			<description/>
+			<Point>
+				<coordinates>-0.612783,51.464379,3000</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>13.7 nm</name>
+			<LineString>
+				<coordinates>-0.97976,51.45657  -0.612783,51.464379</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>RW09R</name>
+			<description/>
+			<Point>
+				<coordinates>-0.468577,51.46484,-60</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>5.4 nm</name>
+			<LineString>
+				<coordinates>-0.612783,51.464379  -0.468577,51.46484</coordinates>
+			</LineString>
+		</Placemark>
+		<Placemark>
+			<name>BUTTER</name>
+			<description/>
+			<Point>
+				<coordinates>-0.434381,51.464956,-60</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>1.3 nm</name>
+			<LineString>
+				<coordinates>-0.468577,51.46484  -0.434381,51.464956</coordinates>
+			</LineString>
+		</Placemark>
+	</Document>
+</kml>
