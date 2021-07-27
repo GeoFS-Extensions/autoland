@@ -1,7 +1,7 @@
 ---
 name: Route Suggestion
-about: Describe this issue template's purpose here.
-title: ''
+about: Suggest a route.
+title: 'ROUTE:'
 labels: routes
 assignees: 'slap-py'
 
