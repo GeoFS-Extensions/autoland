@@ -12,9 +12,5 @@
 	},
 	"include": [
 		"routes/routes.ts"
-	],
-	"types": [
-		"chrome",
-		"jquery"
 	]
 }

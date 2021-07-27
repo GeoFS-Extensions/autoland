@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "GeoFS Autoland allows users to land most aircraft automatically in GeoFS Flight Simulator. Many videos have been made to assist users, so it is suggested that you watch the tutorials at [this channel](https://www.youtube.com/channel/UCADc2MNvTnNhqyD7iLSy_6g). The tutorials encompass installing autoland, making a autoland FMC route, and using autoland. There is also a document [here](https://docs.google.com/document/d/1F4ybxKhG5QYbvifkP2A9epeX30FT6SfWLM5l7KKaSts/edit) that explains how to make an FMC route for autoland.",
   "scripts": {
-    "build": "npm i && npx tsc"
+    "build": "npm i --save-dev && npx tsc"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "url": "https://github.com/GeoFS-Autoland/autoland/issues"
   },
   "homepage": "https://github.com/GeoFS-Autoland/autoland#readme",
-  "dependencies": {
+  "devDependencies": {
     "typescript": "^4.3.5"
   }
 }
