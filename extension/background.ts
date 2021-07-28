@@ -41,7 +41,7 @@ chrome.storage.onChanged.addListener(async () => {
 		and if anything turned from false to true we just add the script, if it turns to false we can refresh */
 });
 
-chrome.tabs.onCreated.addListener((tab) => {
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	if (tab.url != "https://www.geo-fs.com/geofs.php") {
 		return;
 	}
@@ -53,17 +53,16 @@ chrome.tabs.onCreated.addListener((tab) => {
 
 		if (options[key]) {
 			chrome.scripting.executeScript({
-				target: {tabId: tab.id, allFrames: true},
+				target: {tabId: tabId, allFrames: true},
 				// @ts-ignore because @types/chrome is probably not updated to manifest v3
-				func: (args: any[]): void => {
-					let name = args[0];
+				func: (name: string): void => {
 					switch (name) {
 						case 'ap':
 							name = 'ap++';
 							break;
 					}
 					let scriptTag = document.createElement('script');
-					scriptTag.src = chrome.runtime.getURL(`${name}.js`);
+					scriptTag.src = chrome.runtime.getURL(`scripts/${name}.js`);
 					scriptTag.type = 'module';
 					scriptTag.onload = () => {scriptTag.remove()};
 					(document.head || document.documentElement).appendChild(scriptTag);

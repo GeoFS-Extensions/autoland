@@ -2,19 +2,13 @@
     "compilerOptions": {
         "module": "none",
         "esModuleInterop": true,
-        "target": "esnext",
+        "target" : "ESNext",
         "noImplicitAny": true,
         "lib": [
-            "DOM",
-            "es5"
+            "DOM", "es2015"
         ],
         "alwaysStrict": true
     },
-    "include": [
-        "build/**/*"
-    ],
-    "types": [
-        "chrome",
-        "jquery"
-    ]
+    "include": ["build/**/*"],
+    "types": ["chrome", "jquery"]
 }
