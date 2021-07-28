@@ -54,7 +54,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 		if (options[key]) {
 			chrome.scripting.executeScript({
 				target: {tabId: tabId, allFrames: true},
-				// @ts-ignore because @types/chrome is probably not updated to manifest v3
+				// @ts-ignore until nicolas' pr gets merged
 				func: (name: string): void => {
 					switch (name) {
 						case 'ap':
