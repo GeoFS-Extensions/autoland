@@ -5,7 +5,7 @@
 	"main": "build.js",
 	"type": "commonjs",
 	"scripts": {
-		"build": "npm i --save-dev && node build.js"
+		"build": "npm i && node build.js"
 	},
 	"repository": {
 		"type": "git",
@@ -19,7 +19,7 @@
 	},
 	"homepage": "https://github.com/GeoFS-Autoland/dev-autoland#readme",
 	"devDependencies": {
-		"@types/chrome": "0.0.148",
+		"@types/chrome": "^0.0.149",
 		"@types/jquery": "^3.5.6",
 		"async": "^3.2.0",
 		"fs-extra": "^10.0.0",

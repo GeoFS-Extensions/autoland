@@ -22,15 +22,44 @@ var options = {
     ap: false,
     fmc: false
 };
-(async function () {
+(async () => {
     options = await readState();
 })();
+const addScript = (type, tabId) => {
+    chrome.scripting.executeScript({
+        target: { tabId: tabId, allFrames: true },
+        // @ts-ignore until nicolas' pr gets merged
+        func: (name) => {
+            switch (name) {
+                case 'ap':
+                    name = 'ap++';
+                    break;
+            }
+            let scriptTag = document.createElement('script');
+            scriptTag.src = chrome.runtime.getURL(`scripts/${name}.js`);
+            scriptTag.type = 'module';
+            scriptTag.onload = () => { scriptTag.remove(); };
+            (document.head || document.documentElement).appendChild(scriptTag);
+        },
+        args: [type]
+    });
+};
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async () => {
-    options = await readState();
-    /* TODO
-        we can just get the url of the active tab and see if it's geofs
-        and if anything turned from false to true we just add the script, if it turns to false we can refresh */
+    let newOptions = await readState();
+    let tabId; // get that
+    let keys = Object.keys(options);
+    for (let i = 0; i < keys.length; i++) {
+        let key = keys[i];
+        if (options[key] !== newOptions[key]) {
+            if (newOptions[key]) {
+                addScript(key, tabId);
+            }
+            else {
+                // reload
+            }
+        }
+    }
 });
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (tab.url != "https://www.geo-fs.com/geofs.php") {
@@ -41,23 +70,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     for (let i = 0; i < keys.length; i++) {
         let key = keys[i];
         if (options[key]) {
-            chrome.scripting.executeScript({
-                target: { tabId: tabId, allFrames: true },
-                // @ts-ignore until nicolas' pr gets merged
-                func: (name) => {
-                    switch (name) {
-                        case 'ap':
-                            name = 'ap++';
-                            break;
-                    }
-                    let scriptTag = document.createElement('script');
-                    scriptTag.src = chrome.runtime.getURL(`scripts/${name}.js`);
-                    scriptTag.type = 'module';
-                    scriptTag.onload = () => { scriptTag.remove(); };
-                    (document.head || document.documentElement).appendChild(scriptTag);
-                },
-                args: [key]
-            });
+            // check the session chat
+            addScript(key, tabId);
         }
     }
 });
