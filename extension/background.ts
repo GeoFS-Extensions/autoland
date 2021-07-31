@@ -1,7 +1,7 @@
 interface options {
 	ap: boolean;
 	fmc: boolean;
-};
+}
 
 
 // src: modified https://developer.chrome.com/docs/extensions/reference/storage/

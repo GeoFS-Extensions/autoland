@@ -6,7 +6,7 @@
   "action": {
     "default_popup": "ui/popup/popup.html"
   },
-  "author": "Nicolas, Guy Adler",
+  "author": "Nicolas Rodriguez, Guy Adler",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
