@@ -69,26 +69,42 @@ chrome.storage.onChanged.addListener(async () => {
 	}
 });
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-	if (tab.url != "https://www.geo-fs.com/geofs.php") {
-		return;
-	}
-	// the tab is definitely a geo tab
-	
-	let keys = Object.keys(options) as Array<keyof options>;
-	for (let i = 0; i < keys.length; i++) {
-		let key = keys[i];
+chrome.permissions.contains({
+	permissions: ['tabs']
+}, (result) => {
+	if (result) {
+		chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+			if (tab.url != "https://www.geo-fs.com/geofs.php") {
+				return;
+			}
+			// the tab is definitely a geo tab
 
-		if (options[key]) {
-			// check the session chat
-			addScript(key, tabId)
-		}
-	}
+			let keys = Object.keys(options) as Array<keyof options>;
+			for (let i = 0; i < keys.length; i++) {
+				let key = keys[i];
 
-});
+				if (options[key]) {
+					// check the session chat
+					addScript(key, tabId)
+				}
+			}
+
+		});
+	}
+})
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 	if (msg.needsData) {
 		sendResponse({options: options});
 	}
 });
+
+chrome.runtime.onInstalled.addListener((details) => {
+	if (details.reason == "install") {
+		chrome.tabs.create({url: chrome.runtime.getURL("ui/oninstall/page.html")})
+	}
+	else if (details.reason == "update") {
+		var thisVersion = chrome.runtime.getManifest().version;
+
+	}
+})
