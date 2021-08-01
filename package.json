@@ -18,6 +18,7 @@
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "async": "latest",
+    "audit-ci": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "fs-extra": "latest",
