@@ -35,7 +35,6 @@ let options: options = {
 const addScript = (type: string, tabId: number) => {
 	chrome.scripting.executeScript({
 		target: {tabId: tabId, allFrames: true},
-		// @ts-ignore until nicolas' pr gets merged
 		func: (name: string): void => {
 			switch (name) {
 				case "ap":
