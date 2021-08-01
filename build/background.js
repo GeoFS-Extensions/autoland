@@ -27,7 +27,6 @@ let options = {
 const addScript = (type, tabId) => {
   chrome.scripting.executeScript({
     target: { tabId: tabId, allFrames: true },
-    // @ts-ignore until nicolas' pr gets merged
     func: (name) => {
       switch (name) {
         case "ap":
@@ -48,7 +47,7 @@ const addScript = (type, tabId) => {
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async () => {
   const newOptions = await readState();
-  let tabId; // get that
+  let tabId;
   const keys = Object.keys(options);
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
@@ -61,28 +60,23 @@ chrome.storage.onChanged.addListener(async () => {
     }
   }
 });
-chrome.permissions.contains(
-  {
-    permissions: ["tabs"],
-  },
-  (result) => {
-    if (result) {
-      chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-        if (tab.url != "https://www.geo-fs.com/geofs.php") {
-          return;
+chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
+  if (result) {
+    chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+      if (tab.url != "https://www.geo-fs.com/geofs.php") {
+        return;
+      }
+      // the tab is definitely a geo tab
+      const keys = Object.keys(options);
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        if (options[key]) {
+          addScript(key, tabId);
         }
-        // the tab is definitely a geo tab
-        const keys = Object.keys(options);
-        for (let i = 0; i < keys.length; i++) {
-          const key = keys[i];
-          if (options[key]) {
-            addScript(key, tabId);
-          }
-        }
-      });
-    }
+      }
+    });
   }
-);
+});
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.needsData) {
     sendResponse({ options: options });
