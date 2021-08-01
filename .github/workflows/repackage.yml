@@ -1,7 +1,7 @@
 name: "Chore: Repackage"
 
 on:
-  workflow_dipatch:
+  workflow-dipatch:
   schedule: 
     - cron: '0 0 * * *'
 
