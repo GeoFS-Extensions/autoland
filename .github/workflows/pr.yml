@@ -1,8 +1,7 @@
-name: Build PRs
+name: CI
 
 on:
   pull_request:
-
 
 jobs:
   job_1:
@@ -13,5 +12,42 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.5.0'
+
       - name: Build
         run: npm run build
+
+  job_2:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.5.0'
+
+      - name: Lint
+        run: npx eslint
+
+  job_3:
+    name: Security
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.5.0'
+
+      - name: Audit for vulnerabilities
+        run: npx audit-ci --moderate
