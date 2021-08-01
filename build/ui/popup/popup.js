@@ -18,7 +18,7 @@ const GetStorageSyncData = (name) => {
 };
 const getOptions = async () => {
     let data;
-    await GetStorageSyncData('options').then(val => {
+    await GetStorageSyncData("options").then(val => {
         data = val.options;
     });
     return data;
@@ -28,7 +28,7 @@ const setOptions = (options) => {
     return options;
 };
 const getButtons = () => {
-    let buttons = emptyButtons();
+    const buttons = emptyButtons();
     Object.keys(buttons).forEach(key => {
         buttons[key] = document.querySelector(`#${key}button`);
     });
@@ -39,22 +39,21 @@ const UpdateButtons = (buttons, options) => {
         console.log(key);
         console.log(options[key]);
         if (options[key]) {
-            buttons[key].className = 'on';
-            if (key == 'ap')
-                buttons.fmc.style.display = '';
+            buttons[key].className = "on";
+            if (key == "ap")
+                buttons.fmc.style.display = "";
         }
         else {
-            buttons[key].className = 'off';
-            if (key == 'ap') {
-                buttons.fmc.style.display = 'none';
+            buttons[key].className = "off";
+            if (key == "ap") {
+                buttons.fmc.style.display = "none";
                 options = setOptions({ ap: false, fmc: false });
             }
-            ;
         }
     });
 };
 window.onload = async () => {
-    let buttons = getButtons();
+    const buttons = getButtons();
     let options = await getOptions();
     if (options == undefined) {
         options = setOptions({
@@ -64,7 +63,7 @@ window.onload = async () => {
     }
     UpdateButtons(buttons, options);
     Object.keys(buttons).forEach(key => {
-        buttons[key].addEventListener('click', () => {
+        buttons[key].addEventListener("click", () => {
             options = setOptions({ ...options, [key]: !options[key] }); // works until we add sound
             UpdateButtons(buttons, options);
         });

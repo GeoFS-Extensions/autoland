@@ -1,11 +1,14 @@
-const fs = require('fs-extra')
-const path = require('path')
-const series = require('async').series
-const exec = require('child_process').exec
+/* eslint-env node */
+/* eslint @typescript-eslint/no-var-requires: 0*/
+
+const fs = require("fs-extra");
+const path = require("path");
+const series = require("async").series;
+const exec = require("child_process").exec;
 
 function deleteFolderRecursive(path) {
 	if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
-		fs.readdirSync(path).forEach(function (file, index) {
+		fs.readdirSync(path).forEach(function (file) {
 			var curPath = path + "/" + file;
 
 			if (fs.lstatSync(curPath).isDirectory()) { // recurse
@@ -17,17 +20,22 @@ function deleteFolderRecursive(path) {
 
 		fs.rmdirSync(path);
 	}
-};
+}
 
-deleteFolderRecursive('build')
+deleteFolderRecursive("build");
+console.log("build folder deleted!");
 
-fs.copySync('extension/', 'build');
+fs.copySync("extension/", "build");
+console.log("extension copied to build!");
 
 series([
-	() => exec('npx tsc')
-])
+	() => exec("npx tsc"),
+]);
 
-setTimeout(function deleteTsFiles(startPath = "./build", filter = ".ts") {
+setTimeout(function deleteTsFiles(startPath = "./build", filter = ".ts", notRecursing = true) {
+	if (notRecursing) {
+		console.log(".ts files compiled!");
+	}
 
 	if (!fs.existsSync(startPath)) {
 		console.log("no dir ", startPath);
@@ -42,7 +50,11 @@ setTimeout(function deleteTsFiles(startPath = "./build", filter = ".ts") {
 			deleteTsFiles(filename, filter); //recurse
 		}
 		else if (filename.indexOf(filter) >= 0) {
-			fs.unlinkSync(filename)
-		};
-	};
-}, 10000)
+			fs.unlinkSync(filename);
+		}
+	}
+
+	if (notRecursing) {
+		console.log(".ts files deleted!");
+	}
+}, 10000);
