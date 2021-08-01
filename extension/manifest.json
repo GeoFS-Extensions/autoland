@@ -12,19 +12,15 @@
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
-  "web_accessible_resources": [{
-    "resources": ["scripts/ap++.js", "scripts/fmc.js"],
-    "matches": ["*://www.geo-fs.com/*"],
-    "use_dynamic_url" : false
-  }],
-  "permissions": [
-    "storage",
-    "scripting",
-    "activeTab"
+  "web_accessible_resources": [
+    {
+      "resources": ["scripts/ap++.js", "scripts/fmc.js"],
+      "matches": ["*://www.geo-fs.com/*"],
+      "use_dynamic_url": false
+    }
   ],
-  "host_permissions": [
-    "https://www.geo-fs.com/geofs.php"
-  ],
+  "permissions": ["storage", "scripting", "activeTab"],
+  "host_permissions": ["https://www.geo-fs.com/geofs.php"],
   "background": {
     "service_worker": "background.js"
   }
