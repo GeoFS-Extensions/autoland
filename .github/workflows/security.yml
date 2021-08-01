@@ -1,0 +1,23 @@
+name: Security Check
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.5.0'
+
+      - name: Audit for vulnerabilities
+        run: npx audit-ci --moderate
