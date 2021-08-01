@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: '16.5.0'
 
+      - name: Install packages
+        run: npm i
+
       - name: Build
         run: npm run build
 
@@ -33,6 +36,9 @@ jobs:
         with:
           node-version: '16.5.0'
 
+      - name: Install packages
+        run: npm i
+
       - name: Lint
         run: npx eslint
 
@@ -48,6 +54,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16.5.0'
+
+      - name: Install packages
+        run: npm i
 
       - name: Audit for vulnerabilities
         run: npx audit-ci --moderate
