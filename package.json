@@ -11,7 +11,7 @@
   "scripts": {
     "build": "node build.js",
     "prettier": "npx prettier --check .",
-    "prepare": "husky install"
+    "husky": "husky install"
   },
   "devDependencies": {
     "@types/chrome": "latest",
