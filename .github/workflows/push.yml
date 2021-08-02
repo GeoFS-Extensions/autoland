@@ -20,6 +20,7 @@ jobs:
       - name: Install packages
         run: |
           npm config set unsafe-perm true
+          npm config set user 0
           npm i
 
       - name: Lint
@@ -40,6 +41,7 @@ jobs:
       - name: Install packages
         run: |
           npm config set unsafe-perm true
+          npm config set user 0
           npm i
 
       - name: Audit for vulnerabilities
