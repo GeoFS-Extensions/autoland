@@ -18,16 +18,10 @@ jobs:
           node-version: '16.5.0'
 
       - name: Install packages
-        run: |
-          npm config set user 0
-          npm config set unsafe-perm true
-          npm i --only=prod
+        run: npm i
 
       - name: Build
-        run: |
-          npm config set user 0
-          npm config set unsafe-perm true
-          npm run build
+        run: npm run build
 
   job_2:
     name: Lint
@@ -43,16 +37,10 @@ jobs:
           node-version: '16.5.0'
 
       - name: Install packages
-        run: |
-          npm config set user 0
-          npm config set unsafe-perm true
-          npm i --only=prod
+        run: npm i
 
       - name: Lint
-        run: |
-          npm config set user 0
-          npm config set unsafe-perm true
-          npx eslint
+        run: npx eslint
 
   job_3:
     name: Security
@@ -68,13 +56,7 @@ jobs:
           node-version: '16.5.0'
 
       - name: Install packages
-        run: |
-          npm config set user 0
-          npm config set unsafe-perm true
-          npm i --only=prod
+        run: npm i
 
       - name: Audit for vulnerabilities
-        run: |
-          npm config set user 0
-          npm config set unsafe-perm true
-          npx audit-ci --moderate
+        run: npx audit-ci --moderate
