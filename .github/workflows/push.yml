@@ -1,30 +1,11 @@
-name: PR Tests
+name: Push tests
 
 on:
-  pull_request:
+  push:
+    branches: [master]
 
 jobs:
-  job_1:
-    name: Build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup node v16
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.5.0'
-
-      - name: Install packages
-        run: npm i
-
-      - name: Build
-        run: npm run build
-
-  job_2:
-    name: Lint
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -42,8 +23,7 @@ jobs:
       - name: Lint
         run: npx eslint
 
-  job_3:
-    name: Security
+  security:
     runs-on: ubuntu-latest
 
     steps:
