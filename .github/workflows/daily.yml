@@ -59,6 +59,10 @@ jobs:
           npm i
         shell: bash
 
+      - name: Run prettier
+        run: npm run prettier
+        shell: bash
+
       - name: Commit
         run: |
           git config --local user.email "action@github.com"
@@ -68,7 +72,7 @@ jobs:
           if [-z "$(git status --porcelain)"]; then
             echo "::set-output name=push::false"
           else
-            git commit -m "🤖 Chore: Repackage" -a --allow-empty
+            git commit -m "🤖 Chore: Repackage and Prettify" -a --allow-empty
             echo "::set-output name=push::true"
           fi
           git push -f
