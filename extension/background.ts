@@ -34,7 +34,6 @@ let options: options = {
 const addScript = (type: string, tabId: number) => {
   chrome.scripting.executeScript({
     target: { tabId: tabId, allFrames: true },
-    // @ts-ignore until https://github.com/DefinitelyTyped/DefinitelyTyped/pull/54823 gets merged
     func: (name: string): void => {
       switch (name) {
         case "ap":
