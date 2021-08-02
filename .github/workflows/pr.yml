@@ -19,8 +19,8 @@ jobs:
 
       - name: Install packages
         run: |
-          npm config --global set user 0
-          npm config --global set unsafe-perm true
+          npm config set -g user 0
+          npm config set -g unsafe-perm true
           npm i --only=prod
 
       - name: Build
@@ -41,8 +41,8 @@ jobs:
 
       - name: Install packages
         run: |
-          npm config --global set user 0
-          npm config --global set unsafe-perm true
+          npm config set -g user 0
+          npm config set -g unsafe-perm true
           npm i --only=prod
 
       - name: Lint
@@ -63,8 +63,8 @@ jobs:
 
       - name: Install packages
         run: |
-          npm config --global set user 0
-          npm config --global set unsafe-perm true
+          npm config set -g user 0
+          npm config set -g unsafe-perm true
           npm i --only=prod
 
       - name: Audit for vulnerabilities
