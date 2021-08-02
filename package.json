@@ -21,12 +21,12 @@
     "audit-ci": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
-    "lint-staged": "latest",
+    "fs-extra": "latest",
     "prettier": "latest",
     "typescript": "latest"
   },
   "devDependencies": {
-    "fs-extra": "latest",
+    "lint-staged": "latest",
     "husky": "latest"
   },
   "lint-staged": {
