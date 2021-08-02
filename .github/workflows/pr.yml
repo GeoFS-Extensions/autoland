@@ -19,12 +19,15 @@ jobs:
 
       - name: Install packages
         run: |
-          npm config set -g user 0
-          npm config set -g unsafe-perm true
+          npm config set user 0
+          npm config set unsafe-perm true
           npm i --only=prod
 
       - name: Build
-        run: npm run build
+        run: |
+          npm config set user 0
+          npm config set unsafe-perm true
+          npm run build
 
   job_2:
     name: Lint
@@ -41,12 +44,15 @@ jobs:
 
       - name: Install packages
         run: |
-          npm config set -g user 0
-          npm config set -g unsafe-perm true
+          npm config set user 0
+          npm config set unsafe-perm true
           npm i --only=prod
 
       - name: Lint
-        run: npx eslint
+        run: |
+          npm config set user 0
+          npm config set unsafe-perm true
+          npx eslint
 
   job_3:
     name: Security
@@ -63,9 +69,12 @@ jobs:
 
       - name: Install packages
         run: |
-          npm config set -g user 0
-          npm config set -g unsafe-perm true
+          npm config set user 0
+          npm config set unsafe-perm true
           npm i --only=prod
 
       - name: Audit for vulnerabilities
-        run: npx audit-ci --moderate
+        run: |
+          npm config set user 0
+          npm config set unsafe-perm true
+          npx audit-ci --moderate
