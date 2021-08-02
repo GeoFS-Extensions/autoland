@@ -1,6 +1,6 @@
 {
   "name": "geofs-autoland",
-  "description": "Adding new functionalities to the GeoFS Flight Simulator.",
+  "description": "Adding new functionalities to the GeoFS Flight Simulator. RUN `npm run husky` AFTER INSTALL",
   "version": "1.0.0",
   "homepage": "https://geofsautoland.wixsite.com/autoland",
   "author": "Nicolas Rodriguez, Guy Adler",
@@ -10,9 +10,9 @@
   },
   "scripts": {
     "build": "node build.js",
-    "prepare": "husky install"
+    "husky": "husky install"
   },
-  "devDependencies": {
+  "dependencies": {
     "@types/chrome": "latest",
     "@types/jquery": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
@@ -21,11 +21,13 @@
     "audit-ci": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
-    "fs-extra": "latest",
-    "husky": "latest",
     "lint-staged": "latest",
     "prettier": "latest",
     "typescript": "latest"
+  },
+  "devDependencies": {
+    "fs-extra": "latest",
+    "husky": "latest"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",
