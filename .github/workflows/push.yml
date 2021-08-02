@@ -1,12 +1,28 @@
-name: Security Check
+name: CI
 
 on:
   push:
     branches: [master]
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.5.0'
+
+      - name: Install packages
+        run: npm i
+
+      - name: Lint
+        run: npx eslint
+
   security:
     runs-on: ubuntu-latest
 
