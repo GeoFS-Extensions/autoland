@@ -21,7 +21,7 @@ jobs:
         run: npm i
 
       - name: Lint
-        run: npx eslint
+        run: sudo npx eslint
 
   security:
     runs-on: ubuntu-latest
@@ -39,9 +39,10 @@ jobs:
         run: npm i
 
       - name: Audit for vulnerabilities
-        run: npx audit-ci --moderate
+        run: sudo npx audit-ci --moderate
 
   repackage:
+    name: Repackage and prettify
     runs-on: ubuntu-latest
 
     steps:
@@ -60,7 +61,7 @@ jobs:
         shell: bash
 
       - name: Run prettier
-        run: npm run prettier
+        run: sudo npm run prettier
         shell: bash
 
       - name: Commit
