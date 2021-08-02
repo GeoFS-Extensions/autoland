@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "node build.js",
-    "prettier": "npx prettier --check ."
+    "prettier": "npx prettier --check .",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@types/chrome": "latest",
@@ -22,6 +23,8 @@
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "fs-extra": "latest",
+    "husky": "latest",
+    "lint-staged": "latest",
     "prettier": "latest",
     "typescript": "latest"
   },
