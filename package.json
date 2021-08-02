@@ -12,7 +12,7 @@
     "build": "node build.js",
     "prepare": "husky install"
   },
-  "dependencies": {
+  "devDependencies": {
     "@types/chrome": "latest",
     "@types/jquery": "latest",
     "@typescript-eslint/eslint-plugin": "latest",
@@ -22,12 +22,10 @@
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "fs-extra": "latest",
+    "husky": "latest",
+    "lint-staged": "latest",
     "prettier": "latest",
     "typescript": "latest"
-  },
-  "devDependencies": {
-    "husky": "latest",
-    "lint-staged": "latest"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown",

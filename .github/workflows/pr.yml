@@ -17,8 +17,8 @@ jobs:
         with:
           node-version: '16.5.0'
 
-      #- name: Install packages
-      #  run: npm i
+      - name: Install packages
+        run: npm i --save
 
       - name: Build
         run: npm run build
@@ -40,7 +40,7 @@ jobs:
         run: |
           npm config set unsafe-perm true
           npm config set user 0
-          npm i
+          npm i --save
 
       - name: Lint
         run: npx eslint
@@ -62,7 +62,7 @@ jobs:
         run: |
           npm config set unsafe-perm true
           npm config set user 0
-          npm i
+          npm i --save
 
       - name: Audit for vulnerabilities
         run: npx audit-ci --moderate
