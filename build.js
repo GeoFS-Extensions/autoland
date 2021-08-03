@@ -51,7 +51,7 @@ setTimeout(function deleteTsFiles(
     var filename = path.join(startPath, files[i]);
     var stat = fs.lstatSync(filename);
     if (stat.isDirectory()) {
-      deleteTsFiles(filename, filter); //recurse
+      deleteTsFiles(filename, filter, false); //recurse
     } else if (filename.indexOf(filter) >= 0) {
       fs.unlinkSync(filename);
     }
