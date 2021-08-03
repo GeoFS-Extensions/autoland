@@ -6,7 +6,7 @@
   "author": "Nicolas Rodriguez, Guy Adler",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GeoFS-Autoland/dev-autoland.git"
+    "url": "git+https://github.com/GeoFS-Autoland/autoland.git"
   },
   "scripts": {
     "build": "node build.js && npx prettier --write . && npx eslint --fix"
