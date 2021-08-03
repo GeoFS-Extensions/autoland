@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "node build.js && npx prettier --write . && npx eslint --fix && npm update",
-    "echo": "echo"
+    "commit": "python commit.py"
   },
   "devDependencies": {
     "@types/chrome": "latest",
