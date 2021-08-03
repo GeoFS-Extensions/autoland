@@ -1,20 +1,12 @@
 {
-    "compilerOptions": {
-        "module": "none",
-        "esModuleInterop": true,
-        "target": "esnext",
-        "noImplicitAny": true,
-        "lib": [
-            "DOM",
-            "es5"
-        ],
-        "alwaysStrict": true
-    },
-    "include": [
-        "build/**/*"
-    ],
-    "types": [
-        "chrome",
-        "jquery"
-    ]
+  "compilerOptions": {
+    "module": "none",
+    "esModuleInterop": true,
+    "target": "ESNext",
+    "noImplicitAny": true,
+    "lib": ["DOM", "es2015"],
+    "alwaysStrict": true
+  },
+  "include": ["build/**/*", "geofs_types.d.ts"],
+  "types": ["chrome", "jquery"]
 }

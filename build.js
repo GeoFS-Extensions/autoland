@@ -1,31 +1,75 @@
-const fs = require('fs')
-const path = require('path')
-const fse = require('fs-extra')
-const series = require('async').series
-const exec = require('child_process').exec
+/* eslint-env node */
+/* eslint @typescript-eslint/no-var-requires: 0*/
+
+const fs = require("fs-extra");
+const path = require("path");
+const series = require("async").series;
+const exec = require("child_process").exec;
+
+var package = fs.readFileSync("package.json", { encoding: "utf8" });
+package = JSON.parse(package);
+
+for (const [key] of Object.entries(package.devDependencies)) {
+  package.devDependencies[key] = "latest";
+}
+
+fs.writeFileSync("package.json", JSON.stringify(package, null, 2));
+
+console.log("package.json ready!");
 
 function deleteFolderRecursive(path) {
-	if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
-		fs.readdirSync(path).forEach(function (file, index) {
-			var curPath = path + "/" + file;
+  if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
+    fs.readdirSync(path).forEach(function (file) {
+      var curPath = path + "/" + file;
 
-			if (fs.lstatSync(curPath).isDirectory()) { // recurse
-				deleteFolderRecursive(curPath);
-			} else { // delete file
-				fs.unlinkSync(curPath);
-			}
-		});
+      if (fs.lstatSync(curPath).isDirectory()) {
+        // recurse
+        deleteFolderRecursive(curPath);
+      } else {
+        // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
 
-		fs.rmdirSync(path);
-	}
-};
+    fs.rmdirSync(path);
+  }
+}
 
-deleteFolderRecursive('build')
+deleteFolderRecursive("build");
+console.log("build folder deleted!");
 
-fse.copySync('extension/', 'build')
+fs.copySync("extension/", "build");
+console.log("extension copied to build!");
 
-series([
-	() => exec('npx tsc')
-])
+series([() => exec("npx tsc")]);
 
-// TODO: delete the .ts files in build dir
+setTimeout(function deleteTsFiles(
+  startPath = "./build",
+  filter = ".ts",
+  notRecursing = true
+) {
+  if (notRecursing) {
+    console.log(".ts files compiled!");
+  }
+
+  if (!fs.existsSync(startPath)) {
+    console.log("no dir ", startPath);
+    return;
+  }
+
+  var files = fs.readdirSync(startPath);
+  for (var i = 0; i < files.length; i++) {
+    var filename = path.join(startPath, files[i]);
+    var stat = fs.lstatSync(filename);
+    if (stat.isDirectory()) {
+      deleteTsFiles(filename, filter, false); //recurse
+    } else if (filename.indexOf(filter) >= 0) {
+      fs.unlinkSync(filename);
+    }
+  }
+
+  if (notRecursing) {
+    console.log(".ts files deleted!");
+  }
+},
+10000);

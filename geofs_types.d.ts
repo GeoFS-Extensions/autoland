@@ -1,1024 +1,1042 @@
 export interface Object3DOptions {
-    '3dModel': Model;
-    animations: {[key:string]: any}[];
-    brakesController: boolean;
-    model: string;
-    name: string;
-    originalScale: number[];
-    points: {[key:string]: any};
-    position: number[];
-    scale: number[];
-    type: number;
-    [key:string]: any;
+  "3dModel": Model;
+  animations: { [key: string]: any }[];
+  brakesController: boolean;
+  model: string;
+  name: string;
+  originalScale: number[];
+  points: { [key: string]: any };
+  position: number[];
+  scale: number[];
+  type: number;
+  [key: string]: any;
 }
 export declare class Object3D {
-    constructor(a?: Object3DOptions);
-    _name: string;
-    _nodeName: string;
-    _children: Object3D[];
-    _points: {[key:string]: any};
-    _collisionPoints: any[];
-    visible: boolean;
-    _options: Object3DOptions
-    _rotation: any;
-    _position: number[];
+  constructor(a?: Object3DOptions);
+  _name: string;
+  _nodeName: string;
+  _children: Object3D[];
+  _points: { [key: string]: any };
+  _collisionPoints: any[];
+  visible: boolean;
+  _options: Object3DOptions;
+  _rotation: any;
+  _position: number[];
 
-    reset(): void;
-    setInitiallRotation(a: any): void;
-    rotateInitialRotation(a: any): void;
-    rotate(a: any): void;
-    rotateX(a: any): void;
-    rotateY(a: any): void;
-    rotateZ(a: any): void;
-    setRotationX(a: any): void;
-    setRotationY(a: any): void;
-    setRotationZ(a: any): void;
-    rotateParentFrameX(a: any): void;
-    rotateParentFrameY(a: any): void;
-    rotateParentFrameZ(a: any): void;
-    getRotation(): any;
-    setInitialPosition(a: number[]): void;
-    setInitialScale(a: number[]): void;
-    scale(a: number | number[], b: any): void;
-    setPosition(a: any): void;
-    translate(a: any): void;
-    setTranslation(a: any): void;
-    setScale(a: any, b: any): void;
-    setOpacity(a: any): void;
-    setScaleOffset(a: any, b: any): void;
-    getPosition(): number[];
-    getLocalPosition(): number[];
-    resetAnimatedTrasnform(): void;
-    resetRotationMatrix(): void;
-    setVectorWorldPosition(a: any): any;
-    compute(a: any): void;
-    render(a: any): void;
-    setModel(a: Model): void;
-    setEntity(a: any): void;
-    getModel(a?: any): Model;
-    getNode(): any;
-    getNodePosition(): number[];
-    getNodeRotation(): any;
-    setLight(a: any): void;
-    getWorldFrame(): any;
-    getWorldPosition(): number[];
-    getLlaLocation(): number[];
-    addChild(a: Object3D): void;
-    setVisibility(a: any, b: any): void;
-    findModelInAncestry(): Model;
-    getParent(): Object3D;
-    propagateToTree(a: any, b: any): void;
-    destroy(): void;
+  reset(): void;
+  setInitiallRotation(a: any): void;
+  rotateInitialRotation(a: any): void;
+  rotate(a: any): void;
+  rotateX(a: any): void;
+  rotateY(a: any): void;
+  rotateZ(a: any): void;
+  setRotationX(a: any): void;
+  setRotationY(a: any): void;
+  setRotationZ(a: any): void;
+  rotateParentFrameX(a: any): void;
+  rotateParentFrameY(a: any): void;
+  rotateParentFrameZ(a: any): void;
+  getRotation(): any;
+  setInitialPosition(a: number[]): void;
+  setInitialScale(a: number[]): void;
+  scale(a: number | number[], b: any): void;
+  setPosition(a: any): void;
+  translate(a: any): void;
+  setTranslation(a: any): void;
+  setScale(a: any, b: any): void;
+  setOpacity(a: any): void;
+  setScaleOffset(a: any, b: any): void;
+  getPosition(): number[];
+  getLocalPosition(): number[];
+  resetAnimatedTrasnform(): void;
+  resetRotationMatrix(): void;
+  setVectorWorldPosition(a: any): any;
+  compute(a: any): void;
+  render(a: any): void;
+  setModel(a: Model): void;
+  setEntity(a: any): void;
+  getModel(a?: any): Model;
+  getNode(): any;
+  getNodePosition(): number[];
+  getNodeRotation(): any;
+  setLight(a: any): void;
+  getWorldFrame(): any;
+  getWorldPosition(): number[];
+  getLlaLocation(): number[];
+  addChild(a: Object3D): void;
+  setVisibility(a: any, b: any): void;
+  findModelInAncestry(): Model;
+  getParent(): Object3D;
+  propagateToTree(a: any, b: any): void;
+  destroy(): void;
 
-    utilities?: {
-        getPointLla(a: any, b: any): any;
-    }
+  utilities?: {
+    getPointLla(a: any, b: any): any;
+  };
 
-    [key:string]: any;
+  [key: string]: any;
 }
 export declare class Model {
-    constructor(a: any, b?: any);
-    _model: any;
-    setOpacity(a: any): void;
-    setRotation(a: any, b: any): void;
-    setScale(a: any): void;
-    setPositionOrientationAndScale(a: any, b: any, c: any): void;
-    setLocation(a: any): void;
-    setColor(a: any): void;
-    setCssColor(a: any): void;
-    changeTexture(a: any, b: any, c: any): void;
-    hide(): void;
-    show(): void;
-    destroy(): void;
-    remove(): void;
+  constructor(a: any, b?: any);
+  _model: any;
+  setOpacity(a: any): void;
+  setRotation(a: any, b: any): void;
+  setScale(a: any): void;
+  setPositionOrientationAndScale(a: any, b: any, c: any): void;
+  setLocation(a: any): void;
+  setColor(a: any): void;
+  setCssColor(a: any): void;
+  changeTexture(a: any, b: any, c: any): void;
+  hide(): void;
+  show(): void;
+  destroy(): void;
+  remove(): void;
 
-    [key:string]: any;
+  [key: string]: any;
 }
 
 export interface OverlayDefinition {
-    url: string;
-    anchor: {
-        x: number;
-        y: number;
-    };
-    position: {
-        x: number;
-        y: number;
-    };
-    rotation: number;
-    size: {
-        x: number;
-        y: number;
-    };
-    offset: {
-        x: number;
-        y: number;
-    };
-    visibility: boolean;
-    opacity: number;
-    scale: {
-        x: number;
-        y: number;
-    };
-    rescale: boolean;
-    rescalePosition: boolean;
-    alignment: {
-        x: string;
-        y: string;
-    }
-    overlays: any[];
-    [key: string]: any;
+  url: string;
+  anchor: {
+    x: number;
+    y: number;
+  };
+  position: {
+    x: number;
+    y: number;
+  };
+  rotation: number;
+  size: {
+    x: number;
+    y: number;
+  };
+  offset: {
+    x: number;
+    y: number;
+  };
+  visibility: boolean;
+  opacity: number;
+  scale: {
+    x: number;
+    y: number;
+  };
+  rescale: boolean;
+  rescalePosition: boolean;
+  alignment: {
+    x: string;
+    y: string;
+  };
+  overlays: any[];
+  [key: string]: any;
 }
 
 export declare class cssTransform {
-    constructor();
-    _$element: typeof $;
-    positionY: number;
-    positionX: number;
-    rotation: number;
-    offset: {
-        x: number;
-        y: number;
-    };
-    // these to should be class variables, but I cant get them to work
-    rotationThreshold: number;
-    translationThreshold: number;
+  constructor();
+  _$element: typeof $;
+  positionY: number;
+  positionX: number;
+  rotation: number;
+  offset: {
+    x: number;
+    y: number;
+  };
+  // these to should be class variables, but I cant get them to work
+  rotationThreshold: number;
+  translationThreshold: number;
 
-    setDrawOrder(a: number): void;
-    setUrl(a: string): void;
-    setText(a: string): void;
-    setTtitle(a: string): void;
-    setClass(a: string): void;
-    setStyle(a: string | number | null): void;
-    loaded(): void;
-    setFrameSize(a: {x: number; y: number}): void;
-    setVisibility(a: boolean): void;
-    setAnchor(a: {x: number; y: number}): void;
-    setRotationCenter(a: {x: number; y: number}): void;
-    setSize(a: {x: number; y: number}): void;
-    setPosition(a: {x: number; y: number}): void;
-    setPositionX(a: number): void;
-    setPositionY(a: number): void;
-    setPositionOffset(a: {x: number; y: number}): void;
-    setOpacity(a: number): void;
-    setRotation(a: number): void;
-    destroy(): void;
+  setDrawOrder(a: number): void;
+  setUrl(a: string): void;
+  setText(a: string): void;
+  setTtitle(a: string): void;
+  setClass(a: string): void;
+  setStyle(a: string | number | null): void;
+  loaded(): void;
+  setFrameSize(a: { x: number; y: number }): void;
+  setVisibility(a: boolean): void;
+  setAnchor(a: { x: number; y: number }): void;
+  setRotationCenter(a: { x: number; y: number }): void;
+  setSize(a: { x: number; y: number }): void;
+  setPosition(a: { x: number; y: number }): void;
+  setPositionX(a: number): void;
+  setPositionY(a: number): void;
+  setPositionOffset(a: { x: number; y: number }): void;
+  setOpacity(a: number): void;
+  setRotation(a: number): void;
+  destroy(): void;
 
-    [key: string]: any;
+  [key: string]: any;
 }
 
 export declare class Overlay {
-    constructor(a: any, b: any);
-    definition: OverlayDefinition;
-    children: Overlay[];
-    size: {
-        x: number;
-        y: number;
-    };
-    iconFrame: {
-        x: number;
-        y: number;
-    };
-    scale: {
-        x: number;
-        y: number;
-    };
-    positionOffset: {
-        x: number;
-        y: number;
-    };
-    _offset: {
-        x: number;
-        y: number;
-    };
-    _sizeScale: number;
-    rotation: number;
-    opacity: number;
-    anchor: {
-        x: number;
-        y: number;
-    };
-    visibility: boolean;
-    overlay: cssTransform;
+  constructor(a: any, b: any);
+  definition: OverlayDefinition;
+  children: Overlay[];
+  size: {
+    x: number;
+    y: number;
+  };
+  iconFrame: {
+    x: number;
+    y: number;
+  };
+  scale: {
+    x: number;
+    y: number;
+  };
+  positionOffset: {
+    x: number;
+    y: number;
+  };
+  _offset: {
+    x: number;
+    y: number;
+  };
+  _sizeScale: number;
+  rotation: number;
+  opacity: number;
+  anchor: {
+    x: number;
+    y: number;
+  };
+  visibility: boolean;
+  overlay: cssTransform;
 
-    setVisibility(a: boolean): void;
-    setOpacity(a: number): void;
-    scaleAllProperties(a?: {x: number; y: number}): void;
-    scaleAndPlace(a: any, b: any, c: any): void;
-    place(a: any): void;
-    scaleFromParent(a: {x: number; y: number}): {x: number; y: number};
-    positionFromParentRotation(): {x: number; y: number};
-    animate(a: boolean): void;
-    translateIcon(a: number, b: string): void;
-    rotate(a: number): void;
-    setText(a: string): void;
-    setTitle(a: string): void;
-    destroy(): void;
+  setVisibility(a: boolean): void;
+  setOpacity(a: number): void;
+  scaleAllProperties(a?: { x: number; y: number }): void;
+  scaleAndPlace(a: any, b: any, c: any): void;
+  place(a: any): void;
+  scaleFromParent(a: { x: number; y: number }): { x: number; y: number };
+  positionFromParentRotation(): { x: number; y: number };
+  animate(a: boolean): void;
+  translateIcon(a: number, b: string): void;
+  rotate(a: number): void;
+  setText(a: string): void;
+  setTitle(a: string): void;
+  destroy(): void;
 
-    [key: string]: any;
+  [key: string]: any;
 }
 
 export declare class RigidBody {
-    constructor();
-    s_inverseMass: number;
-    mass: number;
-    minLinearVelocity: number;
-    minAngularVelocity: number;
-    v_linearVelocity: number[];
-    v_angularVelocity: number[];
-    v_totalForce: number[];
-    v_totalTorque: number[];
-    v_prevLinearVelocity: number[];
-    v_prevTotalTorque: number[];
-    v_acceleration: number[];
-    v_torque: number[];
-    gravityForce: number[];
+  constructor();
+  s_inverseMass: number;
+  mass: number;
+  minLinearVelocity: number;
+  minAngularVelocity: number;
+  v_linearVelocity: number[];
+  v_angularVelocity: number[];
+  v_totalForce: number[];
+  v_totalTorque: number[];
+  v_prevLinearVelocity: number[];
+  v_prevTotalTorque: number[];
+  v_acceleration: number[];
+  v_torque: number[];
+  gravityForce: number[];
 
-    reset(): void;
-    setMassProps(a: number, b: number[] | number): void;
-    getLinearVelocity(): number[];
-    getAngularVelocity(): number[];
-    setLinearVelocity(a: number[]): void;
-    setAngularVelocity(a: number[]): void;
-    getVelocityInLocalPoint(a: number[]): number[];
-    getForceInLocalPoint(a: number[]): number[];
-    applyCentralForce(a: number[]): void;
-    applyTorque(a: number[]): void;
-    applyForce(a: number[], b: number[]): void;
-    applyCentralImpulse(a: number[]): void;
-    applyTorqueImpulse(a: number[]): void;
-    applyImpulse(a: number[]): void;
-    computeJacobian(a: number, b: number, c: number[], d: number[]): number;
-
+  reset(): void;
+  setMassProps(a: number, b: number[] | number): void;
+  getLinearVelocity(): number[];
+  getAngularVelocity(): number[];
+  setLinearVelocity(a: number[]): void;
+  setAngularVelocity(a: number[]): void;
+  getVelocityInLocalPoint(a: number[]): number[];
+  getForceInLocalPoint(a: number[]): number[];
+  applyCentralForce(a: number[]): void;
+  applyTorque(a: number[]): void;
+  applyForce(a: number[], b: number[]): void;
+  applyCentralImpulse(a: number[]): void;
+  applyTorqueImpulse(a: number[]): void;
+  applyImpulse(a: number[]): void;
+  computeJacobian(a: number, b: number, c: number[], d: number[]): number;
 }
 
 export interface AircraftDefinition {
-    scale: number;
-    startupTime: number;
-    com: number[];
-    startAltitude: number;
-    cockpitScaleFix: number;
-    motionSensitivity: number;
-    cameras: {
-        distance: number;
-        position: number[];
+  scale: number;
+  startupTime: number;
+  com: number[];
+  startAltitude: number;
+  cockpitScaleFix: number;
+  motionSensitivity: number;
+  cameras: {
+    distance: number;
+    position: number[];
+  };
+  parts: any[];
+  instruments: {
+    [key: string]: {
+      [key: string]: any;
     };
-    parts: any[];
-    instruments: {
-        [key:string]: {
-            [key:string]: any;
-        }
-    }
-    [key:string]: any;
+  };
+  [key: string]: any;
 }
 
 export declare class Aircraft {
-    constructor(a: any);
-    engine: {
-        rpm: number;
-        on: boolean;
+  constructor(a: any);
+  engine: {
+    rpm: number;
+    on: boolean;
+  };
+  object3d: Object3D;
+  brakesOn: boolean;
+  groundContact: boolean;
+  lastLlaLocaiton: number[];
+  collResult: {
+    location: number[];
+    normal: number[];
+  };
+  relativeAltitude: number;
+  htr: number[];
+  htrAngularSpeed: number[];
+  veldir: number[];
+  trueAirSpeed: number;
+  liveryId: string;
+  setup: AircraftDefinition;
+  definition: AircraftDefinition;
+
+  controllers: {
+    pitch: {
+      recenter: boolean;
+      sensitivity: number;
+      ratio: number;
     };
-    object3d: Object3D;
-    brakesOn: boolean;
-    groundContact: boolean;
-    lastLlaLocaiton: number[];
-    collResult: {
-        location: number[];
-        normal: number[];
-    }
-    relativeAltitude: number;
-    htr: number[];
-    htrAngularSpeed: number[];
-    veldir: number[];
-    trueAirSpeed: number;
-    liveryId: string;
-    setup: AircraftDefinition;
-    definition: AircraftDefinition;
+    roll: {
+      recenter: boolean;
+      sensitivity: number;
+      ratio: number;
+    };
+    yaw: {
+      recenter: boolean;
+      sensitivity: number;
+      ratio: number;
+    };
+  };
 
-    controllers: {
-        pitch: {
-            recenter: boolean;
-            sensitivity: number;
-            ratio: number;
-        };
-        roll: {
-            recenter: boolean;
-            sensitivity: number;
-            ratio: number;
-        };
-        yaw: {
-            recenter: boolean;
-            sensitivity: number;
-            ratio: number;
-        }
-    }
+  parts: {
+    [key: string]: {
+      [key: string]: any;
+    };
+  };
 
-    parts: {
-        [key:string]: {
-            [key: string]: any
-        }
-    }
+  airfoils: any[];
+  engines: any[];
+  balloons: any[];
+  wheels: any[];
+  collisionPoints: any[];
+  lights: any[];
+  suspensions: any[];
 
-    airfoils: any[];
-    engines: any[];
-    balloons: any[];
-    wheels: any[];
-    collisionPoints: any[];
-    lights: any[];
-    suspensions: any[];
-
-    getCurrentCoordinates(): number[];
-    addShadow(): boolean;
-    removeShadow(): void;
-    loadDefault(a?: string): void;
-    parseRecord(a: string): any;
-    change(a: string, b: string, c: any, d: any): any;
-    loadLivery(a: string): void;
-    loadWithLivery(a: any, b: any, c: string): void;
-    load(a: string, b: any, c?: any, d?: any): Promise<any>;
-    init(a?: any , b?: any , c?: any , d?: any ): void;
-    loadCockpit(): Promise<any>;
-    addParts(a?: any, b?: any, c?: any): void;
-    setVisibility(a: any): void;
-    unloadAircraft(): void;
-    reset(a: any): void;
-    place(a?: any, b?: any): void;
-    placeParts(a: any): void;
-    placePart(a: any): void;
-    render(): void;
-    startEngine(): void;
-    stopEngine(): void;
-    addOffsets(a?: any, b?: any): void;
-    fixCockpitScale(a: any): void;
-    crash(): void;
-    [key: string]: any
+  getCurrentCoordinates(): number[];
+  addShadow(): boolean;
+  removeShadow(): void;
+  loadDefault(a?: string): void;
+  parseRecord(a: string): any;
+  change(a: string, b: string, c: any, d: any): any;
+  loadLivery(a: string): void;
+  loadWithLivery(a: any, b: any, c: string): void;
+  load(a: string, b: any, c?: any, d?: any): Promise<any>;
+  init(a?: any, b?: any, c?: any, d?: any): void;
+  loadCockpit(): Promise<any>;
+  addParts(a?: any, b?: any, c?: any): void;
+  setVisibility(a: any): void;
+  unloadAircraft(): void;
+  reset(a: any): void;
+  place(a?: any, b?: any): void;
+  placeParts(a: any): void;
+  placePart(a: any): void;
+  render(): void;
+  startEngine(): void;
+  stopEngine(): void;
+  addOffsets(a?: any, b?: any): void;
+  fixCockpitScale(a: any): void;
+  crash(): void;
+  [key: string]: any;
 }
 
 export declare class PID {
-    // TODO PID Class
+  // TODO PID Class
 }
 
 export declare class Indicator {
-    // TODO Indicator Class
+  // TODO Indicator Class
 }
 
 export declare class GlassPanel {
-    // TODO GlassPanel Class
+  // TODO GlassPanel Class
 }
 
 export declare type jQuery$ = string | Element | Element[] | Object; // things that can be passed to jQuery's $().
 
-
 export interface API {
-    march2019theTwentyFirst: number;
-    halfADayInSeconds: number;
-    overlayBaseZIndex: number;
-    ALTITUDE_RELATIVE: string;
-    CLAMP_TO_GROUND: string;
-    nativeMouseHandling: boolean;
-    cssTransform: typeof cssTransform;
+  march2019theTwentyFirst: number;
+  halfADayInSeconds: number;
+  overlayBaseZIndex: number;
+  ALTITUDE_RELATIVE: string;
+  CLAMP_TO_GROUND: string;
+  nativeMouseHandling: boolean;
+  cssTransform: typeof cssTransform;
 
-    initWorld(a: string, b?: any): void;
-    destroyWorld(): void;
+  initWorld(a: string, b?: any): void;
+  destroyWorld(): void;
 
-    triggerExplicitRendering(): void;
-    addFrameCallback(a: Function, b?: string, c?: number): number;
-    removeFrameCallback(a: number, b?: string): void;
-    frameCallbackWrapper(a: number, b: FrameCallback): void;
+  triggerExplicitRendering(): void;
+  addFrameCallback(a: Function, b?: string, c?: number): number;
+  removeFrameCallback(a: number, b?: string): void;
+  frameCallbackWrapper(a: number, b: FrameCallback): void;
 
-    configureOutsideView(): void;
-    configureInsideView(): void;
-    setGlobalLighting(a: boolean): void;
-    setWaterEffect(a: boolean): void;
-    setHD(a: boolean): void;
-    isWebXRAvailable(): boolean;
-    toggleVr(): void;
-    showSun(): void;
-    hideSun(): void;
-    getGroundAltitude(a?: any, b?: any): number;
+  configureOutsideView(): void;
+  configureInsideView(): void;
+  setGlobalLighting(a: boolean): void;
+  setWaterEffect(a: boolean): void;
+  setHD(a: boolean): void;
+  isWebXRAvailable(): boolean;
+  toggleVr(): void;
+  showSun(): void;
+  hideSun(): void;
+  getGroundAltitude(a?: any, b?: any): number;
 
-    Model: typeof Model;
-    loadModel(a: string | Model): any; // Cesium.Model.fromGltf
+  Model: typeof Model;
+  loadModel(a: string | Model): any; // Cesium.Model.fromGltf
 
-    getHeading(a: any): number; // a is the camera
+  getHeading(a: any): number; // a is the camera
 
-    isMobile(): boolean;
-    [key: string]: any
+  isMobile(): boolean;
+  [key: string]: any;
 }
 
 export interface FrameCallback {
-    callbacks: {
-        [key:string]: any;
-    };
-    lastId: number;
-    maxExecutionTime: number;
-    lastIndex: number;
-    [key: string]: any
+  callbacks: {
+    [key: string]: any;
+  };
+  lastId: number;
+  maxExecutionTime: number;
+  lastIndex: number;
+  [key: string]: any;
 }
 
 export interface Animation {
-    init(): void;
-    values: {
-        [key: string]: any
-    }
-    [key: string]: any
+  init(): void;
+  values: {
+    [key: string]: any;
+  };
+  [key: string]: any;
 }
 
 export interface Preferences {
-    aircraft: string;
-    coordinates: string;
-    controlMode: string;
-    keyboard: {
-        sensitivity: number,
-        exponential: number,
-        mixYawRoll: boolean,
-        mixYawRollQuantity: number,
-        keys: {
-            [key:string]: {
-                keycode: number,
-                label: string;
-            }
-        }
-    },
-    mouse: {
-        sensitivity: number,
-        exponential: number,
-        mixYawRoll: boolean;
-        mixYawRollQuantity: number;
-    },
-    joystick: {
-        sensitivity: number;
-        exponential: number;
-        mixYawRoll: boolean;
-        mixYawRollQuantity: number;
-        axis: {
-            pitch: number;
-            roll: number;
-            yaw: number;
-            throttle: number;
-        },
-        multiplier: {
-            pitch: boolean;
-            roll: boolean;
-            yaw: boolean;
-            throttle: boolean;
-        },
-        buttons: {
-            [key:number]: string;
-        }
-    },
-    orientation: {
-        sensitivity: number;
-        exponential: number;
-        mixYawRoll: boolean;
-        mixYawRollQuantity: number;
-        axis: {
-            pitch: number;
-            roll: number;
-            yaw: number;
-        },
-        multiplier: {
-            pitch: boolean;
-            roll: boolean;
-            yaw: boolean;
-        }
-    },
-    touch: {
-        sensitivity: number;
-        exponential: number;
-        mixYawRoll: boolean;
-        mixYawRollQuantity: number;
-        axis: {
-            pitch: number;
-            roll: number;
-            yaw: number;
-        },
-        multiplier: {
-            pitch: boolean;
-            roll: boolean;
-            yaw: boolean;
-        }
-    },
-    camera: {
-        headMotion: boolean;
-    },
-    weather: {
-        sun: boolean;
-        localTime: number;
-        season: number;
-        manual: boolean;
-        quality: number;
-        advanced: {
-            clouds: number;
-            fog: number;
-            windSpeed: number;
-            windDirection: number;
-            turbulences: number;
-        }
-    },
-    graphics: {
-        quality: number;
-        enhanceColors: number;
-        cloudShadows: boolean;
-        waterEffect: boolean;
-        contrails: boolean;
-        HD: boolean;
-        advanced: {
-            resolutionScale: number;
-            viewingDistance: number;
-            tileCacheSize: number;
-            fxaa: boolean;
-            globeLighting: boolean;
-            shadowQuality: number;
-            dropShadow: boolean;
-            cloudDensity: number;
-            waterResolution: number;
-        }
-    },
-    interface: {
-        transparent: boolean
-    },
-    crashDetection: boolean;
-    showPapi: boolean,
-    multiplayer: boolean;
-    showCommunityMultiplayer: boolean;
-    adsb: boolean;
-    chat: boolean;
-    sound: boolean;
-    [key: string]: any;
+  aircraft: string;
+  coordinates: string;
+  controlMode: string;
+  keyboard: {
+    sensitivity: number;
+    exponential: number;
+    mixYawRoll: boolean;
+    mixYawRollQuantity: number;
+    keys: {
+      [key: string]: {
+        keycode: number;
+        label: string;
+      };
+    };
+  };
+  mouse: {
+    sensitivity: number;
+    exponential: number;
+    mixYawRoll: boolean;
+    mixYawRollQuantity: number;
+  };
+  joystick: {
+    sensitivity: number;
+    exponential: number;
+    mixYawRoll: boolean;
+    mixYawRollQuantity: number;
+    axis: {
+      pitch: number;
+      roll: number;
+      yaw: number;
+      throttle: number;
+    };
+    multiplier: {
+      pitch: boolean;
+      roll: boolean;
+      yaw: boolean;
+      throttle: boolean;
+    };
+    buttons: {
+      [key: number]: string;
+    };
+  };
+  orientation: {
+    sensitivity: number;
+    exponential: number;
+    mixYawRoll: boolean;
+    mixYawRollQuantity: number;
+    axis: {
+      pitch: number;
+      roll: number;
+      yaw: number;
+    };
+    multiplier: {
+      pitch: boolean;
+      roll: boolean;
+      yaw: boolean;
+    };
+  };
+  touch: {
+    sensitivity: number;
+    exponential: number;
+    mixYawRoll: boolean;
+    mixYawRollQuantity: number;
+    axis: {
+      pitch: number;
+      roll: number;
+      yaw: number;
+    };
+    multiplier: {
+      pitch: boolean;
+      roll: boolean;
+      yaw: boolean;
+    };
+  };
+  camera: {
+    headMotion: boolean;
+  };
+  weather: {
+    sun: boolean;
+    localTime: number;
+    season: number;
+    manual: boolean;
+    quality: number;
+    advanced: {
+      clouds: number;
+      fog: number;
+      windSpeed: number;
+      windDirection: number;
+      turbulences: number;
+    };
+  };
+  graphics: {
+    quality: number;
+    enhanceColors: number;
+    cloudShadows: boolean;
+    waterEffect: boolean;
+    contrails: boolean;
+    HD: boolean;
+    advanced: {
+      resolutionScale: number;
+      viewingDistance: number;
+      tileCacheSize: number;
+      fxaa: boolean;
+      globeLighting: boolean;
+      shadowQuality: number;
+      dropShadow: boolean;
+      cloudDensity: number;
+      waterResolution: number;
+    };
+  };
+  interface: {
+    transparent: boolean;
+  };
+  crashDetection: boolean;
+  showPapi: boolean;
+  multiplayer: boolean;
+  showCommunityMultiplayer: boolean;
+  adsb: boolean;
+  chat: boolean;
+  sound: boolean;
+  [key: string]: any;
 }
 
 export class Runway {
-    constructor(a: {0:string, 1: number, 2: number, 3: number, 4: number, 5: number, distance: number}[], b?: string);
-    id: string;
-    icao: string;
-    location: number[];
-    heading: number;
-    headingRad: number;
-    lengthFeet: number;
-    widthFeet: number;
-    lengthMeters: number;
-    widthMeters: number;
-    threshold1: number;
-    padding: number;
-    meterlla: number[];
-    lengthInLla: number[];
-    widthInLla: number[];
-    meterAcrossInLla: number[];
-    imageryLayers: any[];
-    generateRunwayModel(): void;
-    destroyRunwayModel(): void;
-    destroy(): void;
+  constructor(
+    a: {
+      0: string;
+      1: number;
+      2: number;
+      3: number;
+      4: number;
+      5: number;
+      distance: number;
+    }[],
+    b?: string
+  );
+  id: string;
+  icao: string;
+  location: number[];
+  heading: number;
+  headingRad: number;
+  lengthFeet: number;
+  widthFeet: number;
+  lengthMeters: number;
+  widthMeters: number;
+  threshold1: number;
+  padding: number;
+  meterlla: number[];
+  lengthInLla: number[];
+  widthInLla: number[];
+  meterAcrossInLla: number[];
+  imageryLayers: any[];
+  generateRunwayModel(): void;
+  destroyRunwayModel(): void;
+  destroy(): void;
 }
 
 export interface Runways {
-    runwayNumberLimit: number;
-    refreshRate: number;
-    refreshDistanceThreshold: number;
-    modelVisibility: boolean;
-    defaultPadding: number;
-    defaultWidth: number;
-    tileLength: number;
-    modelRunwayWidth: number;
-    thresholdLength: number;
-    modelVerticalOffset: number;
-    imageryLayers: any[];
-    imageryOpacity: number;
-    env: {
-        [key:string]: any;
-    };
+  runwayNumberLimit: number;
+  refreshRate: number;
+  refreshDistanceThreshold: number;
+  modelVisibility: boolean;
+  defaultPadding: number;
+  defaultWidth: number;
+  tileLength: number;
+  modelRunwayWidth: number;
+  thresholdLength: number;
+  modelVerticalOffset: number;
+  imageryLayers: any[];
+  imageryOpacity: number;
+  env: {
+    [key: string]: any;
+  };
 
-    redraw(): void;
-    refresh(): void;
-    reset(): void;
-    getNearestRunway(a: number[]): Runway | null;
-    getNearRunways(a: number[], b?: number, c?: number): any[];
-    setRunwayDistance(a: any, b: any[]): void;
-    setRunwayModelVisibility(a: boolean): void;
-    getRotationCanvas(a: string): any;
-    asyncSetImageLayerRotationPosition(a: any, b: any, c: any, d: any): Promise<any>;
-    generateRunwayId(a: {0:string, 1: number, 2: number, 3: number, 4: number, 5: number, distance: number}): string;
-    [key:string]: any;
+  redraw(): void;
+  refresh(): void;
+  reset(): void;
+  getNearestRunway(a: number[]): Runway | null;
+  getNearRunways(a: number[], b?: number, c?: number): any[];
+  setRunwayDistance(a: any, b: any[]): void;
+  setRunwayModelVisibility(a: boolean): void;
+  getRotationCanvas(a: string): any;
+  asyncSetImageLayerRotationPosition(
+    a: any,
+    b: any,
+    c: any,
+    d: any
+  ): Promise<any>;
+  generateRunwayId(a: {
+    0: string;
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+    distance: number;
+  }): string;
+  [key: string]: any;
 }
 
 export interface GeoFS {
-    runways: Runways;
-    api: API;
-    frameCallbackStack: FrameCallback;
-    animation: Animation;
+  runways: Runways;
+  api: API;
+  frameCallbackStack: FrameCallback;
+  animation: Animation;
 
-    init(): void;
-    start(a?: any, b?: any): void;
-    unload(): void;
-    initLoggedInUser(): void;
-    terrainProbbingDone(): void;
-    terrainProbingDuration: number;
-    probeTerrain(): void;
-    togglePause(): void;
-    isPaused(): boolean;
-    resetFlight(): void;
+  init(): void;
+  start(a?: any, b?: any): void;
+  unload(): void;
+  initLoggedInUser(): void;
+  terrainProbbingDone(): void;
+  terrainProbingDuration: number;
+  probeTerrain(): void;
+  togglePause(): void;
+  isPaused(): boolean;
+  resetFlight(): void;
 
-    preferences: Preferences;
-    preferencesDefault: Preferences;
-    preferencesKeycodeLookup: {[keycode:number] : string};
-    initPreferences(): void;
-    isPreferencePanelOpen(): boolean;
-    saveFlight(): void;
-    savePreferences(): void;
-    resetPreferences(): void;
-    readPreference(a?: Function): void;
-    populateButtonAssignments(): void;
-    populateAxesAssignments(): void;
-    populateKeyAssignments(): void;
-    preferencesDebugInfo(): void;
-    preferencesTestJoystick(): boolean;
-    preferencesTestOrientation(): boolean;
-    preferencesStartFeedback(): void;
-    preferencesStopFeedback(): void;
-    initializePreferencesPanel(): void;
-    setPreferenceValues(a: jQuery$, b: boolean): void;
-    setInputHandlers(a: jQuery$): void;
-    destroyPreferencePanel(): void;
-    cancelPreferencesPanel(): void;
-    setPreferenceFromInput(a: jQuery$): void;
-    savePreferencesPanel(): void;
+  preferences: Preferences;
+  preferencesDefault: Preferences;
+  preferencesKeycodeLookup: { [keycode: number]: string };
+  initPreferences(): void;
+  isPreferencePanelOpen(): boolean;
+  saveFlight(): void;
+  savePreferences(): void;
+  resetPreferences(): void;
+  readPreference(a?: Function): void;
+  populateButtonAssignments(): void;
+  populateAxesAssignments(): void;
+  populateKeyAssignments(): void;
+  preferencesDebugInfo(): void;
+  preferencesTestJoystick(): boolean;
+  preferencesTestOrientation(): boolean;
+  preferencesStartFeedback(): void;
+  preferencesStopFeedback(): void;
+  initializePreferencesPanel(): void;
+  setPreferenceValues(a: jQuery$, b: boolean): void;
+  setInputHandlers(a: jQuery$): void;
+  destroyPreferencePanel(): void;
+  cancelPreferencesPanel(): void;
+  setPreferenceFromInput(a: jQuery$): void;
+  savePreferencesPanel(): void;
 
-    handleResize(): void;
-    resizeHandlersIndex: number;
-    addResizeHandler(a: number, b?: any): any;
-    removeResizeHandler(a: number): void;
-    getViewportDimentions(): void;
-    autopilotIndicator(a: boolean): void;
+  handleResize(): void;
+  resizeHandlersIndex: number;
+  addResizeHandler(a: number, b?: any): any;
+  removeResizeHandler(a: number): void;
+  getViewportDimentions(): void;
+  autopilotIndicator(a: boolean): void;
 
-    aircraft?: {
-        default: number;
-        Aircraft: Aircraft;
-        instance?: Aircraft;
-    }
+  aircraft?: {
+    default: number;
+    Aircraft: Aircraft;
+    instance?: Aircraft;
+  };
 
-    GlassPanel: GlassPanel;
-    [key: string]: any
+  GlassPanel: GlassPanel;
+  [key: string]: any;
 }
 
 export interface Chat {
-    maxNumberMessages: number;
-    init(): void;
-    showInput(): void;
-    hideInput(a?: boolean): void;
-    publish(a: any): void;
-    removeUserMessages(a: any): void;
-    hide(): void;
-    show(): void;
-    [key: string]: any;
+  maxNumberMessages: number;
+  init(): void;
+  showInput(): void;
+  hideInput(a?: boolean): void;
+  publish(a: any): void;
+  removeUserMessages(a: any): void;
+  hide(): void;
+  show(): void;
+  [key: string]: any;
 }
 
 export interface Vr {
-    init(): void;
-    toggle(): void;
-    [key: string]: any;
+  init(): void;
+  toggle(): void;
+  [key: string]: any;
 }
 
 export interface HUD {
-    init(): {};
-    stall: Overlay;
-    stallAlarmSet: boolean;
-    stallAlarmOn: boolean;
-    stallAlarm(a: boolean): void;
-    autopilotIndicator(): void;
-    [key: string]: any;
+  init(): {};
+  stall: Overlay;
+  stallAlarmSet: boolean;
+  stallAlarmOn: boolean;
+  stallAlarm(a: boolean): void;
+  autopilotIndicator(): void;
+  [key: string]: any;
 }
 
 export interface Ui {
-    playerMarkers: {};
-    playerSymbols: {};
-    mouseUpHandler: Function[];
-    svgPlanePath: string;
-    svgPlaneStyles: {
-        [key: string]: {
-            path: string;
-            fillColor: string;
-            fillOpacity: number;
-            scale: number;
-            strokeColor: string;
-            strokeWeight: number;
-            anchor: number[];
-        }
+  playerMarkers: {};
+  playerSymbols: {};
+  mouseUpHandler: Function[];
+  svgPlanePath: string;
+  svgPlaneStyles: {
+    [key: string]: {
+      path: string;
+      fillColor: string;
+      fillOpacity: number;
+      scale: number;
+      strokeColor: string;
+      strokeWeight: number;
+      anchor: number[];
     };
+  };
 
+  init(): void;
+  showCrashNotification(): void;
+  hideCrashNotification(): void;
+  toggleFullscreen(): void;
+  applyPreferences(): void;
+  toggleButton(a?: any, b?: any): void;
+  expandLeft(): void;
+  collapseLeft(a?: any): void;
+  addMouseUpHandler(a: Function): void;
+  runMouseUpHandlers(a: any): void;
+  panel: {
     init(): void;
-    showCrashNotification(): void;
-    hideCrashNotification(): void;
-    toggleFullscreen(): void;
-    applyPreferences(): void;
-    toggleButton(a?: any, b?: any): void;
-    expandLeft(): void;
-    collapseLeft(a?: any): void;
-    addMouseUpHandler(a: Function): void;
-    runMouseUpHandlers(a: any): void;
-    panel: {
-        init(): void;
-        toggleItem(a: jQuery$, b: Event): void;
-        expendItem(a: jQuery$, b: Event): void;
-        toggle(a: jQuery$): void;
-        show(a: jQuery$): void;
-        hide(a?: jQuery$, b?: any): void;
-    }
-    closePreferencePanel(): void;
+    toggleItem(a: jQuery$, b: Event): void;
+    expendItem(a: jQuery$, b: Event): void;
+    toggle(a: jQuery$): void;
+    show(a: jQuery$): void;
+    hide(a?: jQuery$, b?: any): void;
+  };
+  closePreferencePanel(): void;
 
-    chat: Chat;
-    vr: Vr;
-    hud: HUD;
-    [key: string]: any
+  chat: Chat;
+  vr: Vr;
+  hud: HUD;
+  [key: string]: any;
 }
 
 export interface Recorder {
-    tape: {
-        time: number;
-        coord: number[];
-        controls: number[];
-        state: boolean[];
-        velocities: number[];
-    }[];
-    rate: number;
-    frequency: number;
-    maxLength: number;
-    playing: boolean;
-    lastRecordTime: number;
-    record(): void;
-    clear(): void;
-    enterPlayback(): void;
-    exitPlayback(): void;
-    pausePlayback(): void;
-    unpausePlayback(): void;
-    startPlayback(): void;
-    setStep(a: number, b: string): boolean;
-    play(a: number): void;
-    [key: string]: any
+  tape: {
+    time: number;
+    coord: number[];
+    controls: number[];
+    state: boolean[];
+    velocities: number[];
+  }[];
+  rate: number;
+  frequency: number;
+  maxLength: number;
+  playing: boolean;
+  lastRecordTime: number;
+  record(): void;
+  clear(): void;
+  enterPlayback(): void;
+  exitPlayback(): void;
+  pausePlayback(): void;
+  unpausePlayback(): void;
+  startPlayback(): void;
+  setStep(a: number, b: string): boolean;
+  play(a: number): void;
+  [key: string]: any;
 }
 
 export interface Sharing {
-    minSafeTimeDelta: number;
-    on: boolean;
-    start(): void;
-    stop(): void;
-    reset(): void;
-    peerUpdate(a: any): void;
-    update(a: any): void;
-    [key: string]: any
+  minSafeTimeDelta: number;
+  on: boolean;
+  start(): void;
+  stop(): void;
+  reset(): void;
+  peerUpdate(a: any): void;
+  update(a: any): void;
+  [key: string]: any;
 }
 
 export interface Flight {
-    minPenetrationThreshold: number;
-    arrestingHookDiscardVelocity: number;
-    arrestingHookDiscardLength: number;
-    currentAltitudeTestContext: number;
-    pastAltitudeTestContext: number;
-    tick(a: number, b: number): void;
-    setAnimationValues(a: number): void;
-    recorder: Recorder;
-    sharing: Sharing;
-    // there are some more  functions and stuff I didn't bother implementing bc its pretty useless
-    reset(): void
-    [key: string]: any
+  minPenetrationThreshold: number;
+  arrestingHookDiscardVelocity: number;
+  arrestingHookDiscardLength: number;
+  currentAltitudeTestContext: number;
+  pastAltitudeTestContext: number;
+  tick(a: number, b: number): void;
+  setAnimationValues(a: number): void;
+  recorder: Recorder;
+  sharing: Sharing;
+  // there are some more  functions and stuff I didn't bother implementing bc its pretty useless
+  reset(): void;
+  [key: string]: any;
 }
 
 export type APDefinitions = {
-    maxBankAngle: number;
-    maxPitchAngle: number;
-    minPitchAngle: number;
-    baseClimbrate: number;
-    baseDescentrate: number;
-    maxClimbrate: number;
-    maxDescentrate: number;
-    verticalSpeedHoldMargin: number;
-    targetBankAngleRatio: number;
-    heading: number;
-    altitude: number;
-    kias: number;
-    climbrate: number;
-    yawBankAngleRatio: number;
-    pitchAnglePID: number[];
-    elevatorPitchPID: number[];
-    bankAnglePID: number[];
-    aileronsRollPID: number[];
-    throttlePID: number[];
-    effectivenessRatioMaximum: number;
-    [key: string]: any;
-}
+  maxBankAngle: number;
+  maxPitchAngle: number;
+  minPitchAngle: number;
+  baseClimbrate: number;
+  baseDescentrate: number;
+  maxClimbrate: number;
+  maxDescentrate: number;
+  verticalSpeedHoldMargin: number;
+  targetBankAngleRatio: number;
+  heading: number;
+  altitude: number;
+  kias: number;
+  climbrate: number;
+  yawBankAngleRatio: number;
+  pitchAnglePID: number[];
+  elevatorPitchPID: number[];
+  bankAnglePID: number[];
+  aileronsRollPID: number[];
+  throttlePID: number[];
+  effectivenessRatioMaximum: number;
+  [key: string]: any;
+};
 
 interface Autopilot {
-    on: boolean;
-    PIDs: {
-        pitchAngle: PID;
-        elevatorPitch: PID;
-        bankAngle: PID;
-        aileronsRoll: PID;
-        throttle: PID;
-    };
-    defaults: APDefinitions;
-    definitions: APDefinitions;
-    init(): void;
-    update(a: any): void;
-    initUI(): void;
-    toggle(): void;
-    resetPIDs(): void;
-    turnOn(): void;
-    turnOff(): void;
-    [key: string]: any
+  on: boolean;
+  PIDs: {
+    pitchAngle: PID;
+    elevatorPitch: PID;
+    bankAngle: PID;
+    aileronsRoll: PID;
+    throttle: PID;
+  };
+  defaults: APDefinitions;
+  definitions: APDefinitions;
+  init(): void;
+  update(a: any): void;
+  initUI(): void;
+  toggle(): void;
+  resetPIDs(): void;
+  turnOn(): void;
+  turnOff(): void;
+  [key: string]: any;
 }
 
 export interface Controls {
-    states: {
-
+  states: {};
+  mouse: {
+    down: boolean;
+    orbit: {};
+    offset: {
+      ratioX: number;
+      ratioY: number;
     };
-    mouse: {
-        down: boolean;
-        orbit: {
+  };
 
-        };
-        offset: {
-            ratioX: number;
-            ratioY: number;
-        }
-    };
-
-    keyboard: {
-        rollIncrement: number;
-        pitchIncrement: number;
-        yawIncrement: number;
-        throttleIncrement: number;
-        recenterRatio: number;
-        override: boolean;
-        overrideRudder: boolean;
-        exponential: number;
-    }
-
-    touch: {
-        pitch: number;
-        roll: number;
-        yaw: number;
-        throttle: number;
-    }
-
-    orientation: {
-        values: number[];
-        available: boolean;
-        generalMultiplier: number;
-        init(): void;
-        fixPitch(a: number): void;
-        recenter(): void;
-        isAvailable(): boolean;
-        getNormalizedAxis(a: any): number;
-        getHtr(a: any): number[];
-        updateOrientation(a: any): void;
-        updateTouch(a: any): void;
-    }
-
-    joystick: {
-        deadZoneUp: number;
-        deadZoneDown: number;
-        ready: boolean;
-        sticksNumber: number;
-        sticks: number[];
-        poll(): boolean;
-        init(): void;
-        configure(): void;
-        checkButton(a: any): any;
-        getAxisValue(a?: any, b?: any, c?: any): any;
-        updateJoystick(a: any): void;
-        addButtonListener(a?: any, b?: any, c?: any): void;
-    }
-
-    mixYawRoll: boolean;
+  keyboard: {
+    rollIncrement: number;
+    pitchIncrement: number;
+    yawIncrement: number;
+    throttleIncrement: number;
+    recenterRatio: number;
+    override: boolean;
+    overrideRudder: boolean;
     exponential: number;
-    mixYawRollQuantity: number;
-    mode: string;
+  };
+
+  touch: {
+    pitch: number;
+    roll: number;
+    yaw: number;
+    throttle: number;
+  };
+
+  orientation: {
+    values: number[];
+    available: boolean;
+    generalMultiplier: number;
     init(): void;
-    addHammerHandlers(): void;
-    initViewportDimensions(): void;
-    resetWithAircraftDefinition(): void;
-    reset(): void;
-    setMode(a: string): void;
-    axisSetters: {
-        [key: string]: {
-            label: string;
-            process?(a: number): void | number;
-            value?: null;
-        }
-    }
-    setters: {
-        [type: string]: {
-            label: string;
-            set(): void;
-            unset(): void;
-        }
-    }
-    trimUp(a?: number): void;
-    trimDown(a?: number): void;
-    update(a: any): void;
-    setPartAnimationDelta(a: any): void;
-    animatePart(a: string, b: number): void;
-    updateMouse(a?: any): void;
-    updateKeyboard(a: number): void;
+    fixPitch(a: number): void;
     recenter(): void;
-    keyDown(a: KeyboardEvent): void;
-    keyUp(a: KeyboardEvent): void;
-    autopilot: Autopilot;
-    [key: string]: any
+    isAvailable(): boolean;
+    getNormalizedAxis(a: any): number;
+    getHtr(a: any): number[];
+    updateOrientation(a: any): void;
+    updateTouch(a: any): void;
+  };
+
+  joystick: {
+    deadZoneUp: number;
+    deadZoneDown: number;
+    ready: boolean;
+    sticksNumber: number;
+    sticks: number[];
+    poll(): boolean;
+    init(): void;
+    configure(): void;
+    checkButton(a: any): any;
+    getAxisValue(a?: any, b?: any, c?: any): any;
+    updateJoystick(a: any): void;
+    addButtonListener(a?: any, b?: any, c?: any): void;
+  };
+
+  mixYawRoll: boolean;
+  exponential: number;
+  mixYawRollQuantity: number;
+  mode: string;
+  init(): void;
+  addHammerHandlers(): void;
+  initViewportDimensions(): void;
+  resetWithAircraftDefinition(): void;
+  reset(): void;
+  setMode(a: string): void;
+  axisSetters: {
+    [key: string]: {
+      label: string;
+      process?(a: number): void | number;
+      value?: null;
+    };
+  };
+  setters: {
+    [type: string]: {
+      label: string;
+      set(): void;
+      unset(): void;
+    };
+  };
+  trimUp(a?: number): void;
+  trimDown(a?: number): void;
+  update(a: any): void;
+  setPartAnimationDelta(a: any): void;
+  animatePart(a: string, b: number): void;
+  updateMouse(a?: any): void;
+  updateKeyboard(a: number): void;
+  recenter(): void;
+  keyDown(a: KeyboardEvent): void;
+  keyUp(a: KeyboardEvent): void;
+  autopilot: Autopilot;
+  [key: string]: any;
 }
 
 export interface InstrumentsDefinitions {
-    stackX?: boolean;
-    overlay: any; // too complicated for my small brain
-    [key:string]: any;
+  stackX?: boolean;
+  overlay: any; // too complicated for my small brain
+  [key: string]: any;
 }
 
 export interface Instruments {
-    stackPosition: {x: number; y: number;};
-    margins: number[];
-    defaultMargin: number;
-    visible: boolean;
-    list: {};
-    gaugeOverlayPosition: number[];
-    gaugeOverlayOrigin: number[];
-    definitions: InstrumentsDefinitions;
-    definitionsMobile: InstrumentsDefinitions;
-    definitions3DOverlay: InstrumentsDefinitions
-    init(a?: any): void;
-    toggle(): void;
-    add(a?: any, b?: any): void;
-    hide(a?: any): void;
-    show(a?: any): void;
-    rescale(): void;
-    update(a?: any): void;
-    updateCockpitPositions(): void;
-    updateScreenPositions():  void;
-    [key: string]: any
+  stackPosition: { x: number; y: number };
+  margins: number[];
+  defaultMargin: number;
+  visible: boolean;
+  list: {};
+  gaugeOverlayPosition: number[];
+  gaugeOverlayOrigin: number[];
+  definitions: InstrumentsDefinitions;
+  definitionsMobile: InstrumentsDefinitions;
+  definitions3DOverlay: InstrumentsDefinitions;
+  init(a?: any): void;
+  toggle(): void;
+  add(a?: any, b?: any): void;
+  hide(a?: any): void;
+  show(a?: any): void;
+  rescale(): void;
+  update(a?: any): void;
+  updateCockpitPositions(): void;
+  updateScreenPositions(): void;
+  [key: string]: any;
 }
 
 // global variables
 declare global {
-    interface Window {
-        geofs?: GeoFS;
-        ui: Ui;
-        flight: Flight;
-        controls: Controls;
-        // TODO add weather, camera, audio, fx
-        instruments: Instruments;
-        rigidBody: typeof RigidBody;
+  interface Window {
+    geofs?: GeoFS;
+    ui: Ui;
+    flight: Flight;
+    controls: Controls;
+    // TODO add weather, camera, audio, fx
+    instruments: Instruments;
+    rigidBody: typeof RigidBody;
 
-        // constants
-        GRAVITY: number,
-        DEGREES_TO_RAD: number,
-        RAD_TO_DEGREES: number,
-        KMH_TO_MS: number,
-        METERS_TO_FEET: number,
-        FEET_TO_METERS: number,
-        LONGITUDE_TO_HOURS: number,
-        EPSILON: number,
-        MERIDIONAL_RADIUS: number,
-        EARTH_CIRCUMFERENCE: number,
-        METERS_TO_LOCAL_LAT: number,
-        WGS84_TO_EGM96: number,
-        EGM96_TO_WGS84: number,
-        PI: number,
-        HALF_PI: number,
-        TWO_PI: number,
-        MS_TO_KNOTS: number,
-        KNOTS_TO_MS: number,
-        KMH_TO_KNOTS: number,
-        AXIS_TO_INDEX: {
-            X: number;
-            Y: number;
-            Z: number;
-        },
-        AXIS_TO_VECTOR: {
-            X: number[];
-            Y: number[];
-            Z: number[];
-        },
-        KELVIN_OFFSET: number,
-        TEMPERATURE_LAPSE_RATE: number,
-        AIR_DENSITY_SL: number,
-        AIR_PRESSURE_SL: number,
-        AIR_TEMP_SL: number,
-        DRAG_CONSTANT: number,
-        MIN_DRAG_COEF: number,
-        PLANFORM_EFFICIENCY_FACTOR: number,
-        TOTAL_DRAG_CONSTANT: number,
-        IDEAL_GAS_CONSTANT: number,
-        MOLAR_MASS_DRY_AIR: number,
-        GAS_CONSTANT: number,
-        GM_RL: number,
-        DEFAULT_AIRFOIL_ASPECT_RATIO: number,
-        FOV: number,
-        VIEWPORT_REFERENCE_WIDTH: number,
-        VIEWPORT_REFERENCE_HEIGHT: number,
-        SMOOTH_BUFFER: {
-            [x:string]: any
-        },
-        SMOOTHING_FACTOR: number,
-        SIX_STEP_WARNING: string[];
-        PAGE_PATH: string;
-    }
+    // constants
+    GRAVITY: number;
+    DEGREES_TO_RAD: number;
+    RAD_TO_DEGREES: number;
+    KMH_TO_MS: number;
+    METERS_TO_FEET: number;
+    FEET_TO_METERS: number;
+    LONGITUDE_TO_HOURS: number;
+    EPSILON: number;
+    MERIDIONAL_RADIUS: number;
+    EARTH_CIRCUMFERENCE: number;
+    METERS_TO_LOCAL_LAT: number;
+    WGS84_TO_EGM96: number;
+    EGM96_TO_WGS84: number;
+    PI: number;
+    HALF_PI: number;
+    TWO_PI: number;
+    MS_TO_KNOTS: number;
+    KNOTS_TO_MS: number;
+    KMH_TO_KNOTS: number;
+    AXIS_TO_INDEX: {
+      X: number;
+      Y: number;
+      Z: number;
+    };
+    AXIS_TO_VECTOR: {
+      X: number[];
+      Y: number[];
+      Z: number[];
+    };
+    KELVIN_OFFSET: number;
+    TEMPERATURE_LAPSE_RATE: number;
+    AIR_DENSITY_SL: number;
+    AIR_PRESSURE_SL: number;
+    AIR_TEMP_SL: number;
+    DRAG_CONSTANT: number;
+    MIN_DRAG_COEF: number;
+    PLANFORM_EFFICIENCY_FACTOR: number;
+    TOTAL_DRAG_CONSTANT: number;
+    IDEAL_GAS_CONSTANT: number;
+    MOLAR_MASS_DRY_AIR: number;
+    GAS_CONSTANT: number;
+    GM_RL: number;
+    DEFAULT_AIRFOIL_ASPECT_RATIO: number;
+    FOV: number;
+    VIEWPORT_REFERENCE_WIDTH: number;
+    VIEWPORT_REFERENCE_HEIGHT: number;
+    SMOOTH_BUFFER: {
+      [x: string]: any;
+    };
+    SMOOTHING_FACTOR: number;
+    SIX_STEP_WARNING: string[];
+    PAGE_PATH: string;
+  }
 }

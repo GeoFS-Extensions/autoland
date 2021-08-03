@@ -1,28 +1,28 @@
 {
-	"name": "dev-autoland",
-	"version": "1.0.0",
-	"description": "build action",
-	"main": "build.js",
-	"type": "commonjs",
-	"scripts": {
-		"build": "npm i --save-dev && node build.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/GeoFS-Autoland/dev-autoland.git"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/GeoFS-Autoland/dev-autoland/issues"
-	},
-	"homepage": "https://github.com/GeoFS-Autoland/dev-autoland#readme",
-	"devDependencies": {
-		"@types/chrome": "0.0.148",
-		"@types/jquery": "^3.5.6",
-		"async": "^3.2.0",
-		"fs-extra": "^10.0.0",
-		"typescript": "^4.3.5"
-	}
+  "name": "geofs-autoland",
+  "description": "Adding new functionalities to the GeoFS Flight Simulator.",
+  "version": "1.0.0",
+  "homepage": "https://geofsautoland.wixsite.com/autoland",
+  "author": "Nicolas Rodriguez, Guy Adler",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeoFS-Autoland/autoland.git"
+  },
+  "scripts": {
+    "build": "node build.js && npx prettier --write . && npx eslint --fix && npm update",
+    "commit": "python commit.py"
+  },
+  "devDependencies": {
+    "@types/chrome": "latest",
+    "@types/jquery": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "async": "latest",
+    "audit-ci": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "fs-extra": "latest",
+    "prettier": "latest",
+    "typescript": "latest"
+  }
 }

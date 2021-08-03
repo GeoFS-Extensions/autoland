@@ -1,25 +1,26 @@
 {
   "manifest_version": 3,
   "name": "GeoFS Autoland Beta",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "GeoFS Autoland adds new functionalities to the GeoFS Flight Simulator. This is currently a internal beta.",
   "action": {
     "default_popup": "ui/popup/popup.html"
   },
+  "author": "Nicolas Rodriguez, Guy Adler",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
-  "web_accessible_resources": [{
-    "resources": ["scripts/ap++.js", "scripts/fmc.js"],
-    "matches": ["*://www.geo-fs.com/*"]
-  }],
-  "permissions": [
-    "storage",
-    "tabs",
-    "scripting"
+  "web_accessible_resources": [
+    {
+      "resources": ["scripts/ap++.js", "scripts/fmc.js"],
+      "matches": ["*://www.geo-fs.com/*"],
+      "use_dynamic_url": false
+    }
   ],
+  "permissions": ["storage", "scripting", "activeTab"],
+  "host_permissions": ["https://www.geo-fs.com/geofs.php"],
   "background": {
     "service_worker": "background.js"
   }

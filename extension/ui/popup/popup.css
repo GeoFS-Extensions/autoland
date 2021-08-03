@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text&display=swap");
 
 html {
   width: 150px;
@@ -9,8 +9,8 @@ p {
 }
 
 button {
-  transition-duration: .4s;
-  color: #FFFFFF;
+  transition-duration: 0.4s;
+  color: #ffffff;
   border: none;
   font-family: Big Shoulders Stencil Text;
   font-size: 20px;
@@ -24,7 +24,7 @@ button {
 }
 
 .off:hover {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: #c75858;
 }
 
@@ -33,6 +33,6 @@ button {
 }
 
 .on:hover {
-  background-color: #FFFFFF;
-  color: #51cf53
+  background-color: #ffffff;
+  color: #51cf53;
 }

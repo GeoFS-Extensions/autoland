@@ -1,10 +1,9 @@
 ---
 name: Route Suggestion
 about: Suggest a route.
-title: 'ROUTE:'
+title: "ROUTE:"
 labels: routes
-assignees: 'slap-py'
-
+assignees: "slap-py"
 ---
 
 **What airport does this route land at?**
