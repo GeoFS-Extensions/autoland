@@ -9,8 +9,7 @@
     "url": "git+https://github.com/GeoFS-Autoland/dev-autoland.git"
   },
   "scripts": {
-    "build": "node build.js && npm run prettier",
-    "prettier": "npx prettier --write ."
+    "build": "node build.js && npx prettier --write . && npx eslint --fix"
   },
   "devDependencies": {
     "@types/chrome": "latest",

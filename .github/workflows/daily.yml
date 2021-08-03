@@ -2,7 +2,7 @@ name: Daily Test
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
   lint:
@@ -15,7 +15,7 @@ jobs:
       - name: Setup node v16
         uses: actions/setup-node@v2
         with:
-          node-version: '16.5.0'
+          node-version: "16.5.0"
 
       - name: Install packages
         run: npm i
@@ -33,7 +33,7 @@ jobs:
       - name: Setup node v16
         uses: actions/setup-node@v2
         with:
-          node-version: '16.5.0'
+          node-version: "16.5.0"
 
       - name: Install packages
         run: npm i
