@@ -54,11 +54,8 @@ jobs:
         with:
           node-version: '16.5.0'
 
-      - name: Repackage
-        run: |
-          rm -rf node_modules
-          npm i
-        shell: bash
+      - name: Install packages
+        run: npm i
 
       - name: Run prettier
         run: sudo npm run prettier

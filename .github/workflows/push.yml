@@ -4,6 +4,8 @@ on:
   push:
     branches: [master]
 
+# TODO: package and beautify on push
+
 jobs:
   lint:
     runs-on: ubuntu-latest
