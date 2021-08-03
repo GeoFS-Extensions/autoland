@@ -9,9 +9,8 @@
     "url": "git+https://github.com/GeoFS-Autoland/dev-autoland.git"
   },
   "scripts": {
-    "build": "node build.js",
-    "prettier": "npx prettier --check .",
-    "husky": "husky install"
+    "build": "node build.js && npm run prettier",
+    "prettier": "npx prettier --write ."
   },
   "devDependencies": {
     "@types/chrome": "latest",
@@ -23,14 +22,7 @@
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "fs-extra": "latest",
-    "husky": "latest",
-    "lint-staged": "latest",
     "prettier": "latest",
     "typescript": "latest"
-  },
-  "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown",
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
   }
 }
