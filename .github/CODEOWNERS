@@ -11,5 +11,3 @@ geofs_types.d.ts @Guy-Adler
 # Documentation belongs to slappy
 .github/ISSUE_TEMPLATE @slap-py
 readme.md @slap-py
-
-# TODO: make node_modules owned by nobody
