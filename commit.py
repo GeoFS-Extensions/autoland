@@ -11,6 +11,9 @@ name = input('Enter commit name\n> ')
 # build the extension
 run_command('npm run build')
 
+# test the extension
+run_command('npm run test')
+
 # commit
 run_command('git pull')
 run_command('git add .')

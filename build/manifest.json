@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "GeoFS Autoland Beta",
+  "name": "GeoFS Autoland",
   "version": "0.1.2",
   "description": "GeoFS Autoland adds new functionalities to the GeoFS Flight Simulator. This is currently a internal beta.",
   "action": {
