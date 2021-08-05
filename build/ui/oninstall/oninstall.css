@@ -4,13 +4,13 @@
 /* we need to declare the font size since chrome downsizes most tags automatically */
 
 h1 {
-  font-family: Georama;
+  font-family: Georama, sans-serif;
   font-size: 32pt;
   text-align: center;
 }
 
 p {
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 12pt;
   margin: 8px;
 }
@@ -22,7 +22,7 @@ code {
 }
 
 li {
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-size: 12pt;
   margin: 8px;
 }
@@ -30,4 +30,28 @@ li {
 img {
   border: 3px solid black;
   border-radius: 10px;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+  color: #91c3ff;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  margin-left: 30px;
+  background-color: #5482d8;
+  color: #ffffff;
+  border: none;
+  font-family: sans-serif;
+  font-size: 12px;
+  outline: none;
+  border: 0;
+  margin-bottom: 2px;
+  width: 80px;
+  height: 30px;
 }
