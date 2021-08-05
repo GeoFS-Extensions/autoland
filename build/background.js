@@ -52,6 +52,7 @@ chrome.storage.onChanged.addListener(async () => {
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
     if (options[key] !== newOptions[key]) {
+      // TODO: make sure this is a geo tab before adding scripts
       if (newOptions[key]) {
         addScript(key, tabId);
       } else {

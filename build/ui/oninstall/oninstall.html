@@ -14,11 +14,29 @@
     <p>
       This extension uses a special permission in the chrome world called
       <code>tabs</code>, that allows us to add userscripts directly to GeoFS.
-      <br />
-      More infomation on how we use this permission can be found
-      <a href="">here.</a>
     </p>
+    <p>
+      More infomation on how we use this permission can be found
+      <a
+        href="https://github.com/GeoFS-Autoland/autoland/blob/tabs-declaration/declaration.md"
+        target="_blank"
+        >here</a
+      >.
+    </p>
+    <p>
+      In order for this extension to work, we need you to grant us the tabs
+      permission. Here's how to do that:
+    </p>
+    <ol>
+      <li>Click the button on the bottom of the page.</li>
+      <li>A dialog box will pop up that looks like this:</li>
+      <!-- TODO: Update dialog.png to real extension -->
+      <img src="dialog.png" alt="a dialog box" />
+      <li>Click "Allow".</li>
+      <li>That's it! The extension is now fully functional!</li>
+    </ol>
 
+    <button id="permissionRequestButton">Click here!</button>
     <script src="oninstall.js"></script>
   </body>
 </html>

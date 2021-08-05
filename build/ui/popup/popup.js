@@ -62,7 +62,7 @@ window.onload = async () => {
   UpdateButtons(buttons, options);
   Object.keys(buttons).forEach((key) => {
     buttons[key].addEventListener("click", () => {
-      options = setOptions({ ...options, [key]: !options[key] }); // works until we add sound
+      options = setOptions({ ...options, [key]: !options[key] });
       UpdateButtons(buttons, options);
     });
   });
