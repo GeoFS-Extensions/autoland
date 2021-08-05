@@ -67,6 +67,7 @@ chrome.storage.onChanged.addListener(async () => {
       }
     }
   }
+  options = newOptions;
 });
 
 chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
@@ -98,7 +99,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason == "install") {
     chrome.tabs.create({
-      url: chrome.runtime.getURL("ui/oninstall/page.html"),
+      url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
     });
   }
 });

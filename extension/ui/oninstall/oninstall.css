@@ -1,6 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Georama:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+/* we need to declare the font size since chrome downsizes most tags automatically */
 
 h1 {
   font-family: Georama;
+  font-size: 32pt;
   text-align: center;
+}
+
+p {
+  font-family: Roboto;
+  font-size: 12pt;
+}
+
+code {
+  background-color: #ebebeb;
+  color: #000000;
+  border-radius: 3px;
 }
