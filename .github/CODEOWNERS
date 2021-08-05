@@ -1,13 +1,13 @@
 # default owners
 * @nicolas377 @Guy-Adler
 
+# Documentation belongs to slappy
+.github @slap-py
+readme.md @slap-py
+
 # nicolas owns actions
 .github/workflows/ @nicolas377
 build.js @nicolas377
 
 # guy owns the types
 geofs_types.d.ts @Guy-Adler
-
-# Documentation belongs to slappy
-.github/ISSUE_TEMPLATE @slap-py
-readme.md @slap-py
