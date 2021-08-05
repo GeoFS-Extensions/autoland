@@ -36,8 +36,6 @@ const getButtons = () => {
 };
 const UpdateButtons = (buttons, options) => {
   Object.keys(buttons).forEach((key) => {
-    console.log(key);
-    console.log(options[key]);
     if (options[key]) {
       buttons[key].className = "on";
       if (key == "ap") buttons.fmc.style.display = "";

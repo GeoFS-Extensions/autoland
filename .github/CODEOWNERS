@@ -3,7 +3,7 @@
 
 # Documentation belongs to slappy
 # .github @slap-py
-# readme.md @slap-py
+# *.md @slap-py
 
 # nicolas owns actions
 .github/workflows/ @nicolas377

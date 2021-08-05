@@ -15,18 +15,47 @@ function getStorageData(name: string): Promise<any> {
   });
 }
 
+function writeOptions(options: options): options {
+  chrome.storage.sync.set({ options: options }, () => {});
+  return options;
+}
+
+function optionsAreValid(options: options): boolean {
+  if (!options.ap && options.fmc) {
+    return false;
+  }
+  return true;
+}
+
 async function readState(): Promise<options> {
-  let data;
-  await getStorageData("options").then((val) => {
-    data = val.options;
+  let data: options;
+  await getStorageData("options").then((storage) => {
+    if (storage.options) {
+      // there are prefs saved, test them
+      data = storage.options;
+      if (!optionsAreValid(data)) {
+        // options aren't valid, set to default and save
+        data = {
+          ap: false,
+          fmc: false,
+        };
+        writeOptions(data);
+      } else {
+        // options are valid, keep current options
+      }
+    } else {
+      // there are no prefs saved, set to default and save
+      data = {
+        ap: false,
+        fmc: false,
+      };
+      writeOptions(data);
+    }
   });
   return data as options;
 }
 
-let options: options = {
-  ap: false,
-  fmc: false,
-};
+let options: options;
 (async () => {
   options = await readState();
 })();
@@ -56,6 +85,30 @@ const addScript = (type: string, tabId: number) => {
 chrome.storage.onChanged.addListener(async () => {
   options = await readState();
   // TODO: add and remove scripts without reloading geo
+});
+
+// add listener when permissions are updated
+chrome.permissions.onAdded.addListener(() => {
+  console.log("hi");
+  chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
+    if (result) {
+      chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+        if (tab.url != "https://www.geo-fs.com/geofs.php") {
+          return;
+        }
+        // the tab is definitely a geo tab
+
+        const keys = Object.keys(options) as Array<keyof options>;
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i];
+
+          if (options[key]) {
+            addScript(key, tabId);
+          }
+        }
+      });
+    }
+  });
 });
 
 chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {

@@ -50,8 +50,6 @@ const getButtons = (): Buttons => {
 
 const UpdateButtons = (buttons: Buttons, options: PopupState) => {
   (Object.keys(buttons) as Array<keyof Buttons>).forEach((key) => {
-    console.log(key);
-    console.log(options[key]);
     if (options[key]) {
       buttons[key].className = "on";
       if (key == "ap") buttons.fmc.style.display = "";
