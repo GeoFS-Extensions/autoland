@@ -11,7 +11,7 @@
   "scripts": {
     "build": "node build.js && npx prettier --write . && npx eslint --fix && npm update",
     "commit": "python commit.py",
-    "test": "npx prettier --check . && npx eslint && npx audit-ci --moderate && npm outdated"
+    "test": "npx prettier --check . && npx eslint && npx audit-ci --info && npm outdated"
   },
   "devDependencies": {
     "@types/chrome": "latest",
