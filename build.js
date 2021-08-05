@@ -13,7 +13,7 @@ for (const [key] of Object.entries(package.devDependencies)) {
   package.devDependencies[key] = "latest";
 }
 
-fs.writeFileSync("package.json", JSON.stringify(package, null, 2));
+fs.writeFileSync("package.json", JSON.stringify(package));
 
 console.log("package.json ready!");
 

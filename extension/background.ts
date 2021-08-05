@@ -54,19 +54,8 @@ const addScript = (type: string, tabId: number) => {
 
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async () => {
-  const newOptions = await readState();
-  let tabId;
-  const keys = Object.keys(options) as Array<keyof options>;
-  for (let i = 0; i < keys.length; i++) {
-    const key = keys[i];
-    if (options[key] !== newOptions[key]) {
-      if (newOptions[key]) {
-        addScript(key, tabId);
-      } else {
-        // reload
-      }
-    }
-  }
+  options = await readState();
+  // TODO: add and remove scripts without reloading geo
 });
 
 chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
@@ -98,7 +87,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 chrome.runtime.onInstalled.addListener((details) => {
   if (details.reason == "install") {
     chrome.tabs.create({
-      url: chrome.runtime.getURL("ui/oninstall/page.html"),
+      url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
     });
   }
 });

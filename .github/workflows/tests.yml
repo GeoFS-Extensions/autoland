@@ -81,4 +81,4 @@ jobs:
         run: npm i
 
       - name: Audit for vulnerabilities
-        run: sudo npx audit-ci --moderate
+        run: sudo npx audit-ci --info
