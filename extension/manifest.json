@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "GeoFS Autoland",
   "version": "0.1.2",
-  "description": "GeoFS Autoland adds new functionalities to the GeoFS Flight Simulator. This is currently a internal beta.",
+  "description": "GeoFS Autoland adds new functionalities to the GeoFS Flight Simulator.",
   "action": {
     "default_popup": "ui/popup/popup.html"
   },
@@ -25,11 +25,5 @@
   "host_permissions": ["https://www.geo-fs.com/geofs.php"],
   "background": {
     "service_worker": "background.js"
-  },
-  "content_scripts": [
-    {
-      "matches": ["*://www.geo-fs.com/*"],
-      "js": ["permissionsAlert.js"]
-    }
-  ]
+  }
 }
