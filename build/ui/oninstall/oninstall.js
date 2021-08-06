@@ -1,5 +1,4 @@
 "use strict";
-/* eslint @typescript-eslint/no-unused-vars: 0 */
 /**
  * Requests the tabs permission from the user.
  */

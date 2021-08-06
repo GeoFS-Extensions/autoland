@@ -5,6 +5,7 @@ html {
 }
 
 p {
+  font-family: Big Shoulders Stencil Text;
   margin: 0px;
 }
 
@@ -17,6 +18,16 @@ button {
   outline: none;
   border: 0;
   margin-bottom: 2px;
+}
+
+p.updateNotif {
+  margin-top: 5px;
+  font-size: 10px;
+}
+
+button.updateNotif {
+  background-color: #5482d8;
+  font-size: 15px;
 }
 
 .off {

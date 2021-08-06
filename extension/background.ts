@@ -3,7 +3,6 @@ interface options {
   fmc: boolean;
 }
 
-// src: modified https://developer.chrome.com/docs/extensions/reference/storage/
 function getStorageData(name: string): Promise<any> {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get([name], (items) => {
@@ -15,23 +14,59 @@ function getStorageData(name: string): Promise<any> {
   });
 }
 
-async function readState(): Promise<options> {
-  let data;
-  await getStorageData("options").then((val) => {
-    data = val.options;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function writeToStorage(toWrite: any, name: string): options {
+  let toSave;
+  if (name == "options") {
+    toSave = { options: toWrite };
+  } else {
+    toSave = { update: toWrite };
+  }
+  chrome.storage.sync.set(toSave, () => {});
+  return toWrite;
+}
+
+function optionsAreValid(options: options): boolean {
+  if (!options.ap && options.fmc) {
+    return false;
+  }
+  return true;
+}
+
+async function readState(): Promise<any> {
+  let data: options;
+  await getStorageData("options").then((storage) => {
+    if (storage.options) {
+      // there are prefs saved, test them
+      data = storage.options;
+      if (!optionsAreValid(data)) {
+        // options aren't valid, set to default and save
+        data = {
+          ap: false,
+          fmc: false,
+        };
+        writeToStorage(data, "options");
+      } else {
+        // options are valid, keep current options
+      }
+    } else {
+      // there are no prefs saved, set to default and save
+      data = {
+        ap: false,
+        fmc: false,
+      };
+      writeToStorage(data, "options");
+    }
   });
   return data as options;
 }
 
-let options: options = {
-  ap: false,
-  fmc: false,
-};
+let options: options;
 (async () => {
   options = await readState();
 })();
 
-const addScript = (type: string, tabId: number) => {
+function addScript(type: string, tabId: number) {
   chrome.scripting.executeScript({
     target: { tabId: tabId, allFrames: true },
     func: (name: string): void => {
@@ -50,12 +85,35 @@ const addScript = (type: string, tabId: number) => {
     },
     args: [type],
   });
-};
+}
 
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async () => {
   options = await readState();
-  // TODO: add and remove scripts without reloading geo
+  // TODO: add and remove scripts without reloading geo (beta 3.1?)
+});
+
+// add listener when permissions are updated
+chrome.permissions.onAdded.addListener(() => {
+  chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
+    if (result) {
+      chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+        if (tab.url != "https://www.geo-fs.com/geofs.php") {
+          return;
+        }
+        // the tab is definitely a geo tab
+
+        const keys = Object.keys(options) as Array<keyof options>;
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i];
+
+          if (options[key]) {
+            addScript(key, tabId);
+          }
+        }
+      });
+    }
+  });
 });
 
 chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
@@ -78,9 +136,16 @@ chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
   }
 });
 
+chrome.runtime.onUpdateAvailable.addListener((details) => {
+  writeToStorage({ shouldBeUpdated: true, new: details.version }, "update");
+});
+
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.needsData) {
-    sendResponse({ options: options });
+  if (msg.hasTabsPermission) {
+    chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
+      sendResponse(result);
+    });
+    return true;
   }
 });
 

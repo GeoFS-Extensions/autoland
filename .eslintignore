@@ -1,0 +1,4 @@
+# ignore the massive files that we won't change
+
+**/ap++.js
+**/fmc.js
