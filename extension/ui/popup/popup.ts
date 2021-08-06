@@ -108,8 +108,6 @@ window.onload = async () => {
       "options"
     );
   }
-  console.log(buttons);
-  console.log(options);
   UpdateButtons(buttons, options);
   (Object.keys(buttons) as Array<keyof Buttons>).forEach((key) => {
     buttons[key].addEventListener("click", () => {
