@@ -1,7 +1,7 @@
 /**
  * Requests the tabs permission from the user.
  */
-function requestPermission(): void {
+function requestPermissions(): void {
   chrome.permissions.contains(
     {
       permissions: ["tabs"],
@@ -21,6 +21,6 @@ function requestPermission(): void {
 window.onload = function () {
   const button = document.getElementById("permissionRequestButton");
   button.addEventListener("click", function () {
-    requestPermission();
+    requestPermissions();
   });
 };

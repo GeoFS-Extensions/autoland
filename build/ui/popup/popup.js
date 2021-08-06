@@ -64,4 +64,19 @@ window.onload = async () => {
       UpdateButtons(buttons, options);
     });
   });
+  chrome.permissions.contains(
+    {
+      permissions: ["tabs"],
+    },
+    (result) => {
+      if (!result) {
+        document.body.innerHTML = "";
+        chrome.tabs.create({
+          url: chrome.runtime.getURL(
+            "ui/needspermissions/needspermissions.html"
+          ),
+        });
+      }
+    }
+  );
 };

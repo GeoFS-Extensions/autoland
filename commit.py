@@ -7,6 +7,8 @@ def run_command(command):
 
 # Get the commit name
 name = input('Enter commit name\n> ')
+if (name == ""):
+  raise SystemExit
 
 # build the extension
 run_command('npm run build')
