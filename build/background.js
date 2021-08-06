@@ -74,11 +74,10 @@ const addScript = (type, tabId) => {
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async () => {
   options = await readState();
-  // TODO: add and remove scripts without reloading geo
+  // TODO: add and remove scripts without reloading geo (beta 3.1?)
 });
 // add listener when permissions are updated
 chrome.permissions.onAdded.addListener(() => {
-  console.log("hi");
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
       chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
