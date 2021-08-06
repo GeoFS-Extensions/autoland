@@ -12,7 +12,11 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["scripts/ap++.js", "scripts/fmc.js"],
+      "resources": [
+        "scripts/ap++.js",
+        "scripts/fmc.js",
+        "ui/oninstall/oninstall.html"
+      ],
       "matches": ["*://www.geo-fs.com/*"]
     }
   ],
@@ -21,5 +25,11 @@
   "host_permissions": ["https://www.geo-fs.com/geofs.php"],
   "background": {
     "service_worker": "background.js"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://www.geo-fs.com/*"],
+      "js": ["permissionsAlert.js"]
+    }
+  ]
 }

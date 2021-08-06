@@ -135,6 +135,12 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.needsData) {
     sendResponse({ options: options });
   }
+  if (msg.hasTabsPermission) {
+    chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
+      sendResponse(result);
+    });
+    return true;
+  }
 });
 
 chrome.runtime.onInstalled.addListener((details) => {
