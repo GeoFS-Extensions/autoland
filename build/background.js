@@ -1,5 +1,4 @@
 "use strict";
-// src: modified https://developer.chrome.com/docs/extensions/reference/storage/
 function getStorageData(name) {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get([name], (items) => {
@@ -10,9 +9,16 @@ function getStorageData(name) {
     });
   });
 }
-function writeOptions(options) {
-  chrome.storage.sync.set({ options: options }, () => {});
-  return options;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function writeToStorage(toWrite, name) {
+  let toSave;
+  if (name == "options") {
+    toSave = { options: toWrite };
+  } else {
+    toSave = { update: toWrite };
+  }
+  chrome.storage.sync.set(toSave, () => {});
+  return toWrite;
 }
 function optionsAreValid(options) {
   if (!options.ap && options.fmc) {
@@ -32,7 +38,7 @@ async function readState() {
           ap: false,
           fmc: false,
         };
-        writeOptions(data);
+        writeToStorage(data, "options");
       } else {
         // options are valid, keep current options
       }
@@ -42,7 +48,7 @@ async function readState() {
         ap: false,
         fmc: false,
       };
-      writeOptions(data);
+      writeToStorage(data, "options");
     }
   });
   return data;
@@ -51,7 +57,7 @@ let options;
 (async () => {
   options = await readState();
 })();
-const addScript = (type, tabId) => {
+function addScript(type, tabId) {
   chrome.scripting.executeScript({
     target: { tabId: tabId, allFrames: true },
     func: (name) => {
@@ -70,7 +76,7 @@ const addScript = (type, tabId) => {
     },
     args: [type],
   });
-};
+}
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async () => {
   options = await readState();
@@ -112,6 +118,9 @@ chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
       }
     });
   }
+});
+chrome.runtime.onUpdateAvailable.addListener((details) => {
+  writeToStorage({ shouldBeUpdated: true, new: details.version }, "update");
 });
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.hasTabsPermission) {

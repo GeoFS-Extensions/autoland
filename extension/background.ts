@@ -3,7 +3,6 @@ interface options {
   fmc: boolean;
 }
 
-// src: modified https://developer.chrome.com/docs/extensions/reference/storage/
 function getStorageData(name: string): Promise<any> {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get([name], (items) => {
@@ -15,9 +14,16 @@ function getStorageData(name: string): Promise<any> {
   });
 }
 
-function writeOptions(options: options): options {
-  chrome.storage.sync.set({ options: options }, () => {});
-  return options;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function writeToStorage(toWrite: any, name: string): options {
+  let toSave;
+  if (name == "options") {
+    toSave = { options: toWrite };
+  } else {
+    toSave = { update: toWrite };
+  }
+  chrome.storage.sync.set(toSave, () => {});
+  return toWrite;
 }
 
 function optionsAreValid(options: options): boolean {
@@ -27,7 +33,7 @@ function optionsAreValid(options: options): boolean {
   return true;
 }
 
-async function readState(): Promise<options> {
+async function readState(): Promise<any> {
   let data: options;
   await getStorageData("options").then((storage) => {
     if (storage.options) {
@@ -39,7 +45,7 @@ async function readState(): Promise<options> {
           ap: false,
           fmc: false,
         };
-        writeOptions(data);
+        writeToStorage(data, "options");
       } else {
         // options are valid, keep current options
       }
@@ -49,7 +55,7 @@ async function readState(): Promise<options> {
         ap: false,
         fmc: false,
       };
-      writeOptions(data);
+      writeToStorage(data, "options");
     }
   });
   return data as options;
@@ -60,7 +66,7 @@ let options: options;
   options = await readState();
 })();
 
-const addScript = (type: string, tabId: number) => {
+function addScript(type: string, tabId: number) {
   chrome.scripting.executeScript({
     target: { tabId: tabId, allFrames: true },
     func: (name: string): void => {
@@ -79,7 +85,7 @@ const addScript = (type: string, tabId: number) => {
     },
     args: [type],
   });
-};
+}
 
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async () => {
@@ -128,6 +134,10 @@ chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
       }
     });
   }
+});
+
+chrome.runtime.onUpdateAvailable.addListener((details) => {
+  writeToStorage({ shouldBeUpdated: true, new: details.version }, "update");
 });
 
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
