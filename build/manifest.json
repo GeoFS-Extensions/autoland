@@ -20,7 +20,7 @@
       "matches": ["*://www.geo-fs.com/*"]
     }
   ],
-  "permissions": ["storage", "scripting", "activeTab"],
+  "permissions": ["storage", "scripting"],
   "optional_permissions": ["tabs"],
   "host_permissions": ["https://www.geo-fs.com/geofs.php"],
   "background": {
