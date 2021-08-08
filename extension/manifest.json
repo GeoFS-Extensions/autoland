@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "GeoFS Autoland Beta",
-  "version": "0.3.0",
+  "name": "GeoFS Autoland",
+  "version": "3.0.0",
   "description": "GeoFS Autoland adds new functionalities to the GeoFS Flight Simulator.",
   "action": {
     "default_popup": "ui/popup/popup.html"
@@ -22,7 +22,7 @@
   ],
   "permissions": ["storage", "scripting"],
   "optional_permissions": ["tabs"],
-  "host_permissions": ["https://www.geo-fs.com/geofs.php"],
+  "host_permissions": ["https://www.geo-fs.com/*"],
   "background": {
     "service_worker": "background.js"
   }
