@@ -22,7 +22,6 @@
   ],
   "permissions": ["storage", "scripting"],
   "optional_permissions": ["tabs"],
-  "host_permissions": ["https://www.geo-fs.com/*"],
   "background": {
     "service_worker": "background.js"
   }
