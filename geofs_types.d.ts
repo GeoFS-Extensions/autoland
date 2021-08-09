@@ -373,8 +373,19 @@ export declare class PID {
   [key: string]: any;
 }
 
+
 export declare class Indicator {
-  // TODO Indicator Class
+  constructor(a: InstrumentsDefinitions);
+  definition: InstrumentsDefinitions;
+  visibility: boolean;
+  scale(): void;
+  show(): void;
+  hide(): void;
+  setVisibility(a: boolean): void;
+  updateCockpitPosition(): void;
+  update(a: any): void;
+  destroy(): void;
+  [key: string]: any;
 }
 
 export declare class GlassPanel {
