@@ -1,0 +1,15 @@
+{
+  "plugins": [],
+  "source": {
+    "include": ["build"],
+    "exclude": ["build/scripts"]
+  },
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc", "closure"]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

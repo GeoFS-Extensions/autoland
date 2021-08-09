@@ -373,7 +373,6 @@ export declare class PID {
   [key: string]: any;
 }
 
-
 export declare class Indicator {
   constructor(a: InstrumentsDefinitions);
   definition: InstrumentsDefinitions;
@@ -1033,12 +1032,12 @@ export interface Audio {
     };
     cordova: {
       [key: string]: any;
-    }
+    };
   };
   peer2peer: {
     init(a: string): void;
     destroy(): void;
-  }
+  };
   [key: string]: any;
 }
 
