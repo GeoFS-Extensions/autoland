@@ -389,7 +389,13 @@ export declare class Indicator {
 }
 
 export declare class GlassPanel {
-  // TODO GlassPanel Class
+  constructor(a: any);
+  canvas: any; // geofs.api.Canvas;
+  entity: any;
+  update(): void;
+  updateCockpitPosition(): void;
+  destroy(): void;
+  [key: string]: any;
 }
 
 export declare type jQuery$ = string | Element | Element[] | Object; // things that can be passed to jQuery's $().
@@ -705,7 +711,7 @@ export interface GeoFS {
     instance?: Aircraft;
   };
 
-  GlassPanel: GlassPanel;
+  GlassPanel: typeof GlassPanel;
   [key: string]: any;
 }
 
@@ -1011,6 +1017,7 @@ declare global {
     // TODO add weather, camera, audio, fx
     instruments: Instruments;
     rigidBody: typeof RigidBody;
+    Indicator: typeof Indicator;
 
     // constants
     GRAVITY: number;
