@@ -1,3 +1,6 @@
+/** @internal */
+export = {};
+
 /**
  * Requests the tabs permission from the user.
  */

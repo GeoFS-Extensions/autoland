@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Requests the tabs permission from the user.
  */
@@ -24,3 +23,4 @@ window.onload = function () {
     requestPermission();
   });
 };
+export {};

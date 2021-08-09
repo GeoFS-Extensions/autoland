@@ -1,3 +1,6 @@
+/** @internal */
+export = {};
+
 interface PopupState {
   ap: boolean;
   fmc: boolean;
@@ -15,7 +18,7 @@ const emptyButtons = (): Buttons => {
   };
 };
 
-const GetStorageSyncData = (name: string): Promise<any> => {
+function getStorageData(name: string): Promise<any> {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get([name], (items) => {
       if (chrome.runtime.lastError) {
@@ -24,11 +27,11 @@ const GetStorageSyncData = (name: string): Promise<any> => {
       resolve(items);
     });
   });
-};
+}
 
 const getOptions = async (name: string): Promise<any> => {
   let data;
-  await GetStorageSyncData(name).then((val) => {
+  await getStorageData(name).then((val) => {
     data = val[name];
   });
   return data;

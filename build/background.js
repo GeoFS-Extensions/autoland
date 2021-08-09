@@ -1,4 +1,3 @@
-"use strict";
 function getStorageData(name) {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get([name], (items) => {
@@ -9,7 +8,6 @@ function getStorageData(name) {
     });
   });
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function writeToStorage(toWrite, name) {
   let toSave;
   if (name == "options") {
@@ -137,3 +135,4 @@ chrome.runtime.onInstalled.addListener((details) => {
     });
   }
 });
+export {};

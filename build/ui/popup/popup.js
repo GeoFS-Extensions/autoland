@@ -1,11 +1,10 @@
-"use strict";
 const emptyButtons = () => {
   return {
     ap: undefined,
     fmc: undefined,
   };
 };
-const GetStorageSyncData = (name) => {
+function getStorageData(name) {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get([name], (items) => {
       if (chrome.runtime.lastError) {
@@ -14,10 +13,10 @@ const GetStorageSyncData = (name) => {
       resolve(items);
     });
   });
-};
+}
 const getOptions = async (name) => {
   let data;
-  await GetStorageSyncData(name).then((val) => {
+  await getStorageData(name).then((val) => {
     data = val[name];
   });
   return data;
@@ -113,3 +112,4 @@ window.onload = async () => {
   );
   CheckForUpdate();
 };
+export {};

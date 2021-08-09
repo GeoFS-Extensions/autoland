@@ -1,3 +1,6 @@
+/** @internal */
+export = {};
+
 interface options {
   ap: boolean;
   fmc: boolean;
@@ -14,7 +17,6 @@ function getStorageData(name: string): Promise<any> {
   });
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function writeToStorage(toWrite: any, name: string): options {
   let toSave;
   if (name == "options") {
