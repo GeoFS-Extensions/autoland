@@ -1007,6 +1007,41 @@ export interface Instruments {
   [key: string]: any;
 }
 
+export interface Audio {
+  soundplayer: HTMLAudioElement;
+  sounds: any;
+  on: boolean;
+
+  init(a: any[]): void;
+  loaded(a: any): void;
+  stopped(a: any): void;
+  update(): void;
+  toggleMute(): void;
+  stop(): void;
+  mute(): void;
+  unmute(): void;
+  playStartup(): void;
+  playShutdown(): void;
+  playSoundLoop(a: any, b: any): void;
+  stopSoundLoop(a: any): void;
+  impl: {
+    webAudio: {
+      [key: string]: any;
+    };
+    html5: {
+      [key: string]: any;
+    };
+    cordova: {
+      [key: string]: any;
+    }
+  };
+  peer2peer: {
+    init(a: string): void;
+    destroy(): void;
+  }
+  [key: string]: any;
+}
+
 // global variables
 declare global {
   interface Window {
@@ -1014,7 +1049,8 @@ declare global {
     ui: Ui;
     flight: Flight;
     controls: Controls;
-    // TODO add weather, camera, audio, fx
+    // TODO add weather, camera, fx
+    audio: Audio;
     instruments: Instruments;
     rigidBody: typeof RigidBody;
     Indicator: typeof Indicator;
