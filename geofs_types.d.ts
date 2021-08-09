@@ -356,7 +356,21 @@ export declare class Aircraft {
 }
 
 export declare class PID {
-  // TODO PID Class
+  constructor(a: number, b: number, c: number);
+  _kp: number;
+  _ki: number;
+  _kd: number;
+  _maxOutput: number;
+  _minOutput: number;
+  _setPoint: number;
+  _integral: number;
+  _previousError: number;
+  _previousInput: number;
+  reset(): void;
+  initialize(a: number, b: number): void;
+  set(a: number, b: number, c: number): void;
+  compute(a: number, b: number): number;
+  [key: string]: any;
 }
 
 export declare class Indicator {
