@@ -1,7 +1,7 @@
 /**
  * Gets data from chrome storage.
- * @param {string} name name of the data in chrome storage
- * @returns {options} data in chrome storage
+ * @param {string} name The name of the data in chrome storage.
+ * @returns {options} The data in chrome storage.
  */
 function getStorageData(name) {
   return new Promise((resolve, reject) => {
@@ -15,9 +15,9 @@ function getStorageData(name) {
 }
 /**
  * Saves something to chrome storage.
- * @param {any} toWrite a JSON object containing the data to save
- * @param {string} name the name to save the object to
- * @returns {any} the object given that was saved to storage
+ * @param {any} toWrite A JSON object containing the data to save.
+ * @param {string} name The name to save the object to.
+ * @returns {any} The object given that was saved to storage.
  */
 function writeToStorage(toWrite, name) {
   let toSave;
@@ -30,9 +30,9 @@ function writeToStorage(toWrite, name) {
   return toWrite;
 }
 /**
- * Checks if the given options are valid
- * @param {options} options the options to check
- * @returns {boolean} whether the options are valid (true) or not (false)
+ * Checks if the given options are valid.
+ * @param {options} options The options to check.
+ * @returns {boolean} Whether the options are valid (true) or not (false).
  */
 function optionsAreValid(options) {
   if (!options.ap && options.fmc) {
@@ -42,7 +42,7 @@ function optionsAreValid(options) {
 }
 /**
  * Reads valid user selected options from memory. If there are no saved options, returns a default and saves the default.
- * @returns {Promise<options>} a promise that resolves to user options
+ * @returns {Promise<options>} A promise that resolves to user options.
  */
 async function readOptions() {
   let data;
