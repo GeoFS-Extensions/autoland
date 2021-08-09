@@ -69,25 +69,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup node v16
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16.5.0"
-
-      - name: Install packages
-        run: npm i
-
-      - name: Audit for vulnerabilities
-        run: sudo npx audit-ci --info
-
-  CodeQL-Build:
-    # CodeQL runs on ubuntu-latest and windows-latest
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
