@@ -96,6 +96,99 @@
             </dd>
           </dl>
 
+          <h4 class="name" id="checkForUpdate">
+            <span class="type-signature">(async) </span>checkForUpdate<span
+              class="signature"
+              >()</span
+            ><span class="type-signature"></span>
+          </h4>
+
+          <div class="description">
+            The auto-update function. If an update is available (checked by the
+            background script), and can't be installed right now, prompt the
+            user in the popup.
+          </div>
+
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li>
+                  <a href="ui_popup_popup.js.html">ui/popup/popup.js</a>,
+                  <a href="ui_popup_popup.js.html#line84">line 84</a>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+
+          <h4 class="name" id="emptyButtons">
+            <span class="type-signature"></span>emptyButtons<span
+              class="signature"
+              >()</span
+            ><span class="type-signature"> &rarr; {Buttons}</span>
+          </h4>
+
+          <div class="description">Gives a empty version of the buttons.</div>
+
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li>
+                  <a href="ui_popup_popup.js.html">ui/popup/popup.js</a>,
+                  <a href="ui_popup_popup.js.html#line5">line 5</a>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+
+          <h5>Returns:</h5>
+
+          <div class="param-desc">A empty version of the buttons.</div>
+
+          <dl>
+            <dt>Type</dt>
+            <dd>
+              <span class="param-type">Buttons</span>
+            </dd>
+          </dl>
+
+          <h4 class="name" id="getButtons">
+            <span class="type-signature"></span>getButtons<span
+              class="signature"
+              >()</span
+            ><span class="type-signature"> &rarr; {Buttons}</span>
+          </h4>
+
+          <div class="description">
+            Gets the current state of the buttons on the popup.
+          </div>
+
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li>
+                  <a href="ui_popup_popup.js.html">ui/popup/popup.js</a>,
+                  <a href="ui_popup_popup.js.html#line53">line 53</a>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+
+          <h5>Returns:</h5>
+
+          <div class="param-desc">
+            The current state of the buttons on the popup.
+          </div>
+
+          <dl>
+            <dt>Type</dt>
+            <dd>
+              <span class="param-type">Buttons</span>
+            </dd>
+          </dl>
+
           <h4 class="name" id="getStorageData">
             <span class="type-signature"></span>getStorageData<span
               class="signature"
@@ -127,7 +220,7 @@
                 </td>
 
                 <td class="description last">
-                  name of the data in chrome storage
+                  The name of the data in chrome storage.
                 </td>
               </tr>
             </tbody>
@@ -147,7 +240,70 @@
 
           <h5>Returns:</h5>
 
-          <div class="param-desc">data in chrome storage</div>
+          <div class="param-desc">The data in chrome storage.</div>
+
+          <dl>
+            <dt>Type</dt>
+            <dd>
+              <span class="param-type">options</span>
+            </dd>
+          </dl>
+
+          <h4 class="name" id="getStorageData">
+            <span class="type-signature"></span>getStorageData<span
+              class="signature"
+              >(name)</span
+            ><span class="type-signature"> &rarr; {options}</span>
+          </h4>
+
+          <div class="description">
+            Gets data from chrome storage. Don't call this function, call
+            readStorage instead.
+          </div>
+
+          <h5>Parameters:</h5>
+
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+
+                <th>Type</th>
+
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td class="name"><code>name</code></td>
+
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+
+                <td class="description last">
+                  The name of the data in chrome storage.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li>
+                  <a href="ui_popup_popup.js.html">ui/popup/popup.js</a>,
+                  <a href="ui_popup_popup.js.html#line16">line 16</a>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+
+          <h5>Returns:</h5>
+
+          <div class="param-desc">The data in chrome storage.</div>
 
           <dl>
             <dt>Type</dt>
@@ -163,7 +319,7 @@
             ><span class="type-signature"> &rarr; {boolean}</span>
           </h4>
 
-          <div class="description">Checks if the given options are valid</div>
+          <div class="description">Checks if the given options are valid.</div>
 
           <h5>Parameters:</h5>
 
@@ -186,7 +342,7 @@
                   <span class="param-type">options</span>
                 </td>
 
-                <td class="description last">the options to check</td>
+                <td class="description last">The options to check.</td>
               </tr>
             </tbody>
           </table>
@@ -206,7 +362,7 @@
           <h5>Returns:</h5>
 
           <div class="param-desc">
-            whether the options are valid (true) or not (false)
+            Whether the options are valid (true) or not (false).
           </div>
 
           <dl>
@@ -242,12 +398,72 @@
 
           <h5>Returns:</h5>
 
-          <div class="param-desc">a promise that resolves to user options</div>
+          <div class="param-desc">A promise that resolves to user options.</div>
 
           <dl>
             <dt>Type</dt>
             <dd>
               <span class="param-type">Promise.&lt;options></span>
+            </dd>
+          </dl>
+
+          <h4 class="name" id="readStorage">
+            <span class="type-signature">(async) </span>readStorage<span
+              class="signature"
+              >(name)</span
+            ><span class="type-signature"> &rarr; {Promise.&lt;any>}</span>
+          </h4>
+
+          <div class="description">Reads data from chrome storage.</div>
+
+          <h5>Parameters:</h5>
+
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+
+                <th>Type</th>
+
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td class="name"><code>name</code></td>
+
+                <td class="type">
+                  <span class="param-type">string</span>
+                </td>
+
+                <td class="description last">
+                  The name of the stored data to read.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li>
+                  <a href="ui_popup_popup.js.html">ui/popup/popup.js</a>,
+                  <a href="ui_popup_popup.js.html#line31">line 31</a>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+
+          <h5>Returns:</h5>
+
+          <div class="param-desc">The stored data.</div>
+
+          <dl>
+            <dt>Type</dt>
+            <dd>
+              <span class="param-type">Promise.&lt;any></span>
             </dd>
           </dl>
 
@@ -302,6 +518,67 @@
             </dd>
           </dl>
 
+          <h4 class="name" id="updateButtons">
+            <span class="type-signature"></span>updateButtons<span
+              class="signature"
+              >(buttons, options)</span
+            ><span class="type-signature"></span>
+          </h4>
+
+          <div class="description">
+            Updates buttons to the local cache of user preferences.
+          </div>
+
+          <h5>Parameters:</h5>
+
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+
+                <th>Type</th>
+
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td class="name"><code>buttons</code></td>
+
+                <td class="type">
+                  <span class="param-type">Buttons</span>
+                </td>
+
+                <td class="description last">The HTML elements to update.</td>
+              </tr>
+
+              <tr>
+                <td class="name"><code>options</code></td>
+
+                <td class="type">
+                  <span class="param-type">PopupState</span>
+                </td>
+
+                <td class="description last">
+                  The preferences to update against.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <dl class="details">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source">
+              <ul class="dummy">
+                <li>
+                  <a href="ui_popup_popup.js.html">ui/popup/popup.js</a>,
+                  <a href="ui_popup_popup.js.html#line65">line 65</a>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+
           <h4 class="name" id="writeToStorage">
             <span class="type-signature"></span>writeToStorage<span
               class="signature"
@@ -333,7 +610,7 @@
                 </td>
 
                 <td class="description last">
-                  a JSON object containing the data to save
+                  A JSON object containing the data to save.
                 </td>
               </tr>
 
@@ -344,7 +621,9 @@
                   <span class="param-type">string</span>
                 </td>
 
-                <td class="description last">the name to save the object to</td>
+                <td class="description last">
+                  The name to save the object to.
+                </td>
               </tr>
             </tbody>
           </table>
@@ -364,7 +643,7 @@
           <h5>Returns:</h5>
 
           <div class="param-desc">
-            the object given that was saved to storage
+            The object given that was saved to storage.
           </div>
 
           <dl>
@@ -382,10 +661,15 @@
       <h3>Global</h3>
       <ul>
         <li><a href="global.html#addScript">addScript</a></li>
+        <li><a href="global.html#checkForUpdate">checkForUpdate</a></li>
+        <li><a href="global.html#emptyButtons">emptyButtons</a></li>
+        <li><a href="global.html#getButtons">getButtons</a></li>
         <li><a href="global.html#getStorageData">getStorageData</a></li>
         <li><a href="global.html#optionsAreValid">optionsAreValid</a></li>
         <li><a href="global.html#readOptions">readOptions</a></li>
+        <li><a href="global.html#readStorage">readStorage</a></li>
         <li><a href="global.html#requestPermission">requestPermission</a></li>
+        <li><a href="global.html#updateButtons">updateButtons</a></li>
         <li><a href="global.html#writeToStorage">writeToStorage</a></li>
       </ul>
     </nav>
@@ -395,7 +679,7 @@
     <footer>
       Documentation generated by
       <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Aug 09
-      2021 12:00:40 GMT-0400 (Eastern Daylight Time)
+      2021 13:17:44 GMT-0400 (Eastern Daylight Time)
     </footer>
 
     <script>
