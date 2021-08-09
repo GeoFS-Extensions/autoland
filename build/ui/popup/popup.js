@@ -1,9 +1,18 @@
-const emptyButtons = () => {
+/**
+ * Gives a empty version of the buttons.
+ * @returns {Buttons} A empty version of the buttons.
+ */
+function emptyButtons() {
   return {
     ap: undefined,
     fmc: undefined,
   };
-};
+}
+/**
+ * Gets data from chrome storage. Don't call this function, call readStorage instead.
+ * @param {string} name The name of the data in chrome storage.
+ * @returns {options} The data in chrome storage.
+ */
 function getStorageData(name) {
   return new Promise((resolve, reject) => {
     chrome.storage.sync.get([name], (items) => {
@@ -14,14 +23,19 @@ function getStorageData(name) {
     });
   });
 }
-const getOptions = async (name) => {
+/**
+ * Reads data from chrome storage.
+ * @param {string} name The name of the stored data to read.
+ * @returns {Promise<any>} The stored data.
+ */
+async function readStorage(name) {
   let data;
   await getStorageData(name).then((val) => {
     data = val[name];
   });
   return data;
-};
-const setOptions = (toWrite, name) => {
+}
+function writeToStorage(toWrite, name) {
   let toSave;
   if (name == "options") {
     toSave = { options: toWrite };
@@ -30,15 +44,24 @@ const setOptions = (toWrite, name) => {
   }
   chrome.storage.sync.set(toSave, () => {});
   return toWrite;
-};
-const getButtons = () => {
+}
+/**
+ * Gets the current state of the buttons on the popup.
+ * @returns {Buttons} The current state of the buttons on the popup.
+ */
+function getButtons() {
   const buttons = emptyButtons();
   Object.keys(buttons).forEach((key) => {
     buttons[key] = document.querySelector(`#${key}button`);
   });
   return buttons;
-};
-const UpdateButtons = (buttons, options) => {
+}
+/**
+ * Updates buttons to the local cache of user preferences.
+ * @param {Buttons} buttons The HTML elements to update.
+ * @param {PopupState} options The preferences to update against.
+ */
+function updateButtons(buttons, options) {
   Object.keys(buttons).forEach((key) => {
     if (options[key]) {
       buttons[key].className = "on";
@@ -47,13 +70,16 @@ const UpdateButtons = (buttons, options) => {
       buttons[key].className = "off";
       if (key == "ap") {
         buttons.fmc.style.display = "none";
-        options = setOptions({ ap: false, fmc: false }, "options");
+        options = writeToStorage({ ap: false, fmc: false }, "options");
       }
     }
   });
-};
-const CheckForUpdate = async () => {
-  const update = await getOptions("update");
+}
+/**
+ * The auto-update function. If an update is available (checked by the background script), and can't be installed right now, prompt the user in the popup.
+ */
+async function checkForUpdate() {
+  const update = await readStorage("update");
   if (!update || !update.shouldBeUpdated) {
     // we don't need to update
     return;
@@ -71,13 +97,13 @@ const CheckForUpdate = async () => {
   });
   document.body.appendChild(tag);
   document.body.appendChild(button);
-};
+}
 let buttons, options;
 window.onload = async () => {
   buttons = getButtons();
-  options = await getOptions("options");
+  options = await readStorage("options");
   if (options == undefined) {
-    options = setOptions(
+    options = writeToStorage(
       {
         ap: false,
         fmc: false,
@@ -85,14 +111,14 @@ window.onload = async () => {
       "options"
     );
   }
-  UpdateButtons(buttons, options);
+  updateButtons(buttons, options);
   Object.keys(buttons).forEach((key) => {
     buttons[key].addEventListener("click", () => {
-      options = setOptions({ ...options, [key]: !options[key] }, "options");
-      UpdateButtons(buttons, options);
+      options = writeToStorage({ ...options, [key]: !options[key] }, "options");
+      updateButtons(buttons, options);
     });
   });
-  // CheckPermissions();
+  // TODO: make a checkPermissions() function to simplify this
   // Check if we have the needed permissions
   chrome.permissions.contains(
     {
@@ -110,6 +136,6 @@ window.onload = async () => {
       }
     }
   );
-  CheckForUpdate();
+  checkForUpdate();
 };
 export {};
