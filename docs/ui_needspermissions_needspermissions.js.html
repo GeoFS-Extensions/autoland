@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: ui/needspermissions/needspermissions.js</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -19,14 +19,41 @@
 
   <body>
     <div id="main">
-      <h1 class="page-title">Home</h1>
-
-      <h3></h3>
+      <h1 class="page-title">
+        Source: ui/needspermissions/needspermissions.js
+      </h1>
 
       <section>
         <article>
-          <h1>GeoFS Autoland</h1>
-          <p>This the documentation for the dev version of GeoFS Autoland.</p>
+          <pre class="prettyprint source linenums"><code>"use strict";
+// this is a fix for chrome not allowing modules
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const module = {};
+/**
+ * Requests the tabs permission from the user.
+ */
+function requestPermission() {
+    chrome.permissions.contains({
+        permissions: ["tabs"],
+    }, function (result) {
+        if (result) {
+            alert("You already have the tabs permission enabled!");
+        }
+        else {
+            chrome.permissions.request({
+                permissions: ["tabs"],
+            });
+        }
+    });
+}
+window.onload = function () {
+    const button = document.getElementById("permissionRequestButton");
+    button.addEventListener("click", function () {
+        requestPermission();
+    });
+};
+module.exports = {};
+</code></pre>
         </article>
       </section>
     </div>

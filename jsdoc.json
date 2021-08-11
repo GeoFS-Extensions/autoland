@@ -1,4 +1,10 @@
 {
+  "opts": {
+    "destination": "./docs/",
+    "debug": true,
+    "readme": "jsdoc-home.md",
+    "recurse": true
+  },
   "plugins": [],
   "source": {
     "include": ["build"],
@@ -11,10 +17,5 @@
   "templates": {
     "cleverLinks": false,
     "monospaceLinks": false
-  },
-  "opts": {
-    "destination": "./docs/",
-    "debug": true,
-    "readme": "jsdoc-home.md"
   }
 }
