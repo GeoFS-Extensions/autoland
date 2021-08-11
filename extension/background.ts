@@ -116,7 +116,6 @@ function addScript(type: "ap" | "fmc", tabId: number) {
     args: [type],
   });
 }
-
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async () => {
   options = await readOptions();
@@ -168,15 +167,6 @@ chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
 
 chrome.runtime.onUpdateAvailable.addListener((details) => {
   writeToStorage({ shouldBeUpdated: true, new: details.version }, "update");
-});
-
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.hasTabsPermission) {
-    chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
-      sendResponse(result);
-    });
-    return true;
-  }
 });
 
 chrome.runtime.onInstalled.addListener((details) => {
