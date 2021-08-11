@@ -126,6 +126,28 @@ async function checkForUpdate() {
   document.body.appendChild(button);
 }
 
+/**
+ * Checks if the extension has the needed permissions, and if not, opens the needspermissions page.
+ */
+function checkPermissions() {
+  chrome.permissions.contains(
+    {
+      permissions: ["tabs"],
+    },
+    (result) => {
+      if (!result) {
+        // don't have the needed permissions, open the page to grant permissions
+        document.body.innerHTML = "";
+        chrome.tabs.create({
+          url: chrome.runtime.getURL(
+            "ui/needspermissions/needspermissions.html"
+          ),
+        });
+      }
+    }
+  );
+}
+
 let buttons, options;
 
 window.onload = async () => {
@@ -148,23 +170,9 @@ window.onload = async () => {
     });
   });
 
-  // TODO: make a checkPermissions() function to simplify this
   // Check if we have the needed permissions
-  chrome.permissions.contains(
-    {
-      permissions: ["tabs"],
-    },
-    (result) => {
-      if (!result) {
-        // don't have the needed permissions, open the page to grant permissions
-        document.body.innerHTML = "";
-        chrome.tabs.create({
-          url: chrome.runtime.getURL(
-            "ui/needspermissions/needspermissions.html"
-          ),
-        });
-      }
-    }
-  );
+  checkPermissions();
+
+  // Check if we need to update
   checkForUpdate();
 };
