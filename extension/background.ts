@@ -185,4 +185,10 @@ chrome.runtime.onInstalled.addListener((details) => {
       url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
     });
   }
+
+  if (details.reason == "update") {
+    chrome.tabs.create({
+      url: chrome.runtime.getURL("changelog/changelog.html"),
+    });
+  }
 });
