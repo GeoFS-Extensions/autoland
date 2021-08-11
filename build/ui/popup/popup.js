@@ -1,3 +1,7 @@
+"use strict";
+// this is a fix for chrome not allowing modules
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const module = {};
 /**
  * Gives a empty version of the buttons.
  * @returns {Buttons} A empty version of the buttons.
@@ -138,4 +142,4 @@ window.onload = async () => {
   );
   checkForUpdate();
 };
-export {};
+module.exports = {};

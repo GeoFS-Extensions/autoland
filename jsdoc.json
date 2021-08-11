@@ -11,5 +11,10 @@
   "templates": {
     "cleverLinks": false,
     "monospaceLinks": false
+  },
+  "opts": {
+    "destination": "./docs/",
+    "debug": true,
+    "readme": "jsdoc-home.md"
   }
 }

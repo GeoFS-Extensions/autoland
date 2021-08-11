@@ -1,3 +1,7 @@
+"use strict";
+// this is a fix for chrome not allowing modules
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const module = {};
 /**
  * Gets data from chrome storage.
  * @param {string} name The name of the data in chrome storage.
@@ -160,4 +164,4 @@ chrome.runtime.onInstalled.addListener((details) => {
     });
   }
 });
-export {};
+module.exports = {};
