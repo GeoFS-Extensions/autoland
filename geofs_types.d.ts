@@ -1107,5 +1107,7 @@ declare global {
     SMOOTHING_FACTOR: number;
     SIX_STEP_WARNING: string[];
     PAGE_PATH: string;
+    L: any;
+    componentHandler: any;
   }
 }
