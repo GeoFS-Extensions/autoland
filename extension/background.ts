@@ -121,7 +121,8 @@ function addScript(type: scripts, tabId: number) {
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async () => {
   const newOptions = await readOptions();
-  // TODO: add and remove scripts without reloading geo (beta 3.1)
+
+  // add and remove scripts without reloading geo
   const keys = Object.keys(newOptions) as Array<scripts>;
   let reload = false;
   const toLoad: Array<scripts> = [];
