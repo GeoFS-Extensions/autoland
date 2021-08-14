@@ -81,7 +81,7 @@ let options;
 })();
 /**
  * Executes a script in the DOM context of a tab.
- * @param {"ap" | "fmc"} type The script to add.
+ * @param {scripts} type The script to add.
  * @param {number} tabId The ID of the tab to add the script to.
  */
 function addScript(type, tabId) {
@@ -106,8 +106,34 @@ function addScript(type, tabId) {
 }
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async () => {
-  options = await readOptions();
+  const newOptions = await readOptions();
   // TODO: add and remove scripts without reloading geo (beta 3.1)
+  const keys = Object.keys(newOptions);
+  let reload = false;
+  const toLoad = [];
+  for (const key of keys) {
+    if (newOptions[key] !== options[key]) {
+      if (newOptions[key]) toLoad.push(key);
+      else reload = true;
+    }
+  }
+  chrome.permissions.contains({ permissions: ["tabs"] }, async (result) => {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+    if (tab.url !== "https://www.geo-fs.com/geofs.php") return;
+    if (result) {
+      if (reload) {
+        options = newOptions;
+        chrome.tabs.reload(tab.id);
+      } else {
+        for (const key of toLoad) {
+          addScript(key, tab.id);
+        }
+      }
+    }
+  });
 });
 // add listener when permissions are updated
 chrome.permissions.onAdded.addListener(() => {
@@ -119,8 +145,7 @@ chrome.permissions.onAdded.addListener(() => {
         }
         // the tab is definitely a geo tab
         const keys = Object.keys(options);
-        for (let i = 0; i < keys.length; i++) {
-          const key = keys[i];
+        for (const key of keys) {
           if (options[key]) {
             addScript(key, tabId);
           }
@@ -137,8 +162,7 @@ chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
       }
       // the tab is definitely a geo tab
       const keys = Object.keys(options);
-      for (let i = 0; i < keys.length; i++) {
-        const key = keys[i];
+      for (const key of keys) {
         if (options[key]) {
           addScript(key, tabId);
         }
