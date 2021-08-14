@@ -4,8 +4,7 @@
     "target": "ESNext",
     "noImplicitAny": true,
     "lib": ["DOM", "es2015"],
-    "alwaysStrict": true,
-    "stripInternal": true
+    "alwaysStrict": true
   },
   "include": ["build/**/*", "geofs_types.d.ts"],
   "types": ["chrome", "jquery"]
