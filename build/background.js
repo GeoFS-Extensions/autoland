@@ -134,8 +134,10 @@ chrome.storage.onChanged.addListener(async () => {
     }
   });
 });
-// add listener when permissions are updated
-chrome.permissions.onAdded.addListener(() => {
+/**
+ * Adds the needed scripts listeners. Checks to make sure the extension has the tabs permission before adding the listener.
+ */
+function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
       chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
@@ -152,23 +154,12 @@ chrome.permissions.onAdded.addListener(() => {
       });
     }
   });
+}
+// add listener when permissions are updated
+chrome.permissions.onAdded.addListener(() => {
+  addScriptsListener();
 });
-chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
-  if (result) {
-    chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-      if (tab.url != "https://www.geo-fs.com/geofs.php") {
-        return;
-      }
-      // the tab is definitely a geo tab
-      const keys = Object.keys(options);
-      for (const key of keys) {
-        if (options[key]) {
-          addScript(key, tabId);
-        }
-      }
-    });
-  }
-});
+addScriptsListener();
 chrome.runtime.onUpdateAvailable.addListener((details) => {
   writeToStorage({ shouldBeUpdated: true, new: details.version }, "update");
 });
