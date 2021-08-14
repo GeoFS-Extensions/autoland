@@ -1278,6 +1278,117 @@ interface Weather {
   [key: string]: any;
 }
 
+export class User {
+  constructor(a: any);
+  id: string;
+  acid: number;
+  callsign: string;
+  aircraft: number;
+  lod: number;
+  model: null;
+  lastUpdate: any;
+  visibleGear: boolean;
+  referencePoint: {
+    lla: number[];
+  }
+  currentServerTime: number;
+  lastHeartbeatTime: number;
+  isTraffic: boolean | undefined;
+  updated: boolean;
+
+  heartBeat(): void;
+  update(a: any, b: any): void;
+  getLOD(a: any): 0 | 1 | 2 | 3;
+  updateAircraft(a: any): void;
+  updateContrails(): void;
+  updateModel(a: any): void;
+  addCallsign(a: string, b: string): void;
+  removeCallsign(): void;
+  removeFromWorld(): void;
+  removeModels(): void;
+  remove(): void;
+  getCoordinates(): number[];
+  isOnGround(): boolean;
+
+  [key: string]: any;
+}
+
+interface Multiplater {
+  nbUsers: number;
+  users: {[id: string]: User};
+  visibleUsers: {[id: string]: User};
+  numberOfLOD: number;
+  captainIconUrl: string;
+  premiumIconUrl: string;
+  minUpdateDelay: number;
+  hearbeatLife: number;
+  userLife: number;
+  userHalfLife: number;
+  userHeartBeatPeriod: number;
+  trafficLife: number;
+  trafficHalfLife: number;
+  trafficHeartBeatPeriod: number;
+  contrailEmitters: {
+    [key: number]: any;
+  }
+  mapUpdatePeriod: number;
+  myId: string;
+  lastRequest: any;
+  lastResponse: any;
+  lastJoinedCoordinates: string;
+  lastRequestTime: number;
+  serverTimeOffset: number;
+  labelVisibilityRange: number;
+  farVisibilityRange: number;
+  lowVisibilityRange: number;
+  nearVisibilityRange: number;
+  chatMessage: string;
+  chatMessageId: number;
+  on: boolean;
+  started: boolean;
+  callsignPlacemarkAltitude: number;
+  updateFunctions: any[];
+  init(): void;
+  stop(): void;
+  startUpdates(): void;
+  stopUpdates(a?: any): void;
+  getServerTime: number;
+  getUser(a: string): User;
+  flightSharing: {
+    requestTimeout: number;
+    host: boolean;
+    control: boolean;
+    status: string;
+    willpeer: User;
+    waspeer: User;
+    peer: User;
+    init(): void;
+    request(a: User): void;
+    incoming(a: User): void;
+    accept(a: User): void;
+    accepted(a: User): void;
+    peerUpdate(a: any): void;
+    swapControl(a: boolean): void;
+    refuse(a?: any): void;
+    stop(): void;
+    [key: string]: any;
+  };
+
+  updateUsers(a?: User[]): void;
+  startMapUpdate(): void;
+  update(a: number): void;
+  errorCallback(a?: any): void;
+  updateCallback(a: any): void;
+  sendUpdate(): void;
+  blockUser(a: string): void;
+  banUser(a: string): void;
+  laodModels(a: any): any[];
+  setNbUsers(a: number): void;
+  setChatMessage(a: string): void;
+
+  [key: string]: any;
+}
+
 // global variables
 declare global {
   interface Window {
@@ -1285,8 +1396,8 @@ declare global {
     ui: Ui;
     flight: Flight;
     controls: Controls;
-    // TODO add multiplayer
     weather: Weather;
+    multiplayer: Multiplater;
     audio: Audio;
     instruments: Instruments;
     rigidBody: typeof RigidBody;
