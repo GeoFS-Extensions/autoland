@@ -9,9 +9,9 @@
     "url": "git+https://github.com/GeoFS-Autoland/autoland.git"
   },
   "scripts": {
-    "build": "npm i && node build.js && npx jsdoc -c jsdoc.json && npx prettier --write . && npx eslint --fix",
+    "build": "npm i && node build.js && npx jsdoc -c jsdoc.json && npx prettier --write . && npx eslint --fix --debug",
     "commit": "python commit.py",
-    "test": "npx prettier --check . && npx eslint && npx audit-ci --info && npm outdated"
+    "test": "npx prettier --check . && npx eslint --debug && npx audit-ci --info && npm outdated"
   },
   "devDependencies": {
     "@types/chrome": "latest",
