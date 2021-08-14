@@ -135,13 +135,9 @@ chrome.storage.onChanged.addListener(async () => {
   chrome.permissions.contains({ permissions: ["tabs"] }, async (result) => {
     if (result) {
       const [tab] = await chrome.tabs.query({
-        active: true,
         currentWindow: true,
+        url: "https://www.geo-fs.com/geofs.php",
       });
-      if (tab.url !== "https://www.geo-fs.com/geofs.php") {
-        options = newOptions;
-        return;
-      }
       if (reload) {
         options = newOptions;
         chrome.tabs.reload(tab.id);
