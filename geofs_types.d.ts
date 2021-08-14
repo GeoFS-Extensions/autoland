@@ -705,6 +705,99 @@ interface Camera {
   [key: string]: any;
 }
 
+export class ParticleEmitter {
+  constructor(a: any);
+  _birth: number;
+  _id: number;
+  _lastEmission: number;
+  _on: boolean;
+  _options: any;
+  
+  update(): void;
+  idOn(): boolean;
+  turnOn(): void;
+  turnOff(): void;
+  destroy(): void;
+
+  [key: string]: any;
+}
+
+export class Particle {
+  constructor(a: any, b: any);
+  _birth: number;
+  _id: number;
+  _emitter: any;
+  _options: {
+    url: string;
+    startOpacity: number;
+    endOpacity: number;
+    startScale: number;
+    endScale: number;
+    easing: string;
+    randomizeStartScale?: number;
+    randomizeEndScale?: number;
+    startRotation: number;
+    endRotation: number;
+    location: number[];
+    dtOpacity: number;
+    dtScale: number;
+    dtRotaion: number;
+    [key: string]: any;
+  }
+  currentLocation: number[];
+
+  create(): void;
+  setColor(a: any): void;
+  setLocation(a: number[]): void;
+  setRotation(a: any, b: any): void;
+  setScale(a: number): void;
+  setPositionOrientationAndScale(a: any, b: any, c: any): void;
+  update(a: any): void;
+  destroy(): void;
+
+  [key: string]: any;
+}
+
+interface Fx {
+  texture2url: {
+    // these three are different for some reason
+    1: string;
+    2: string;
+    3: string;
+    [key: string]: any;
+  };
+  particles: {[key: string]: any};
+  particleEmitters: {[key: string]: any};
+  lightBillboardOptions: {
+    altitudeMode: string;
+    sizeInMeters: boolean;
+    scaleByDistance: any;
+  };
+  papiBillboardOptions: {
+    altitudeMode: string;
+    sizeInMeters: boolean;
+    scaleByDistance: any;
+  }
+  particleBillboardOptions: {
+    sizeInMeters: boolean;
+  }
+  thresholdLightTemplate: number[][];
+  maxTimeSinceLastParticleEmission: number;
+
+  init(): void;
+  update(a: any): void;
+  setParticlesColor(a: any): void;
+
+  ParticuleEmitter: typeof ParticleEmitter;
+  Particle: typeof Particle;
+
+  lastRunwayTestLocation: number[];
+  templateCenter: number[];
+
+  [key: string]: any;
+  //  there are more types but honestly it's never going to be used so why bother
+}
+
 export interface GeoFS {
   runways: Runways;
   api: API;
@@ -762,7 +855,7 @@ export interface GeoFS {
 
   GlassPanel: typeof GlassPanel;
   camera: Camera;
-
+  fx: Fx;
   [key: string]: any;
 }
 
@@ -1192,7 +1285,7 @@ declare global {
     ui: Ui;
     flight: Flight;
     controls: Controls;
-    // TODO add fx
+    // TODO add multiplayer
     weather: Weather;
     audio: Audio;
     instruments: Instruments;
