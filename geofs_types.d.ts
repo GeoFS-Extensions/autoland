@@ -356,15 +356,45 @@ export declare class Aircraft {
 }
 
 export declare class PID {
-  // TODO PID Class
+  constructor(a: number, b: number, c: number);
+  _kp: number;
+  _ki: number;
+  _kd: number;
+  _maxOutput: number;
+  _minOutput: number;
+  _setPoint: number;
+  _integral: number;
+  _previousError: number;
+  _previousInput: number;
+  reset(): void;
+  initialize(a: number, b: number): void;
+  set(a: number, b: number, c: number): void;
+  compute(a: number, b: number): number;
+  [key: string]: any;
 }
 
 export declare class Indicator {
-  // TODO Indicator Class
+  constructor(a: InstrumentsDefinitions);
+  definition: InstrumentsDefinitions;
+  visibility: boolean;
+  scale(): void;
+  show(): void;
+  hide(): void;
+  setVisibility(a: boolean): void;
+  updateCockpitPosition(): void;
+  update(a: any): void;
+  destroy(): void;
+  [key: string]: any;
 }
 
 export declare class GlassPanel {
-  // TODO GlassPanel Class
+  constructor(a: any);
+  canvas: any; // geofs.api.Canvas;
+  entity: any;
+  update(): void;
+  updateCockpitPosition(): void;
+  destroy(): void;
+  [key: string]: any;
 }
 
 export declare type jQuery$ = string | Element | Element[] | Object; // things that can be passed to jQuery's $().
@@ -680,7 +710,7 @@ export interface GeoFS {
     instance?: Aircraft;
   };
 
-  GlassPanel: GlassPanel;
+  GlassPanel: typeof GlassPanel;
   [key: string]: any;
 }
 
@@ -976,6 +1006,41 @@ export interface Instruments {
   [key: string]: any;
 }
 
+export interface Audio {
+  soundplayer: HTMLAudioElement;
+  sounds: any;
+  on: boolean;
+
+  init(a: any[]): void;
+  loaded(a: any): void;
+  stopped(a: any): void;
+  update(): void;
+  toggleMute(): void;
+  stop(): void;
+  mute(): void;
+  unmute(): void;
+  playStartup(): void;
+  playShutdown(): void;
+  playSoundLoop(a: any, b: any): void;
+  stopSoundLoop(a: any): void;
+  impl: {
+    webAudio: {
+      [key: string]: any;
+    };
+    html5: {
+      [key: string]: any;
+    };
+    cordova: {
+      [key: string]: any;
+    };
+  };
+  peer2peer: {
+    init(a: string): void;
+    destroy(): void;
+  };
+  [key: string]: any;
+}
+
 // global variables
 declare global {
   interface Window {
@@ -983,9 +1048,11 @@ declare global {
     ui: Ui;
     flight: Flight;
     controls: Controls;
-    // TODO add weather, camera, audio, fx
+    // TODO add weather, camera, fx
+    audio: Audio;
     instruments: Instruments;
     rigidBody: typeof RigidBody;
+    Indicator: typeof Indicator;
 
     // constants
     GRAVITY: number;
@@ -1040,5 +1107,7 @@ declare global {
     SMOOTHING_FACTOR: number;
     SIX_STEP_WARNING: string[];
     PAGE_PATH: string;
+    L: any;
+    componentHandler: any;
   }
 }

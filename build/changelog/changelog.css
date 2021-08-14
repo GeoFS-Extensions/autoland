@@ -1,0 +1,22 @@
+/* Import fonts */
+@import url("https://fonts.googleapis.com/css2?family=Georama&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap");
+
+h1 {
+  font-family: Georama;
+  font-size: 40px;
+}
+
+div {
+  margin-left: 20px;
+}
+
+h3 {
+  font-family: Roboto Slab;
+  font-size: 20px;
+}
+
+div ul li {
+  font-size: 15px;
+  font-family: sans-serif;
+}

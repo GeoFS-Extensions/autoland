@@ -1,8 +1,11 @@
 "use strict";
+// this is a fix for chrome not allowing modules
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const module = {};
 /**
  * Requests the tabs permission from the user.
  */
-function requestPermissions() {
+function requestPermission() {
   chrome.permissions.contains(
     {
       permissions: ["tabs"],
@@ -21,6 +24,7 @@ function requestPermissions() {
 window.onload = function () {
   const button = document.getElementById("permissionRequestButton");
   button.addEventListener("click", function () {
-    requestPermissions();
+    requestPermission();
   });
 };
+module.exports = {};
