@@ -655,6 +655,56 @@ export interface Runways {
   [key: string]: any;
 }
 
+interface Camera {
+  animations: {
+    [key: string]: any;
+  };
+  currentMode: number;
+  urrentModeName: string;
+  currentDefinition: {[key: string]: any};
+  lastCurrentMode: number;
+  worldPosition: number[];
+  openSlave: boolean;
+  motionRange: number[];
+  FOVIncrement: number;
+  defaultFOV: number;
+  currentFOV: number;
+  minFOV: number;
+  maxFOV: number;
+  groundAvoidanceMargin: number;
+  groundAvoidanceIgnore: number;
+  shortestDistance: number;
+  cam: any;
+  lla: number[];
+  htr: number[];
+  hasMoved: boolean;
+
+  init(): void;
+  setFOV(a?: number): void;
+  increaseFOV(a?: number): void;
+  decreaseFOV(a?: number): void;
+  reset(): void;
+  cycle(): void;
+  set(a: number, b: any): void;
+  lookAround(a: number, b: number): boolean;
+  rotate(a: number, b: number, c: number): boolean;
+  translate(a: number, b: number, c: number): boolean;
+  setPosition(a: number, b: number, c: number): boolean;
+  isHandlingMouseRotation(): boolean;
+  setRotation(a: any, b: any, c: any): boolean;
+  saveRotation(): void;
+  saveOffset(): void;
+  setToNatural(): void;
+  avoidGrounds(): void;
+  getFlytToCoordinates(): number[];
+  update(a: any): void;
+  update3DOverlayPosition(): void;
+  openSlaveWindow(a: number): void;
+  updateSlaveData(): void;
+
+  [key: string]: any;
+}
+
 export interface GeoFS {
   runways: Runways;
   api: API;
@@ -711,6 +761,8 @@ export interface GeoFS {
   };
 
   GlassPanel: typeof GlassPanel;
+  camera: Camera;
+
   [key: string]: any;
 }
 
@@ -1056,6 +1108,7 @@ export class Wind {
   randomize(): void;
   computeAndSet(a: number[]): void;
   computeTerrainLift(a: number[]): any;
+  [key: string]: any;
 }
 
 interface Weather {
@@ -1129,6 +1182,7 @@ interface Weather {
     init(): void;
     update(a: number): void;
   }
+  [key: string]: any;
 }
 
 // global variables
@@ -1138,7 +1192,7 @@ declare global {
     ui: Ui;
     flight: Flight;
     controls: Controls;
-    // TODO add camera, fx
+    // TODO add fx
     weather: Weather;
     audio: Audio;
     instruments: Instruments;
