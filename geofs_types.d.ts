@@ -1041,6 +1041,96 @@ export interface Audio {
   [key: string]: any;
 }
 
+export class Wind {
+  constructor(a: number, b: number, c: number, d: number);
+  mainDirection: number;
+  speedKnots: number;
+  speedMs: number;
+  vector: number[];
+  vectorMs: number[];
+  vectorCross: number[];
+  floor: number;
+  ceiling: number;
+  direction: number;
+  speed: number;
+  randomize(): void;
+  computeAndSet(a: number[]): void;
+  computeTerrainLift(a: number[]): any;
+}
+
+interface Weather {
+  dataProxy: string;
+  minimumCloudCover: number;
+  updateRate: number;
+  timeRatio: number;
+  seasonRatio: number;
+  contrailTemperatureThreshold: number;
+  contrailAltitude: number;
+  defaults: {
+    cloudCover: number;
+    ceiling: number;
+    cloudCoverThickness: number;
+    fogDensity: number;
+    fogCeiling: number;
+    fogBottom: number;
+    precipitationType: string;
+    precipitationAmount: number;
+    thunderstorm: number;
+    visibility: number;
+    windDirection: number;
+    windSpeedMS: number;
+    windGustMS: number;
+    windLayerHeight: number;
+    windLayerNb: number;
+    turbulences: number;
+    thermals: number;
+    airPressureSL: number;
+    airTemperatureSL: number;
+  };
+  definitionBounds: {
+    cloudCover: number[];
+    ceiling: number[];
+    fogDensity: number[];
+    precipitationAmount: number[];
+    thunderstorm: number[];
+    windDirection: number[];
+    windSpeedMS: number[];
+    windGustMS: number[];
+    turbulences: number[];
+    thermals: number[];
+  };
+  init(a: any): void;
+  reset(a: any): void;
+  refresh(a: any): void;
+  sanitizedDefinition(a: any): any;
+  generateDefinition(a: any, b: any): any;
+  setManual(): void;
+  serAdvanced(): void;
+  set(a: any, b: any): void;
+  update(a: any): void;
+  setWindIndicatorVisibility(a: any): void;
+  setDateAndTime(a: any): void;
+  getLocalTurbulence(a: any): number[];
+  thermals: {
+    currentVector: number[];
+    minradius: number;
+    maxradius: number;
+    minspeed: number;
+    maxspeed: number;
+    invertionRange: number;
+  };
+  setThermals(a: any): void;
+  getLocalThermal(a: number[]): number[];
+  Wind: typeof Wind;
+  initWind(a: number, b: number): void;
+  windOff(): void;
+
+  atmosphere: {
+    init(): void;
+    update(a: number): void;
+  }
+}
+
 // global variables
 declare global {
   interface Window {
@@ -1048,7 +1138,8 @@ declare global {
     ui: Ui;
     flight: Flight;
     controls: Controls;
-    // TODO add weather, camera, fx
+    // TODO add camera, fx
+    weather: Weather;
     audio: Audio;
     instruments: Instruments;
     rigidBody: typeof RigidBody;
