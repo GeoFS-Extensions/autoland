@@ -661,7 +661,7 @@ interface Camera {
   };
   currentMode: number;
   urrentModeName: string;
-  currentDefinition: {[key: string]: any};
+  currentDefinition: { [key: string]: any };
   lastCurrentMode: number;
   worldPosition: number[];
   openSlave: boolean;
@@ -712,7 +712,7 @@ export class ParticleEmitter {
   _lastEmission: number;
   _on: boolean;
   _options: any;
-  
+
   update(): void;
   idOn(): boolean;
   turnOn(): void;
@@ -743,7 +743,7 @@ export class Particle {
     dtScale: number;
     dtRotaion: number;
     [key: string]: any;
-  }
+  };
   currentLocation: number[];
 
   create(): void;
@@ -766,8 +766,8 @@ interface Fx {
     3: string;
     [key: string]: any;
   };
-  particles: {[key: string]: any};
-  particleEmitters: {[key: string]: any};
+  particles: { [key: string]: any };
+  particleEmitters: { [key: string]: any };
   lightBillboardOptions: {
     altitudeMode: string;
     sizeInMeters: boolean;
@@ -777,10 +777,10 @@ interface Fx {
     altitudeMode: string;
     sizeInMeters: boolean;
     scaleByDistance: any;
-  }
+  };
   particleBillboardOptions: {
     sizeInMeters: boolean;
-  }
+  };
   thresholdLightTemplate: number[][];
   maxTimeSinceLastParticleEmission: number;
 
@@ -1274,7 +1274,7 @@ interface Weather {
   atmosphere: {
     init(): void;
     update(a: number): void;
-  }
+  };
   [key: string]: any;
 }
 
@@ -1290,7 +1290,7 @@ export class User {
   visibleGear: boolean;
   referencePoint: {
     lla: number[];
-  }
+  };
   currentServerTime: number;
   lastHeartbeatTime: number;
   isTraffic: boolean | undefined;
@@ -1315,8 +1315,8 @@ export class User {
 
 interface Multiplater {
   nbUsers: number;
-  users: {[id: string]: User};
-  visibleUsers: {[id: string]: User};
+  users: { [id: string]: User };
+  visibleUsers: { [id: string]: User };
   numberOfLOD: number;
   captainIconUrl: string;
   premiumIconUrl: string;
@@ -1330,7 +1330,7 @@ interface Multiplater {
   trafficHeartBeatPeriod: number;
   contrailEmitters: {
     [key: number]: any;
-  }
+  };
   mapUpdatePeriod: number;
   myId: string;
   lastRequest: any;
