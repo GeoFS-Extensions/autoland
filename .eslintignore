@@ -1,7 +1,7 @@
 # ignore the massive files
 
-**/ap++.js
-**/fmc.js
+**/scripts/
+**/node_modules/
 
 # Ignore the generated docs
 docs/

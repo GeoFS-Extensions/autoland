@@ -12,11 +12,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": [
-        "scripts/ap++.js",
-        "scripts/fmc.js",
-        "ui/oninstall/oninstall.html"
-      ],
+      "resources": ["scripts/*", "ui/oninstall/oninstall.html"],
       "matches": ["*://www.geo-fs.com/*"]
     }
   ],

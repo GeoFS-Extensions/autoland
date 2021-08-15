@@ -90,7 +90,7 @@ function addScript(type, tabId) {
     func: (name) => {
       switch (name) {
         case "ap":
-          name = "ap++";
+          name = "autopilot_pp";
           break;
       }
       const scriptTag = document.createElement("script");

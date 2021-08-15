@@ -104,7 +104,7 @@ function addScript(type: scripts, tabId: number) {
     func: (name: string): void => {
       switch (name) {
         case "ap":
-          name = "ap++";
+          name = "autopilot_pp";
           break;
       }
       const scriptTag = document.createElement("script");
