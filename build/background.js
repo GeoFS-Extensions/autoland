@@ -127,6 +127,7 @@ chrome.storage.onChanged.addListener(async () => {
         options = newOptions;
         chrome.tabs.reload(tab.id);
       } else {
+        toLoad.sort();
         for (const key of toLoad) {
           addScript(key, tab.id);
         }
@@ -136,6 +137,7 @@ chrome.storage.onChanged.addListener(async () => {
 });
 /**
  * Adds the needed scripts listeners. Checks to make sure the extension has the tabs permission before adding the listener.
+ * This is only for new tabs. Updates to tabs will be run through the chrome.storage.onChanged listener
  */
 function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
@@ -146,6 +148,7 @@ function addScriptsListener() {
         }
         // the tab is definitely a geo tab
         const keys = Object.keys(options);
+        keys.sort();
         for (const key of keys) {
           if (options[key]) {
             addScript(key, tabId);
@@ -173,6 +176,7 @@ chrome.runtime.onInstalled.addListener((details) => {
     chrome.tabs.create({
       url: chrome.runtime.getURL("changelog/changelog.html"),
     });
+    writeToStorage({ shouldBeUpdated: false }, "update");
   }
 });
 module.exports = {};
