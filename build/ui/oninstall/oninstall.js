@@ -22,9 +22,12 @@ function requestPermission() {
   );
 }
 window.onload = function () {
+  document.getElementById("tutorial").style.display = "none";
   const button = document.getElementById("permissionRequestButton");
   button.addEventListener("click", function () {
     requestPermission();
+    document.getElementById("tutorial").style.display = "";
+    document.getElementById("permissionRequest").style.display = "none";
   });
 };
 module.exports = {};

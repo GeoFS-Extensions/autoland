@@ -28,7 +28,7 @@ li {
 }
 
 img {
-  border: 3px solid black;
+  border: 2px solid black;
   border-radius: 10px;
 }
 
@@ -44,7 +44,7 @@ a:hover {
 
 button {
   margin-left: 30px;
-  background-color: #5482d8;
+  background-color: #5883d1;
   color: #ffffff;
   border: none;
   font-family: sans-serif;
@@ -52,6 +52,14 @@ button {
   outline: none;
   border: 0;
   margin-bottom: 2px;
-  width: 80px;
-  height: 30px;
+  width: 75px;
+  height: 33px;
+}
+
+div#tutorial {
+  margin-top: 40px;
+}
+
+div#tutorial img {
+  margin-left: 15px;
 }

@@ -655,6 +655,149 @@ export interface Runways {
   [key: string]: any;
 }
 
+interface Camera {
+  animations: {
+    [key: string]: any;
+  };
+  currentMode: number;
+  urrentModeName: string;
+  currentDefinition: { [key: string]: any };
+  lastCurrentMode: number;
+  worldPosition: number[];
+  openSlave: boolean;
+  motionRange: number[];
+  FOVIncrement: number;
+  defaultFOV: number;
+  currentFOV: number;
+  minFOV: number;
+  maxFOV: number;
+  groundAvoidanceMargin: number;
+  groundAvoidanceIgnore: number;
+  shortestDistance: number;
+  cam: any;
+  lla: number[];
+  htr: number[];
+  hasMoved: boolean;
+
+  init(): void;
+  setFOV(a?: number): void;
+  increaseFOV(a?: number): void;
+  decreaseFOV(a?: number): void;
+  reset(): void;
+  cycle(): void;
+  set(a: number, b: any): void;
+  lookAround(a: number, b: number): boolean;
+  rotate(a: number, b: number, c: number): boolean;
+  translate(a: number, b: number, c: number): boolean;
+  setPosition(a: number, b: number, c: number): boolean;
+  isHandlingMouseRotation(): boolean;
+  setRotation(a: any, b: any, c: any): boolean;
+  saveRotation(): void;
+  saveOffset(): void;
+  setToNatural(): void;
+  avoidGrounds(): void;
+  getFlytToCoordinates(): number[];
+  update(a: any): void;
+  update3DOverlayPosition(): void;
+  openSlaveWindow(a: number): void;
+  updateSlaveData(): void;
+
+  [key: string]: any;
+}
+
+export class ParticleEmitter {
+  constructor(a: any);
+  _birth: number;
+  _id: number;
+  _lastEmission: number;
+  _on: boolean;
+  _options: any;
+
+  update(): void;
+  idOn(): boolean;
+  turnOn(): void;
+  turnOff(): void;
+  destroy(): void;
+
+  [key: string]: any;
+}
+
+export class Particle {
+  constructor(a: any, b: any);
+  _birth: number;
+  _id: number;
+  _emitter: any;
+  _options: {
+    url: string;
+    startOpacity: number;
+    endOpacity: number;
+    startScale: number;
+    endScale: number;
+    easing: string;
+    randomizeStartScale?: number;
+    randomizeEndScale?: number;
+    startRotation: number;
+    endRotation: number;
+    location: number[];
+    dtOpacity: number;
+    dtScale: number;
+    dtRotaion: number;
+    [key: string]: any;
+  };
+  currentLocation: number[];
+
+  create(): void;
+  setColor(a: any): void;
+  setLocation(a: number[]): void;
+  setRotation(a: any, b: any): void;
+  setScale(a: number): void;
+  setPositionOrientationAndScale(a: any, b: any, c: any): void;
+  update(a: any): void;
+  destroy(): void;
+
+  [key: string]: any;
+}
+
+interface Fx {
+  texture2url: {
+    // these three are different for some reason
+    1: string;
+    2: string;
+    3: string;
+    [key: string]: any;
+  };
+  particles: { [key: string]: any };
+  particleEmitters: { [key: string]: any };
+  lightBillboardOptions: {
+    altitudeMode: string;
+    sizeInMeters: boolean;
+    scaleByDistance: any;
+  };
+  papiBillboardOptions: {
+    altitudeMode: string;
+    sizeInMeters: boolean;
+    scaleByDistance: any;
+  };
+  particleBillboardOptions: {
+    sizeInMeters: boolean;
+  };
+  thresholdLightTemplate: number[][];
+  maxTimeSinceLastParticleEmission: number;
+
+  init(): void;
+  update(a: any): void;
+  setParticlesColor(a: any): void;
+
+  ParticuleEmitter: typeof ParticleEmitter;
+  Particle: typeof Particle;
+
+  lastRunwayTestLocation: number[];
+  templateCenter: number[];
+
+  [key: string]: any;
+  //  there are more types but honestly it's never going to be used so why bother
+}
+
 export interface GeoFS {
   runways: Runways;
   api: API;
@@ -711,6 +854,8 @@ export interface GeoFS {
   };
 
   GlassPanel: typeof GlassPanel;
+  camera: Camera;
+  fx: Fx;
   [key: string]: any;
 }
 
@@ -1041,6 +1186,209 @@ export interface Audio {
   [key: string]: any;
 }
 
+export class Wind {
+  constructor(a: number, b: number, c: number, d: number);
+  mainDirection: number;
+  speedKnots: number;
+  speedMs: number;
+  vector: number[];
+  vectorMs: number[];
+  vectorCross: number[];
+  floor: number;
+  ceiling: number;
+  direction: number;
+  speed: number;
+  randomize(): void;
+  computeAndSet(a: number[]): void;
+  computeTerrainLift(a: number[]): any;
+  [key: string]: any;
+}
+
+interface Weather {
+  dataProxy: string;
+  minimumCloudCover: number;
+  updateRate: number;
+  timeRatio: number;
+  seasonRatio: number;
+  contrailTemperatureThreshold: number;
+  contrailAltitude: number;
+  defaults: {
+    cloudCover: number;
+    ceiling: number;
+    cloudCoverThickness: number;
+    fogDensity: number;
+    fogCeiling: number;
+    fogBottom: number;
+    precipitationType: string;
+    precipitationAmount: number;
+    thunderstorm: number;
+    visibility: number;
+    windDirection: number;
+    windSpeedMS: number;
+    windGustMS: number;
+    windLayerHeight: number;
+    windLayerNb: number;
+    turbulences: number;
+    thermals: number;
+    airPressureSL: number;
+    airTemperatureSL: number;
+  };
+  definitionBounds: {
+    cloudCover: number[];
+    ceiling: number[];
+    fogDensity: number[];
+    precipitationAmount: number[];
+    thunderstorm: number[];
+    windDirection: number[];
+    windSpeedMS: number[];
+    windGustMS: number[];
+    turbulences: number[];
+    thermals: number[];
+  };
+  init(a: any): void;
+  reset(a: any): void;
+  refresh(a: any): void;
+  sanitizedDefinition(a: any): any;
+  generateDefinition(a: any, b: any): any;
+  setManual(): void;
+  serAdvanced(): void;
+  set(a: any, b: any): void;
+  update(a: any): void;
+  setWindIndicatorVisibility(a: any): void;
+  setDateAndTime(a: any): void;
+  getLocalTurbulence(a: any): number[];
+  thermals: {
+    currentVector: number[];
+    minradius: number;
+    maxradius: number;
+    minspeed: number;
+    maxspeed: number;
+    invertionRange: number;
+  };
+  setThermals(a: any): void;
+  getLocalThermal(a: number[]): number[];
+  Wind: typeof Wind;
+  initWind(a: number, b: number): void;
+  windOff(): void;
+
+  atmosphere: {
+    init(): void;
+    update(a: number): void;
+  };
+  [key: string]: any;
+}
+
+export class User {
+  constructor(a: any);
+  id: string;
+  acid: number;
+  callsign: string;
+  aircraft: number;
+  lod: number;
+  model: null;
+  lastUpdate: any;
+  visibleGear: boolean;
+  referencePoint: {
+    lla: number[];
+  };
+  currentServerTime: number;
+  lastHeartbeatTime: number;
+  isTraffic: boolean | undefined;
+  updated: boolean;
+
+  heartBeat(): void;
+  update(a: any, b: any): void;
+  getLOD(a: any): 0 | 1 | 2 | 3;
+  updateAircraft(a: any): void;
+  updateContrails(): void;
+  updateModel(a: any): void;
+  addCallsign(a: string, b: string): void;
+  removeCallsign(): void;
+  removeFromWorld(): void;
+  removeModels(): void;
+  remove(): void;
+  getCoordinates(): number[];
+  isOnGround(): boolean;
+
+  [key: string]: any;
+}
+
+interface Multiplater {
+  nbUsers: number;
+  users: { [id: string]: User };
+  visibleUsers: { [id: string]: User };
+  numberOfLOD: number;
+  captainIconUrl: string;
+  premiumIconUrl: string;
+  minUpdateDelay: number;
+  hearbeatLife: number;
+  userLife: number;
+  userHalfLife: number;
+  userHeartBeatPeriod: number;
+  trafficLife: number;
+  trafficHalfLife: number;
+  trafficHeartBeatPeriod: number;
+  contrailEmitters: {
+    [key: number]: any;
+  };
+  mapUpdatePeriod: number;
+  myId: string;
+  lastRequest: any;
+  lastResponse: any;
+  lastJoinedCoordinates: string;
+  lastRequestTime: number;
+  serverTimeOffset: number;
+  labelVisibilityRange: number;
+  farVisibilityRange: number;
+  lowVisibilityRange: number;
+  nearVisibilityRange: number;
+  chatMessage: string;
+  chatMessageId: number;
+  on: boolean;
+  started: boolean;
+  callsignPlacemarkAltitude: number;
+  updateFunctions: any[];
+  init(): void;
+  stop(): void;
+  startUpdates(): void;
+  stopUpdates(a?: any): void;
+  getServerTime: number;
+  getUser(a: string): User;
+  flightSharing: {
+    requestTimeout: number;
+    host: boolean;
+    control: boolean;
+    status: string;
+    willpeer: User;
+    waspeer: User;
+    peer: User;
+    init(): void;
+    request(a: User): void;
+    incoming(a: User): void;
+    accept(a: User): void;
+    accepted(a: User): void;
+    peerUpdate(a: any): void;
+    swapControl(a: boolean): void;
+    refuse(a?: any): void;
+    stop(): void;
+    [key: string]: any;
+  };
+
+  updateUsers(a?: User[]): void;
+  startMapUpdate(): void;
+  update(a: number): void;
+  errorCallback(a?: any): void;
+  updateCallback(a: any): void;
+  sendUpdate(): void;
+  blockUser(a: string): void;
+  banUser(a: string): void;
+  laodModels(a: any): any[];
+  setNbUsers(a: number): void;
+  setChatMessage(a: string): void;
+
+  [key: string]: any;
+}
+
 // global variables
 declare global {
   interface Window {
@@ -1048,7 +1396,8 @@ declare global {
     ui: Ui;
     flight: Flight;
     controls: Controls;
-    // TODO add weather, camera, fx
+    weather: Weather;
+    multiplayer: Multiplater;
     audio: Audio;
     instruments: Instruments;
     rigidBody: typeof RigidBody;
