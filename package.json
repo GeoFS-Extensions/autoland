@@ -14,17 +14,17 @@
     "test": "npx prettier --check . && npx eslint . --debug && npx audit-ci --info && npm outdated"
   },
   "devDependencies": {
-    "@types/chrome": "latest",
-    "@types/jquery": "latest",
-    "@typescript-eslint/eslint-plugin": "latest",
-    "@typescript-eslint/parser": "latest",
-    "async": "latest",
-    "audit-ci": "latest",
-    "eslint": "latest",
-    "eslint-config-prettier": "latest",
-    "fs-extra": "latest",
-    "jsdoc": "latest",
-    "prettier": "latest",
-    "typescript": "latest"
+    "@types/chrome": "0.0.154",
+    "@types/jquery": "3.5.6",
+    "@typescript-eslint/eslint-plugin": "4.29.1",
+    "@typescript-eslint/parser": "4.29.1",
+    "async": "3.2.1",
+    "audit-ci": "4.1.0",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "fs-extra": "10.0.0",
+    "jsdoc": "3.6.7",
+    "prettier": "2.3.2",
+    "typescript": "4.3.5"
   }
 }

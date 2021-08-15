@@ -6,17 +6,6 @@ const path = require("path");
 const series = require("async").series;
 const exec = require("child_process").exec;
 
-var package = fs.readFileSync("package.json", { encoding: "utf8" });
-package = JSON.parse(package);
-
-for (const [key] of Object.entries(package.devDependencies)) {
-  package.devDependencies[key] = "latest";
-}
-
-fs.writeFileSync("package.json", JSON.stringify(package));
-
-console.log("package.json ready!");
-
 function deleteFolderRecursive(path) {
   if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
     fs.readdirSync(path).forEach(function (file) {
