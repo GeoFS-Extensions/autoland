@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "homepage": "https://geofsautoland.wixsite.com/autoland",
   "author": "Nicolas Rodriguez, Guy Adler",
+  "license": "GPL-3",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/GeoFS-Autoland/autoland.git"
