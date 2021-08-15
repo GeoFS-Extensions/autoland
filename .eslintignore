@@ -1,4 +1,7 @@
-# ignore the massive files that we won't change
+# ignore the massive files
 
 **/ap++.js
 **/fmc.js
+
+# Ignore the generated docs
+docs/

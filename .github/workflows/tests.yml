@@ -62,7 +62,7 @@ jobs:
         run: npm i
 
       - name: Lint
-        run: sudo npx eslint  --debug
+        run: sudo npx eslint .  --debug
 
   job_4:
     name: Security
