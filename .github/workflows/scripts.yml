@@ -113,7 +113,7 @@ jobs:
         with:
           name: spoilers_arming
           path: extension/scripts
-          
+
       - name: Build extension
         run: |
           npm i
