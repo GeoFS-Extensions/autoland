@@ -118,3 +118,8 @@ jobs:
         run: |
           npm i
           npm run build
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update scripts
