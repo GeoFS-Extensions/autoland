@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repo: GeoFS-Autoland/autopilot-pp
+          repository: GeoFS-Autoland/autopilot-pp
 
       - name: Setup node v16
         uses: actions/setup-node@v2
@@ -38,7 +38,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repo: GeoFS-Autoland/fmc-requirejs
+          repository: GeoFS-Autoland/fmc-requirejs
 
       - name: Setup node v16
         uses: actions/setup-node@v2
@@ -64,7 +64,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repo: GeoFS-Autoland/spoilers-arming
+          repository: GeoFS-Autoland/spoilers-arming
 
       - name: Setup node v16
         uses: actions/setup-node@v2
@@ -83,7 +83,7 @@ jobs:
           path: dist/spoilers_arming.js
 
   job_4:
-    name: Commit to main repo
+    name: Commit to main repository
     needs: [job_1, job_2, job_3]
     runs-on: ubuntu-latest
 
