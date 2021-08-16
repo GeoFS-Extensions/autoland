@@ -6,7 +6,7 @@ on:
 jobs:
   job_1:
     name: Build (AP++)
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -32,7 +32,7 @@ jobs:
 
   job_2:
     name: Build (FMC)
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -58,7 +58,7 @@ jobs:
 
   job_3:
     name: Build (Spoilers Arming)
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -84,7 +84,7 @@ jobs:
 
   job_4:
     name: Commit to main repo
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
