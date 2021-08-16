@@ -84,6 +84,7 @@ jobs:
 
   job_4:
     name: Commit to main repo
+    needs: job_1, job_2, job_3
     runs-on: ubuntu-latest
 
     steps:
