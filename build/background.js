@@ -167,6 +167,7 @@ chrome.runtime.onUpdateAvailable.addListener((details) => {
   writeToStorage({ shouldBeUpdated: true, new: details.version }, "update");
 });
 chrome.runtime.onInstalled.addListener((details) => {
+  writeToStorage({ shouldBeUpdated: false }, "update");
   if (details.reason == "install") {
     chrome.tabs.create({
       url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
@@ -176,7 +177,6 @@ chrome.runtime.onInstalled.addListener((details) => {
     chrome.tabs.create({
       url: chrome.runtime.getURL("changelog/changelog.html"),
     });
-    writeToStorage({ shouldBeUpdated: false }, "update");
   }
 });
 module.exports = {};
