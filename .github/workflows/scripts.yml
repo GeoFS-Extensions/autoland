@@ -1,0 +1,125 @@
+name: Update Scripts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job_1:
+    name: Build (AP++)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: GeoFS-Autoland/autopilot-pp
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.6.2"
+
+      - name: Build
+        run: |
+          npm i
+          npm run build
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: autopilot_pp
+          path: dist/autopilot_pp.js
+
+  job_2:
+    name: Build (FMC)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: GeoFS-Autoland/fmc-requirejs
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.6.2"
+
+      - name: Build
+        run: |
+          npm i
+          npm run build
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: fmc
+          path: dist/fmc.js
+
+  job_3:
+    name: Build (Spoilers Arming)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: GeoFS-Autoland/spoilers-arming
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.6.2"
+
+      - name: Build
+        run: |
+          npm i
+          npm run build
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: spoilers_arming
+          path: dist/spoilers_arming.js
+
+  job_4:
+    name: Commit to main repository
+    needs: [job_1, job_2, job_3]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.6.2"
+
+      - name: Download AP++
+        uses: actions/download-artifact@v2
+        with:
+          name: autopilot_pp
+          path: extension/scripts
+
+      - name: Download FMC
+        uses: actions/download-artifact@v2
+        with:
+          name: fmc
+          path: extension/scripts
+
+      - name: Download Spoilers Arming
+        uses: actions/download-artifact@v2
+        with:
+          name: spoilers_arming
+          path: extension/scripts
+
+      - name: Build extension
+        run: |
+          npm i
+          npm run build
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update scripts
