@@ -7,11 +7,13 @@ export = {};
 interface PopupState {
   ap: boolean;
   fmc: boolean;
+  spoilerarming: boolean;
 }
 
 interface Buttons {
   ap: HTMLElement;
   fmc: HTMLElement;
+  spoilerarming: HTMLElement;
 }
 
 /**
@@ -22,6 +24,7 @@ function emptyButtons(): Buttons {
   return {
     ap: undefined,
     fmc: undefined,
+    spoilerarming: undefined,
   };
 }
 

@@ -10,6 +10,7 @@ function emptyButtons() {
   return {
     ap: undefined,
     fmc: undefined,
+    spoilerarming: undefined,
   };
 }
 /**

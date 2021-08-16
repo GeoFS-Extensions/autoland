@@ -59,6 +59,7 @@ async function readOptions() {
         data = {
           ap: false,
           fmc: false,
+          spoilerarming: false,
         };
         writeToStorage(data, "options");
       } else {
@@ -69,6 +70,7 @@ async function readOptions() {
       data = {
         ap: false,
         fmc: false,
+        spoilerarming: false,
       };
       writeToStorage(data, "options");
     }
@@ -91,6 +93,9 @@ function addScript(type, tabId) {
       switch (name) {
         case "ap":
           name = "autopilot_pp";
+          break;
+        case "spoilerarming":
+          name = "spoilers_arming";
           break;
       }
       const scriptTag = document.createElement("script");
@@ -142,16 +147,18 @@ chrome.storage.onChanged.addListener(async () => {
 function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
-      chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+      chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         if (tab.url != "https://www.geo-fs.com/geofs.php") {
           return;
         }
         // the tab is definitely a geo tab
-        const keys = Object.keys(options);
-        keys.sort();
+        const keys = Object.keys(options).sort();
         for (const key of keys) {
           if (options[key]) {
             addScript(key, tabId);
+            if (key == "ap") {
+              await new Promise((r) => setTimeout(r, 2000));
+            }
           }
         }
       });

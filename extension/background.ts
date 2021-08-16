@@ -7,6 +7,7 @@ export = {};
 interface options {
   ap: boolean;
   fmc: boolean;
+  spoilerarming: boolean;
 }
 
 type scripts = keyof options;
@@ -71,6 +72,7 @@ async function readOptions(): Promise<options> {
         data = {
           ap: false,
           fmc: false,
+          spoilerarming: false,
         };
         writeToStorage(data, "options");
       } else {
@@ -81,6 +83,7 @@ async function readOptions(): Promise<options> {
       data = {
         ap: false,
         fmc: false,
+        spoilerarming: false,
       };
       writeToStorage(data, "options");
     }
@@ -105,6 +108,9 @@ function addScript(type: scripts, tabId: number) {
       switch (name) {
         case "ap":
           name = "autopilot_pp";
+          break;
+        case "spoilerarming":
+          name = "spoilers_arming";
           break;
       }
       const scriptTag = document.createElement("script");
@@ -158,17 +164,19 @@ chrome.storage.onChanged.addListener(async () => {
 function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
-      chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+      chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         if (tab.url != "https://www.geo-fs.com/geofs.php") {
           return;
         }
         // the tab is definitely a geo tab
 
-        const keys = Object.keys(options) as Array<scripts>;
-        keys.sort();
+        const keys = Object.keys(options).sort() as Array<scripts>;
         for (const key of keys) {
           if (options[key]) {
             addScript(key, tabId);
+            if (key == "ap") {
+              await new Promise((r) => setTimeout(r, 2000));
+            }
           }
         }
       });
