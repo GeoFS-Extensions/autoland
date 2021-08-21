@@ -151,7 +151,7 @@ function checkPermissions() {
   );
 }
 
-let buttons, options;
+let buttons: any, options: any;
 
 window.onload = async () => {
   buttons = getButtons();
