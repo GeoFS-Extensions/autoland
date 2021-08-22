@@ -94,7 +94,14 @@ function updateButtons(buttons: Buttons, options: PopupState) {
       buttons[key].className = "off";
       if (key == "ap") {
         buttons.fmc.style.display = "none";
-        options = writeToStorage({ ap: false, fmc: false }, "options");
+        options = writeToStorage(
+          {
+            ap: false,
+            fmc: false,
+            spoilerarming: options.spoilerarming,
+          } as PopupState,
+          "options"
+        );
       }
     }
   });

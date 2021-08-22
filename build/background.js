@@ -128,6 +128,9 @@ chrome.storage.onChanged.addListener(async () => {
         currentWindow: true,
         url: "https://www.geo-fs.com/geofs.php",
       });
+      if (!tab) {
+        return;
+      }
       if (reload) {
         options = newOptions;
         chrome.tabs.reload(tab.id);
@@ -142,7 +145,7 @@ chrome.storage.onChanged.addListener(async () => {
 });
 /**
  * Adds the needed scripts listeners. Checks to make sure the extension has the tabs permission before adding the listener.
- * This is only for new tabs. Updates to tabs will be run through the chrome.storage.onChanged listener
+ * This is only for new tabs. Updates to tabs should be run through the chrome.storage.onChanged listener.
  */
 function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
@@ -156,9 +159,6 @@ function addScriptsListener() {
         for (const key of keys) {
           if (options[key]) {
             addScript(key, tabId);
-            if (key == "ap") {
-              await new Promise((r) => setTimeout(r, 2000));
-            }
           }
         }
       });
@@ -176,6 +176,7 @@ chrome.runtime.onUpdateAvailable.addListener((details) => {
 chrome.runtime.onInstalled.addListener((details) => {
   writeToStorage({ shouldBeUpdated: false }, "update");
   if (details.reason == "install") {
+    writeToStorage({ ap: false, fmc: false, spoilerarming: false }, "options");
     chrome.tabs.create({
       url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
     });

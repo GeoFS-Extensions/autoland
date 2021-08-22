@@ -75,7 +75,14 @@ function updateButtons(buttons, options) {
       buttons[key].className = "off";
       if (key == "ap") {
         buttons.fmc.style.display = "none";
-        options = writeToStorage({ ap: false, fmc: false }, "options");
+        options = writeToStorage(
+          {
+            ap: false,
+            fmc: false,
+            spoilerarming: options.spoilerarming,
+          },
+          "options"
+        );
       }
     }
   });
