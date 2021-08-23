@@ -100,8 +100,6 @@ jobs:
       - name: Build
         run: |
           npm i
-          cd node_modules
-          ls -A
           npm run build
 
       - name: Upload as artifact
