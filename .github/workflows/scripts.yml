@@ -17,7 +17,7 @@ jobs:
       - name: Setup node v16
         uses: actions/setup-node@v2
         with:
-          node-version: "16.6.2"
+          node-version: "16.x"
 
       - name: Build
         run: |
@@ -43,7 +43,7 @@ jobs:
       - name: Setup node v16
         uses: actions/setup-node@v2
         with:
-          node-version: "16.6.2"
+          node-version: "16.x"
 
       - name: Build
         run: |
@@ -69,7 +69,7 @@ jobs:
       - name: Setup node v16
         uses: actions/setup-node@v2
         with:
-          node-version: "16.6.2"
+          node-version: "16.x"
 
       - name: Build
         run: |
@@ -94,7 +94,7 @@ jobs:
       - name: Setup node v16
         uses: actions/setup-node@v2
         with:
-          node-version: "16.6.2"
+          node-version: "16.x"
 
       - name: Download AP++
         uses: actions/download-artifact@v2
