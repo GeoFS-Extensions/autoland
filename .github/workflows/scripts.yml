@@ -122,4 +122,4 @@ jobs:
       - name: Commit
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Update scripts
+          commit_message: '🤖: Update scripts'
