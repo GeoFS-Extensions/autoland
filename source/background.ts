@@ -15,7 +15,7 @@ type scripts = keyof options;
 /**
  * Gets data from chrome storage.
  * @param {string} name The name of the data in chrome storage.
- * @returns {options} The data in chrome storage.
+ * @returns {any} The data in chrome storage.
  */
 function getStorageData(name: string): Promise<any> {
   return new Promise((resolve, reject) => {
@@ -48,13 +48,14 @@ function writeToStorage(toWrite: any, name: string): any {
 /**
  * Checks if the given options are valid.
  * @param {options} options The options to check.
- * @returns {boolean} Whether the options are valid (true) or not (false).
+ * @returns {options} A valid version of the options (or the current options if they are valid).
  */
-function optionsAreValid(options: options): boolean {
-  if (!options.ap && options.fmc) {
-    return false;
+function optionsAreValid(toCheck: options): options {
+  // FMC can't be on when AP++ is off
+  if (!toCheck.ap && toCheck.fmc) {
+    toCheck.fmc = false;
   }
-  return true;
+  return toCheck;
 }
 
 /**
@@ -66,18 +67,7 @@ async function readOptions(): Promise<options> {
   await getStorageData("options").then((storage) => {
     if (storage.options) {
       // there are prefs saved, test them
-      data = storage.options;
-      if (!optionsAreValid(data)) {
-        // options aren't valid, set to default and save
-        data = {
-          ap: false,
-          fmc: false,
-          spoilerarming: false,
-        };
-        writeToStorage(data, "options");
-      } else {
-        // options are valid, keep current options
-      }
+      data = optionsAreValid(storage.options);
     } else {
       // there are no prefs saved, set to default and save
       data = {
