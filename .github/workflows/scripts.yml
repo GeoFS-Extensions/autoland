@@ -3,6 +3,9 @@ name: Update Scripts
 on:
   workflow_dispatch:
 
+  schedule:
+    - cron: "0 0 * * *"
+
 jobs:
   job_1:
     name: Build (AP++)
@@ -100,19 +103,19 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: autopilot_pp
-          path: extension/scripts
+          path: source/scripts
 
       - name: Download FMC
         uses: actions/download-artifact@v2
         with:
           name: fmc
-          path: extension/scripts
+          path: source/scripts
 
       - name: Download Spoilers Arming
         uses: actions/download-artifact@v2
         with:
           name: spoilers_arming
-          path: extension/scripts
+          path: source/scripts
 
       - name: Build extension
         run: |
