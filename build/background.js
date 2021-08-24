@@ -2,6 +2,7 @@
 // this is a fix for chrome not allowing modules
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const module = {};
+let devModeEnabled = false;
 /**
  * Gets data from chrome storage.
  * @param {string} name The name of the data in chrome storage.
@@ -21,16 +22,14 @@ function getStorageData(name) {
  * Saves something to chrome storage.
  * @param {any} toWrite A JSON object containing the data to save.
  * @param {string} name The name to save the object to.
- * @returns {any} The object given that was saved to storage.
+ * @returns {typeof toWrite} The object given that was saved to storage.
  */
 function writeToStorage(toWrite, name) {
-  let toSave;
-  if (name == "options") {
-    toSave = { options: toWrite };
-  } else {
-    toSave = { update: toWrite };
-  }
-  chrome.storage.sync.set(toSave, () => {});
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  const toSave = {};
+  // @ts-ignore this is prefectly valid code, but ts doesn't like it
+  toSave[name] = toWrite;
+  chrome.storage.sync.set(toSave);
   return toWrite;
 }
 /**
@@ -42,6 +41,10 @@ function optionsAreValid(toCheck) {
   // FMC can't be on when AP++ is off
   if (!toCheck.ap && toCheck.fmc) {
     toCheck.fmc = false;
+  }
+  // keyboard mapping can't be on if developer mode is off
+  if (!devModeEnabled && toCheck.keyboardmapping) {
+    toCheck.keyboardmapping = false;
   }
   return toCheck;
 }
@@ -61,6 +64,7 @@ async function readOptions() {
         ap: false,
         fmc: false,
         spoilerarming: false,
+        keyboardmapping: false,
       };
       writeToStorage(data, "options");
     }
@@ -102,6 +106,11 @@ function addScript(type, tabId) {
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async (changes) => {
   if (changes["devModeEnabled"]) {
+    if (changes["devModeEnabled"].newValue == false) {
+      options = optionsAreValid(options);
+      writeToStorage(options, "options");
+    }
+    devModeEnabled = changes["devModeEnabled"].newValue;
     return;
   }
   const newOptions = await readOptions();
@@ -169,7 +178,10 @@ chrome.runtime.onUpdateAvailable.addListener((details) => {
 chrome.runtime.onInstalled.addListener((details) => {
   writeToStorage({ shouldBeUpdated: false }, "update");
   if (details.reason == "install") {
-    writeToStorage({ ap: false, fmc: false, spoilerarming: false }, "options");
+    writeToStorage(
+      { ap: false, fmc: false, spoilerarming: false, keyboardmapping: false },
+      "options"
+    );
     writeToStorage(false, "devModeEnabled");
     chrome.tabs.create({
       url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
