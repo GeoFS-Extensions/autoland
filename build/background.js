@@ -100,7 +100,10 @@ function addScript(type, tabId) {
   });
 }
 // update cache when storage changes
-chrome.storage.onChanged.addListener(async () => {
+chrome.storage.onChanged.addListener(async (changes) => {
+  if (changes["devModeEnabled"]) {
+    return;
+  }
   const newOptions = await readOptions();
   // add and remove scripts without reloading geo
   const keys = Object.keys(newOptions);
@@ -167,6 +170,7 @@ chrome.runtime.onInstalled.addListener((details) => {
   writeToStorage({ shouldBeUpdated: false }, "update");
   if (details.reason == "install") {
     writeToStorage({ ap: false, fmc: false, spoilerarming: false }, "options");
+    writeToStorage(false, "devModeEnabled");
     chrome.tabs.create({
       url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
     });
