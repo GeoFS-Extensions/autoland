@@ -11,6 +11,7 @@ function emptyButtons() {
     ap: undefined,
     fmc: undefined,
     spoilerarming: undefined,
+    keyboardmapping: undefined,
   };
 }
 /**
@@ -80,6 +81,7 @@ function updateButtons(buttons, options) {
             ap: false,
             fmc: false,
             spoilerarming: options.spoilerarming,
+            keyboardmapping: options.keyboardmapping,
           },
           "options"
         );
@@ -131,19 +133,20 @@ function checkPermissions() {
     }
   );
 }
+async function checkKeyboardMapping() {
+  const devModeEnabled = await readStorage("devModeEnabled");
+  if (devModeEnabled) {
+    buttons.keyboardmapping.style.display = "";
+  } else {
+    buttons.keyboardmapping.style.display = "none";
+  }
+}
 let buttons, options;
 window.onload = async () => {
   buttons = getButtons();
   options = await readStorage("options");
-  if (options == undefined) {
-    options = writeToStorage(
-      {
-        ap: false,
-        fmc: false,
-      },
-      "options"
-    );
-  }
+  // Check if we need to add keyboard mapping to the popup
+  await checkKeyboardMapping();
   updateButtons(buttons, options);
   Object.keys(buttons).forEach((key) => {
     buttons[key].addEventListener("click", () => {
