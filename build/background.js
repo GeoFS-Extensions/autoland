@@ -25,9 +25,8 @@ function getStorageData(name) {
  * @returns {typeof toWrite} The object given that was saved to storage.
  */
 function writeToStorage(toWrite, name) {
-  // eslint-disable-next-line @typescript-eslint/ban-types
   const toSave = {};
-  // @ts-ignore this is prefectly valid code, but ts doesn't like it
+  // @ts-ignore i dont understand why ts doesnt like this code
   toSave[name] = toWrite;
   chrome.storage.sync.set(toSave);
   return toWrite;
@@ -90,6 +89,9 @@ function addScript(type, tabId) {
           break;
         case "spoilerarming":
           name = "spoilers_arming";
+          break;
+        case "keyboardmapping":
+          name = "keyboard_mapping";
           break;
       }
       const scriptTag = document.createElement("script");

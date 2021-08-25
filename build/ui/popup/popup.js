@@ -137,6 +137,8 @@ async function checkKeyboardMapping() {
   const devModeEnabled = await readStorage("devModeEnabled");
   if (devModeEnabled) {
     buttons.keyboardmapping.style.display = "";
+  } else {
+    buttons.keyboardmapping.style.display = "none";
   }
 }
 let buttons, options;

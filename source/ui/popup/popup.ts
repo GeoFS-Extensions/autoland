@@ -166,6 +166,8 @@ async function checkKeyboardMapping() {
   const devModeEnabled: boolean = await readStorage("devModeEnabled");
   if (devModeEnabled) {
     buttons.keyboardmapping.style.display = "";
+  } else {
+    buttons.keyboardmapping.style.display = "none";
   }
 }
 
