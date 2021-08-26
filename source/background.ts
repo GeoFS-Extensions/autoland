@@ -35,7 +35,7 @@ function getStorageData(name: string): Promise<any> {
  * Saves something to chrome storage.
  * @param {any} toWrite A JSON object containing the data to save.
  * @param {string} name The name to save the object to.
- * @returns {typeof toWrite} The object given that was saved to storage.
+ * @returns The object given that was saved to storage.
  */
 function writeToStorage(toWrite: any, name: string): typeof toWrite {
   const toSave = {};
