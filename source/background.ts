@@ -133,38 +133,41 @@ chrome.storage.onChanged.addListener(async (changes) => {
     devModeEnabled = changes["devModeEnabled"].newValue;
     return;
   }
-  const newOptions = await readOptions();
 
-  // add and remove scripts without reloading geo
-  const keys = Object.keys(newOptions) as Array<scripts>;
-  let reload = false;
-  const toLoad: Array<scripts> = [];
-  for (const key of keys) {
-    if (newOptions[key] !== options[key]) {
-      if (newOptions[key]) toLoad.push(key);
-      else reload = true;
-    }
-  }
-  chrome.permissions.contains({ permissions: ["tabs"] }, async (result) => {
-    if (result) {
-      const [tab] = await chrome.tabs.query({
-        currentWindow: true,
-        url: "https://www.geo-fs.com/geofs.php",
-      });
-      if (!tab) {
-        return;
+  if (changes["options"]) {
+    const newOptions = await readOptions();
+
+    // add and remove scripts without reloading geo
+    const keys = Object.keys(newOptions) as Array<scripts>;
+    let reload = false;
+    const toLoad: Array<scripts> = [];
+    for (const key of keys) {
+      if (newOptions[key] !== options[key]) {
+        if (newOptions[key]) toLoad.push(key);
+        else reload = true;
       }
-      if (reload) {
-        options = newOptions;
-        chrome.tabs.reload(tab.id);
-      } else {
-        toLoad.sort();
-        for (const key of toLoad) {
-          addScript(key, tab.id);
+    }
+    chrome.permissions.contains({ permissions: ["tabs"] }, async (result) => {
+      if (result) {
+        const [tab] = await chrome.tabs.query({
+          currentWindow: true,
+          url: "https://www.geo-fs.com/geofs.php",
+        });
+        if (!tab) {
+          return;
+        }
+        if (reload) {
+          options = newOptions;
+          chrome.tabs.reload(tab.id);
+        } else {
+          toLoad.sort();
+          for (const key of toLoad) {
+            addScript(key, tab.id);
+          }
         }
       }
-    }
-  });
+    });
+  }
 });
 
 /**
