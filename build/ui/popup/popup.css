@@ -4,15 +4,6 @@ html {
   width: 150px;
 }
 
-img {
-  transition: transform 0.7s ease-in-out;
-  width: 45px;
-}
-
-img:hover {
-  transform: rotate(180deg);
-}
-
 p {
   font-family: Big Shoulders Stencil Text;
   margin: 0px;
@@ -27,13 +18,6 @@ button {
   outline: none;
   border: 0;
   margin-bottom: 2px;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-  font-family: sans-serif;
-  float: right;
 }
 
 .updateNotif {

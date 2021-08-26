@@ -8,12 +8,9 @@ interface options {
   ap: boolean;
   fmc: boolean;
   spoilerarming: boolean;
-  keyboardmapping: boolean;
 }
 
 type scripts = keyof options;
-
-let devModeEnabled = false;
 
 /**
  * Gets data from chrome storage.
@@ -55,10 +52,6 @@ function optionsAreValid(toCheck: options): options {
   if (!toCheck.ap && toCheck.fmc) {
     toCheck.fmc = false;
   }
-  // keyboard mapping can't be on if developer mode is off
-  if (!devModeEnabled && toCheck.keyboardmapping) {
-    toCheck.keyboardmapping = false;
-  }
 
   return toCheck;
 }
@@ -79,7 +72,6 @@ async function readOptions(): Promise<options> {
         ap: false,
         fmc: false,
         spoilerarming: false,
-        keyboardmapping: false,
       };
       writeToStorage(data, "options");
     }
@@ -130,7 +122,6 @@ chrome.storage.onChanged.addListener(async (changes) => {
       options = optionsAreValid(options);
       writeToStorage(options, "options");
     }
-    devModeEnabled = changes["devModeEnabled"].newValue;
     return;
   }
 
@@ -209,10 +200,7 @@ chrome.runtime.onInstalled.addListener((details) => {
   writeToStorage({ shouldBeUpdated: false }, "update");
 
   if (details.reason == "install") {
-    writeToStorage(
-      { ap: false, fmc: false, spoilerarming: false, keyboardmapping: false },
-      "options"
-    );
+    writeToStorage({ ap: false, fmc: false, spoilerarming: false }, "options");
     writeToStorage(false, "devModeEnabled");
     chrome.tabs.create({
       url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),

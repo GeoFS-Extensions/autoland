@@ -2,7 +2,6 @@
 // this is a fix for chrome not allowing modules
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const module = {};
-let devModeEnabled = false;
 /**
  * Gets data from chrome storage.
  * @param {string} name The name of the data in chrome storage.
@@ -41,10 +40,6 @@ function optionsAreValid(toCheck) {
   if (!toCheck.ap && toCheck.fmc) {
     toCheck.fmc = false;
   }
-  // keyboard mapping can't be on if developer mode is off
-  if (!devModeEnabled && toCheck.keyboardmapping) {
-    toCheck.keyboardmapping = false;
-  }
   return toCheck;
 }
 /**
@@ -63,7 +58,6 @@ async function readOptions() {
         ap: false,
         fmc: false,
         spoilerarming: false,
-        keyboardmapping: false,
       };
       writeToStorage(data, "options");
     }
@@ -112,7 +106,6 @@ chrome.storage.onChanged.addListener(async (changes) => {
       options = optionsAreValid(options);
       writeToStorage(options, "options");
     }
-    devModeEnabled = changes["devModeEnabled"].newValue;
     return;
   }
   if (changes["options"]) {
@@ -182,10 +175,7 @@ chrome.runtime.onUpdateAvailable.addListener((details) => {
 chrome.runtime.onInstalled.addListener((details) => {
   writeToStorage({ shouldBeUpdated: false }, "update");
   if (details.reason == "install") {
-    writeToStorage(
-      { ap: false, fmc: false, spoilerarming: false, keyboardmapping: false },
-      "options"
-    );
+    writeToStorage({ ap: false, fmc: false, spoilerarming: false }, "options");
     writeToStorage(false, "devModeEnabled");
     chrome.tabs.create({
       url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),

@@ -8,14 +8,12 @@ interface PopupState {
   ap: boolean;
   fmc: boolean;
   spoilerarming: boolean;
-  keyboardmapping: boolean;
 }
 
 interface Buttons {
   ap: HTMLElement;
   fmc: HTMLElement;
   spoilerarming: HTMLElement;
-  keyboardmapping: HTMLElement;
 }
 
 /**
@@ -27,7 +25,6 @@ function emptyButtons(): Buttons {
     ap: undefined,
     fmc: undefined,
     spoilerarming: undefined,
-    keyboardmapping: undefined,
   };
 }
 
@@ -102,7 +99,6 @@ function updateButtons(buttons: Buttons, options: PopupState) {
             ap: false,
             fmc: false,
             spoilerarming: options.spoilerarming,
-            keyboardmapping: options.keyboardmapping,
           } as PopupState,
           "options"
         );
@@ -162,23 +158,11 @@ function checkPermissions() {
   );
 }
 
-async function checkKeyboardMapping() {
-  const devModeEnabled: boolean = await readStorage("devModeEnabled");
-  if (devModeEnabled) {
-    buttons.keyboardmapping.style.display = "";
-  } else {
-    buttons.keyboardmapping.style.display = "none";
-  }
-}
-
 let buttons: Buttons, options: PopupState;
 
 window.onload = async () => {
   buttons = getButtons();
   options = await readStorage("options");
-
-  // Check if we need to add keyboard mapping to the popup
-  await checkKeyboardMapping();
 
   updateButtons(buttons, options);
   (Object.keys(buttons) as Array<keyof Buttons>).forEach((key) => {
