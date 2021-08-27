@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: GeoFS-Autoland/autopilot-pp
+          ref: release
 
       - name: Setup node v16
         uses: actions/setup-node@v2
@@ -42,6 +43,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: GeoFS-Autoland/fmc-requirejs
+          ref: release
 
       - name: Setup node v16
         uses: actions/setup-node@v2
@@ -68,6 +70,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: GeoFS-Autoland/spoilers-arming
+          ref: release
 
       - name: Setup node v16
         uses: actions/setup-node@v2
@@ -94,6 +97,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: GeoFS-Autoland/keyboard-mapping
+          ref: release
 
       - name: Setup node v16
         uses: actions/setup-node@v2
