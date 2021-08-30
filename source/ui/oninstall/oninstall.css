@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Georama:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+/* we need to declare the font size since chrome downsizes most tags automatically */
+
+h1 {
+  font-family: Georama, sans-serif;
+  font-size: 32pt;
+  text-align: center;
+}
+
+p {
+  font-family: Roboto, sans-serif;
+  font-size: 12pt;
+  margin: 8px;
+}
+
+code {
+  background-color: #ebebeb;
+  color: #000000;
+  border-radius: 3px;
+}
+
+li {
+  font-family: Roboto, sans-serif;
+  font-size: 12pt;
+  margin: 8px;
+}
+
+img {
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+  color: #91c3ff;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  margin-left: 30px;
+  background-color: #5883d1;
+  color: #ffffff;
+  border: none;
+  font-family: sans-serif;
+  font-size: 12px;
+  outline: none;
+  border: 0;
+  margin-bottom: 2px;
+  width: 75px;
+  height: 33px;
+}
+
+div#tutorial {
+  margin-top: 40px;
+}
+
+div#tutorial img {
+  margin-left: 15px;
+}

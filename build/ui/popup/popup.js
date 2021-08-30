@@ -10,6 +10,7 @@ function emptyButtons() {
   return {
     ap: undefined,
     fmc: undefined,
+    spoilerarming: undefined,
   };
 }
 /**
@@ -74,7 +75,14 @@ function updateButtons(buttons, options) {
       buttons[key].className = "off";
       if (key == "ap") {
         buttons.fmc.style.display = "none";
-        options = writeToStorage({ ap: false, fmc: false }, "options");
+        options = writeToStorage(
+          {
+            ap: false,
+            fmc: false,
+            spoilerarming: options.spoilerarming,
+          },
+          "options"
+        );
       }
     }
   });
@@ -127,15 +135,6 @@ let buttons, options;
 window.onload = async () => {
   buttons = getButtons();
   options = await readStorage("options");
-  if (options == undefined) {
-    options = writeToStorage(
-      {
-        ap: false,
-        fmc: false,
-      },
-      "options"
-    );
-  }
   updateButtons(buttons, options);
   Object.keys(buttons).forEach((key) => {
     buttons[key].addEventListener("click", () => {

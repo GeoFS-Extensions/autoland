@@ -1,0 +1,54 @@
+name: Build documentation
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  job_1:
+    name: Build docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+
+      - name: Build docs
+        run: |
+          npm i
+          npm run docs
+
+      - name: Upload docs as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: docs/
+
+  job_2:
+    name: Commit docs
+    runs-on: ubuntu-latest
+    needs: job_1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: docs
+
+      - name: Download docs artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: docs
+
+      - name: Commit docs
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Build docs
+          branch: docs

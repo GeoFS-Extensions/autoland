@@ -4,27 +4,30 @@
   "version": "1.0.0",
   "homepage": "https://geofsautoland.wixsite.com/autoland",
   "author": "Nicolas Rodriguez, Guy Adler",
+  "license": "GPL-3",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/GeoFS-Autoland/autoland.git"
   },
   "scripts": {
-    "build": "npm i && node build.js && npx jsdoc -c jsdoc.json && npx prettier --write . && npx eslint . --fix --debug",
+    "docs": "npx jsdoc -c jsdoc.json",
+    "tsc": "npx tsc",
+    "build": "npm i && node build.js && npx prettier --write . && npx eslint . --fix --debug",
     "commit": "python commit.py",
     "test": "npx prettier --check . && npx eslint . --debug && npx audit-ci --info && npm outdated"
   },
   "devDependencies": {
-    "@types/chrome": "latest",
-    "@types/jquery": "latest",
-    "@typescript-eslint/eslint-plugin": "latest",
-    "@typescript-eslint/parser": "latest",
-    "async": "latest",
-    "audit-ci": "latest",
-    "eslint": "latest",
-    "eslint-config-prettier": "latest",
-    "fs-extra": "latest",
-    "jsdoc": "latest",
-    "prettier": "latest",
-    "typescript": "latest"
+    "@types/chrome": "0.0.154",
+    "@types/jquery": "3.5.6",
+    "@typescript-eslint/eslint-plugin": "4.29.3",
+    "@typescript-eslint/parser": "4.29.3",
+    "audit-ci": "4.1.0",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "fs-extra": "10.0.0",
+    "jsdoc": "3.6.7",
+    "npm": "7.21.1",
+    "prettier": "2.3.2",
+    "typescript": "4.4.2"
   }
 }

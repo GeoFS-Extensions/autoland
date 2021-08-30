@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text&display=swap");
+
+html {
+  width: 150px;
+}
+
+p {
+  font-family: Big Shoulders Stencil Text;
+  margin: 0px;
+}
+
+button {
+  transition-duration: 0.4s;
+  color: #ffffff;
+  border: none;
+  font-family: Big Shoulders Stencil Text;
+  font-size: 20px;
+  outline: none;
+  border: 0;
+  margin-bottom: 2px;
+}
+
+.updateNotif {
+  margin-top: 5px;
+  font-size: 10px;
+}
+
+button.updateNotif {
+  background-color: #5482d8;
+  font-size: 15px;
+}
+
+.off {
+  background-color: #c75858;
+}
+
+.off:hover {
+  background-color: #ffffff;
+  color: #c75858;
+}
+
+.on {
+  background-color: #51cf53;
+}
+
+.on:hover {
+  background-color: #ffffff;
+  color: #51cf53;
+}

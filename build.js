@@ -3,19 +3,7 @@
 
 const fs = require("fs-extra");
 const path = require("path");
-const series = require("async").series;
-const exec = require("child_process").exec;
-
-var package = fs.readFileSync("package.json", { encoding: "utf8" });
-package = JSON.parse(package);
-
-for (const [key] of Object.entries(package.devDependencies)) {
-  package.devDependencies[key] = "latest";
-}
-
-fs.writeFileSync("package.json", JSON.stringify(package));
-
-console.log("package.json ready!");
+const npm = require("npm");
 
 function deleteFolderRecursive(path) {
   if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
@@ -35,15 +23,7 @@ function deleteFolderRecursive(path) {
   }
 }
 
-deleteFolderRecursive("build");
-console.log("build folder deleted!");
-
-fs.copySync("extension/", "build");
-console.log("extension copied to build!");
-
-series([() => exec("npx tsc")]);
-
-setTimeout(function deleteTsFiles(
+function deleteTsFiles(
   startPath = "./build",
   filter = ".ts",
   notRecursing = true
@@ -62,7 +42,7 @@ setTimeout(function deleteTsFiles(
     var filename = path.join(startPath, files[i]);
     var stat = fs.lstatSync(filename);
     if (stat.isDirectory()) {
-      deleteTsFiles(filename, filter, false); //recurse
+      deleteTsFiles(filename, filter, false); // recurse
     } else if (filename.indexOf(filter) >= 0) {
       fs.unlinkSync(filename);
     }
@@ -71,5 +51,16 @@ setTimeout(function deleteTsFiles(
   if (notRecursing) {
     console.log(".ts files deleted!");
   }
-},
-10000);
+}
+
+deleteFolderRecursive("build");
+console.log("build folder deleted!");
+
+fs.copySync("source", "build");
+console.log("source copied to build!");
+
+npm.load(function () {
+  npm.commands["run-script"](["tsc"], () => {
+    deleteTsFiles();
+  });
+});

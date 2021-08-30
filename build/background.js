@@ -5,7 +5,7 @@ const module = {};
 /**
  * Gets data from chrome storage.
  * @param {string} name The name of the data in chrome storage.
- * @returns {options} The data in chrome storage.
+ * @returns {any} The data in chrome storage.
  */
 function getStorageData(name) {
   return new Promise((resolve, reject) => {
@@ -21,28 +21,26 @@ function getStorageData(name) {
  * Saves something to chrome storage.
  * @param {any} toWrite A JSON object containing the data to save.
  * @param {string} name The name to save the object to.
- * @returns {any} The object given that was saved to storage.
+ * @returns The object given that was saved to storage.
  */
 function writeToStorage(toWrite, name) {
-  let toSave;
-  if (name == "options") {
-    toSave = { options: toWrite };
-  } else {
-    toSave = { update: toWrite };
-  }
-  chrome.storage.sync.set(toSave, () => {});
+  const toSave = {};
+  // @ts-ignore i dont understand why ts doesnt like this code
+  toSave[name] = toWrite;
+  chrome.storage.sync.set(toSave);
   return toWrite;
 }
 /**
  * Checks if the given options are valid.
  * @param {options} options The options to check.
- * @returns {boolean} Whether the options are valid (true) or not (false).
+ * @returns {options} A valid version of the options (or the current options if they are valid).
  */
-function optionsAreValid(options) {
-  if (!options.ap && options.fmc) {
-    return false;
+function optionsAreValid(toCheck) {
+  // FMC can't be on when AP++ is off
+  if (!toCheck.ap && toCheck.fmc) {
+    toCheck.fmc = false;
   }
-  return true;
+  return toCheck;
 }
 /**
  * Reads valid user selected options from memory. If there are no saved options, returns a default and saves the default.
@@ -53,22 +51,13 @@ async function readOptions() {
   await getStorageData("options").then((storage) => {
     if (storage.options) {
       // there are prefs saved, test them
-      data = storage.options;
-      if (!optionsAreValid(data)) {
-        // options aren't valid, set to default and save
-        data = {
-          ap: false,
-          fmc: false,
-        };
-        writeToStorage(data, "options");
-      } else {
-        // options are valid, keep current options
-      }
+      data = optionsAreValid(storage.options);
     } else {
       // there are no prefs saved, set to default and save
       data = {
         ap: false,
         fmc: false,
+        spoilerarming: false,
       };
       writeToStorage(data, "options");
     }
@@ -90,7 +79,13 @@ function addScript(type, tabId) {
     func: (name) => {
       switch (name) {
         case "ap":
-          name = "ap++";
+          name = "autopilot_pp";
+          break;
+        case "spoilerarming":
+          name = "spoilers_arming";
+          break;
+        case "keyboardmapping":
+          name = "keyboard_mapping";
           break;
       }
       const scriptTag = document.createElement("script");
@@ -105,47 +100,61 @@ function addScript(type, tabId) {
   });
 }
 // update cache when storage changes
-chrome.storage.onChanged.addListener(async () => {
-  const newOptions = await readOptions();
-  // add and remove scripts without reloading geo
-  const keys = Object.keys(newOptions);
-  let reload = false;
-  const toLoad = [];
-  for (const key of keys) {
-    if (newOptions[key] !== options[key]) {
-      if (newOptions[key]) toLoad.push(key);
-      else reload = true;
+chrome.storage.onChanged.addListener(async (changes) => {
+  if (changes["devModeEnabled"]) {
+    if (changes["devModeEnabled"].newValue == false) {
+      options = optionsAreValid(options);
+      writeToStorage(options, "options");
     }
+    return;
   }
-  chrome.permissions.contains({ permissions: ["tabs"] }, async (result) => {
-    if (result) {
-      const [tab] = await chrome.tabs.query({
-        currentWindow: true,
-        url: "https://www.geo-fs.com/geofs.php",
-      });
-      if (reload) {
-        options = newOptions;
-        chrome.tabs.reload(tab.id);
-      } else {
-        for (const key of toLoad) {
-          addScript(key, tab.id);
-        }
+  if (changes["options"]) {
+    const newOptions = await readOptions();
+    // add and remove scripts without reloading geo
+    const keys = Object.keys(newOptions);
+    let reload = false;
+    const toLoad = [];
+    for (const key of keys) {
+      if (newOptions[key] !== options[key]) {
+        if (newOptions[key]) toLoad.push(key);
+        else reload = true;
       }
     }
-  });
+    chrome.permissions.contains({ permissions: ["tabs"] }, async (result) => {
+      if (result) {
+        const [tab] = await chrome.tabs.query({
+          currentWindow: true,
+          url: "https://www.geo-fs.com/geofs.php",
+        });
+        if (!tab) {
+          return;
+        }
+        if (reload) {
+          options = newOptions;
+          chrome.tabs.reload(tab.id);
+        } else {
+          toLoad.sort();
+          for (const key of toLoad) {
+            addScript(key, tab.id);
+          }
+        }
+      }
+    });
+  }
 });
 /**
  * Adds the needed scripts listeners. Checks to make sure the extension has the tabs permission before adding the listener.
+ * This is only for new tabs. Updates to tabs should be run through the chrome.storage.onChanged listener.
  */
 function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
-      chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+      chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         if (tab.url != "https://www.geo-fs.com/geofs.php") {
           return;
         }
         // the tab is definitely a geo tab
-        const keys = Object.keys(options);
+        const keys = Object.keys(options).sort();
         for (const key of keys) {
           if (options[key]) {
             addScript(key, tabId);
@@ -164,7 +173,10 @@ chrome.runtime.onUpdateAvailable.addListener((details) => {
   writeToStorage({ shouldBeUpdated: true, new: details.version }, "update");
 });
 chrome.runtime.onInstalled.addListener((details) => {
+  writeToStorage({ shouldBeUpdated: false }, "update");
   if (details.reason == "install") {
+    writeToStorage({ ap: false, fmc: false, spoilerarming: false }, "options");
+    writeToStorage(false, "devModeEnabled");
     chrome.tabs.create({
       url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
     });
