@@ -17,7 +17,7 @@
     "test": "npx prettier --check . && npx eslint . --debug && npx audit-ci --info && npm outdated"
   },
   "devDependencies": {
-    "@types/chrome": "0.0.154",
+    "@types/chrome": "0.0.155",
     "@types/jquery": "3.5.6",
     "@typescript-eslint/eslint-plugin": "4.30.0",
     "@typescript-eslint/parser": "4.30.0",
