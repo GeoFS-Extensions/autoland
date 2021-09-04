@@ -11,8 +11,8 @@
   },
   "scripts": {
     "docs": "npx jsdoc -c jsdoc.json",
-    "tsc": "npx tsc",
-    "build": "npm i && node build.js && npx prettier --write . && npx eslint . --fix --debug",
+    "tsc": "node build.js && npx tsc && npx rimraf ./build/**/*.ts",
+    "build": "npm i && npm run tsc && npx prettier --write . && npx eslint . --fix --debug",
     "commit": "python commit.py",
     "test": "npx prettier --check . && npx eslint . --debug && npx audit-ci --info && npm outdated"
   },
@@ -26,8 +26,8 @@
     "eslint-config-prettier": "8.3.0",
     "fs-extra": "10.0.0",
     "jsdoc": "3.6.7",
-    "npm": "7.22.0",
     "prettier": "2.3.2",
+    "rimraf": "3.0.2",
     "typescript": "4.4.2"
   }
 }
