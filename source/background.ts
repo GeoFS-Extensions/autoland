@@ -98,6 +98,13 @@ let options: options;
  * @param {number} tabId The ID of the tab to add the script to.
  */
 function addScript(type: scripts, tabId: number) {
+  if (type == "ap") {
+    chrome.scripting.executeScript({
+      target: { tabId: tabId, allFrames: true },
+      files: ["scripts/autopilot_pp_infra/content_communicator.js"],
+    });
+  }
+
   chrome.scripting.executeScript({
     target: { tabId: tabId, allFrames: true },
     func: (name: string): void => {
