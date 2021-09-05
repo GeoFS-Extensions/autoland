@@ -12,7 +12,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["scripts/*", "ui/oninstall/oninstall.html"],
+      "resources": ["scripts/*", "ui/oninstall/oninstall.html", "data/*.json"],
       "matches": ["*://www.geo-fs.com/*"]
     }
   ],

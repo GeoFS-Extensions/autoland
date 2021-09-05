@@ -25,4 +25,5 @@ deleteFolderRecursive("build");
 console.log("build folder deleted!");
 
 fs.copySync("source", "build");
+fs.unlinkSync("build/tsconfig.json");
 console.log("source copied to build!");

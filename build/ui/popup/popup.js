@@ -94,7 +94,7 @@ function updateButtons(buttons, options) {
  */
 async function checkForUpdate() {
   const update = await readStorage("update");
-  if (!update || !update.shouldBeUpdated) {
+  if (!update.shouldBeUpdated) {
     // we don't need to update
     return;
   }

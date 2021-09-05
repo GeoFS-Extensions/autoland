@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "none",
+    "target": "ESNext",
+    "noImplicitAny": true,
+    "lib": ["DOM", "es2015"],
+    "alwaysStrict": true,
+    "noEmit": true
+  },
+  "include": ["**/*.ts", "../geofs_types.d.ts"]
+}

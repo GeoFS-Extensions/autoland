@@ -1,6 +1,6 @@
 # ignore the massive files
 
-**/scripts/
+**/scripts/*.js
 **/node_modules/
 
 # Ignore the generated docs
