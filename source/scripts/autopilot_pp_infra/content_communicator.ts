@@ -15,6 +15,7 @@ document.addEventListener("readyForDataLinks", () => {
       detail: {
         airports: chrome.runtime.getURL("data/airports.json"),
         waypoints: chrome.runtime.getURL("data/waypoints.json"),
+        navaids: chrome.runtime.getURL("data/navaids.json"),
       },
     })
   );

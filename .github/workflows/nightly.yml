@@ -1,8 +1,6 @@
 name: Nightly actions
 
 on:
-  workflow_dispatch:
-
   schedule:
     - cron: "0 2 * * *"
 
@@ -22,6 +20,13 @@ jobs:
         with:
           file-url: "https://ourairports.com/data/airports.csv"
           file-name: "airports.csv"
+          location: "./data"
+
+      - name: Downloads navaids.csv
+        uses: carlosperate/download-file-action@v1.0.3
+        with:
+          file-url: "https://ourairports.com/data/navaids.csv"
+          file-name: "navaids.csv"
           location: "./data"
 
       - name: Build extension

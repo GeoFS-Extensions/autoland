@@ -25,6 +25,27 @@ function airportsList() {
   );
 }
 
+function navaidsList() {
+  let a = fs.readFileSync("./data/navaids.csv", { encoding: "utf8" });
+  a = a.split("\n");
+  a.shift();
+
+  const navaids = {};
+
+  for (let navaid of a) {
+    if (navaid[0] == undefined) continue;
+    navaid = navaid.split(",");
+
+    let name = navaid[2].substring(1).substring(0, navaid[2].length - 2);
+    navaids[name] = [Number(navaid[6]), Number(navaid[7])];
+  }
+
+  fs.writeFileSync(
+    "./source/data/navaids.json",
+    JSON.stringify(navaids, null, 2)
+  );
+}
+
 function deleteFolderRecursive(path) {
   if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
     fs.readdirSync(path).forEach(function (file) {
@@ -43,8 +64,11 @@ function deleteFolderRecursive(path) {
   }
 }
 
+navaidsList();
+console.log("navaids list built!");
+
 airportsList();
-console.log("airport list built!");
+console.log("airports list built!");
 
 deleteFolderRecursive("build");
 console.log("build folder deleted!");
