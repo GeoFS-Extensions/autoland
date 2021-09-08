@@ -78,6 +78,7 @@ jobs:
         with:
           commit_message: Build docs
           branch: docs
+          commit_author: geofsautoland <68515084+geofsautoland@users.noreply.github.com>
 
   job_4:
     name: Build AP++
@@ -195,8 +196,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PAT }}
 
       - name: Setup node v16
         uses: actions/setup-node@v2
@@ -250,6 +249,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "🤖: Update scripts and nav data"
+          commit_author: geofsautoland <68515084+geofsautoland@users.noreply.github.com>
 # TODO: uncomment all of this when beta 3.2 is released
 #job_9:
 # name: Build json files to release
