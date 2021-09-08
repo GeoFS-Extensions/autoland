@@ -13,8 +13,6 @@ interface options {
 
 type scripts = keyof options;
 
-let devModeEnabled = false;
-
 /**
  * Gets data from chrome storage.
  * @param {string} name The name of the data in chrome storage.
@@ -54,10 +52,6 @@ function optionsAreValid(toCheck: options): options {
   // FMC can't be on when AP++ is off
   if (!toCheck.ap && toCheck.fmc) {
     toCheck.fmc = false;
-  }
-  // keyboard mapping can't be on if developer mode is off
-  if (!devModeEnabled && toCheck.keyboardmapping) {
-    toCheck.keyboardmapping = false;
   }
 
   return toCheck;
@@ -132,15 +126,6 @@ function addScript(type: scripts, tabId: number) {
 }
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async (changes) => {
-  if (changes["devModeEnabled"]) {
-    if (changes["devModeEnabled"].newValue == false) {
-      options = optionsAreValid(options);
-      writeToStorage(options, "options");
-    }
-    devModeEnabled = changes["devModeEnabled"].newValue;
-    return;
-  }
-
   if (changes["options"]) {
     const newOptions = await readOptions();
 

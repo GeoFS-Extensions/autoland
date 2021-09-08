@@ -133,20 +133,10 @@ function checkPermissions() {
     }
   );
 }
-async function checkKeyboardMapping() {
-  const devModeEnabled = await readStorage("devModeEnabled");
-  if (devModeEnabled) {
-    buttons.keyboardmapping.style.display = "";
-  } else {
-    buttons.keyboardmapping.style.display = "none";
-  }
-}
 let buttons, options;
 window.onload = async () => {
   buttons = getButtons();
   options = await readStorage("options");
-  // Check if we need to add keyboard mapping to the popup
-  await checkKeyboardMapping();
   updateButtons(buttons, options);
   Object.keys(buttons).forEach((key) => {
     buttons[key].addEventListener("click", () => {
