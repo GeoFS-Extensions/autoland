@@ -1,5 +1,5 @@
 {
-  "timezone": "America/New_York"
+  "timezone": "America/New_York",
   "prCreation": "status-success",
   "labels": ["dependencies"],
   "extends": ["config:base", "group:all"],
