@@ -5,21 +5,5 @@
   "schedule": ["at 5:00 am on Saturday"],
   "lockFileMaintenance": {
     "enabled": true
-  },
-  "packageRules": [
-    {
-      "matchUpdateTypes": [
-        "major",
-        "minor",
-        "patch",
-        "pin",
-        "digest",
-        "lockFileMaintenance",
-        "rollback",
-        "bump"
-      ],
-      "automerge": true,
-      "automergeType": "branch"
-    }
-  ]
+  }
 }
