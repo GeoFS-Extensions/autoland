@@ -3,7 +3,6 @@
   "prCreation": "status-success",
   "labels": ["dependencies"],
   "extends": ["config:base", "group:all"],
-  "schedule": ["at 5:00 pm on Friday"],
   "lockFileMaintenance": {
     "enabled": true
   }
