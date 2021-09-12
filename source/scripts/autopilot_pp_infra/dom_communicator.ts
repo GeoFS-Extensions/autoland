@@ -11,30 +11,28 @@ interface dataLinkMessageEvent extends Event {
 document.addEventListener(
   "dataLinkMessageEvent",
   function (event: dataLinkMessageEvent) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
     const links = event.detail;
 
-    const timerNum = setInterval(() => {
-      if (typeof fetch === "function") {
-        clearInterval(timerNum);
+    (function () {
+      // airport database
+      fetch(links.airports)
+        .then((resp) => resp.json())
+        .then((json) => (window.navData.airports = json));
 
-        // airport database
-        fetch(links.airports)
-          .then((resp) => resp.json())
-          .then((json) => (window.navData.airports = json));
+      // waypoint database
+      fetch(links.waypoints)
+        .then((resp) => resp.json())
+        .then((json) => (window.navData.waypoints = json));
 
-        // waypoint database
-        fetch(links.waypoints)
-          .then((resp) => resp.json())
-          .then((json) => (window.navData.waypoints = json));
+      // navaids database
+      fetch(links.navaids)
+        .then((resp) => resp.json())
+        .then((json) => (window.navData.navaids = json));
 
-        // navaids database
-        fetch(links.navaids)
-          .then((resp) => resp.json())
-          .then((json) => (window.navData.navaids = json));
-
-        window.navData.statusCode = 1;
-      }
-    }, 150);
+      window.navData.statusCode = 1;
+    })();
   }
 );
 

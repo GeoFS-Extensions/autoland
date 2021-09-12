@@ -9,7 +9,9 @@
   };
   (document.head || document.documentElement).appendChild(scriptTag);
 })();
-document.addEventListener("readyForDataLinks", () => {
+document.addEventListener("readyForDataLinks", (event) => {
+  event.preventDefault();
+  event.stopImmediatePropagation();
   document.dispatchEvent(
     new CustomEvent("dataLinkMessageEvent", {
       detail: {
