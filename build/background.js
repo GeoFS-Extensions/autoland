@@ -104,6 +104,7 @@ function addScript(type, tabId) {
       }
     }
   );
+  // TODO: figure out why no scripts are loading
   if (!hasPermissions) {
     // we've opened the permissions page, and further action will throw errors
     return;
