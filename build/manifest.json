@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "GeoFS Autoland",
-  "version": "3.2.0",
-  "description": "GeoFS Autoland adds new functionalities to the GeoFS Flight Simulator.",
+  "version": "3.2.0.0",
+  "description": "Adding new functionalities to the GeoFS Flight Simulator.",
   "action": {
     "default_popup": "ui/popup/popup.html"
   },

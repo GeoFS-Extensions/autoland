@@ -1,5 +1,3 @@
-/* eslint-env jquery */
-
 interface dataLinkMessageEvent extends Event {
   detail: {
     airports: string;

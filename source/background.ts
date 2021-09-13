@@ -14,6 +14,23 @@ interface options {
 type scripts = keyof options;
 
 /**
+ * Sorts scripts for adding.
+ * @param {scripts} toSort The scripts to sort through.
+ * @returns {scripts} The sorted scripts.
+ */
+function sortOptions(toSort: scripts[]): scripts[] {
+  const listOfImportance: scripts[] = [
+    "keyboardmapping",
+    "ap",
+    "fmc",
+    "spoilerarming",
+  ];
+  return toSort.sort(
+    (a, b) => listOfImportance.indexOf(a) - listOfImportance.indexOf(b)
+  );
+}
+
+/**
  * Gets data from chrome storage.
  * @param {string} name The name of the data in chrome storage.
  * @returns {any} The data in chrome storage.
@@ -36,8 +53,7 @@ function getStorageData(name: string): Promise<any> {
  * @returns The object given that was saved to storage.
  */
 function writeToStorage(toWrite: any, name: string): typeof toWrite {
-  const toSave = {};
-  // @ts-ignore i dont understand why ts doesnt like this code
+  const toSave: { [key: string]: any } = {};
   toSave[name] = toWrite;
   chrome.storage.sync.set(toSave);
   return toWrite;
@@ -92,6 +108,36 @@ let options: options;
  * @param {number} tabId The ID of the tab to add the script to.
  */
 function addScript(type: scripts, tabId: number) {
+  let hasPermissions: boolean;
+
+  chrome.permissions.contains(
+    {
+      permissions: ["tabs"],
+    },
+    (result) => {
+      hasPermissions = result;
+      if (!result) {
+        // don't have the needed permissions, open the page to grant permissions
+        hasPermissions = false;
+        document.body.innerHTML = "";
+        chrome.tabs.create({
+          url: chrome.runtime.getURL(
+            "ui/needspermissions/needspermissions.html"
+          ),
+        });
+      }
+    }
+  );
+
+  // TODO: figure out why no scripts are loading
+
+  if (!hasPermissions) {
+    // we've opened the permissions page, and further action will throw errors
+    return;
+  }
+
+  console.log(type);
+
   if (type == "ap") {
     chrome.scripting.executeScript({
       target: { tabId: tabId, allFrames: true },
@@ -130,9 +176,9 @@ chrome.storage.onChanged.addListener(async (changes) => {
     const newOptions = await readOptions();
 
     // add and remove scripts without reloading geo
-    const keys = Object.keys(newOptions) as Array<scripts>;
+    const keys = Object.keys(newOptions) as scripts[];
     let reload = false;
-    const toLoad: Array<scripts> = [];
+    let toLoad: scripts[] = [];
     for (const key of keys) {
       if (newOptions[key] !== options[key]) {
         if (newOptions[key]) toLoad.push(key);
@@ -142,7 +188,6 @@ chrome.storage.onChanged.addListener(async (changes) => {
     chrome.permissions.contains({ permissions: ["tabs"] }, async (result) => {
       if (result) {
         const [tab] = await chrome.tabs.query({
-          currentWindow: true,
           url: "https://www.geo-fs.com/geofs.php",
         });
         if (!tab) {
@@ -152,7 +197,7 @@ chrome.storage.onChanged.addListener(async (changes) => {
           options = newOptions;
           chrome.tabs.reload(tab.id);
         } else {
-          toLoad.sort();
+          toLoad = sortOptions(toLoad);
           for (const key of toLoad) {
             addScript(key, tab.id);
           }
@@ -173,9 +218,11 @@ function addScriptsListener() {
         if (tab.url != "https://www.geo-fs.com/geofs.php") {
           return;
         }
-        // the tab is definitely a geo tab
 
-        const keys = Object.keys(options).sort() as Array<scripts>;
+        // the tab is definitely a geo tab, now add the scripts
+        let keys = Object.keys(options) as scripts[];
+        keys = sortOptions(keys);
+
         for (const key of keys) {
           if (options[key]) {
             addScript(key, tabId);

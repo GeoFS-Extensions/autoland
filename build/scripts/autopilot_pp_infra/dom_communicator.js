@@ -1,5 +1,4 @@
 "use strict";
-/* eslint-env jquery */
 document.addEventListener("dataLinkMessageEvent", function (event) {
   event.preventDefault();
   event.stopImmediatePropagation();
