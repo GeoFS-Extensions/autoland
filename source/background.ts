@@ -102,42 +102,37 @@ let options: options;
   options = await readOptions();
 })();
 
-/**
- * Executes a script in the DOM context of a tab.
- * @param {scripts} type The script to add.
- * @param {number} tabId The ID of the tab to add the script to.
- */
-function addScript(type: scripts, tabId: number) {
-  let hasPermissions: boolean;
-
+function addScripts(toInject: scripts[], tabId: number) {
   chrome.permissions.contains(
     {
       permissions: ["tabs"],
     },
     (result) => {
-      hasPermissions = result;
       if (!result) {
-        // don't have the needed permissions, open the page to grant permissions
-        hasPermissions = false;
-        document.body.innerHTML = "";
+        // we don't have the needed permissions, open the page to request them
         chrome.tabs.create({
           url: chrome.runtime.getURL(
             "ui/needspermissions/needspermissions.html"
           ),
         });
+        return;
       }
+
+      // we have the needed permissions, add the scripts
+      sortOptions(toInject);
+      toInject.forEach((value) => {
+        injectScript(value, tabId);
+      });
     }
   );
+}
 
-  // TODO: figure out why no scripts are loading
-
-  if (!hasPermissions) {
-    // we've opened the permissions page, and further action will throw errors
-    return;
-  }
-
-  console.log(type);
-
+/**
+ * Executes a script in the DOM context of a tab.
+ * @param {scripts} type The script to add.
+ * @param {number} tabId The ID of the tab to add the script to.
+ */
+async function injectScript(type: scripts, tabId: number) {
   if (type == "ap") {
     chrome.scripting.executeScript({
       target: { tabId: tabId, allFrames: true },
@@ -178,7 +173,7 @@ chrome.storage.onChanged.addListener(async (changes) => {
     // add and remove scripts without reloading geo
     const keys = Object.keys(newOptions) as scripts[];
     let reload = false;
-    let toLoad: scripts[] = [];
+    const toLoad: scripts[] = [];
     for (const key of keys) {
       if (newOptions[key] !== options[key]) {
         if (newOptions[key]) toLoad.push(key);
@@ -197,10 +192,7 @@ chrome.storage.onChanged.addListener(async (changes) => {
           options = newOptions;
           chrome.tabs.reload(tab.id);
         } else {
-          toLoad = sortOptions(toLoad);
-          for (const key of toLoad) {
-            addScript(key, tab.id);
-          }
+          addScripts(toLoad, tab.id);
         }
       }
     });
@@ -220,14 +212,15 @@ function addScriptsListener() {
         }
 
         // the tab is definitely a geo tab, now add the scripts
-        let keys = Object.keys(options) as scripts[];
-        keys = sortOptions(keys);
+        const keys = Object.keys(options) as scripts[];
+        const toInject: scripts[] = [];
 
-        for (const key of keys) {
-          if (options[key]) {
-            addScript(key, tabId);
+        keys.forEach((value) => {
+          if (options[value]) {
+            toInject.push(value);
           }
-        }
+        });
+        addScripts(toInject, tabId);
       });
     }
   });
