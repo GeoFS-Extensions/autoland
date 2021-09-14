@@ -1,3 +1,4 @@
+# TODO: when beta 3.2 is released, activate this action
 name: Publish to CWS
 
 on:
