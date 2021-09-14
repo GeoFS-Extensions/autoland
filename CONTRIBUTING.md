@@ -55,7 +55,7 @@ Make sure you update the version number in `manifest.json`. Here's how to do tha
 
 At this point, you should switch back to your master branch and make sure it's up to date with Autoland's master branch:
 
-## TODO: check this code
+<!--- TODO: check this code -->
 
 ```sh
 git remote add upstream git@github.com:geofs-autoland/autoland.git
