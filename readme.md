@@ -1,6 +1,12 @@
-[![Tests](https://github.com/GeoFS-Autoland/autoland/actions/workflows/tests.yml/badge.svg)](https://github.com/GeoFS-Autoland/autoland/actions/workflows/tests.yml)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+<h1 align="center">GeoFS Autoland</h1>
 
-# GeoFS Autoland
+<p align="center">
+  <a href="https://github.com/GeoFS-Autoland/autoland/actions/workflows/tests.yml">
+    <img alt="tests" src="https://img.shields.io/github/workflow/status/GeoFS-Autoland/autoland/Tests?label=Tests&style=flat-square"></a>
+  <a href="https://github.com/prettier/prettier">
+    <img alt="prettier style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"></a>
+</p>
 
-Hi! Thanks for stopping by the repo! If you're lost, [here's the Chrome Web Store listing](https://chrome.google.com/webstore/detail/flhbafggaeidplgimldpkkhkeikejlfd).
+<p align="center">
+  Hi! Thanks for stopping by the repo! If you're lost, <a href="https://chrome.google.com/webstore/detail/flhbafggaeidplgimldpkkhkeikejlfd">here's the Chrome Web Store listing</a>.
+</p>
