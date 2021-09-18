@@ -13,12 +13,12 @@
   "web_accessible_resources": [
     {
       "resources": ["scripts/*", "ui/oninstall/oninstall.html", "data/*.json"],
-      "matches": ["*://www.geo-fs.com/*"]
+      "matches": ["*://*.geo-fs.com/*"]
     }
   ],
   "permissions": ["storage", "scripting"],
   "optional_permissions": ["tabs"],
-  "host_permissions": ["https://www.geo-fs.com/*"],
+  "host_permissions": ["*://*.geo-fs.com/*"],
   "background": {
     "service_worker": "background.js"
   }

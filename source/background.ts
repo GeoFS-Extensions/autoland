@@ -207,7 +207,12 @@ function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
       chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-        if (tab.url != "https://www.geo-fs.com/geofs.php") {
+        if (
+          [
+            "https://www.geo-fs.com/geofs.php",
+            "https://beta.geo-fs.com/geofs.php",
+          ].indexOf(tab.url) > -1
+        ) {
           return;
         }
 
