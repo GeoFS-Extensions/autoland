@@ -11,7 +11,6 @@ function emptyButtons() {
     ap: undefined,
     fmc: undefined,
     spoilerarming: undefined,
-    keyboardmapping: undefined,
   };
 }
 /**
@@ -81,7 +80,6 @@ function updateButtons(buttons, options) {
             ap: false,
             fmc: false,
             spoilerarming: options.spoilerarming,
-            keyboardmapping: options.keyboardmapping,
           },
           "options"
         );

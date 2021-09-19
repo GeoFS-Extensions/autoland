@@ -53,21 +53,19 @@ Make sure you update the version number in `manifest.json`. Here's how to do tha
 
 ### Make a Pull Request
 
-At this point, you should switch back to your master branch and make sure it's up to date with Autoland's master branch:
-
-<!--- TODO: check this code -->
+At this point, you should switch back to your main branch and make sure it's up to date with Autoland's main branch:
 
 ```sh
 git remote add upstream git@github.com:geofs-autoland/autoland.git
-git checkout master
-git pull upstream master
+git checkout main
+git pull upstream main
 ```
 
-Then update your feature branch from your local copy of master, and push it!
+Then update your feature branch from your local copy of main, and push it!
 
 ```sh
 git checkout 325-add-japanese-translations
-git rebase master
+git rebase main
 git push --set-upstream origin 325-add-japanese-translations
 ```
 
@@ -89,19 +87,19 @@ To learn more about rebasing in Git, there are a lot of [good][git rebasing]
 
 ```sh
 git checkout 325-add-japanese-translations
-git pull --rebase upstream master
+git pull --rebase upstream main
 git push --force-with-lease 325-add-japanese-translations
 ```
 
 ### Merging a PR (maintainers only)
 
-A PR can only be merged into master by a maintainer if:
+A PR can only be merged into main by a maintainer if:
 
 - It is passing CI.
 - It has been approved by at least two maintainers. If it was a maintainer who
   opened the PR, only one other approval is needed.
 - It has no requested changes.
-- It is up to date with current master.
+- It is up to date with current main.
 
 Any maintainer is allowed to merge a PR if all of these conditions are met.
 
