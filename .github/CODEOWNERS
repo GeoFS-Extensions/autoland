@@ -5,9 +5,6 @@
 .github @slap-py
 *.md @slap-py
 
-# exception being renovate.json
-.github/renovate.json @nicolas377 @Guy-Adler
-
 # nicolas owns actions
 .github/workflows/ @nicolas377
 build.js @nicolas377

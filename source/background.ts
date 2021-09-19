@@ -196,8 +196,7 @@ chrome.storage.onChanged.addListener(async (changes) => {
 function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
-      chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-        console.log(tab.url);
+      chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         if (tab.url != "https://www.geo-fs.com/geofs.php") {
           if (tab.url != "https://beta.geo-fs.com/geofs.php") {
             return;

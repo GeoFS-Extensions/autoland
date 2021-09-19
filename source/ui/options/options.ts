@@ -1,3 +1,7 @@
+interface HTMLSwitch extends HTMLElement {
+  checked: boolean;
+}
+
 /**
  * Gets data from chrome storage. Don't call this function, call readStorage instead.
  * @param {string} name The name of the data in chrome storage.
@@ -28,8 +32,7 @@ async function readStorage(name: string): Promise<any> {
 }
 
 document.getElementById("devModeSwitch").addEventListener("change", () => {
-  // @ts-ignore .checked does exist on this, its just not on the HTMLElement type
-  if (document.getElementById("devModeSwitch").checked) {
+  if ((document.getElementById("devModeSwitch") as HTMLSwitch).checked) {
     chrome.storage.sync.set({ devModeEnabled: true });
   } else {
     chrome.storage.sync.set({ devModeEnabled: false });
@@ -39,7 +42,6 @@ document.getElementById("devModeSwitch").addEventListener("change", () => {
 window.onload = async () => {
   const devModeEnabled: boolean = await readStorage("devModeEnabled");
   if (devModeEnabled) {
-    // @ts-ignore .checked does exist on this, its just not on the HTMLElement type
-    document.getElementById("devModeSwitch").checked = true;
+    (document.getElementById("devModeSwitch") as HTMLSwitch).checked = true;
   }
 };

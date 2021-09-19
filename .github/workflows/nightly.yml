@@ -161,33 +161,6 @@ jobs:
           name: spoilers_arming
           path: dist/spoilers_arming.js
 
-  job_7:
-    name: Build Keyboard Mapping
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          repository: GeoFS-Autoland/keyboard-mapping
-          ref: release
-
-      - name: Setup node v16
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16.x"
-
-      - name: Build
-        run: |
-          npm i
-          npm run build
-
-      - name: Upload as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: keyboard_mapping
-          path: dist/keyboard_mapping.js
-
   job_8:
     name: Commit scripts and .json files
     needs: [job_4, job_5, job_6, job_7]
@@ -232,12 +205,6 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: spoilers_arming
-          path: source/scripts
-
-      - name: Download Keyboard Mapping
-        uses: actions/download-artifact@v2
-        with:
-          name: keyboard_mapping
           path: source/scripts
 
       - name: Build extension

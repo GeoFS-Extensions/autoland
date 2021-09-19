@@ -1,7 +1,4 @@
 "use strict";
-// this is a fix for chrome not allowing modules
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const module = {};
 /**
  * Sorts scripts for adding.
  * @param {scripts} toSort The scripts to sort through.
@@ -174,8 +171,7 @@ chrome.storage.onChanged.addListener(async (changes) => {
 function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
-      chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-        console.log(tab.url);
+      chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         if (tab.url != "https://www.geo-fs.com/geofs.php") {
           if (tab.url != "https://beta.geo-fs.com/geofs.php") {
             return;
@@ -219,4 +215,3 @@ chrome.runtime.onInstalled.addListener((details) => {
     });
   }
 });
-module.exports = {};

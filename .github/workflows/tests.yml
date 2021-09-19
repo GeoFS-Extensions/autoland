@@ -24,7 +24,7 @@ jobs:
         run: npm i
 
       - name: Build
-        run: node build.js
+        run: npm run build
 
   job_2:
     name: Prettier
@@ -62,7 +62,7 @@ jobs:
         run: npm i
 
       - name: Lint
-        run: sudo npx eslint .  --debug
+        run: sudo npx eslint .
 
   job_4:
     name: Security
