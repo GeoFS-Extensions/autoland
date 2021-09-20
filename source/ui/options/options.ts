@@ -1,3 +1,5 @@
+export = {};
+
 interface HTMLSwitch extends HTMLElement {
   checked: boolean;
 }

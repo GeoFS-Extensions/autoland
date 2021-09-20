@@ -5,12 +5,7 @@ const fs = require("fs-extra");
 const path = require("path");
 
 function singleFileAction(filename) {
-  const linesToDelete = [
-    "// this is a fix for chrome not allowing modules",
-    "// eslint-disable-next-line @typescript-eslint/no-unused-vars",
-    "const module = {};",
-    "module.exports = {};",
-  ];
+  const linesToDelete = ["module.exports = {};"];
   let fileContent = fs
     .readFileSync(filename, { encoding: "utf-8" })
     .split("\r\n");

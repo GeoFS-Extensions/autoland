@@ -1,7 +1,3 @@
-// this is a fix for chrome not allowing modules
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const module = {};
-
 export = {};
 
 interface PopupState {
