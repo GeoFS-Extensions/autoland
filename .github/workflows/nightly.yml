@@ -161,9 +161,9 @@ jobs:
           name: spoilers_arming
           path: dist/spoilers_arming.js
 
-  job_8:
+  job_7:
     name: Commit scripts and .json files
-    needs: [job_4, job_5, job_6, job_7]
+    needs: [job_4, job_5, job_6]
     runs-on: ubuntu-latest
 
     steps:
