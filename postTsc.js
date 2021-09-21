@@ -5,17 +5,17 @@ const fs = require("fs-extra");
 const path = require("path");
 
 function singleFileAction(filename) {
-  const linesToDelete = ["module.exports = {};"];
   let fileContent = fs
     .readFileSync(filename, { encoding: "utf-8" })
-    .split("\r\n");
+    .split("\n");
   let toWrite = [];
   fileContent.forEach((value) => {
-    if (!linesToDelete.includes(value)) {
+    value.replaceAll(/\r/g, "");
+    if (!value.includes("module.exports = {};")) {
       toWrite.push(value);
     }
   });
-  fs.writeFileSync(filename, toWrite.join("\r\n"));
+  fs.writeFileSync(filename, toWrite.join("\n"));
 }
 
 function getJsFiles(startPath = "./build", filter = ".js", currentArray = []) {
