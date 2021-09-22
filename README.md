@@ -1,4 +1,4 @@
-<h1 align="center">GeoFS Autoland</h1>
+<h1 align="center">GeoFS Plugins</h1>
 
 <p align="center">
   <a href="https://github.com/GeoFS-Autoland/autoland/actions/workflows/tests.yml">

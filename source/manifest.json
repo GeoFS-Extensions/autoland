@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "GeoFS Autoland",
+  "name": "GeoFS Plugins",
   "version": "3.2.0.0",
   "description": "Adding new functionalities to the GeoFS Flight Simulator.",
   "action": {
