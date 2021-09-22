@@ -88,7 +88,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: GeoFS-Autoland/autopilot-pp
+          repository: GeoFS-Extensions/autopilot-pp
           ref: release
 
       - name: Setup node v16
@@ -115,7 +115,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: GeoFS-Autoland/fmc-requirejs
+          repository: GeoFS-Extensions/fmc-requirejs
           ref: release
 
       - name: Setup node v16
@@ -142,7 +142,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: GeoFS-Autoland/spoilers-arming
+          repository: GeoFS-Extensions/spoilers-arming
           ref: release
 
       - name: Setup node v16
