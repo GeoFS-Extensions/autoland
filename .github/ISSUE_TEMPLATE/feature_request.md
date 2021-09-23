@@ -3,7 +3,7 @@ name: Feature request
 about: Suggestions
 title: "FEATURE:"
 labels: enhancement
-assignees: "Featherway"
+assignees: "nicolas377, Guy-Adler"
 ---
 
 **Is your feature request related to a problem? If so, please explain.**

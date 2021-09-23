@@ -1,7 +1,4 @@
 "use strict";
-// this is a fix for chrome not allowing modules
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const module = {};
 /**
  * Gives a empty version of the buttons.
  * @returns {Buttons} A empty version of the buttons.
@@ -11,7 +8,6 @@ function emptyButtons() {
     ap: undefined,
     fmc: undefined,
     spoilerarming: undefined,
-    keyboardmapping: undefined,
   };
 }
 /**
@@ -81,7 +77,6 @@ function updateButtons(buttons, options) {
             ap: false,
             fmc: false,
             spoilerarming: options.spoilerarming,
-            keyboardmapping: options.keyboardmapping,
           },
           "options"
         );
@@ -135,6 +130,7 @@ function checkPermissions() {
 }
 let buttons, options;
 window.onload = async () => {
+  document.getElementById("fmcbutton").style.display = "none";
   buttons = getButtons();
   options = await readStorage("options");
   updateButtons(buttons, options);
@@ -149,4 +145,3 @@ window.onload = async () => {
   // Check if we need to update
   checkForUpdate();
 };
-module.exports = {};

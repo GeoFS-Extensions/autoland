@@ -27,7 +27,6 @@ async function readStorage(name) {
   return data;
 }
 document.getElementById("devModeSwitch").addEventListener("change", () => {
-  // @ts-ignore .checked does exist on this, its just not on the HTMLElement type
   if (document.getElementById("devModeSwitch").checked) {
     chrome.storage.sync.set({ devModeEnabled: true });
   } else {
@@ -37,7 +36,6 @@ document.getElementById("devModeSwitch").addEventListener("change", () => {
 window.onload = async () => {
   const devModeEnabled = await readStorage("devModeEnabled");
   if (devModeEnabled) {
-    // @ts-ignore .checked does exist on this, its just not on the HTMLElement type
     document.getElementById("devModeSwitch").checked = true;
   }
 };

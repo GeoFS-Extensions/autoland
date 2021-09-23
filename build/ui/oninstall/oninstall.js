@@ -1,7 +1,4 @@
 "use strict";
-// this is a fix for chrome not allowing modules
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const module = {};
 /**
  * Requests the tabs permission from the user.
  */
@@ -30,4 +27,3 @@ window.onload = function () {
     document.getElementById("permissionRequest").style.display = "none";
   });
 };
-module.exports = {};

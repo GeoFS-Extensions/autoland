@@ -1,14 +1,9 @@
-// this is a fix for chrome not allowing modules
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const module = {};
-
 export = {};
 
 interface options {
   ap: boolean;
   fmc: boolean;
   spoilerarming: boolean;
-  keyboardmapping: boolean;
 }
 
 type scripts = keyof options;
@@ -19,12 +14,7 @@ type scripts = keyof options;
  * @returns {scripts} The sorted scripts.
  */
 function sortOptions(toSort: scripts[]): scripts[] {
-  const listOfImportance: scripts[] = [
-    "keyboardmapping",
-    "ap",
-    "fmc",
-    "spoilerarming",
-  ];
+  const listOfImportance: scripts[] = ["ap", "fmc", "spoilerarming"];
   return toSort.sort(
     (a, b) => listOfImportance.indexOf(a) - listOfImportance.indexOf(b)
   );
@@ -89,7 +79,6 @@ async function readOptions(): Promise<options> {
         ap: false,
         fmc: false,
         spoilerarming: false,
-        keyboardmapping: false,
       };
       writeToStorage(data, "options");
     }
@@ -150,9 +139,6 @@ async function injectScript(type: scripts, tabId: number) {
         case "spoilerarming":
           name = "spoilers_arming";
           break;
-        case "keyboardmapping":
-          name = "keyboard_mapping";
-          break;
       }
       const scriptTag = document.createElement("script");
       scriptTag.src = chrome.runtime.getURL(`scripts/${name}.js`);
@@ -206,14 +192,11 @@ chrome.storage.onChanged.addListener(async (changes) => {
 function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
-      chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-        if (
-          [
-            "https://www.geo-fs.com/geofs.php",
-            "https://beta.geo-fs.com/geofs.php",
-          ].indexOf(tab.url) > -1
-        ) {
-          return;
+      chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+        if (tab.url != "https://www.geo-fs.com/geofs.php") {
+          if (tab.url != "https://beta.geo-fs.com/geofs.php") {
+            return;
+          }
         }
 
         // the tab is definitely a geo tab, now add the scripts
@@ -247,18 +230,16 @@ chrome.runtime.onInstalled.addListener((details) => {
 
   if (details.reason == "install") {
     writeToStorage(
-      { ap: false, fmc: false, spoilerarming: false, keyboardmapping: false },
+      {
+        ap: false,
+        fmc: false,
+        spoilerarming: false,
+      } as options,
       "options"
     );
     writeToStorage(false, "devModeEnabled");
     chrome.tabs.create({
       url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
-    });
-  }
-
-  if (details.reason == "update") {
-    chrome.tabs.create({
-      url: chrome.runtime.getURL("changelog/changelog.html"),
     });
   }
 });

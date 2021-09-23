@@ -1,6 +1,6 @@
 ## Contributing
 
-First off, thanks for considering contributing to Autoland! It's people like you that make this project a great tool.
+First off, thanks for considering contributing to this project! It's people like you that make this project a great tool.
 
 ### Where do I go from here?
 
@@ -10,7 +10,7 @@ request this way before starting to code.
 
 ### Fork & create a branch
 
-If this is something you think you can fix, then [fork Autoland] and create
+If this is something you think you can fix, then [fork this project] and create
 a branch with a descriptive name.
 
 A good branch name would be (where issue #325 is the ticket you're working on):
@@ -53,21 +53,19 @@ Make sure you update the version number in `manifest.json`. Here's how to do tha
 
 ### Make a Pull Request
 
-At this point, you should switch back to your master branch and make sure it's up to date with Autoland's master branch:
-
-<!--- TODO: check this code -->
+At this point, you should switch back to your main branch and make sure it's up to date with our main branch:
 
 ```sh
-git remote add upstream git@github.com:geofs-autoland/autoland.git
-git checkout master
-git pull upstream master
+git remote add upstream git@github.com:geofs-extensions/autoland.git
+git checkout main
+git pull upstream main
 ```
 
-Then update your feature branch from your local copy of master, and push it!
+Then update your feature branch from your local copy of main, and push it!
 
 ```sh
 git checkout 325-add-japanese-translations
-git rebase master
+git rebase main
 git push --set-upstream origin 325-add-japanese-translations
 ```
 
@@ -89,27 +87,27 @@ To learn more about rebasing in Git, there are a lot of [good][git rebasing]
 
 ```sh
 git checkout 325-add-japanese-translations
-git pull --rebase upstream master
+git pull --rebase upstream main
 git push --force-with-lease 325-add-japanese-translations
 ```
 
 ### Merging a PR (maintainers only)
 
-A PR can only be merged into master by a maintainer if:
+A PR can only be merged into main by a maintainer if:
 
 - It is passing CI.
 - It has been approved by at least two maintainers. If it was a maintainer who
   opened the PR, only one other approval is needed.
 - It has no requested changes.
-- It is up to date with current master.
+- It is up to date with current main.
 
 Any maintainer is allowed to merge a PR if all of these conditions are met.
 
 Thanks to the [Active Admin Contributing guide] for inspiring this Contributing guide!
 
 [active admin contributing guide]: https://github.com/activeadmin/activeadmin/blob/HEAD/CONTRIBUTING.md
-[make one]: https://github.com/GeoFS-Autoland/autoland/issues/new/choose
-[fork autoland]: https://help.github.com/articles/fork-a-repo
+[make one]: https://github.com/GeoFS-Extensions/autoland/issues/new/choose
+[fork this project]: https://help.github.com/articles/fork-a-repo
 [loading in unpacked mode]: https://stackoverflow.com/a/24577660
 [make a pull request]: https://help.github.com/articles/creating-a-pull-request
 [git rebasing]: http://git-scm.com/book/en/Git-Branching-Rebasing

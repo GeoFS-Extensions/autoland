@@ -1,21 +1,15 @@
-// this is a fix for chrome not allowing modules
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const module = {};
-
 export = {};
 
 interface PopupState {
   ap: boolean;
   fmc: boolean;
   spoilerarming: boolean;
-  keyboardmapping: boolean;
 }
 
 interface Buttons {
   ap: HTMLElement;
   fmc: HTMLElement;
   spoilerarming: HTMLElement;
-  keyboardmapping: HTMLElement;
 }
 
 /**
@@ -27,7 +21,6 @@ function emptyButtons(): Buttons {
     ap: undefined,
     fmc: undefined,
     spoilerarming: undefined,
-    keyboardmapping: undefined,
   };
 }
 
@@ -102,7 +95,6 @@ function updateButtons(buttons: Buttons, options: PopupState) {
             ap: false,
             fmc: false,
             spoilerarming: options.spoilerarming,
-            keyboardmapping: options.keyboardmapping,
           } as PopupState,
           "options"
         );
@@ -165,6 +157,8 @@ function checkPermissions() {
 let buttons: Buttons, options: PopupState;
 
 window.onload = async () => {
+  document.getElementById("fmcbutton").style.display = "none";
+
   buttons = getButtons();
   options = await readStorage("options");
 

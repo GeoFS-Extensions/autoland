@@ -1,14 +1,11 @@
 "use strict";
-// this is a fix for chrome not allowing modules
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const module = {};
 /**
  * Sorts scripts for adding.
  * @param {scripts} toSort The scripts to sort through.
  * @returns {scripts} The sorted scripts.
  */
 function sortOptions(toSort) {
-  const listOfImportance = ["keyboardmapping", "ap", "fmc", "spoilerarming"];
+  const listOfImportance = ["ap", "fmc", "spoilerarming"];
   return toSort.sort(
     (a, b) => listOfImportance.indexOf(a) - listOfImportance.indexOf(b)
   );
@@ -68,7 +65,6 @@ async function readOptions() {
         ap: false,
         fmc: false,
         spoilerarming: false,
-        keyboardmapping: false,
       };
       writeToStorage(data, "options");
     }
@@ -124,9 +120,6 @@ async function injectScript(type, tabId) {
         case "spoilerarming":
           name = "spoilers_arming";
           break;
-        case "keyboardmapping":
-          name = "keyboard_mapping";
-          break;
       }
       const scriptTag = document.createElement("script");
       scriptTag.src = chrome.runtime.getURL(`scripts/${name}.js`);
@@ -178,14 +171,11 @@ chrome.storage.onChanged.addListener(async (changes) => {
 function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
-      chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-        if (
-          [
-            "https://www.geo-fs.com/geofs.php",
-            "https://beta.geo-fs.com/geofs.php",
-          ].indexOf(tab.url) > -1
-        ) {
-          return;
+      chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+        if (tab.url != "https://www.geo-fs.com/geofs.php") {
+          if (tab.url != "https://beta.geo-fs.com/geofs.php") {
+            return;
+          }
         }
         // the tab is definitely a geo tab, now add the scripts
         const keys = Object.keys(options);
@@ -212,7 +202,11 @@ chrome.runtime.onInstalled.addListener((details) => {
   writeToStorage({ shouldBeUpdated: false }, "update");
   if (details.reason == "install") {
     writeToStorage(
-      { ap: false, fmc: false, spoilerarming: false, keyboardmapping: false },
+      {
+        ap: false,
+        fmc: false,
+        spoilerarming: false,
+      },
       "options"
     );
     writeToStorage(false, "devModeEnabled");
@@ -220,10 +214,4 @@ chrome.runtime.onInstalled.addListener((details) => {
       url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
     });
   }
-  if (details.reason == "update") {
-    chrome.tabs.create({
-      url: chrome.runtime.getURL("changelog/changelog.html"),
-    });
-  }
 });
-module.exports = {};
