@@ -130,6 +130,7 @@ function checkPermissions() {
 }
 let buttons, options;
 window.onload = async () => {
+  document.getElementById("fmcbutton").style.display = "none";
   buttons = getButtons();
   options = await readStorage("options");
   updateButtons(buttons, options);

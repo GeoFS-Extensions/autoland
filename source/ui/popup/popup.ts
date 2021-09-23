@@ -157,6 +157,8 @@ function checkPermissions() {
 let buttons: Buttons, options: PopupState;
 
 window.onload = async () => {
+  document.getElementById("fmcbutton").style.display = "none";
+
   buttons = getButtons();
   options = await readStorage("options");
 
