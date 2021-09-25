@@ -7,6 +7,5 @@
     "alwaysStrict": true,
     "stripInternal": true
   },
-  "include": ["build/**/*", "geofs_types.d.ts"],
-  "types": ["chrome", "jquery"]
+  "include": ["build/**/*", "geofs_types.d.ts"]
 }

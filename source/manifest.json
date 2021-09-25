@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "GeoFS Autoland",
-  "version": "3.1.0",
-  "description": "GeoFS Autoland adds new functionalities to the GeoFS Flight Simulator.",
+  "name": "GeoFS Plugins",
+  "version": "3.2.0.0",
+  "description": "Adding new functionalities to the GeoFS Flight Simulator.",
   "action": {
     "default_popup": "ui/popup/popup.html"
   },
@@ -12,13 +12,16 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["scripts/*", "ui/oninstall/oninstall.html"],
-      "matches": ["*://www.geo-fs.com/*"]
+      "resources": ["scripts/*", "ui/oninstall/oninstall.html", "data/*.json"],
+      "matches": ["*://*.geo-fs.com/*"]
     }
   ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com"
+  },
   "permissions": ["storage", "scripting"],
   "optional_permissions": ["tabs"],
-  "host_permissions": ["https://www.geo-fs.com/*"],
+  "host_permissions": ["*://*.geo-fs.com/*"],
   "background": {
     "service_worker": "background.js"
   }

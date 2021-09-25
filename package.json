@@ -1,5 +1,5 @@
 {
-  "name": "geofs-autoland",
+  "name": "geofs-plugins",
   "description": "Adding new functionalities to the GeoFS Flight Simulator.",
   "version": "1.0.0",
   "homepage": "https://geofsautoland.wixsite.com/autoland",
@@ -11,23 +11,24 @@
   },
   "scripts": {
     "docs": "npx jsdoc -c jsdoc.json",
-    "tsc": "npx tsc",
-    "build": "npm i && node build.js && npx prettier --write . && npx eslint . --fix --debug",
+    "tsc": "node build.js && npx tsc && npx rimraf ./build/**/*.ts && node postTsc.js",
+    "build": "npm i && npm run tsc && npx prettier --write . && npx eslint . --fix",
     "commit": "python commit.py",
-    "test": "npx prettier --check . && npx eslint . --debug && npx audit-ci --info && npm outdated"
+    "test": "npx prettier --check . && npx eslint ."
   },
   "devDependencies": {
-    "@types/chrome": "0.0.154",
+    "@types/chrome": "0.0.157",
     "@types/jquery": "3.5.6",
-    "@typescript-eslint/eslint-plugin": "4.29.3",
-    "@typescript-eslint/parser": "4.29.3",
-    "audit-ci": "4.1.0",
+    "@typescript-eslint/eslint-plugin": "4.31.1",
+    "@typescript-eslint/parser": "4.31.1",
+    "cws-publish": "2.0.6",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "fs-extra": "10.0.0",
+    "glob": "7.1.7",
     "jsdoc": "3.6.7",
-    "npm": "7.21.1",
-    "prettier": "2.3.2",
-    "typescript": "4.4.2"
+    "prettier": "2.4.1",
+    "rimraf": "3.0.2",
+    "typescript": "4.4.3"
   }
 }

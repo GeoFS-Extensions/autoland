@@ -1,0 +1,40 @@
+name: Packaging updates
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 2 * * 6"
+
+jobs:
+  job_1:
+    name: Packaging Update
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+
+      - name: Update dependencies to latest version
+        run: |
+          npm i npm-check-updates
+          npx ncu -u
+          npm uninstall npm-check-updates
+
+      - name: Regen package lock file
+        run: |
+          rm -f package-lock.json
+          npm i --package-lock-only
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "🤖: Update packaging"
+          commit_author: geofsautoland <68515084+geofsautoland@users.noreply.github.com>

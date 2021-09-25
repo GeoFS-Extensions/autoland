@@ -1,7 +1,3 @@
-// this is a fix for chrome not allowing modules
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const module = {};
-
 export = {};
 
 interface options {
@@ -11,6 +7,18 @@ interface options {
 }
 
 type scripts = keyof options;
+
+/**
+ * Sorts scripts for adding.
+ * @param {scripts} toSort The scripts to sort through.
+ * @returns {scripts} The sorted scripts.
+ */
+function sortOptions(toSort: scripts[]): scripts[] {
+  const listOfImportance: scripts[] = ["ap", "fmc", "spoilerarming"];
+  return toSort.sort(
+    (a, b) => listOfImportance.indexOf(a) - listOfImportance.indexOf(b)
+  );
+}
 
 /**
  * Gets data from chrome storage.
@@ -35,8 +43,7 @@ function getStorageData(name: string): Promise<any> {
  * @returns The object given that was saved to storage.
  */
 function writeToStorage(toWrite: any, name: string): typeof toWrite {
-  const toSave = {};
-  // @ts-ignore i dont understand why ts doesnt like this code
+  const toSave: { [key: string]: any } = {};
   toSave[name] = toWrite;
   chrome.storage.sync.set(toSave);
   return toWrite;
@@ -84,12 +91,44 @@ let options: options;
   options = await readOptions();
 })();
 
+function addScripts(toInject: scripts[], tabId: number) {
+  chrome.permissions.contains(
+    {
+      permissions: ["tabs"],
+    },
+    (result) => {
+      if (!result) {
+        // we don't have the needed permissions, open the page to request them
+        chrome.tabs.create({
+          url: chrome.runtime.getURL(
+            "ui/needspermissions/needspermissions.html"
+          ),
+        });
+        return;
+      }
+
+      // we have the needed permissions, add the scripts
+      sortOptions(toInject);
+      toInject.forEach((value) => {
+        injectScript(value, tabId);
+      });
+    }
+  );
+}
+
 /**
  * Executes a script in the DOM context of a tab.
  * @param {scripts} type The script to add.
  * @param {number} tabId The ID of the tab to add the script to.
  */
-function addScript(type: scripts, tabId: number) {
+async function injectScript(type: scripts, tabId: number) {
+  if (type == "ap") {
+    chrome.scripting.executeScript({
+      target: { tabId: tabId, allFrames: true },
+      files: ["scripts/autopilot_pp_infra/content_communicator.js"],
+    });
+  }
+
   chrome.scripting.executeScript({
     target: { tabId: tabId, allFrames: true },
     func: (name: string): void => {
@@ -99,9 +138,6 @@ function addScript(type: scripts, tabId: number) {
           break;
         case "spoilerarming":
           name = "spoilers_arming";
-          break;
-        case "keyboardmapping":
-          name = "keyboard_mapping";
           break;
       }
       const scriptTag = document.createElement("script");
@@ -117,21 +153,13 @@ function addScript(type: scripts, tabId: number) {
 }
 // update cache when storage changes
 chrome.storage.onChanged.addListener(async (changes) => {
-  if (changes["devModeEnabled"]) {
-    if (changes["devModeEnabled"].newValue == false) {
-      options = optionsAreValid(options);
-      writeToStorage(options, "options");
-    }
-    return;
-  }
-
   if (changes["options"]) {
     const newOptions = await readOptions();
 
     // add and remove scripts without reloading geo
-    const keys = Object.keys(newOptions) as Array<scripts>;
+    const keys = Object.keys(newOptions) as scripts[];
     let reload = false;
-    const toLoad: Array<scripts> = [];
+    const toLoad: scripts[] = [];
     for (const key of keys) {
       if (newOptions[key] !== options[key]) {
         if (newOptions[key]) toLoad.push(key);
@@ -141,7 +169,6 @@ chrome.storage.onChanged.addListener(async (changes) => {
     chrome.permissions.contains({ permissions: ["tabs"] }, async (result) => {
       if (result) {
         const [tab] = await chrome.tabs.query({
-          currentWindow: true,
           url: "https://www.geo-fs.com/geofs.php",
         });
         if (!tab) {
@@ -151,10 +178,7 @@ chrome.storage.onChanged.addListener(async (changes) => {
           options = newOptions;
           chrome.tabs.reload(tab.id);
         } else {
-          toLoad.sort();
-          for (const key of toLoad) {
-            addScript(key, tab.id);
-          }
+          addScripts(toLoad, tab.id);
         }
       }
     });
@@ -168,18 +192,23 @@ chrome.storage.onChanged.addListener(async (changes) => {
 function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
-      chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+      chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         if (tab.url != "https://www.geo-fs.com/geofs.php") {
-          return;
-        }
-        // the tab is definitely a geo tab
-
-        const keys = Object.keys(options).sort() as Array<scripts>;
-        for (const key of keys) {
-          if (options[key]) {
-            addScript(key, tabId);
+          if (tab.url != "https://beta.geo-fs.com/geofs.php") {
+            return;
           }
         }
+
+        // the tab is definitely a geo tab, now add the scripts
+        const keys = Object.keys(options) as scripts[];
+        const toInject: scripts[] = [];
+
+        keys.forEach((value) => {
+          if (options[value]) {
+            toInject.push(value);
+          }
+        });
+        addScripts(toInject, tabId);
       });
     }
   });
@@ -200,16 +229,17 @@ chrome.runtime.onInstalled.addListener((details) => {
   writeToStorage({ shouldBeUpdated: false }, "update");
 
   if (details.reason == "install") {
-    writeToStorage({ ap: false, fmc: false, spoilerarming: false }, "options");
+    writeToStorage(
+      {
+        ap: false,
+        fmc: false,
+        spoilerarming: false,
+      } as options,
+      "options"
+    );
     writeToStorage(false, "devModeEnabled");
     chrome.tabs.create({
       url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
-    });
-  }
-
-  if (details.reason == "update") {
-    chrome.tabs.create({
-      url: chrome.runtime.getURL("changelog/changelog.html"),
     });
   }
 });

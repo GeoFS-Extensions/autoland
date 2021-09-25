@@ -2,8 +2,49 @@
 /* eslint @typescript-eslint/no-var-requires: 0*/
 
 const fs = require("fs-extra");
-const path = require("path");
-const npm = require("npm");
+
+// build airports.json
+function airportsList() {
+  let a = fs.readFileSync("./data/airports.csv", { encoding: "utf8" });
+  a = a.split("\n");
+  a.shift();
+
+  const airports = {};
+
+  for (let airport of a) {
+    if (airport[0] == undefined) continue;
+    airport = airport.split(",");
+
+    let name = airport[1].substring(1).substring(0, airport[1].length - 2);
+    airports[name] = [Number(airport[4]), Number(airport[5])];
+  }
+
+  fs.writeFileSync(
+    "./source/data/airports.json",
+    JSON.stringify(airports, null, 2)
+  );
+}
+
+function navaidsList() {
+  let a = fs.readFileSync("./data/navaids.csv", { encoding: "utf8" });
+  a = a.split("\n");
+  a.shift();
+
+  const navaids = {};
+
+  for (let navaid of a) {
+    if (navaid[0] == undefined) continue;
+    navaid = navaid.split(",");
+
+    let name = navaid[2].substring(1).substring(0, navaid[2].length - 2);
+    navaids[name] = [Number(navaid[6]), Number(navaid[7])];
+  }
+
+  fs.writeFileSync(
+    "./source/data/navaids.json",
+    JSON.stringify(navaids, null, 2)
+  );
+}
 
 function deleteFolderRecursive(path) {
   if (fs.existsSync(path) && fs.lstatSync(path).isDirectory()) {
@@ -23,44 +64,15 @@ function deleteFolderRecursive(path) {
   }
 }
 
-function deleteTsFiles(
-  startPath = "./build",
-  filter = ".ts",
-  notRecursing = true
-) {
-  if (notRecursing) {
-    console.log(".ts files compiled!");
-  }
+navaidsList();
+console.log("navaids list built!");
 
-  if (!fs.existsSync(startPath)) {
-    console.log("no dir ", startPath);
-    return;
-  }
-
-  var files = fs.readdirSync(startPath);
-  for (var i = 0; i < files.length; i++) {
-    var filename = path.join(startPath, files[i]);
-    var stat = fs.lstatSync(filename);
-    if (stat.isDirectory()) {
-      deleteTsFiles(filename, filter, false); // recurse
-    } else if (filename.indexOf(filter) >= 0) {
-      fs.unlinkSync(filename);
-    }
-  }
-
-  if (notRecursing) {
-    console.log(".ts files deleted!");
-  }
-}
+airportsList();
+console.log("airports list built!");
 
 deleteFolderRecursive("build");
 console.log("build folder deleted!");
 
 fs.copySync("source", "build");
+fs.unlinkSync("build/tsconfig.json");
 console.log("source copied to build!");
-
-npm.load(function () {
-  npm.commands["run-script"](["tsc"], () => {
-    deleteTsFiles();
-  });
-});

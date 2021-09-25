@@ -1,0 +1,293 @@
+name: Nightly actions
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 2 * * *"
+
+jobs:
+  job_1:
+    name: Lock old issues and prs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Lock issues
+        uses: dessant/lock-threads@v2
+        with:
+          github-token: ${{ secrets.PAT }}
+          issue-exclude-labels: "dependencies"
+          issue-lock-labels: "locked"
+          pr-lock-labels: "locked"
+          issue-lock-inactive-days: 15
+          pr-lock-inactive-days: 15
+          issue-lock-comment: >
+            This issue has been automatically locked since there
+            has not been any recent activity after it was closed.
+            Please open a new issue for related bugs.
+          pr-lock-comment: >
+            This pull request has been automatically locked since there
+            has not been any recent activity after it was closed.
+            Please open a new issue for related bugs.
+
+  job_2:
+    name: Build docs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+
+      - name: Build docs
+        run: |
+          npm i
+          npm run docs
+
+      - name: Upload docs as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: docs/
+
+  job_3:
+    name: Commit docs
+    runs-on: ubuntu-latest
+    needs: job_2
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: docs
+          token: ${{ secrets.PAT }}
+
+      - name: Download docs artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: docs
+
+      - name: Commit docs
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Build docs
+          branch: docs
+          commit_author: geofsautoland <68515084+geofsautoland@users.noreply.github.com>
+
+  job_4:
+    name: Build AP++
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: GeoFS-Extensions/autopilot-pp
+          ref: release
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+
+      - name: Build
+        run: |
+          npm i
+          npm run build
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: autopilot_pp
+          path: dist/autopilot_pp.js
+
+  job_5:
+    name: Build FMC
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: GeoFS-Extensions/fmc-requirejs
+          ref: release
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+
+      - name: Build
+        run: |
+          npm i
+          npm run build
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: fmc
+          path: dist/fmc.js
+
+  job_6:
+    name: Build Spoilers Arming
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: GeoFS-Extensions/spoilers-arming
+          ref: release
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+
+      - name: Build
+        run: |
+          npm i
+          npm run build
+
+      - name: Upload as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: spoilers_arming
+          path: dist/spoilers_arming.js
+
+  job_7:
+    name: Commit scripts and .json files
+    needs: [job_4, job_5, job_6]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+
+      - name: Download airports.csv
+        uses: carlosperate/download-file-action@v1.0.3
+        with:
+          file-url: "https://ourairports.com/data/airports.csv"
+          file-name: "airports.csv"
+          location: "./data"
+
+      - name: Downloads navaids.csv
+        uses: carlosperate/download-file-action@v1.0.3
+        with:
+          file-url: "https://ourairports.com/data/navaids.csv"
+          file-name: "navaids.csv"
+          location: "./data"
+
+      - name: Download AP++
+        uses: actions/download-artifact@v2
+        with:
+          name: autopilot_pp
+          path: source/scripts
+
+      - name: Download FMC
+        uses: actions/download-artifact@v2
+        with:
+          name: fmc
+          path: source/scripts
+
+      - name: Download Spoilers Arming
+        uses: actions/download-artifact@v2
+        with:
+          name: spoilers_arming
+          path: source/scripts
+
+      - name: Build extension
+        run: |
+          npm i
+          npm run build
+
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "🤖: Update scripts and nav data"
+          commit_author: geofsautoland <68515084+geofsautoland@users.noreply.github.com>
+
+  job_9:
+    name: Build json files to release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: release
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Download airports.csv
+        uses: carlosperate/download-file-action@v1.0.3
+        with:
+          file-url: "https://ourairports.com/data/airports.csv"
+          file-name: "airports.csv"
+          location: "./data"
+
+      - name: Downloads navaids.csv
+        uses: carlosperate/download-file-action@v1.0.3
+        with:
+          file-url: "https://ourairports.com/data/navaids.csv"
+          file-name: "navaids.csv"
+          location: "./data"
+
+      - name: Increment last version number
+        run: node patch_num.js
+
+      - name: Build extension
+        run: npm run build
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.PAT }}
+          delete-branch: true
+        branch: update-navdata
+        labels: "nav data"
+        title: "🤖: Update navdata"
+        commit-message: "🤖: Update navdata"
+        body: |
+          Updated airports and navaids.
+          This pull request was generated automatically, approved automatically, and will be merged automatically.
+
+          Auto-generated by [create-pull-request][1]
+
+        [1]: https://github.com/peter-evans/create-pull-request
+
+      # we need to wait for the tests to pass before automerge works
+      - name: Wait a minute!
+        run: sleep 150s
+        shell: bash
+
+      - name: Approve PR
+        uses: juliangruber/approve-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.NICOLAS_PAT }}
+          number: ${{ steps.cpr.outputs.pull-request-number }}
+
+      - name: Merge PR
+        uses: juliangruber/merge-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.NICOLAS_PAT }}
+          number: ${{ steps.cpr.outputs.pull-request-number }}
+          method: squash

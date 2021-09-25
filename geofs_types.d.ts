@@ -1392,6 +1392,12 @@ interface Multiplater {
 // global variables
 declare global {
   interface Window {
+    navData: {
+      statusCode: number;
+      airports: { [key: string]: number[] };
+      navaids: { [key: string]: number[] };
+      waypoints: { [key: string]: number[][] };
+    };
     geofs?: GeoFS;
     ui: Ui;
     flight: Flight;
