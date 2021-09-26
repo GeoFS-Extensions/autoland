@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: "0 2 * * 6"
+    - cron: "0 2 * * *"
 
 jobs:
   job_1:
@@ -24,6 +24,7 @@ jobs:
 
       - name: Update dependencies to latest version
         run: |
+          npm update
           npm i npm-check-updates
           npx ncu -u
           npm uninstall npm-check-updates
