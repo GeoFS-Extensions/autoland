@@ -1,15 +1,11 @@
 {
   "manifest_version": 3,
   "name": "GeoFS Plugins",
-  "version": "3.2.0.0",
+  "version": "3.2.0.1",
   "description": "Adding new functionalities to the GeoFS Flight Simulator.",
-  "action": {
-    "default_popup": "ui/popup/popup.html"
-  },
+  "action": { "default_popup": "ui/popup/popup.html" },
   "author": "Nicolas Rodriguez, Guy Adler",
-  "icons": {
-    "772": "icons/icon.png"
-  },
+  "icons": { "772": "icons/icon.png" },
   "web_accessible_resources": [
     {
       "resources": ["scripts/*", "ui/oninstall/oninstall.html", "data/*.json"],
@@ -22,7 +18,5 @@
   "permissions": ["storage", "scripting"],
   "optional_permissions": ["tabs"],
   "host_permissions": ["*://*.geo-fs.com/*"],
-  "background": {
-    "service_worker": "background.js"
-  }
+  "background": { "service_worker": "background.js" }
 }
