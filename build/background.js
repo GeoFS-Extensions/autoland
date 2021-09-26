@@ -5,7 +5,7 @@
  * @returns {scripts} The sorted scripts.
  */
 function sortOptions(toSort) {
-  const listOfImportance = ["ap", "fmc", "spoilerarming"];
+  const listOfImportance = ["keyboardmapping", "ap", "fmc", "spoilerarming"];
   return toSort.sort(
     (a, b) => listOfImportance.indexOf(a) - listOfImportance.indexOf(b)
   );
@@ -65,6 +65,7 @@ async function readOptions() {
         ap: false,
         fmc: false,
         spoilerarming: false,
+        keyboardmapping: true, // defaults to true (#59(v3.3.0) Make keyboard mapping a default)
       };
       writeToStorage(data, "options");
     }
@@ -120,6 +121,9 @@ async function injectScript(type, tabId) {
         case "spoilerarming":
           name = "spoilers_arming";
           break;
+        case "keyboardmapping":
+          name = "keyboard_mapping";
+          break;
       }
       const scriptTag = document.createElement("script");
       scriptTag.src = chrome.runtime.getURL(`scripts/${name}.js`);
@@ -172,10 +176,14 @@ function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
       chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-        if (tab.url != "https://www.geo-fs.com/geofs.php") {
-          if (tab.url != "https://beta.geo-fs.com/geofs.php") {
-            return;
-          }
+        if (
+          tab.url !== "https://www.geo-fs.com/geofs.php" &&
+          tab.url !== "https://beta.geo-fs.com/geofs.php"
+        ) {
+          return;
+        }
+        if (changeInfo.status !== "complete") {
+          return;
         }
         // the tab is definitely a geo tab, now add the scripts
         const keys = Object.keys(options);
