@@ -114,7 +114,6 @@ async function injectScript(type, tabId) {
   chrome.scripting.executeScript({
     target: { tabId: tabId, allFrames: true },
     func: (name) => {
-      console.log(name);
       switch (name) {
         case "ap":
           name = "autopilot_pp";
@@ -177,10 +176,14 @@ function addScriptsListener() {
   chrome.permissions.contains({ permissions: ["tabs"] }, (result) => {
     if (result) {
       chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-        if (tab.url != "https://www.geo-fs.com/geofs.php") {
-          if (tab.url != "https://beta.geo-fs.com/geofs.php") {
-            return;
-          }
+        if (
+          tab.url !== "https://www.geo-fs.com/geofs.php" &&
+          tab.url !== "https://beta.geo-fs.com/geofs.php"
+        ) {
+          return;
+        }
+        if (changeInfo.status !== "complete") {
+          return;
         }
         // the tab is definitely a geo tab, now add the scripts
         const keys = Object.keys(options);
