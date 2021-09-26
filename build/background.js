@@ -5,7 +5,7 @@
  * @returns {scripts} The sorted scripts.
  */
 function sortOptions(toSort) {
-  const listOfImportance = ["ap", "fmc", "spoilerarming"];
+  const listOfImportance = ["keyboardmapping", "ap", "fmc", "spoilerarming"];
   return toSort.sort(
     (a, b) => listOfImportance.indexOf(a) - listOfImportance.indexOf(b)
   );
@@ -65,6 +65,7 @@ async function readOptions() {
         ap: false,
         fmc: false,
         spoilerarming: false,
+        keyboardmapping: true, // defaults to true (#59(v3.3.0) Make keyboard mapping a default)
       };
       writeToStorage(data, "options");
     }
@@ -113,12 +114,16 @@ async function injectScript(type, tabId) {
   chrome.scripting.executeScript({
     target: { tabId: tabId, allFrames: true },
     func: (name) => {
+      console.log(name);
       switch (name) {
         case "ap":
           name = "autopilot_pp";
           break;
         case "spoilerarming":
           name = "spoilers_arming";
+          break;
+        case "keyboardmapping":
+          name = "keyboard_mapping";
           break;
       }
       const scriptTag = document.createElement("script");
