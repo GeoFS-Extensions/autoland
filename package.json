@@ -11,8 +11,8 @@
   },
   "scripts": {
     "docs": "npx jsdoc -c jsdoc.json",
-    "tsc": "node build.js && npx tsc && npx rimraf ./build/**/*.ts && node postTsc.js",
-    "build": "npm i && npm run tsc && npx prettier --write . && npx eslint . --fix",
+    "compile": "node build.js && npx tsc && npx rimraf ./build/**/*.ts && node postTsc.js",
+    "build": "npm i && npm run compile && npx prettier --write . && npx eslint . --fix",
     "commit": "python commit.py",
     "test": "npx prettier --check . && npx eslint ."
   },
