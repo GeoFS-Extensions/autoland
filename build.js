@@ -19,10 +19,7 @@ function airportsList() {
     airports[name] = [Number(airport[4]), Number(airport[5])];
   }
 
-  fs.writeFileSync(
-    "./source/data/airports.json",
-    JSON.stringify(airports, null, 2)
-  );
+  fs.writeFileSync("./source/data/airports.json", JSON.stringify(airports));
 }
 
 function navaidsList() {
@@ -40,10 +37,7 @@ function navaidsList() {
     navaids[name] = [Number(navaid[6]), Number(navaid[7])];
   }
 
-  fs.writeFileSync(
-    "./source/data/navaids.json",
-    JSON.stringify(navaids, null, 2)
-  );
+  fs.writeFileSync("./source/data/navaids.json", JSON.stringify(navaids));
 }
 
 function deleteFolderRecursive(path) {
