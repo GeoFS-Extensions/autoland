@@ -1,0 +1,33 @@
+<!-- LEGS tab contents -->
+<section class="mdl-layout__tab-panel fmc-legs">
+    <div class="page-content">
+        <div class="fmc-legs-container">
+            <table class="fmc-legs-data-table">
+
+                <thead>
+                    <th class="brng-and-wpt"></th>
+                    <th class="dist-and-info"></th>
+                    <th class="altitude"></th>
+                </thead>
+
+                <!-- LEGS information table -->
+                <tbody data-bind="foreach: route">
+                    <tr data-bind="visible: $parent.nextWaypoint() == null || $index() >= $parent.nextWaypoint(), css: {activated:$parent.nextWaypoint() === $index()}">
+                        <td>
+                            <div class="brng-from-prev" data-bind="text: brngFromPrev() == null ? '' : brngFromPrev()+'\xB0'"></div>
+                            <div class="wpt-name" data-bind="text: wpt"></div>
+                        </td>
+                        <td>
+                            <div class="dist-from-prev" data-bind="text: distFromPrev() == null ? '' : distFromPrev()+' NM'"></div>
+                            <div class="wpt-info" data-bind="text: info() ? '('+info()+')' : ''"></div>
+                        </td>
+                        <td>
+                            <div class="alt-target" data-bind="text: !alt() ? (wpt() ? '-----' : '') : (alt() >= 18000 ? 'FL'+Math.round(alt()/100) : alt()+' FT')"></div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</section>

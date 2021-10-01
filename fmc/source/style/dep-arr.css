@@ -1,0 +1,36 @@
+div.fmc-dep-arr-container {
+    overflow: hidden;
+}
+
+div.fmc-dep-arr-container .fmc-dep-arr__input-label {
+    margin-left: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.26);
+    cursor: default;
+}
+
+div.fmc-dep-arr-container td div {
+    width: 140px;
+    margin-left: 10px;
+    position: relative;
+}
+
+div.fmc-dep-arr-container .mdl-textfield__input,
+div.fmc-dep-arr-container label {
+    width: 137px;
+}
+
+div.fmc-auto-tod-container {
+    position: relative;
+    left: 28%;
+}
+
+div.fmc-auto-tod-container .mdl-switch {
+    width: 280px;
+}
+
+div.fmc-auto-tod-container .mdl-switch__label {
+    font-weight: bold;
+    cursor: default !important;
+}

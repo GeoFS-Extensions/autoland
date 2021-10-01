@@ -1,0 +1,79 @@
+div.fmc-wpt-list-container {
+	padding-bottom: 9px;
+	margin-top: -23px;
+	max-height: 277px;
+	overflow: auto;
+}
+
+div.fmc-wpt-list-container table {
+	border: none;
+}
+
+div.fmc-wpt-list-container tr:hover {
+	background-color: initial !important;
+}
+
+div.fmc-wpt-list-container th {
+	text-align: left;
+	cursor: default;
+}
+
+div.fmc-wpt-list-container td {
+	border: none;
+}
+
+div.fmc-wpt-list-container .wpt-col {
+	width: 12%;
+}
+
+div.fmc-wpt-list-container .lat-col {
+	width: 11.8%;
+}
+
+div.fmc-wpt-list-container .lon-col {
+	width: 12.4%;
+}
+
+div.fmc-wpt-list-container .alt-col {
+	width: 3%;
+}
+
+div.fmc-wpt-list-container .actions-col {
+	width: 10%;
+}
+
+tr.wpt-row td {
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+}
+
+tr.wpt-row .mdl-textfield {
+	width: initial;
+	padding: 14px 0;
+}
+
+tr.wpt-row .mdl-textfield__label {
+	top: 18px;
+}
+
+tr.wpt-row .mdl-textfield__label::after {
+	bottom: 14px;
+}
+
+tr.wpt-row .fmc-wpt-info {
+	color: rgb(83, 109, 254);
+	position: absolute;
+	top: -4px;
+	font-size: 12px;
+}
+
+tr.wpt-row button {
+	float: left;
+	min-width: 22px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+button[action="activate-wpt"] .material-icons {
+	color: blue;
+}

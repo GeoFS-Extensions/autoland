@@ -1,0 +1,130 @@
+/* modal.html */
+a.fmc-btn__fade {
+	transition: font-size 0.3s ease-in-out,
+				font-weight 0.3s ease-in-out,
+				color 0.3s ease-in-out;
+	-moz-transition: font-size 0.3s ease-in-out,
+				font-weight 0.3s ease-in-out,
+				color 0.3s ease-in-out;
+	-webkit-transition: font-size 0.3s ease-in-out,
+				font-weight 0.3s ease-in-out,
+				color 0.3s ease-in-out;
+}
+
+a.fmc-btn__fade:hover:not(.is-active) {
+	font-weight: bold;
+	color: black;
+}
+
+a.fmc-btn__fade.is-active {
+	font-size: 15px;
+	font-weight: bold;
+	color: rgb(83, 109, 254) !important;
+}
+
+div.fmc-modal {
+	display: none;
+	width: 665px;
+    padding: 14px 14px;
+	border: none;
+	border-radius: 7px;
+	position: fixed;
+	top: 10%;
+	left: 0px;
+	right: 0px;
+	height: fit-content;
+	height: -moz-fit-content;
+	height: -webkit-fit-content;
+	color: black;
+	margin: auto;
+	background: white;
+}
+
+div.fmc-modal.opened {
+	display: block;
+}
+
+div.fmc-modal::backdrop {
+	background: none;
+}
+
+div.fmc-modal .fmc-modal__close {
+	height: 25px;
+	margin: -13px 0;
+	float: right;
+}
+
+div.fmc-modal h4 {
+	text-align: center;
+	margin-top: 10px !important;
+	margin-bottom: 0px !important;
+}
+
+div.fmc-modal .fmc-modal__warning {
+	height: 20px;
+	text-align: center;
+	color: #d50000;
+}
+
+div.fmc-modal .fmc-modal__no-shadow {
+	box-shadow: none !important;
+	background: white !important;
+    min-height: inherit;
+    height: inherit;
+	position: static !important; /* Default MDL css was redefined */
+}
+
+@media screen and (max-width: 1024px) {
+	/* MDL's small screen hides modal header */
+	div.fmc-modal .fmc-modal__no-shadow {
+		display: block !important;
+	}
+}
+
+div.fmc-modal .fmc-modal__content main {
+	padding-top: 0px !important; /* Default MDL css was redefined */
+}
+
+div.fmc-modal__layout-container {
+	position: relative;
+	height: auto;
+	margin-top: -2px;
+}
+
+div.fmc-modal__layout-container .mdl-layout__container {
+	position: relative !important;
+}
+
+div.fmc-modal__header {
+	height: 48px;
+}
+
+div.fmc-modal__header a {
+	cursor: pointer;
+}
+
+div.fmc-modal__tab-bar {
+	background: inherit !important;
+}
+
+div.fmc-modal__divider {
+	height: 2px;
+	margin-top: -2px;
+	background: rgba(66, 66, 66, 0.2);
+}
+
+div.fmc-modal__content {
+	padding-top: 15px;
+}
+
+div.fmc-modal__actions .close {
+	display: none; /* TODO reposition */
+}
+
+div.fmc-modal__actions .interactive {
+	display: none;
+}
+
+div.fmc-modal__actions .interactive.is-active {
+	display: inline-block;
+}
