@@ -1,0 +1,4 @@
+{
+  "include": ["../**/*.ts", "geofs.d.ts", "scripts.d.ts"],
+  "exclude": ["**/node_modules"]
+}

@@ -1,0 +1,4 @@
+**/scripts/*.js
+**/data/*
+fmc/**/*.html
+fmc/**/*.css
