@@ -1,5 +1,5 @@
-define(["knockout"], function (ko) {
-  return {
-    enabled: ko.observable(undefined),
-  };
-});
+import * as ko from "knockout";
+
+export default {
+  enabled: ko.observable(undefined),
+};

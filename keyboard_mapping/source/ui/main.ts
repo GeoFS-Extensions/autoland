@@ -1,8 +1,5 @@
-define(["knockout", "./ViewModel", "../addDefaultKeybinds"], function (
-  ko: KnockoutStatic,
-  ViewModel,
-  addDefaultKeybinds: () => void
-) {
-  addDefaultKeybinds();
-  new ViewModel();
-});
+import ViewModel from "./ViewModel";
+import addDefaultKeybinds from "../addDefaultKeybinds";
+
+addDefaultKeybinds();
+new ViewModel();
