@@ -1,5 +1,3 @@
-/* eslint @typescript-eslint/ban-types: 0*/
-
 export interface Object3DOptions {
   "3dModel": Model;
   animations: { [key: string]: any }[];

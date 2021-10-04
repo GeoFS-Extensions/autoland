@@ -15,7 +15,6 @@
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "@typescript-eslint/no-explicit-any": 0,
-    "semi": ["error", "always"],
-    "quotes": ["error", "double"]
+    "semi": ["error", "always"]
   }
 }

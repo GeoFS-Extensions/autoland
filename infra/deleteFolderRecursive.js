@@ -12,7 +12,7 @@ const moveToDir = require("./moveToDir");
  */
 function deleteFolderRecursive(path) {
   if (!fs.existsSync(path)) {
-    throw new Error("Path \"" + path + "\" doesn't exist!");
+    throw new Error('Path "' + path + "\" doesn't exist!");
   }
   if (!fs.lstatSync(path).isDirectory()) {
     throw new Error("Path " + path + " isn't a directory!");
@@ -20,6 +20,6 @@ function deleteFolderRecursive(path) {
 
   fs.rm(path, { recursive: true, force: true });
   return moveToDir(path);
-};
+}
 
 module.exports = deleteFolderRecursive;

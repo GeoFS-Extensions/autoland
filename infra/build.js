@@ -1,5 +1,5 @@
-const prettier = require("./prettier/main");
+const prettier = require("./builds/prettier");
 prettier();
 
-// const keyboardMapping = require("./keyboard_mapping/main");
-// keyboardMapping();
+const keyboardMapping = require("./builds/keyboard_mapping");
+keyboardMapping();

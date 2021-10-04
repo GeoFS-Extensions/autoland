@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es5",
+    "lib": ["DOM", "es2016"],
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "outDir": "build",
+    "moduleResolution": "node",
+    "checkJs": true
+  },
+  "files": ["../types/geofs.d.ts", "../types/scripts.d.ts"],
+  "include": ["source/**/*"]
+}

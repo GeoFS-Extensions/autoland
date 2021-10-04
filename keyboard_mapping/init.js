@@ -7,10 +7,10 @@
   var timer = setInterval(function () {
     if (
       !(
-        window.geofs &&
-        window.geofs.aircraft &&
-        window.geofs.aircraft.instance &&
-        window.geofs.aircraft.instance.object3d &&
+        geofs &&
+        geofs.aircraft &&
+        geofs.aircraft.instance &&
+        geofs.aircraft.instance.object3d &&
         !!localStorage.getItem("settings")
       )
     ) {
@@ -18,6 +18,6 @@
     }
 
     clearInterval(timer);
-    require(["ui/main"]);
+    require(["./build/ui/main"]);
   }, 250);
 })();
