@@ -1,6 +1,6 @@
 const { sync } = require("glob");
 const { readFileSync, writeFileSync } = require("fs-extra");
-const homedir = require("../homeDir");
+const mainDir = require("../main_dir");
 
 /**
  * Generates a pattern to be used in the the global .prettierignore file based on a local prettier ignore pattern and its location.
@@ -32,7 +32,7 @@ function buildPrettierIgnoreFile() {
     return toReturn;
   })();
 
-  writeFileSync(homedir + "/.prettierignore", toWrite.join("\n"));
+  writeFileSync(mainDir.buildOnHomeDir(".prettierignore"), toWrite.join("\n"));
 }
 
 module.exports = buildPrettierIgnoreFile;
