@@ -251,6 +251,8 @@ export declare class RigidBody {
   computeJacobian(a: number, b: number, c: number[], d: number[]): number;
 }
 
+type RigidBodyType = typeof RigidBody;
+
 export interface AircraftDefinition {
   scale: number;
   startupTime: number;
@@ -384,6 +386,8 @@ export declare class Indicator {
   destroy(): void;
   [key: string]: any;
 }
+
+type IndicatorType = typeof Indicator;
 
 export declare class GlassPanel {
   constructor(a: any);
@@ -1389,72 +1393,70 @@ interface Multiplater {
 
 // global variables
 declare global {
-  interface Window {
-    geofs?: GeoFS;
-    ui: Ui;
-    flight: Flight;
-    controls: Controls;
-    weather: Weather;
-    multiplayer: Multiplater;
-    audio: Audio;
-    instruments: Instruments;
-    rigidBody: typeof RigidBody;
-    Indicator: typeof Indicator;
+  let geofs: GeoFS;
+  let ui: Ui;
+  let flight: Flight;
+  let controls: Controls;
+  let weather: Weather;
+  let multiplier: Multiplater;
+  let audio: Audio;
+  let instruments: Instruments;
+  let rigidBody: RigidBodyType;
+  let Indicator: IndicatorType;
 
-    // constants
-    GRAVITY: number;
-    DEGREES_TO_RAD: number;
-    RAD_TO_DEGREES: number;
-    KMH_TO_MS: number;
-    METERS_TO_FEET: number;
-    FEET_TO_METERS: number;
-    LONGITUDE_TO_HOURS: number;
-    EPSILON: number;
-    MERIDIONAL_RADIUS: number;
-    EARTH_CIRCUMFERENCE: number;
-    METERS_TO_LOCAL_LAT: number;
-    WGS84_TO_EGM96: number;
-    EGM96_TO_WGS84: number;
-    PI: number;
-    HALF_PI: number;
-    TWO_PI: number;
-    MS_TO_KNOTS: number;
-    KNOTS_TO_MS: number;
-    KMH_TO_KNOTS: number;
-    AXIS_TO_INDEX: {
-      X: number;
-      Y: number;
-      Z: number;
-    };
-    AXIS_TO_VECTOR: {
-      X: number[];
-      Y: number[];
-      Z: number[];
-    };
-    KELVIN_OFFSET: number;
-    TEMPERATURE_LAPSE_RATE: number;
-    AIR_DENSITY_SL: number;
-    AIR_PRESSURE_SL: number;
-    AIR_TEMP_SL: number;
-    DRAG_CONSTANT: number;
-    MIN_DRAG_COEF: number;
-    PLANFORM_EFFICIENCY_FACTOR: number;
-    TOTAL_DRAG_CONSTANT: number;
-    IDEAL_GAS_CONSTANT: number;
-    MOLAR_MASS_DRY_AIR: number;
-    GAS_CONSTANT: number;
-    GM_RL: number;
-    DEFAULT_AIRFOIL_ASPECT_RATIO: number;
-    FOV: number;
-    VIEWPORT_REFERENCE_WIDTH: number;
-    VIEWPORT_REFERENCE_HEIGHT: number;
-    SMOOTH_BUFFER: {
-      [x: string]: any;
-    };
-    SMOOTHING_FACTOR: number;
-    SIX_STEP_WARNING: string[];
-    PAGE_PATH: string;
-    L: any;
-    componentHandler: any;
-  }
+  // constants
+  let GRAVITY: number;
+  let DEGREES_TO_RAD: number;
+  let RAD_TO_DEGREES: number;
+  let KMH_TO_MS: number;
+  let METERS_TO_FEET: number;
+  let FEET_TO_METERS: number;
+  let LONGITUDE_TO_HOURS: number;
+  let EPSILON: number;
+  let MERIDIONAL_RADIUS: number;
+  let EARTH_CIRCUMFERENCE: number;
+  let METERS_TO_LOCAL_LAT: number;
+  let WGS84_TO_EGM96: number;
+  let EGM96_TO_WGS84: number;
+  let PI: number;
+  let HALF_PI: number;
+  let TWO_PI: number;
+  let MS_TO_KNOTS: number;
+  let KNOTS_TO_MS: number;
+  let KMH_TO_KNOTS: number;
+  let AXIS_TO_INDEX: {
+    X: number;
+    Y: number;
+    Z: number;
+  };
+  let AXIS_TO_VECTOR: {
+    X: number[];
+    Y: number[];
+    Z: number[];
+  };
+  let KELVIN_OFFSET: number;
+  let TEMPERATURE_LAPSE_RATE: number;
+  let AIR_DENSITY_SL: number;
+  let AIR_PRESSURE_SL: number;
+  let AIR_TEMP_SL: number;
+  let DRAG_CONSTANT: number;
+  let MIN_DRAG_COEF: number;
+  let PLANFORM_EFFICIENCY_FACTOR: number;
+  let TOTAL_DRAG_CONSTANT: number;
+  let IDEAL_GAS_CONSTANT: number;
+  let MOLAR_MASS_DRY_AIR: number;
+  let GAS_CONSTANT: number;
+  let GM_RL: number;
+  let DEFAULT_AIRFOIL_ASPECT_RATIO: number;
+  let FOV: number;
+  let VIEWPORT_REFERENCE_WIDTH: number;
+  let VIEWPORT_REFERENCE_HEIGHT: number;
+  let SMOOTH_BUFFER: {
+    [x: string]: any;
+  };
+  let SMOOTHING_FACTOR: number;
+  let SIX_STEP_WARNING: string[];
+  let PAGE_PATH: string;
+  let L: any;
+  let componentHandler: any;
 }
