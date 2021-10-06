@@ -1,16 +1,13 @@
-"use strict";
+import waypoint from "./get/waypoint";
+import ATS from "./get/ATS";
+import SID from "./get/SID";
+import STAR from "./get/STAR";
+import runway from "./get/runway";
 
-define([
-  "get/waypoint",
-  "get/ATS",
-  "get/SID",
-  "get/STAR",
-  "get/runway",
-  "exports",
-], function (a, b, c, d, e, exports) {
-  exports.waypoint = a;
-  exports.ATS = b;
-  exports.SID = c;
-  exports.STAR = d;
-  exports.runway = e;
-});
+export default {
+  waypoint: waypoint,
+  ATS: ATS,
+  SID: SID,
+  STAR: STAR,
+  runway: runway,
+};

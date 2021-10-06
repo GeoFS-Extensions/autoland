@@ -1,31 +1,31 @@
-"use strict";
+import distance from "../distance";
+import flight from "../flight";
+import waypoints from "../waypoints";
 
-define(["distance", "flight", "waypoints", "exports"], function (
-  distance,
-  flight,
-  waypoints,
-  exports
-) {
-  exports.timer = null;
+var timer = null;
 
-  /**
-   * Controls LNAV, plane's lateral navigation, set on a timer
-   */
-  exports.update = function () {
-    if (waypoints.nextWaypoint() === null || !flight.arrival.airport()) {
-      clearInterval(exports.timer);
-      exports.timer = null;
-      return;
-    }
+/**
+ * Controls LNAV, plane's lateral navigation, set on a timer
+ */
+const update = function () {
+  if (waypoints.nextWaypoint() === null || !flight.arrival.airport()) {
+    clearInterval(timer);
+    timer = null;
+    return;
+  }
 
-    var d = distance.route(waypoints.nextWaypoint() + 1);
-    if (d <= distance.turn(60)) {
-      waypoints.activateWaypoint(waypoints.nextWaypoint() + 1);
-    }
+  var d = distance.route(waypoints.nextWaypoint() + 1);
+  if (d <= distance.turn(60)) {
+    waypoints.activateWaypoint(waypoints.nextWaypoint() + 1);
+  }
 
-    clearInterval(exports.timer);
-    if (d < window.geofs.aircraft.instance.animationValue.ktas / 60)
-      exports.timer = setInterval(exports.update, 500);
-    else exports.timer = setInterval(exports.update, 5000);
-  };
-});
+  clearInterval(timer);
+  if (d < geofs.aircraft.instance.animationValue.ktas / 60)
+    timer = setInterval(update, 500);
+  else timer = setInterval(update, 5000);
+};
+
+export default {
+  timer: timer,
+  update: update,
+};

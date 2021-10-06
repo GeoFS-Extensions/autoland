@@ -1,30 +1,28 @@
-"use strict";
+import E from "./ui/elements";
 
-define(["ui/elements"], function (E) {
-  // If FMC is production
-  var PRODUCTION = false;
+// If FMC is production
+var PRODUCTION = false;
 
-  // Stops event propagation
-  function stopPropagation(event: { stopImmediatePropagation: () => void }) {
-    event.stopImmediatePropagation();
-  }
+// Stops event propagation
+function stopPropagation(event: Event) {
+  event.stopImmediatePropagation();
+}
 
-  return {
-    /**
-     * Stops input key propagation
-     */
-    stopPropagation: function () {
-      $(E.modal)
-        .keyup(stopPropagation)
-        .keydown(stopPropagation)
-        .keypress(stopPropagation);
-    },
+export default {
+  /**
+   * Stops input key propagation
+   */
+  stopPropagation: function () {
+    $(E.modal)
+      .on("keyup", stopPropagation)
+      .on("keydown", stopPropagation)
+      .on("keypress", stopPropagation);
+  },
 
-    /**
-     * Logs debug statement into console when needed if not PRODUCTION
-     */
-    log: function (text) {
-      if (!PRODUCTION) console.log(text);
-    },
-  };
-});
+  /**
+   * Logs debug statement into console when needed if not PRODUCTION
+   */
+  log: function (text) {
+    if (!PRODUCTION) console.log(text);
+  },
+};

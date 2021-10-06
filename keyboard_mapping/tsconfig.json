@@ -3,6 +3,7 @@
     "module": "amd",
     "target": "es5",
     "lib": ["DOM", "es2016"],
+    "types": ["jquery", "requirejs"],
     "alwaysStrict": true,
     "esModuleInterop": true,
     "outDir": "build",

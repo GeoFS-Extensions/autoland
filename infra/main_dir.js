@@ -13,13 +13,6 @@ function getHomeDir() {
 /**
  * The parent directory, where the entire repo resides.
  */
-exports.mainDir = getHomeDir();
+const homeDir = getHomeDir();
 
-/**
- * Build a path on top of the repo home directory.
- * @param {string} path A path to join with the repo home directory.
- * @returns The path built on top of the home directory.
- */
-exports.buildOnHomeDir = function (path) {
-  return join(getHomeDir(), path);
-};
+module.exports = homeDir;

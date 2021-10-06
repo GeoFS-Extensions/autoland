@@ -1,4 +1,5 @@
 const { sync } = require("glob");
+const { join } = require("path");
 const { readFileSync, writeFileSync } = require("fs-extra");
 const mainDir = require("../main_dir");
 
@@ -32,7 +33,7 @@ function buildPrettierIgnoreFile() {
     return toReturn;
   })();
 
-  writeFileSync(mainDir.buildOnHomeDir(".prettierignore"), toWrite.join("\n"));
+  writeFileSync(join(mainDir, ".prettierignore"), toWrite.join("\n"));
 }
 
 module.exports = buildPrettierIgnoreFile;

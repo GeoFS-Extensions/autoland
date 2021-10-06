@@ -34,6 +34,7 @@ declare global {
     require: Require;
     define: RequireDefine;
     requirejs: Require;
+    ready: boolean;
   };
   let spoilers_arming: {
     version: string;

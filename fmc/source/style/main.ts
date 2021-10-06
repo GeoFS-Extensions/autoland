@@ -1,20 +1,19 @@
 "use strict";
+import button from "./button.css";
+import externalDist from "./externaldist.css";
+import modal from "./modal.css";
+import route from "./route.css";
+import waypoints from "./waypoints.css";
+import depArr from "./dep-arr.css";
+import legs from "./legs.css";
+import vnav from "./vnav.css";
+import ils from "./ils.css";
+import progress from "./progress.css";
+import map from "./map.css";
+import load from "./load.css";
+import log from "./log.css";
 
-define([
-  "minify!./button.css",
-  "minify!./externaldist.css",
-  "minify!./modal.css",
-  "minify!./route.css",
-  "minify!./waypoints.css",
-  "minify!./dep-arr.css",
-  "minify!./legs.css",
-  "minify!./vnav.css",
-  "minify!./ils.css",
-  "minify!./progress.css",
-  "minify!./map.css",
-  "minify!./load.css",
-  "minify!./log.css",
-], function (
+export default [
   button,
   externalDist,
   modal,
@@ -27,21 +26,5 @@ define([
   progress,
   map,
   load,
-  log
-) {
-  return [
-    button,
-    externalDist,
-    modal,
-    route,
-    waypoints,
-    depArr,
-    legs,
-    vnav,
-    ils,
-    progress,
-    map,
-    load,
-    log,
-  ].join("");
-});
+  log,
+].join("");

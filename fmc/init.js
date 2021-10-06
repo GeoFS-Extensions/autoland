@@ -3,12 +3,9 @@
  * Released under the GNU Affero General Public License, v3.0 or later
  * https://github.com/geofs-plugins/fmc-requirejs/blob/master/LICENSE.md
  */
-
 "use strict";
-
 (function () {
   if (!window.Promise) throw new Error("Browser is outdated.");
-
   // Check if game has completed loading
   var timer = setInterval(function () {
     if (
@@ -23,9 +20,7 @@
       )
     )
       return;
-
     clearInterval(timer);
-
-    require(["ui/main"]);
+    require(["build/ui/main"]);
   }, 250);
 })();

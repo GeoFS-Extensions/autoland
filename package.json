@@ -35,8 +35,5 @@
     "requirejs": "^2.3.6",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3"
-  },
-  "peerDependencies": {
-    "@types/node": "^16.10.2"
   }
 }

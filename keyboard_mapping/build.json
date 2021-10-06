@@ -1,6 +1,6 @@
 {
   "baseUrl": ".",
-  "name": "./node_modules/requirejs/require",
+  "name": "../node_modules/requirejs/require",
   "include": "init",
   "mainConfigFile": "./config.js",
   "out": "./dist/keyboard_mapping.js",

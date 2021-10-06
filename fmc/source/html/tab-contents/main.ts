@@ -1,15 +1,13 @@
-"use strict";
+import route from "./route.html";
+import depArr from "./dep-arr.html";
+import legs from "./legs.html";
+import vnav from "./vnav.html";
+import ils from "./ils.html";
+import progress from "./progress.html";
+import map from "./map.html";
+import load from "./load.html";
+import log from "./log.html";
 
-define([
-  "minify!./route.html",
-  "minify!./dep-arr.html",
-  "minify!./legs.html",
-  "minify!./vnav.html",
-  "minify!./ils.html",
-  "minify!./progress.html",
-  "minify!./map.html",
-  "minify!./load.html",
-  "minify!./log.html",
-], function (route, depArr, legs, vnav, ils, progress, map, load, log) {
-  return [route, depArr, legs, vnav, ils, progress, map, load, log].join("");
-});
+export default [route, depArr, legs, vnav, ils, progress, map, load, log].join(
+  ""
+);

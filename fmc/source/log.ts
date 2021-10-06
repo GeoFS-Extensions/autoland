@@ -1,69 +1,87 @@
-"use strict";
+import * as ko from "knockout";
+import utils from "./utils";
 
-define(["knockout", "utils", "exports"], function (ko, utils, exports) {
-  var animationValue = window.geofs.aircraft.instance.animationValue;
+let mainTimer: number = null;
+let speedTimer: number = null;
 
-  exports.mainTimer = null;
-  exports.speedTimer = null;
+const data = ko.observableArray();
 
-  exports.data = ko.observableArray();
+/**
+ * Updates plane's flight log, set on a timer
+ *
+ * @param {String} [other] Updates the log with other as extra info
+ */
+const update = function (other?: string) {
+  if (!geofs.pause && !(flight.recorder.playing || flight.recorder.paused)) {
+    var spd = Math.round(geofs.aircraft.instance.animationValue.ktas);
+    var hdg = Math.round(geofs.aircraft.instance.animationValue.heading360);
+    var alt = Math.round(geofs.aircraft.instance.animationValue.altitude);
+    var fps = +geofs.debug.fps;
+    var lat =
+      Math.round(10000 * geofs.aircraft.instance.llaLocation[0]) / 10000;
+    var lon =
+      Math.round(10000 * geofs.aircraft.instance.llaLocation[1]) / 10000;
+    var date = new Date();
+    var h = date.getUTCHours();
+    var m = date.getUTCMinutes();
+    var time = utils.formatTime(utils.timeCheck(h, m));
+    other = other || "--";
 
-  /**
-   * Updates plane's flight log, set on a timer
-   *
-   * @param {String} [other] Updates the log with other as extra info
-   */
-  exports.update = function (other: string) {
-    if (
-      !window.geofs.pause &&
-      !(window.flight.recorder.playing || window.flight.recorder.paused)
-    ) {
-      var spd = Math.round(animationValue.ktas);
-      var hdg = Math.round(animationValue.heading360);
-      var alt = Math.round(animationValue.altitude);
-      var fps = +window.geofs.debug.fps;
-      var lat =
-        Math.round(10000 * window.geofs.aircraft.instance.llaLocation[0]) /
-        10000;
-      var lon =
-        Math.round(10000 * window.geofs.aircraft.instance.llaLocation[1]) /
-        10000;
-      var date = new Date();
-      var h = date.getUTCHours();
-      var m = date.getUTCMinutes();
-      var time = utils.formatTime(utils.timeCheck(h, m));
-      other = other || "--";
+    var dataArray = [time, spd, hdg, alt, lat, lon, fps, other];
+    data.push(dataArray);
+  }
+  if (mainTimer !== null) {
+    clearInterval(mainTimer);
+  }
+  if (geofs.aircraft.instance.animationValue.altitude > 18000) {
+    mainTimer = setInterval(update, 120000);
+  } else mainTimer = setInterval(update, 30000);
+};
 
-      var dataArray = [time, spd, hdg, alt, lat, lon, fps, other];
-      exports.data.push(dataArray);
-    }
-    clearInterval(exports.mainTimer);
-    if (animationValue.altitude > 18000) {
-      exports.mainTimer = setInterval(exports.update, 120000);
-    } else exports.mainTimer = setInterval(exports.update, 30000);
-  };
+/**
+ * Checks for overspeed under 10000 feet AGL for log, set on a timer
+ */
+const speed = function () {
+  var kcas = geofs.aircraft.instance.animationValue.kcas;
+  var altitude =
+    geofs.aircraft.instance.animationValue.altitude +
+    geofs.groundElevation * METERS_TO_FEET;
+  if (kcas > 255 && altitude < 10000) {
+    update("Overspeed");
+  }
+  if (speedTimer !== null) {
+    clearInterval(speedTimer);
+  }
+  if (altitude < 10000) speedTimer = setInterval(speed, 15000);
+  else speedTimer = setInterval(speed, 30000);
+};
 
-  /**
-   * Checks for overspeed under 10000 feet AGL for log, set on a timer
-   */
-  exports.speed = function () {
-    var kcas = animationValue.kcas;
-    var altitude =
-      animationValue.altitude +
-      window.geofs.groundElevation * window.METERS_TO_FEET;
-    if (kcas > 255 && altitude < 10000) {
-      exports.update("Overspeed");
-    }
-    clearInterval(exports.speedTimer);
-    if (altitude < 10000)
-      exports.speedTimer = setInterval(exports.speed, 15000);
-    else exports.speedTimer = setInterval(exports.speed, 30000);
-  };
+/**
+ * Clears the log
+ */
+const removeData = function () {
+  data.removeAll();
+};
 
-  /**
-   * Clears the log
-   */
-  exports.removeData = function () {
-    exports.data.removeAll();
-  };
+// things used in in ui/ViewModel#28
+const modalWarning: ko.Observable<string> = ko.observable(undefined);
+
+const warn = ko.pureComputed({
+  // Prints modal warning, disappears after 5 seconds
+  read: modalWarning,
+  write: function (warningText) {
+    modalWarning(warningText);
+    setTimeout(function () {
+      modalWarning(undefined);
+    }, 5000);
+  },
 });
+
+export default {
+  data: data,
+  update: update,
+  speed: speed,
+  removeData: removeData,
+  modalWarning: modalWarning,
+  warn: warn,
+};

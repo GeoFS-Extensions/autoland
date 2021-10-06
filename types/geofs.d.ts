@@ -693,7 +693,7 @@ interface Camera {
   translate(a: number, b: number, c: number): boolean;
   setPosition(a: number, b: number, c: number): boolean;
   isHandlingMouseRotation(): boolean;
-  setRotation(a: any, b: any, c: any): boolean;
+  setRotation(a: any, b?: any, c?: any): boolean;
   saveRotation(): void;
   saveOffset(): void;
   setToNatural(): void;
@@ -1029,7 +1029,16 @@ interface Autopilot {
 }
 
 export interface Controls {
-  states: {};
+  states: {
+    decreaseThrottle: boolean;
+    down: boolean;
+    increaseThrottle: boolean;
+    left: boolean;
+    right: boolean;
+    rudderLeft: boolean;
+    rudderRight: boolean;
+    up: boolean;
+  };
   mouse: {
     down: boolean;
     orbit: {};

@@ -1,6 +1,4 @@
-"use strict";
-
-define({
+export default {
   modal: ".fmc-modal",
   container: {
     tabBar: ".fmc-modal .fmc-modal__tab-bar",
@@ -11,4 +9,4 @@ define({
     fmcBtn: "button.fmc-btn",
     interactive: ".interactive",
   },
-});
+};
