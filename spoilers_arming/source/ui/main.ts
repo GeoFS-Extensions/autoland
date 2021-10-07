@@ -20,7 +20,7 @@ const spoilersArming = () => {
 };
 
 instruments.init(geofs.aircraft.instance.setup.instruments);
-if (!window.keyboard_mapping) {
+if (!keyboard_mapping) {
   $(document).on({ keydown: controls.keyDown }); // reapply the keybinds
 }
 geofs.api.addFrameCallback(spoilersArming, "spoilersArming");

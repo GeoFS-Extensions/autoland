@@ -20,7 +20,7 @@ export default () => {
   };
 
   // add the keybind for the spoilers arming
-  if (window.keyboard_mapping) {
+  if (keyboard_mapping) {
     const addKeybind = keyboard_mapping.require("addKeybind");
     addKeybind(
       "Spoilers Arming",

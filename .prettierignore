@@ -1,6 +1,6 @@
+autopilot_pp/dist/*
 extension/**/scripts/*.js
 extension/**/data/*
 fmc/**/*.html
 fmc/**/*.css
-fmc/dist/*
 keyboard_mapping/dist/*

@@ -27,7 +27,7 @@ var $ap = $(".geofs-autopilot")
   .html(uihtml);
 
 // Set ` key for autopilot disconnect, like the red sidestick button.
-if (window.keyboard_mapping) {
+if (keyboard_mapping) {
   const addKeybind = keyboard_mapping.require("addKeybind");
   addKeybind(
     "",
@@ -52,7 +52,7 @@ if (window.keyboard_mapping) {
 
 // Play autopilot disconnect sound when autopilot is turned off.
 ap.on.subscribe(function (newValue) {
-  if (!newValue && window.geofs.preferences.sound) apDisconnectSound.play();
+  if (!newValue && geofs.preferences.sound) apDisconnectSound.play();
 });
 
 papiBugfix();

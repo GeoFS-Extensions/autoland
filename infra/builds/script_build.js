@@ -1,26 +1,30 @@
 const { exec } = require("child_process");
-const { readJSONSync } = require("fs-extra");
+const { appendFileSync, readJSONSync } = require("fs-extra");
 const { join } = require("path");
-const { chdir } = require("process");
+const { chdir, cwd } = require("process");
 const homeDir = require("../main_dir");
-const requirejs = require("requirejs");
+const { optimize } = require("requirejs");
 
 /**
- * Buinds a script.
+ * Builds a script.
  * @param {"autopilot_pp" | "fmc" | "keyboard_mapping" | "spoilers_arming"} scriptName The script to build.
+ * @param {string} toAppend What to append to the script.
  */
-function defaultScriptBuild(scriptName) {
+function defaultScriptBuild(scriptName, toAppend) {
   const scriptLocation = join(homeDir, scriptName);
   chdir(scriptLocation);
-  exec("npx tsc", (err, stdout, stderr) => {
+  exec("npx tsc", (err) => {
     if (err) {
       throw err;
     }
-    console.log(stdout);
-    console.log(stderr);
   });
   const optomizerOptions = readJSONSync("build.json");
-  requirejs.optimize(optomizerOptions);
+  optimize(optomizerOptions, function () {
+    appendFileSync(
+      join(cwd(), "../autopilot_pp/dist", `${scriptName}.js`),
+      toAppend
+    );
+  });
 }
 
 module.exports = defaultScriptBuild;
