@@ -1,5 +1,5 @@
 const { exec } = require("child_process");
-const { appendFileSync, readJSONSync } = require("fs-extra");
+const { appendFileSync, readJSONSync, copySync, rm } = require("fs-extra");
 const { join } = require("path");
 const { chdir, cwd } = require("process");
 const homeDir = require("../main_dir");
@@ -18,13 +18,13 @@ function defaultScriptBuild(scriptName, toAppend) {
       throw err;
     }
   });
-  const optomizerOptions = readJSONSync("build.json");
-  optimize(optomizerOptions, function () {
-    appendFileSync(
-      join(cwd(), "../autopilot_pp/dist", `${scriptName}.js`),
-      toAppend
-    );
-  });
+  copySync(cwd(), join(homeDir, "..", scriptName));
+  chdir(join(homeDir, "..", scriptName));
+  // const optomizerOptions = readJSONSync("build.json");
+  // optimize(optomizerOptions, function () {
+
+  // });
+  chdir(scriptLocation);
 }
 
 module.exports = defaultScriptBuild;
