@@ -30,6 +30,10 @@ autopilotAppend += "a.ready=false;";
 
 const prettierBuild = require("./builds/prettier_build");
 const scriptBuild = require("./builds/script_build");
+const { chdir } = require("process");
+const homeDir = require("./main_dir");
+
+chdir(homeDir);
 
 prettierBuild();
 

@@ -4,5 +4,6 @@
   "include": "init",
   "mainConfigFile": "./config.js",
   "out": "./dist/autopilot_pp.js",
-  "optimize": "uglify2"
+  "optimize": "uglify2",
+  "generateSourceMaps": true
 }

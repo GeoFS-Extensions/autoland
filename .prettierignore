@@ -1,6 +1,12 @@
+autopilot_pp/build/**/*
 autopilot_pp/dist/*
 extension/**/scripts/*.js
 extension/**/data/*
 fmc/**/*.html
 fmc/**/*.css
+fmc/build/**/*
+fmc/dist/*
+keyboard_mapping/build/**/*
 keyboard_mapping/dist/*
+spoilers_arming/build/**/*
+spoilers_arming/dist/*

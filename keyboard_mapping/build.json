@@ -4,5 +4,6 @@
   "include": "init",
   "mainConfigFile": "./config.js",
   "out": "./dist/keyboard_mapping.js",
-  "optimize": "uglify2"
+  "optimize": "uglify2",
+  "generateSourceMaps": true
 }
