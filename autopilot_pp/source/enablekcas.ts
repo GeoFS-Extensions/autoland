@@ -3,7 +3,7 @@ import util from "./util";
 
 /** @private */
 function setKcas() {
-  var animationValue = geofs.aircraft.instance.animationValue;
+  const animationValue = geofs.aircraft.instance.animationValue;
   animationValue.kcas = speedConversions.tasToCas(
     animationValue.ktas,
     util.ft2mtrs(animationValue.altitude)
@@ -13,7 +13,7 @@ function setKcas() {
 function enableKcas() {
   // Convert KTAS to KCAS.
   // Ensure "kcas" property is set before changing it.
-  var timer = setInterval(function () {
+  const timer = setInterval(function () {
     if (
       geofs &&
       geofs.aircraft.instance &&

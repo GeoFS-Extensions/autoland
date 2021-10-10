@@ -1,14 +1,26 @@
 // NOTE: unless otherwise stated, all temperatures are in Kelvin.
+// NOTE: unless otherwise stated, all units are in MKS.
 
 // Mohr, P. J., Taylor, B. N. & Newell, D. B. (2012). CODATA recommended values of the
 // fundamental physical constants: 2010.
-var molar = 8.3144621;
-var avogardo = 6.02214129e23;
-var boltzmann = 1.3806487924497035e-23;
+// https://physics.nist.gov/cuu/Constants/codata.pdf
+const molar = 8.3144621;
+const avogardo = 6.02214129e23;
+const boltzmann = 1.3806487924497035e-23;
 
-// International Committee of Weights and Measures. (1901).
-// Techically a bit high, but we'll use it anyway (meant to be 45 but actually ~45.523 latitude).
-var gravity = 9.80665;
+/**
+ * Accleration due to gravity at sea level.
+ * Meters per second per second.
+ * Extrapolated from the law of universal gravitation.
+ */
+const gravity = (function() {
+  // see https://en.wikipedia.org/wiki/Gravity_of_Earth#Estimating_g_from_the_law_of_universal_gravitation for the formula used
+  const bigG = 6.67408e-11;
+  const earthMass = 5.9722e+24;
+  const earthRadius = 6371000;
+
+  return bigG*(earthMass/(earthRadius**2));
+})();
 
 // Gatley, D. P., Herrmann, S. & Kretzschmar, H.-J. (2008). A Twenty-First Century Molar Mass
 // for Dry Air.
@@ -16,34 +28,39 @@ var gravity = 9.80665;
 // var airMass = 28.965369-3;
 
 // ICAO Standard Atmosphere (assumption based on 1.225kg/m3 @ SL)
-var airMass = 28.96491498930052e-3;
-
-// assumes diatomic molecules (adiabatic index)
-// relatively accurate, ranges from 1.3991 to 1.403 in real life
-var gamma = 1.4;
-
-// 1852 / 3600
-var knotsToMs = 463 / 900;
-var msToKnots = 900 / 463;
-
-// specific gas constant of air -- equal to molar divided by air mass per mole
-var airGasConstant = molar / airMass;
+const airMass = 28.96491498930052e-3;
 
 /**
- * @param {Number} temperature
- * @returns {Number} Speed of sound in metres per second.
+ * assumes diatomic molecules (adiabatic index)
+ * relatively accurate, ranges from 1.3991 to 1.403 in real life
+ */
+const gamma = 1.4;
+
+// 1852 / 3600
+const knotsToMs = 463 / 900;
+const msToKnots = 900 / 463;
+
+/** Specific gas constant of air -- equal to molar divided by air mass per mole */
+const airGasConstant = molar / airMass;
+
+/**
+ * @param {number} temperature
+ * @returns {number} Speed of sound in metres per second.
  */
 function speedOfSound(temperature: number): number {
   return Math.sqrt(gamma * airGasConstant * temperature);
 }
 
 // sea level defaults
-var machSL = speedOfSound(288.15);
-var densitySL = 1.225;
-var pressureSL = 101325;
-var temperatureSL = 288.15;
+const densitySL = 1.225;
+const pressureSL = 101325;
+const temperatureSL = 288.15;
+const machSL = speedOfSound(temperatureSL);
 
-// pascals, kelvin
+/**
+ * @param {number} pressure Pressure in pascals.
+ * @param {number} temperature Temperature in kelvin.
+ */
 function airDensity(pressure: number, temperature: number) {
   return pressure / temperature / airGasConstant;
 }
@@ -58,8 +75,8 @@ function casToMach(
   temperature?: number
 ): number {
   if (arguments.length === 2) {
-    var altitude = pressure;
-    var condition = standardConditions(altitude);
+    const altitude = pressure;
+    const condition = standardConditions(altitude);
     pressure = condition[0];
     temperature = condition[1];
   }
@@ -74,8 +91,8 @@ function machToCas(
 ): number {
   // check if second argument is altitude (instead of pressure)
   if (arguments.length === 2) {
-    var altitude = pressure;
-    var condition = standardConditions(altitude);
+    const altitude = pressure;
+    const condition = standardConditions(altitude);
     pressure = condition[0];
     temperature = condition[1];
   }
@@ -97,17 +114,17 @@ function easToTas(keas: number, density: number): number {
 
 // TAS = EAS * mach / (machSL * Math.sqrt(pressure / pressureSL));
 
-/** @param {Number} altitude - In metres. */
+/** @param {number} altitude - In metres. */
 // National Aeronautics and Space Administration. (1976). U.S. Standard Atmosphere.
 // TEST: PASS
 function standardConditions(altitude: number): number[] {
-  var exp = Math.exp;
-  var min = Math.min;
-  var pow = Math.pow;
+  const exp = Math.exp;
+  const min = Math.min;
+  const pow = Math.pow;
 
   // This uses geopotential height -- not sure whether we should be using geometric or
   // geopotential height.
-  var layers = [
+  const layers = [
     [288.15, 0, -0.0065],
     [216.65, 11000, 0],
     [216.65, 20000, 0.001],
@@ -118,15 +135,15 @@ function standardConditions(altitude: number): number[] {
     [186.946, 84852, 0],
   ];
 
-  var pressure = 101325;
-  var temperature = 288.15;
+  let pressure = 101325;
+  let temperature = 288.15;
 
   layers.some(function (currentLayer, i) {
-    var baseTemperature = currentLayer[0];
-    var layerHeight = currentLayer[1];
-    var nextLayerHeight = layers[min(i + 1, layers.length - 1)][1];
-    var lapseRate = currentLayer[2];
-    var heightDifference = min(altitude, nextLayerHeight) - layerHeight;
+    const baseTemperature = currentLayer[0];
+    const layerHeight = currentLayer[1];
+    const nextLayerHeight = layers[min(i + 1, layers.length - 1)][1];
+    const lapseRate = currentLayer[2];
+    const heightDifference = min(altitude, nextLayerHeight) - layerHeight;
     temperature = baseTemperature + heightDifference * lapseRate;
 
     if (lapseRate === 0)
@@ -152,30 +169,30 @@ function tasToCas(
 ): number {
   if (arguments.length === 2) {
     // second argument is actually altitude, not pressure
-    var altitude = pressure;
-    var condition = standardConditions(altitude);
+    const altitude = pressure;
+    const condition = standardConditions(altitude);
     pressure = condition[0];
     temperature = condition[1];
   }
 
   // mach one at sea level
-  var A0 = machSL * msToKnots;
+  const A0 = machSL * msToKnots;
   // sea level pressure
-  var P0 = pressureSL;
-  var P = pressure;
+  const P0 = pressureSL;
+  const P = pressure;
   // sea level temperature
-  var T0 = temperatureSL;
-  var T = temperature;
+  const T0 = temperatureSL;
+  const T = temperature;
 
-  var sqrt = Math.sqrt;
-  var pow = Math.pow;
+  const sqrt = Math.sqrt;
+  const pow = Math.pow;
 
   // formula assumes gamma = 1.4
   // how does this take into account compressibility (it apparently does)?
 
   // impact pressure
   // sqrt(pow(x, 7)) or pow(x, 7 / 2)?
-  var Qc = P * (pow((T0 * ktas * ktas) / (5 * T * A0 * A0) + 1, 7 / 2) - 1);
+  const Qc = P * (pow((T0 * ktas * ktas) / (5 * T * A0 * A0) + 1, 7 / 2) - 1);
   // subsonic compressible flow formula
   return A0 * sqrt(5 * (pow(Qc / P0 + 1, 2 / 7) - 1));
 }
@@ -187,29 +204,29 @@ function casToTas(
 ): number {
   // check if second argument is altitude (instead of pressure)
   if (arguments.length === 2) {
-    var altitude = pressure;
-    var condition = standardConditions(altitude);
+    const altitude = pressure;
+    const condition = standardConditions(altitude);
     pressure = condition[0];
     temperature = condition[1];
   }
 
   // mach one at sea level
-  var A0 = machSL * msToKnots;
+  const A0 = machSL * msToKnots;
   // sea level pressure
-  var P0 = pressureSL;
-  var P = pressure;
+  const P0 = pressureSL;
+  const P = pressure;
   // sea level temperature
-  var T0 = temperatureSL;
-  var T = temperature;
+  const T0 = temperatureSL;
+  const T = temperature;
 
-  var sqrt = Math.sqrt;
-  var pow = Math.pow;
+  const sqrt = Math.sqrt;
+  const pow = Math.pow;
 
   // formula assumes gamma = 1.4
   // how does this take into account compressibility (it apparently does)?
 
   // impact pressure
-  var Qc = P0 * (pow((kcas * kcas) / (5 * A0 * A0) + 1, 7 / 2) - 1);
+  const Qc = P0 * (pow((kcas * kcas) / (5 * A0 * A0) + 1, 7 / 2) - 1);
   return A0 * sqrt(((5 * T) / T0) * (pow(Qc / P + 1, 2 / 7) - 1));
 }
 
@@ -220,29 +237,25 @@ function easToCas(
 ): number {
   // check if second argument is altitude (instead of pressure)
   if (arguments.length === 2) {
-    var altitude = pressure;
-    var condition = standardConditions(altitude);
+    const altitude = pressure;
+    const condition = standardConditions(altitude);
     pressure = condition[0];
     temperature = condition[1];
   }
 
   // mach one at sea level
-  var A0 = machSL * msToKnots;
+  const A0 = machSL * msToKnots;
   // sea level pressure
-  var P0 = pressureSL;
-  var P = pressure;
-  // sea level temperature
-  var T0 = temperatureSL;
-  var T = temperature;
+  const P0 = pressureSL;
 
-  var sqrt = Math.sqrt;
-  var pow = Math.pow;
+  const sqrt = Math.sqrt;
+  const pow = Math.pow;
 
   // formula assumes gamma = 1.4
   // how does this take into account compressibility (it apparently does)?
 
   // impact pressure
-  var Qc = (keas * keas * P0) / 2;
+  const Qc = (keas * keas * P0) / 2;
   return A0 * sqrt(5 * (pow(Qc / P0 + 1, 2 / 7) - 1));
 }
 
@@ -253,45 +266,39 @@ function casToEas(
 ): number {
   // check if second argument is altitude (instead of pressure)
   if (arguments.length === 2) {
-    var altitude = pressure;
-    var condition = standardConditions(altitude);
+    const altitude = pressure;
+    const condition = standardConditions(altitude);
     pressure = condition[0];
     temperature = condition[1];
   }
 
   // mach one at sea level
-  var A0 = machSL * msToKnots;
+  const A0 = machSL * msToKnots;
   // sea level pressure
-  var P0 = pressureSL;
-  var P = pressure;
-  // sea level temperature
-  var T0 = temperatureSL;
-  var T = temperature;
-
-  var sqrt = Math.sqrt;
-  var pow = Math.pow;
+  const P0 = pressureSL;
+  const pow = Math.pow;
 
   // formula assumes gamma = 1.4
   // how does this take into account compressibility (it apparently does)?
 
   // impact pressure
-  var Qc = P0 * (pow((kcas * kcas) / (5 * A0 * A0) + 1, 7 / 2) - 1);
+  const Qc = P0 * (pow((kcas * kcas) / (5 * A0 * A0) + 1, 7 / 2) - 1);
   return Math.sqrt((2 * Qc) / P0);
 }
 
-var airspeed = {
-  speedOfSound: speedOfSound,
-  tasToMach: tasToMach,
-  airDensity: airDensity,
-  standardConditions: standardConditions,
-  casToMach: casToMach,
-  machToCas: machToCas,
-  tasToCas: tasToCas,
-  casToTas: casToTas,
-  tasToEas: tasToEas,
-  easToTas: easToTas,
-  casToEas: casToEas,
-  easToCas: easToCas,
+const airspeed = {
+  speedOfSound,
+  tasToMach,
+  airDensity,
+  standardConditions,
+  casToMach,
+  machToCas,
+  tasToCas,
+  casToTas,
+  tasToEas,
+  easToTas,
+  casToEas,
+  easToCas,
 };
 
 export default airspeed;

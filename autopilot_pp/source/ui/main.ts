@@ -20,7 +20,7 @@ function stopImmediatePropagation(event: Event) {
 $("<style>").text(uicss).appendTo("head");
 
 // Replace CSS class to avoid nasty override issues with GEFS styling.
-var $ap = $(".geofs-autopilot")
+const $ap = $(".geofs-autopilot")
   .removeClass("geofs-autopilot")
   .prop("id", "Qantas94Heavy-ap")
   .on("keydown", stopImmediatePropagation)
@@ -59,7 +59,7 @@ papiBugfix();
 restrictionsBugfix();
 enableKcas();
 
-var viewModel = new AutopilotVM();
+const viewModel = new AutopilotVM();
 ko.applyBindings(viewModel, $ap[0]);
 
 // when AP++ is injected, a content script is injected with it that fetches the json and adds it to the global context

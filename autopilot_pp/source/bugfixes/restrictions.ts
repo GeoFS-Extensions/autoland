@@ -1,19 +1,19 @@
 // Prevent aircraft from exceeding limits of altitude and speed.
 function restrictionsBugfix() {
-  var speedTimer, partsTimer, deleteTimer, deleteTimeout, oldMaxRPM;
-  var activated = false;
+  let speedTimer, partsTimer, deleteTimer, deleteTimeout, oldMaxRPM;
+  let activated = false;
 
-  var restrictedAircraft = new Set();
+  const restrictedAircraft = new Set();
   restrictedAircraft.add("4"); // KLM 737
   restrictedAircraft.add("5"); // Phenom 100
   restrictedAircraft.add("17"); // MD-11
   restrictedAircraft.add("10"); // A380
 
   function checkSpeedAndAltitude() {
-    var values = geofs.aircraft.instance.animationValue;
-    var maxLimits = geofs.aircraft.instance.setup.maxLimits;
-    var maxMach = maxLimits ? maxLimits[0] : 1;
-    var maxAltitude = maxLimits ? maxLimits[1] : 44444;
+    const values = geofs.aircraft.instance.animationValue;
+    const maxLimits = geofs.aircraft.instance.setup.maxLimits;
+    const maxMach = maxLimits ? maxLimits[0] : 1;
+    const maxAltitude = maxLimits ? maxLimits[1] : 44444;
     if (values.mach < maxMach && values.altitude < maxAltitude) return;
 
     clearInterval(speedTimer);
@@ -54,19 +54,19 @@ function restrictionsBugfix() {
     // Let's have the parts a-flyin'!
     partsTimer = setInterval(function () {
       geofs.aircraft.instance.object3d._children.forEach(function (object) {
-        var position = object._localposition;
-        for (var i = 0; i < 2; i++) position[i] *= 1.01;
+        const position = object._localposition;
+        for (let i = 0; i < 2; i++) position[i] *= 1.01;
       });
     }, 100);
 
     deleteTimeout = setTimeout(function () {
       clearInterval(partsTimer);
-      var i = 0;
+      let i = 0;
 
       // Bye bye parts!!!
-      var parts = geofs.aircraft.instance.object3d._children;
+      const parts = geofs.aircraft.instance.object3d._children;
       deleteTimer = setInterval(function () {
-        ++i;
+        i++;
 
         // Hide the part of aircraft.
         if (i === parts.length) {
@@ -79,7 +79,7 @@ function restrictionsBugfix() {
   }
 
   function matchesName() {
-    var maxLimits = geofs.aircraft.instance.setup.maxLimits;
+    const maxLimits = geofs.aircraft.instance.setup.maxLimits;
     return restrictedAircraft.has(geofs.aircraft.instance.id) || maxLimits;
   }
 
@@ -87,7 +87,7 @@ function restrictionsBugfix() {
     if (matchesName()) speedTimer = setInterval(checkSpeedAndAltitude, 5000);
   }
 
-  var oldReset = geofs.aircraft.Aircraft.prototype.reset;
+  const oldReset = geofs.aircraft.Aircraft.prototype.reset;
   geofs.aircraft.Aircraft.prototype.reset = function (bOnTheGround) {
     clearTimeout(deleteTimeout);
 
@@ -114,7 +114,7 @@ function restrictionsBugfix() {
   };
 
   // Aircraft setup object might not be loaded yet.
-  var setupLoadTimer = setInterval(function () {
+  const setupLoadTimer = setInterval(function () {
     if (geofs.aircraft.instance.setup) {
       clearInterval(setupLoadTimer);
       addRestrictions();

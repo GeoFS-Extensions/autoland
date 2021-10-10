@@ -24,8 +24,8 @@ function validateLon(val) {
 
 function apValidate(target, fn) {
   return function (val) {
-    var current = target();
-    var newValue = fn(val);
+    const current = target();
+    const newValue = fn(val);
 
     if (newValue !== current && !isNaN(newValue)) target(newValue);
     // change value if actual value same
@@ -34,7 +34,7 @@ function apValidate(target, fn) {
 }
 
 ko.extenders.apValidate = function (target, fn) {
-  var result = ko.pureComputed({
+  const result = ko.pureComputed({
     read: target,
     write: apValidate(target, fn),
   });
@@ -42,13 +42,13 @@ ko.extenders.apValidate = function (target, fn) {
   return result;
 };
 
-var modeToText = ["Heading mode", "Lat/lon mode", "Waypoint mode"];
+const modeToText = ["Heading mode", "Lat/lon mode", "Waypoint mode"];
 
 function AutopilotVM() {
   this.on = ap.on;
   this.currentMode = ap.currentMode;
   this.currentModeText = ko.pureComputed(function () {
-    var index = ap.currentMode();
+    const index = ap.currentMode();
     return modeToText[index];
   });
 
@@ -59,12 +59,13 @@ function AutopilotVM() {
   this.altitudeEnabled = ap.modes.altitude.enabled;
 
   function formatVs(value) {
-    var str = Math.abs(value).toFixed(0);
+    let str = Math.abs(value).toFixed(0);
 
     // Pad with zeroes.
     while (str.length < 4) str = "0" + str;
 
     // TODO: find a way of using "+" without triggering <input type="number"> validation.
+    // maybe call toString?
     return (value < 0 ? "-" : "") + str;
   }
 
@@ -75,9 +76,9 @@ function AutopilotVM() {
       return "";
     },
     write: function (val) {
-      var target = ap.modes.vs.value;
-      var current = target();
-      var newValue = parseInt(val);
+      const target = ap.modes.vs.value;
+      const current = target();
+      const newValue = parseInt(val);
       if (newValue !== newValue) newValue = undefined;
 
       if (newValue !== current) target(newValue);
@@ -88,9 +89,9 @@ function AutopilotVM() {
 
   this.heading = ko.pureComputed({
     read: function () {
-      var str = ap.modes.heading.value();
+      const str = ap.modes.heading.value();
       // Pad the value to 3 digits.
-      // @ts-ignore AP++ dvs really hate type checking, huh?
+      // @ts-ignore AP++ devs really hate type checking, huh?
       while (str.length < 3) str = "0" + str;
       return str;
     },
@@ -101,13 +102,13 @@ function AutopilotVM() {
 
   this.speed = ko.pureComputed({
     read: function () {
-      var value = ap.modes.speed.value();
+      const value = ap.modes.speed.value();
       return value.toFixed(ap.modes.speed.isMach() ? 2 : 0);
     },
     write: function (val) {
-      var target = ap.modes.speed.value;
-      var current = target();
-      var newValue = ap.modes.speed.isMach()
+      const target = ap.modes.speed.value;
+      const current = target();
+      const newValue = ap.modes.speed.isMach()
         ? //@ts-ignore
           Math.round(parseFloat(val) + "e2") / 100
         : parseInt(val);
@@ -133,14 +134,14 @@ function AutopilotVM() {
   this.lon = gc.longitude.extend({ apValidate: validateLon });
 
   // REVIEW: should FMC be allowed to change the displayed ICAO value?
-  var _waypoint = ko.observable();
+  const _waypoint = ko.observable();
   this.waypoint = ko.pureComputed({
     read: _waypoint,
     write: function (inputVal) {
       // Wapoint names are uppercase, so make the input uppercase for consistency.
-      var code = inputVal.trim().toUpperCase();
+      const code = inputVal.trim().toUpperCase();
 
-      var coord = getWaypoint(code);
+      const coord = getWaypoint(code);
       if (coord) {
         gc.latitude(coord[0]);
         gc.longitude(coord[1]);
@@ -177,7 +178,7 @@ function AutopilotVM() {
   };
 
   this.nextMode = function () {
-    var mode = ap.currentMode();
+    const mode = ap.currentMode();
     // Loop back around to first mode if currently on last mode.
     ap.currentMode(mode === modeToText.length - 1 ? 0 : mode + 1);
   };
@@ -185,17 +186,15 @@ function AutopilotVM() {
 
 // Handle MDL's annoying inputs that needs updating all the time.
 function updateMdlSwitch(element, _notUsed, bindings) {
-  // jshint unused:false
-
   // Call these so the update is triggered when these bindings change.
-  var isChecked = bindings.get("checked");
-  var isEnabled = bindings.get("enable");
+  const isChecked = bindings.get("checked");
+  const isEnabled = bindings.get("enable");
   if (isChecked) isChecked();
   if (isEnabled) isEnabled();
 
   // This has to be done after the bindings call as MaterialSwitch isn't
   // present yet when GeoFS is loaded.
-  var materialSwitch = element.parentNode.MaterialSwitch;
+  const materialSwitch = element.parentNode.MaterialSwitch;
   if (!materialSwitch) return;
 
   materialSwitch.checkDisabled();
@@ -206,14 +205,14 @@ function updateMdlRadio(element, _notUsed, bindings) {
   // jshint unused:false
 
   // Call these so the update is triggered when these bindings change.
-  var isChecked = bindings.get("checked");
-  var isEnabled = bindings.get("enable");
+  const isChecked = bindings.get("checked");
+  const isEnabled = bindings.get("enable");
   if (isChecked) isChecked();
   if (isEnabled) isEnabled();
 
   // This has to be done after the bindings call as MaterialRadio isn't
   // present yet when GeoFS is loaded.
-  var materialRadio = element.parentNode.MaterialRadio;
+  const materialRadio = element.parentNode.MaterialRadio;
   if (!materialRadio) return;
 
   materialRadio.checkDisabled();

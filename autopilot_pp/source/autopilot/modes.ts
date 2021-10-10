@@ -2,22 +2,22 @@ import * as ko from "knockout";
 import speedConversions from "../speedConversions";
 import util from "../util";
 
-var altitude = {
+const altitude = {
   enabled: ko.observable(false),
   value: ko.observable(0),
 };
 
-var vs = {
+const vs = {
   enabled: ko.observable(false),
   value: ko.observable(0),
 };
 
-var heading = {
+const heading = {
   enabled: ko.observable(false),
   value: ko.observable(360),
 };
 
-var speed = {
+const speed = {
   enabled: ko.observable(false),
   isMach: ko.observable(false),
   value: ko.observable(0),
@@ -26,26 +26,26 @@ var speed = {
 };
 
 function toMach(kias: number) {
-  var altitude = util.ft2mtrs(geofs.aircraft.instance.animationValue.altitude);
+  const altitude = util.ft2mtrs(geofs.aircraft.instance.animationValue.altitude);
   return speedConversions.casToMach(kias, altitude);
 }
 
 function toKias(mach: number) {
-  var altitude = util.ft2mtrs(geofs.aircraft.instance.animationValue.altitude);
+  const altitude = util.ft2mtrs(geofs.aircraft.instance.animationValue.altitude);
   return speedConversions.machToCas(mach, altitude);
 }
 
 // Convert value between KIAS and Mach when mode switched.
 speed.isMach.subscribe(function (isMach: boolean) {
-  var value = speed.value();
+  const value = speed.value();
   speed.value(isMach ? toMach(value) : toKias(value));
 });
 
-var modes = {
-  altitude: altitude,
-  vs: vs,
-  heading: heading,
-  speed: speed,
+const modes = {
+  altitude,
+  vs,
+  heading,
+  speed,
 };
 
 export default modes;

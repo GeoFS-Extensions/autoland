@@ -4,8 +4,8 @@ import pidControls from "./autopilot/pidControls";
 import gc from "./greatcircle";
 import util from "./util";
 
-var _on = ko.observable(false);
-var on = ko.pureComputed({
+const _on = ko.observable(false);
+const on = ko.pureComputed({
   read: _on,
   write: function (newValue) {
     // Check if autopilot is enabled for the current aircraft or not.
@@ -15,7 +15,7 @@ var on = ko.pureComputed({
 });
 
 // The type of navigation mode currently set for the autopilot.
-var currentMode = ko.observable(0);
+const currentMode = ko.observable(0);
 
 // Initialise the autopilot when it is turned on and off.
 on.subscribe(function (newValue) {
@@ -63,7 +63,7 @@ apModes.heading.enabled.subscribe(function (newValue) {
   if (newValue) pidControls.throttle.init(controls.throttle);
 });
 
-var lastGcHeadingUpdate = 0;
+let lastGcHeadingUpdate = 0;
 
 /**
  * Function called by the window.geofs.tick callback.
@@ -71,10 +71,10 @@ var lastGcHeadingUpdate = 0;
  * @param {Number} dt - Time in seconds since the last frame.
  */
 function update(dt) {
-  var values = geofs.aircraft.instance.animationValue;
+  const values = geofs.aircraft.instance.animationValue;
 
   // Calculate relative speed of aircraft as correction factor (TAS, not CAS).
-  var speedRatio = util.clamp(values.ktas / 100, 0.5, 5);
+  const speedRatio = util.clamp(values.ktas / 100, 0.5, 5);
 
   // Disable the autopilot when the plane is touching the ground and upon encountering abnormal flight conditions.
   if (
@@ -94,30 +94,30 @@ function update(dt) {
       ap.currentMode() !== 0 &&
       performance.now() - lastGcHeadingUpdate > 1000
     ) {
-      var headingToDest = gc.getHeading();
+      const headingToDest = gc.getHeading();
       if (isFinite(headingToDest))
         apModes.heading.value(Math.round(headingToDest));
       lastGcHeadingUpdate = performance.now();
     }
 
     // Calculate difference in target/current headings, bound to between +/-180 degrees.
-    var deltaHeading = util.fixAngle(apModes.heading.value() - values.heading);
+    const deltaHeading = util.fixAngle(apModes.heading.value() - values.heading);
 
     // The maximum bank angle is double standard rate turn (6 degrees per second) or the bank
     // angle limit, whichever is less.
-    var maxBankAngle = Math.min(
+    const maxBankAngle = Math.min(
       util.rad2deg(Math.atan(0.0027467328927254283 * values.ktas)),
       ap.maxBankAngle
     );
 
     // Target bank angle is equal to the heading offset (i.e. 10 degree heading offset commands a
     // 10 degree bank), up to the maximum bank angle.
-    var targetBankAngle = util.clamp(deltaHeading, -maxBankAngle, maxBankAngle);
+    const targetBankAngle = util.clamp(deltaHeading, -maxBankAngle, maxBankAngle);
 
     // Coordinated roll rate varies directly with true airspeed.
     // http://www.flightlab.net/Flightlab.net/Download_Course_Notes_files/9_RollingDynamics.pdf
     // NOTE: The current bank angle ("aroll") is negated as GEFS takes right wing up as positive.
-    var result = pidControls.roll.compute(-values.aroll, dt, targetBankAngle);
+    const result = pidControls.roll.compute(-values.aroll, dt, targetBankAngle);
     controls.roll = util.exponentialSmoothing(
       "apRoll",
       result / speedRatio,
@@ -134,23 +134,23 @@ function update(dt) {
   }
 
   function updateAltitude() {
-    var deltaAltitude = apModes.altitude.value() - values.altitude;
-    var maxClimbRate = util.clamp(
+    const deltaAltitude = apModes.altitude.value() - values.altitude;
+    const maxClimbRate = util.clamp(
       speedRatio * ap.commonClimbRate,
       0,
       ap.maxClimbRate
     );
-    var maxDescentRate = util.clamp(
+    const maxDescentRate = util.clamp(
       speedRatio * ap.commonDescentRate,
       ap.maxDescentRate,
       0
     );
-    var vsValue = apModes.vs.value();
+    const vsValue = apModes.vs.value();
 
     // Check if vertical speed should be under manual control or not.
     // V/S should be under manual control if user did not explicitly disable V/S mode (by
     // clearing the input field) and vertical speed is in the same direction as altitude.
-    var manualVsControl =
+    const manualVsControl =
       vsValue !== undefined &&
       (vsValue === 0 ||
         (vsValue < 0 ? deltaAltitude < -200 : deltaAltitude > 200));
@@ -167,7 +167,7 @@ function update(dt) {
       apModes.vs.enabled(true);
     }
 
-    var targetClimbRate;
+    let targetClimbRate;
     if (manualVsControl) targetClimbRate = vsValue;
     // Automatically calculate vertical speed.
     else
@@ -178,7 +178,7 @@ function update(dt) {
       );
 
     // Set climb angle to match target climb rate.
-    var targetTilt = pidControls.climb.compute(
+    let targetTilt = pidControls.climb.compute(
       values.climbrate,
       dt,
       targetClimbRate
@@ -186,7 +186,7 @@ function update(dt) {
     targetTilt = util.clamp(targetTilt, ap.minPitchAngle, ap.maxPitchAngle);
 
     // TODO: add an elevator deflection rate limiter
-    var result = pidControls.pitch.compute(-values.atilt, dt, targetTilt);
+    const result = pidControls.pitch.compute(-values.atilt, dt, targetTilt);
     controls.rawPitch = util.exponentialSmoothing(
       "apPitch",
       result / speedRatio,
@@ -198,12 +198,12 @@ function update(dt) {
   }
 
   function updateThrottle() {
-    var speed = apModes.speed.value();
+    let speed = apModes.speed.value();
 
     // Convert speed input value to KIAS if corrently in Mach mode.
     if (apModes.speed.isMach()) speed = apModes.speed.toKias(speed);
 
-    var result = pidControls.throttle.compute(values.kcas, dt, speed);
+    const result = pidControls.throttle.compute(values.kcas, dt, speed);
     controls.throttle = util.clamp(
       util.exponentialSmoothing("apThrottle", result, 0.9),
       0,
@@ -218,12 +218,12 @@ function update(dt) {
   if (apModes.speed.enabled()) updateThrottle();
 }
 
-var ap = {
-  on: on,
-  toggle: toggle,
-  update: update,
+const ap = {
+  on,
+  toggle,
+  update,
   modes: apModes,
-  currentMode: currentMode,
+  currentMode,
   maxBankAngle: 25,
   minPitchAngle: -10,
   maxPitchAngle: 10,

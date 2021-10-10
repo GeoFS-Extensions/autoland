@@ -1,6 +1,6 @@
 // Provides functions that are useful but either not included with GEFS or not implemented
 // properly.
-var SMOOTH_BUFFER = new Map();
+const SMOOTH_BUFFER = new Map();
 
 /**
  * Performs Brown's simple exponential smoothing for a given series associated by a key.
@@ -19,7 +19,7 @@ function exponentialSmoothing(
   newValue: number,
   smoothingFactor: number
 ): number {
-  var buffer = SMOOTH_BUFFER.get(keyName);
+  const buffer = SMOOTH_BUFFER.get(keyName);
 
   if (!buffer) {
     // [ S_tm1, smoothingFactor ]
@@ -29,7 +29,7 @@ function exponentialSmoothing(
 
   // S_t = a * X_t + (1 - a) * S_tm1
   smoothingFactor = buffer[1];
-  var S_t = newValue * smoothingFactor + (1 - smoothingFactor) * buffer[0];
+  const S_t = newValue * smoothingFactor + (1 - smoothingFactor) * buffer[0];
   buffer[0] = S_t;
   return S_t;
 }
@@ -39,7 +39,7 @@ function exponentialSmoothing(
  * @param {Number} a
  */
 function fixAngle(a: number): number {
-  var result = a % 360;
+  const result = a % 360;
   if (result > 180) return result - 360;
   if (result <= -180) return result + 360;
   return result;
@@ -50,12 +50,12 @@ function fixAngle(a: number): number {
  * @param {Number} a
  */
 function fixAngle360(a: number): number {
-  var result = a % 360;
+  const result = a % 360;
   // Ensure that value is always positive.
   return result > 0 ? result : result + 360;
 }
 
-var DEGREES_TO_RADIANS = 0.017453292519943295;
+const DEGREES_TO_RADIANS = 0.017453292519943295;
 
 /**
  * Convert degrees to radians.
@@ -75,7 +75,7 @@ function rad2deg(x: number): number {
   return x / DEGREES_TO_RADIANS;
 }
 
-var METRES_PER_SECOND_TO_KNOTS = 1.9438444924406046;
+const METRES_PER_SECOND_TO_KNOTS = 1.9438444924406046;
 
 /**
  * Convert knots to metres per second.
@@ -95,7 +95,7 @@ function ms2knots(x: number): number {
   return x * METRES_PER_SECOND_TO_KNOTS;
 }
 
-var FEET_TO_METRES = 0.3048;
+const FEET_TO_METRES = 0.3048;
 
 /**
  * Convert feet to metres.
@@ -114,9 +114,6 @@ function mtrs2ft(x: number): number {
   // the nearest representation of its inverse.
   return x / FEET_TO_METRES;
 }
-
-/**
- * Coib
 
 /** @private */
 function isPlusZero(arg: number): boolean {
@@ -163,17 +160,17 @@ function clamp(x: number, min: number, max: number): number {
   return x;
 }
 
-var util = {
-  exponentialSmoothing: exponentialSmoothing,
-  fixAngle: fixAngle,
-  fixAngle360: fixAngle360,
-  deg2rad: deg2rad,
-  rad2deg: rad2deg,
-  knots2ms: knots2ms,
-  ms2knots: ms2knots,
-  ft2mtrs: ft2mtrs,
-  mtrs2ft: mtrs2ft,
-  clamp: clamp,
+const util = {
+  exponentialSmoothing,
+  fixAngle,
+  fixAngle360,
+  deg2rad,
+  rad2deg,
+  knots2ms,
+  ms2knots,
+  ft2mtrs,
+  mtrs2ft,
+  clamp,
 };
 
 export default util;

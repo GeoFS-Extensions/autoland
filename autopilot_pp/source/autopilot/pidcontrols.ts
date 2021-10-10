@@ -1,5 +1,5 @@
 import PID from "../pid";
-var pidSettings = {
+const pidSettings = {
   climb: new PID({
     kp: 0.01,
     ti: 10,
