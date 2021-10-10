@@ -13,13 +13,13 @@ const boltzmann = 1.3806487924497035e-23;
  * Meters per second per second.
  * Extrapolated from the law of universal gravitation.
  */
-const gravity = (function() {
+const gravity = (function () {
   // see https://en.wikipedia.org/wiki/Gravity_of_Earth#Estimating_g_from_the_law_of_universal_gravitation for the formula used
   const bigG = 6.67408e-11;
-  const earthMass = 5.9722e+24;
+  const earthMass = 5.9722e24;
   const earthRadius = 6371000;
 
-  return bigG*(earthMass/(earthRadius**2));
+  return bigG * (earthMass / earthRadius ** 2);
 })();
 
 // Gatley, D. P., Herrmann, S. & Kretzschmar, H.-J. (2008). A Twenty-First Century Molar Mass

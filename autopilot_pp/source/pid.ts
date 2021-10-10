@@ -47,7 +47,8 @@ PID.prototype.compute = function (input: number, dt: number, setPoint: number) {
 
   // Use derivative on measurement instead of derivative on error to prevent derivative kick.
   // http://brettbeauregard.com/blog/2011/04/improving-the-beginner%E2%80%99s-pid-derivative-kick
-  const dInput = this.lastInput === undefined ? 0 : (this.lastInput - input) / dt;
+  const dInput =
+    this.lastInput === undefined ? 0 : (this.lastInput - input) / dt;
   this.lastInput = input;
 
   // Calculate output using the PID "standard form" formula.

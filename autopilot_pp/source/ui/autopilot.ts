@@ -78,7 +78,7 @@ function AutopilotVM() {
     write: function (val) {
       const target = ap.modes.vs.value;
       const current = target();
-      const newValue = parseInt(val);
+      let newValue = parseInt(val);
       if (newValue !== newValue) newValue = undefined;
 
       if (newValue !== current) target(newValue);

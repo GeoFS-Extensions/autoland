@@ -26,12 +26,16 @@ const speed = {
 };
 
 function toMach(kias: number) {
-  const altitude = util.ft2mtrs(geofs.aircraft.instance.animationValue.altitude);
+  const altitude = util.ft2mtrs(
+    geofs.aircraft.instance.animationValue.altitude
+  );
   return speedConversions.casToMach(kias, altitude);
 }
 
 function toKias(mach: number) {
-  const altitude = util.ft2mtrs(geofs.aircraft.instance.animationValue.altitude);
+  const altitude = util.ft2mtrs(
+    geofs.aircraft.instance.animationValue.altitude
+  );
   return speedConversions.machToCas(mach, altitude);
 }
 

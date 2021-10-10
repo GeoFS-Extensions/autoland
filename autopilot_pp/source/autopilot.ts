@@ -101,7 +101,9 @@ function update(dt) {
     }
 
     // Calculate difference in target/current headings, bound to between +/-180 degrees.
-    const deltaHeading = util.fixAngle(apModes.heading.value() - values.heading);
+    const deltaHeading = util.fixAngle(
+      apModes.heading.value() - values.heading
+    );
 
     // The maximum bank angle is double standard rate turn (6 degrees per second) or the bank
     // angle limit, whichever is less.
@@ -112,7 +114,11 @@ function update(dt) {
 
     // Target bank angle is equal to the heading offset (i.e. 10 degree heading offset commands a
     // 10 degree bank), up to the maximum bank angle.
-    const targetBankAngle = util.clamp(deltaHeading, -maxBankAngle, maxBankAngle);
+    const targetBankAngle = util.clamp(
+      deltaHeading,
+      -maxBankAngle,
+      maxBankAngle
+    );
 
     // Coordinated roll rate varies directly with true airspeed.
     // http://www.flightlab.net/Flightlab.net/Download_Course_Notes_files/9_RollingDynamics.pdf
