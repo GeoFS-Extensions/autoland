@@ -16,14 +16,17 @@ export default function (
   // If there is no departure airport
   if (!airport) return [];
 
-  var allSID = data.SID[airport] || [];
-  var validSID = [];
+  const allSID = data.SID[airport] || [];
+  const validSID: Array<{
+    name: string,
+    availableRunways?: any[]
+  }> = [];
 
   // If a SID is already selected
   if (selectedSIDName) {
     // If SID is selected before runway, return selected SID name and a list of available runways
     if (!runway) {
-      var availableRunways = [];
+      const availableRunways = [];
 
       allSID.forEach(function (obj) {
         if (obj.name === selectedSIDName) availableRunways.push(obj.runway);
@@ -31,7 +34,7 @@ export default function (
 
       validSID.push({
         name: selectedSIDName,
-        availableRunways: availableRunways,
+        availableRunways,
       });
     }
 
@@ -48,7 +51,7 @@ export default function (
   else {
     // List of SID names (no runways, no duplicates)
     if (!runway) {
-      var tempSIDArray = [];
+      const tempSIDArray = [];
 
       allSID.forEach(function (obj) {
         if (tempSIDArray.indexOf(obj.name) === -1) tempSIDArray.push(obj.name);

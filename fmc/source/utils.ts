@@ -33,8 +33,8 @@ function toDegrees(r: number): number {
  * @returns {Number} The ground speed of the aircraft
  */
 function getGroundSpeed(): number {
-  var tas = geofs.aircraft.instance.animationValue.ktas;
-  var vs = 60 * geofs.aircraft.instance.animationValue.climbrate * FEET_TO_NM;
+  const tas = geofs.aircraft.instance.animationValue.ktas;
+  const vs = 60 * geofs.aircraft.instance.animationValue.climbrate * FEET_TO_NM;
   debug.log("tas: " + tas + ", vs: " + vs);
   return Math.sqrt(tas * tas - vs * vs);
 }
@@ -54,14 +54,14 @@ function getDistance(
   lat2: number,
   lon2: number
 ): number {
-  var dlat = toRadians(lat2 - lat1);
-  var dlon = toRadians(lon2 - lon1);
+  const dlat = toRadians(lat2 - lat1);
+  const dlon = toRadians(lon2 - lon1);
   lat1 = toRadians(lat1);
   lat2 = toRadians(lat2);
-  var a =
+  const a =
     Math.sin(dlat / 2) * Math.sin(dlat / 2) +
     Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon / 2) * Math.sin(dlon / 2);
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return EARTH_RADIUS_NM * c;
 }
 
@@ -84,11 +84,11 @@ function getBearing(
   lat2 = toRadians(lat2);
   lon1 = toRadians(lon1);
   lon2 = toRadians(lon2);
-  var y = Math.sin(lon2 - lon1) * Math.cos(lat2);
-  var x =
+  const y = Math.sin(lon2 - lon1) * Math.cos(lat2);
+  const x =
     Math.cos(lat1) * Math.sin(lat2) -
     Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
-  var brng = toDegrees(Math.atan2(y, x));
+    const brng = toDegrees(Math.atan2(y, x));
   return brng <= 0 ? brng + 360 : brng;
 }
 
@@ -100,8 +100,8 @@ function getBearing(
  * @returns {Number} The climb rate necessary to attain the restriction
  */
 function getClimbrate(deltaAlt: number, nextDist: number): number {
-  var gs = getGroundSpeed();
-  var vs =
+  const gs = getGroundSpeed();
+  const vs =
     100 *
     Math.round(
       (gs * (deltaAlt / (nextDist * NM_TO_FEET)) * NM_TO_FEET) / 60 / 100
@@ -117,7 +117,7 @@ function getClimbrate(deltaAlt: number, nextDist: number): number {
  */
 function formatTime(time: number[]): string {
   if (isNaN(time[0]) || isNaN(time[1])) return "--:--";
-  time[1] = checkZeros(time[1]);
+  time[1] = Number(checkZeros(time[1]));
   return time[0] + ":" + time[1];
 }
 
@@ -145,9 +145,9 @@ function timeCheck(h: number, m: number): number[] {
  * @returns {Array} The time after <code>timeCheck(h, m)</code>
  */
 function getETE(d: number, a: boolean): number[] {
-  var hours = d / geofs.aircraft.instance.animationValue.ktas;
-  var h = parseInt(hours.toString());
-  var m = Math.round(60 * (hours - h));
+  const hours = d / geofs.aircraft.instance.animationValue.ktas;
+  const h = parseInt(hours.toString());
+  let m = Math.round(60 * (hours - h));
   if (a)
     m += Math.round(geofs.aircraft.instance.animationValue.altitude / 4000);
   return timeCheck(h, m);
@@ -161,9 +161,9 @@ function getETE(d: number, a: boolean): number[] {
  * @returns {Array} The timer after <code>timeCheck(hours, minutes)</code>
  */
 function getETA(hours: number, minutes: number): number[] {
-  var date = new Date();
-  var h = date.getHours();
-  var m = date.getMinutes();
+  const date = new Date();
+  let h = date.getHours();
+  let m = date.getMinutes();
   h += hours;
   m += Number(minutes);
   return timeCheck(h, m);
@@ -177,23 +177,25 @@ function getETA(hours: number, minutes: number): number[] {
  *
  * @private
  */
-function checkZeros(i) {
-  if (i < 10) i = "0" + i;
-  return i;
+function checkZeros(i: number): string {
+  let toReturn: string;
+  if (i < 10) toReturn = "0" + i; else toReturn = i.toString();
+
+  return toReturn;
 }
 
 export default {
-  EARTH_RADIUS_NM: EARTH_RADIUS_NM,
-  FEET_TO_NM: FEET_TO_NM,
-  NM_TO_FEET: NM_TO_FEET,
-  toRadians: toRadians,
-  toDegrees: toDegrees,
-  getGroundSpeed: getGroundSpeed,
-  getDistance: getDistance,
-  getBearing: getBearing,
-  getClimbrate: getClimbrate,
-  formatTime: formatTime,
-  timeCheck: timeCheck,
-  getETE: getETE,
-  getETA: getETA,
+  EARTH_RADIUS_NM,
+  FEET_TO_NM,
+  NM_TO_FEET,
+  toRadians,
+  toDegrees,
+  getGroundSpeed,
+  getDistance,
+  getBearing,
+  getClimbrate,
+  formatTime,
+  timeCheck,
+  getETE,
+  getETA,
 };

@@ -4,17 +4,17 @@ import lnav from "./nav/LNAV";
 import vnav from "./nav/VNAV";
 
 // Autopilot++ Dependencies
-var icao = navData.airports;
+const icao = navData.airports;
 
 // Top Of Descent distance
-var todDist = ko.observable();
+const todDist = ko.observable();
 
 // If VNAV is enabled
-var _vnavEnabled = ko.observable(false);
-var vnavEnabled = ko.pureComputed({
+const _vnavEnabled = ko.observable(false);
+const vnavEnabled = ko.pureComputed({
   read: _vnavEnabled,
   write: function (boolean) {
-    var set = _vnavEnabled;
+    const set = _vnavEnabled;
 
     if (!cruiseAlt()) set(false);
     else if (boolean) {
@@ -31,38 +31,38 @@ var vnavEnabled = ko.pureComputed({
 });
 
 // Speed control
-var spdControl = ko.observable(true);
+const spdControl = ko.observable(true);
 
 /**
  * departure object: airport, coords, runway, and SID
  */
-var _departureAirport = ko.observable();
-var _departureCoords = ko.observable([]);
-var _selectedDepartureRwy = ko.observable();
-var _selectedSID = ko.observable();
+const _departureAirport = ko.observable();
+const _departureCoords = ko.observable([]);
+const _selectedDepartureRwy = ko.observable();
+const _selectedSID = ko.observable();
 
 // List of runways and SIDs
-var _departureRwys = ko.pureComputed(function () {
-  var depArpt = departure.airport();
-  var depSID = departure.SID() ? departure.SID().name : undefined;
+const _departureRwys = ko.pureComputed(function () {
+  const depArpt = departure.airport();
+  const depSID = departure.SID() ? departure.SID().name : undefined;
 
   return get.runway(depArpt, depSID, true);
 });
-var _SIDs = ko.pureComputed(function () {
-  var depArpt = departure.airport();
-  var depRwy = departure.runway() ? departure.runway().runway : undefined;
-  var depSID = departure.SID() ? departure.SID().name : undefined;
+const _SIDs = ko.pureComputed(function () {
+  const depArpt = departure.airport();
+  const depRwy = departure.runway() ? departure.runway().runway : undefined;
+  const depSID = departure.SID() ? departure.SID().name : undefined;
 
   return get.SID(depArpt, depRwy, depSID);
 });
 
-var departure = {
+const departure = {
   // Departure airport name
   airport: ko.pureComputed({
     read: _departureAirport,
     write: function (airport) {
-      var oldAirport = _departureAirport();
-      var coords = icao[airport];
+      const oldAirport = _departureAirport();
+      const coords = icao[airport];
 
       if (airport !== oldAirport) departure.runway(undefined);
 
@@ -87,7 +87,7 @@ var departure = {
   runway: ko.pureComputed({
     read: _selectedDepartureRwy,
     write: function (index) {
-      var rwyData = _departureRwys()[index];
+      const rwyData = _departureRwys()[index];
 
       if (rwyData) _selectedDepartureRwy(rwyData);
       else {
@@ -101,7 +101,7 @@ var departure = {
   SID: ko.pureComputed({
     read: _selectedSID,
     write: function (index) {
-      var SIDData = _SIDs()[index];
+      const SIDData = _SIDs()[index];
       _selectedSID(SIDData);
     },
   }),
@@ -110,29 +110,29 @@ var departure = {
 /**
  * arrival object: airport, coords, runway, and SID
  */
-var _arrivalAirport = ko.observable();
-var _arrivalCoords = ko.observable([]);
-var _selectedArrivalRwy = ko.observable();
-var _selectedSTAR = ko.observable();
+const _arrivalAirport = ko.observable();
+const _arrivalCoords = ko.observable([]);
+const _selectedArrivalRwy = ko.observable();
+const _selectedSTAR = ko.observable();
 
 // List of runways and STARs
-var _arrivalRwys = ko.pureComputed(function () {
+const _arrivalRwys = ko.pureComputed(function () {
   return get.runway(arrival.airport());
 });
-var _STARs = ko.pureComputed(function () {
+const _STARs = ko.pureComputed(function () {
   return get.SID(
     arrival.airport(),
     arrival.runway() ? arrival.runway().runway : false
   );
 });
 
-var arrival = {
+const arrival = {
   // Arrival airport name
   airport: ko.pureComputed({
     read: _arrivalAirport,
     write: function (airport) {
-      var oldAirport = _arrivalAirport();
-      var coords = icao[airport];
+      const oldAirport = _arrivalAirport();
+      const coords = icao[airport];
 
       if (airport !== oldAirport) arrival.runway(undefined);
 
@@ -156,7 +156,7 @@ var arrival = {
   runway: ko.pureComputed({
     read: _selectedArrivalRwy,
     write: function (index) {
-      var rwyData = _arrivalRwys()[index];
+      const rwyData = _arrivalRwys()[index];
 
       if (rwyData) _selectedArrivalRwy(rwyData);
       else {
@@ -170,21 +170,21 @@ var arrival = {
   STAR: ko.pureComputed({
     read: _selectedSTAR,
     write: function (index) {
-      var STARData = _STARs()[index];
+      const STARData = _STARs()[index];
       _selectedSTAR(STARData);
     },
   }),
 };
 
 // Flight Number
-var flightNumber = ko.observable();
+const flightNumber = ko.observable();
 
 // Cruise altitude
-var _cruiseAlt = ko.observable();
-var cruiseAlt = ko.pureComputed({
+const _cruiseAlt = ko.observable();
+const cruiseAlt = ko.pureComputed({
   read: _cruiseAlt,
   write: function (val) {
-    var set = _cruiseAlt;
+    const set = _cruiseAlt;
 
     if (!val) {
       set(undefined);
@@ -194,8 +194,8 @@ var cruiseAlt = ko.pureComputed({
 });
 
 // Flight phase
-var _phase = ko.observable(0);
-var phase = ko.pureComputed({
+const _phase = ko.observable(0);
+const phase = ko.pureComputed({
   read: _phase,
   write: function (index) {
     if (phaseLocked() || index > 3) return;
@@ -203,32 +203,31 @@ var phase = ko.pureComputed({
   },
 });
 
-var _phaseLocked = ko.observable(false);
-//@ts-ignore
-var phaseLocked = ko.pureComputed({
+const _phaseLocked = ko.observable(false);
+// @ts-ignore
+const phaseLocked = ko.pureComputed({
   read: _phaseLocked,
   write: function (boolean, viewmodel) {
-    // jshint unused:false
     _phaseLocked(boolean);
   },
 });
 
 // Automatic TOD calculation
-var todCalc = ko.observable(false);
+const todCalc = ko.observable(false);
 
 // Arrival Airport field altitude
-var fieldElev = ko.observable();
+const fieldElev = ko.observable();
 
 export default {
-  todDist: todDist,
-  vnavEnabled: vnavEnabled,
-  spdControl: spdControl,
-  departure: departure,
-  arrival: arrival,
-  number: flightNumber,
-  cruiseAlt: cruiseAlt,
-  phase: phase,
-  phaseLocked: phaseLocked,
-  todCalc: todCalc,
-  fieldElev: fieldElev,
+  todDist,
+  vnavEnabled,
+  spdControl,
+  departure,
+  arrival,
+  flightNumber,
+  cruiseAlt,
+  phase,
+  phaseLocked,
+  todCalc,
+  fieldElev,
 };

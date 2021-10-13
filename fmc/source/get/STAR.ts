@@ -10,8 +10,8 @@ export default function (airport: string, runway): Array<any> {
   if (!airport || !runway) return [];
   // FIXME: there still can be a STAR even if there is no arrival runway
 
-  var allSTAR = data.STAR[airport];
-  var validSTAR = [];
+  const allSTAR = data.STAR[airport];
+  const validSTAR = [];
 
   if (Array.isArray(allSTAR))
     allSTAR.forEach(function (obj) {

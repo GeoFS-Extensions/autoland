@@ -1,11 +1,3 @@
-// keyboard mapping appending
-let keyboardMappingAppend = "var a = window.keyboard_mapping = {};";
-keyboardMappingAppend += 'a.version="1.0.2";';
-keyboardMappingAppend += "a.require=require;";
-keyboardMappingAppend += "a.requirejs=requirejs;";
-keyboardMappingAppend += "a.define=define;";
-keyboardMappingAppend += "a.ready=false;";
-
 // fmc appending
 let fmcAppend = "var a = window.fmc = {};";
 fmcAppend += 'a.version="0.6.0";';

@@ -10,12 +10,12 @@ import lnav from "./nav/LNAV";
 import progress from "./nav/progress";
 
 // Autopilt++ Dependencies
-var autopilot = autopilot_pp.require("build/autopilot"),
+const autopilot = autopilot_pp.require("build/autopilot"),
   gc = autopilot_pp.require("build/greatcircle"),
   icao = navData.airports;
 
-var route = ko.observableArray();
-var nextWaypoint = ko.observable(null);
+  const route = ko.observableArray();
+  const nextWaypoint = ko.observable(null);
 
 /**
  * Waypoint object to distinguish between each route item
@@ -23,18 +23,18 @@ var nextWaypoint = ko.observable(null);
  * @private
  * @constructor
  */
-var Waypoint = function () {
-  var self = this;
+const Waypoint = function () {
+  const self = this;
 
   // Waypoint name
-  var _wpt = ko.observable();
+  const _wpt = ko.observable();
   self.wpt = ko.pureComputed({
     read: _wpt,
     write: function (val) {
       _wpt(val);
 
-      var coords = get.waypoint(val, getIndex(self));
-      var isValid = coords && coords[0] && coords[1];
+      const coords = get.waypoint(val, getIndex(self));
+      const isValid = coords && coords[0] && coords[1];
 
       self.lat(isValid ? coords[0] : self.lat(), isValid);
       self.lon(isValid ? coords[1] : self.lon(), isValid);
@@ -46,7 +46,7 @@ var Waypoint = function () {
   });
 
   // Latitude
-  var _lat = ko.observable();
+  const _lat = ko.observable();
   // @ts-ignore
   self.lat = ko.pureComputed({
     read: _lat,
@@ -59,7 +59,7 @@ var Waypoint = function () {
   });
 
   // Longitude
-  var _lon = ko.observable();
+  const _lon = ko.observable();
   // @ts-ignore
   self.lon = ko.pureComputed({
     read: _lon,
@@ -130,7 +130,7 @@ var Waypoint = function () {
 };
 
 // Makes llaLocation an observable for automatic data updates
-var llaLocation = ko.observable();
+const llaLocation = ko.observable();
 setInterval(function () {
   llaLocation(geofs.aircraft.instance.llaLocation);
 }, 1000);
@@ -144,15 +144,14 @@ setInterval(function () {
  * @private
  */
 function getInfoFromPrev(self): Array<any> {
-  var distance,
-    bearing,
-    index = getIndex(self);
+  let distance: number, bearing: number;
+  const index = getIndex(self);
 
   // Calculates info from current location
   // if waypoint is at the start of the list or
   // if current waypoint is activated
   if (index === 0 || index === nextWaypoint()) {
-    var pos = llaLocation() || [];
+    const pos = llaLocation() || [];
 
     distance = utils.getDistance(pos[0], pos[1], self.lat(), self.lon());
     bearing = utils.getBearing(pos[0], pos[1], self.lat(), self.lon());
@@ -160,7 +159,7 @@ function getInfoFromPrev(self): Array<any> {
 
   // Else, calculates info from preceeding waypoint
   else if (index) {
-    var prev = route()[index - 1];
+    const prev = route()[index - 1];
 
     distance = utils.getDistance(
       prev.lat(),
@@ -181,8 +180,13 @@ function getInfoFromPrev(self): Array<any> {
  * @returns {Number} Index
  */
 function getIndex(self): number {
-  for (var index = 0; index < route().length; index++) {
-    if (self === route()[index]) break;
+  let index: number;
+
+  for (let i = 0; index < route().length; index++) {
+    if (self === route()[i]) {
+      index = i;
+      break;
+    }
   }
 
   return index;
@@ -197,10 +201,10 @@ function getIndex(self): number {
  * @private
  */
 function move(index1: number, index2: number) {
-  var tempRoute = route();
+  const tempRoute = route();
 
   if (index2 >= tempRoute.length) {
-    var k = index2 - tempRoute.length;
+    let k = index2 - tempRoute.length;
     while (k-- + 1) {
       tempRoute.push(undefined);
     }
@@ -222,16 +226,16 @@ function move(index1: number, index2: number) {
  * @returns {Array} The array of waypoint names
  */
 function makeFixesArray(): Array<any> {
-  var result = [];
+  const result = [];
 
-  var departureVal = flight.departure.airport();
+  const departureVal = flight.departure.airport();
   if (departureVal) result.push(departureVal);
 
   route().forEach(function (rte) {
     result.push(rte.wpt());
   });
 
-  var arrivalVal = flight.arrival.airport();
+  const arrivalVal = flight.arrival.airport();
   if (arrivalVal) result.push(arrivalVal);
 
   return result;
@@ -253,9 +257,9 @@ function toFixesString(): string {
  * 					using `JSON.stringify` method
  */
 function toRouteString(): string {
-  var normalizedRoute = [];
+  const normalizedRoute = [];
 
-  for (var i = 0; i < route().length; i++) {
+  for (let i = 0; i < route().length; i++) {
     normalizedRoute.push([
       route()[i].wpt(),
       route()[i].lat(),
@@ -284,10 +288,10 @@ function formatCoords(a: string): number {
   a = String(a);
 
   if (a.indexOf(" ") > -1) {
-    var array = a.split(" ");
-    var d = Number(array[0]);
-    var m = Number(array[1]) / 60;
-    var coords;
+    const array = a.split(" ");
+    const d = Number(array[0]);
+    const m = Number(array[1]) / 60;
+    let coords;
     if (d < 0) coords = d - m;
     else coords = d + m;
     return +coords.toFixed(6);
@@ -313,21 +317,21 @@ function toRoute(s: string) {
     return;
   }
 
-  var isWaypoints = true;
-  var a,
+  let isWaypoints = true;
+  let a,
     b,
-    str = [];
+    str: string[] = [];
 
   str = s.toUpperCase().split(" ");
 
   // Check if inputs are valid
-  for (var i = 0; i < str.length; i++)
+  for (let i = 0; i < str.length; i++)
     if (str[i].length > 5 || str[i].length < 1 || !/^\w+$/.test(str[i]))
       isWaypoints = false;
 
   // If the first or last is departure or arrival airport
-  var departure = !!icao[str[0]];
-  var arrival = !!icao[str[str.length - 1]];
+  const departure = !!icao[str[0]];
+  const arrival = !!icao[str[str.length - 1]];
 
   // If input is invalid, exit function call
   if (!isWaypoints) {
@@ -340,7 +344,7 @@ function toRoute(s: string) {
 
   // Departure airport input/clear
   if (departure) {
-    var wpt = str[0];
+    const wpt = str[0];
     flight.departure.airport(wpt);
     a = 1;
   } else {
@@ -350,7 +354,7 @@ function toRoute(s: string) {
 
   // Arrival airport input/clear
   if (arrival) {
-    var wpt = str[str.length - 1];
+    const wpt = str[str.length - 1];
     flight.arrival.airport(wpt);
     b = 1;
   } else {
@@ -359,7 +363,7 @@ function toRoute(s: string) {
   }
 
   // Adds all waypoints into waypoint input area
-  for (var q = a; q < str.length - b; q++) {
+  for (let q = a; q < str.length - b; q++) {
     addWaypoint();
     route()[q - a].wpt(str[q]);
   }
@@ -386,8 +390,7 @@ function removeWaypoint(
   data?: Record<string, any>,
   event?: KeyboardEvent
 ) {
-  // jshint ignore:line
-  var isRemoveAll = (event && event.shiftKey) || typeof n === "boolean";
+  const isRemoveAll = (event && event.shiftKey) || typeof n === "boolean";
   if (isRemoveAll) {
     // route().forEach(function(e) {
     // 	e.marker().remove();
@@ -397,7 +400,6 @@ function removeWaypoint(
   } else {
     // route()[n].marker().remove();
     // polyline.removeAt(n);
-    //@ts-ignore
     route.splice(n, 1);
   }
 
@@ -417,7 +419,7 @@ function activateWaypoint(n: number | boolean) {
   if (n !== false && nextWaypoint() !== n) {
     if (n < route().length) {
       nextWaypoint(n);
-      var rte = route()[nextWaypoint()];
+      const rte = route()[nextWaypoint()];
 
       // FIXME once waypoint mode is fixed, convert to waypoint mode
       gc.latitude(rte.lat());
@@ -467,7 +469,7 @@ function printWaypointInfo(index: number, info: string) {
 function getNextWaypointWithAltRestriction(): number {
   if (nextWaypoint() === null) return -1;
 
-  for (var i = nextWaypoint(); i < route().length; i++) {
+  for (let i = nextWaypoint(); i < route().length; i++) {
     if (route()[i] && route()[i].alt()) return i;
   }
 
@@ -505,18 +507,19 @@ function loadFromSave(arg: string) {
    */
 
   arg = arg || localStorage.getItem("fmcWaypoints");
-  var arr = JSON.parse(arg);
+  const arr = JSON.parse(arg);
   localStorage.removeItem("fmcWaypoints");
 
   if (arr) {
     // Clears all
     removeWaypoint(true);
 
-    var rte = arr[3];
+    const rte = arr[3];
 
     // JSON.stringify turns undefined into null; this loop turns it back
-    for (var i = 0; i < rte.length; i++) {
-      for (var j = 0; j < rte[i].length; j++) {
+    // TODO: can this be optimized?
+    for (let i = 0; i < rte.length; i++) {
+      for (let j = 0; j < rte[i].length; j++) {
         if (rte[i][j] === null) rte[i][j] = undefined;
       }
     }
@@ -525,7 +528,7 @@ function loadFromSave(arg: string) {
     flight.arrival.airport(arr[1]);
     flight.number(arr[2]);
 
-    for (var i = 0; i < rte.length; i++) {
+    for (let i = 0; i < rte.length; i++) {
       addWaypoint();
 
       // Puts in the waypoint
@@ -544,6 +547,7 @@ function loadFromSave(arg: string) {
     // Auto-saves the data once again
     saveData();
   } else
+    // TODO: make this a bit more friendly
     log.warn(
       "You did not save the waypoints or you cleared the browser's cache"
     );
@@ -560,7 +564,7 @@ function shiftWaypoint(oldIndex: number, value: number) {
     "Waypoint #" + (oldIndex + 1) + "(index=" + oldIndex + ") shifted " + value
   );
 
-  var newIndex = oldIndex + value;
+  const newIndex = oldIndex + value;
 
   // Makes sure waypoints at the end of the route stays unchanged
   if (
@@ -578,20 +582,20 @@ function shiftWaypoint(oldIndex: number, value: number) {
 }
 
 export default {
-  route: route,
-  nextWaypoint: nextWaypoint,
-  makeFixesArray: makeFixesArray,
-  toFixesString: toFixesString,
-  toRouteString: toRouteString,
-  formatCoords: formatCoords,
-  toRoute: toRoute,
-  addWaypoint: addWaypoint,
-  removeWaypoint: removeWaypoint,
-  activateWaypoint: activateWaypoint,
-  printWaypointInfo: printWaypointInfo,
+  route,
+  nextWaypoint,
+  makeFixesArray,
+  toFixesString,
+  toRouteString,
+  formatCoords,
+  toRoute,
+  addWaypoint,
+  removeWaypoint,
+  activateWaypoint,
+  printWaypointInfo,
   nextWptAltRes: getNextWaypointWithAltRestriction,
-  saveData: saveData,
-  loadFromSave: loadFromSave,
-  shiftWaypoint: shiftWaypoint,
+  saveData,
+  loadFromSave,
+  shiftWaypoint,
   getCoords: get.waypoint,
 };

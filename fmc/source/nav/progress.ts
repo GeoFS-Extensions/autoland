@@ -7,7 +7,7 @@ import waypoints from "../waypoints";
 let timer: number = null;
 
 // Progress information
-var info = {
+const info = {
   flightETE: ko.observable("--:--"),
   flightETA: ko.observable("--:--"),
   todETE: ko.observable("--:--"),
@@ -22,18 +22,19 @@ var info = {
  * Updates the plane's progress during flying, set on a timer
  */
 const update = function () {
-  var route = waypoints.route();
-  var nextWaypoint = waypoints.nextWaypoint();
-  var lat1 = geofs.aircraft.instance.llaLocation[0];
-  var lon1 = geofs.aircraft.instance.llaLocation[1];
-  var lat2 = flight.arrival.coords()[0];
-  var lon2 = flight.arrival.coords()[1];
-  var times = [[], [], [], [], []]; // flightETE, flightETA, todETE, todETA, nextETE
-  var nextDist = nextWaypoint === null ? 0 : route[nextWaypoint].distFromPrev();
-  var flightDist;
+  const route = waypoints.route();
+  const nextWaypoint = waypoints.nextWaypoint();
+  const lat1 = geofs.aircraft.instance.llaLocation[0];
+  const lon1 = geofs.aircraft.instance.llaLocation[1];
+  const lat2 = flight.arrival.coords()[0];
+  const lon2 = flight.arrival.coords()[1];
+  const times = [[], [], [], [], []]; // flightETE, flightETA, todETE, todETA, nextETE
+  const nextDist = nextWaypoint === null ? 0 : route[nextWaypoint].distFromPrev();
+  let flightDist: number;
+  let valid = true;
 
   // Checks if the whole route is complete
-  for (var i = 0, valid = true; i < route.length; i++) {
+  for (let i = 0; i < route.length; i++) {
     if (!route[i].lat() || !route[i].lon()) valid = false;
   }
   if (valid) flightDist = distance.route(route.length);
@@ -65,7 +66,7 @@ const update = function () {
  * @param {Array} times An array of the time: [hours, minutes]
  */
 const print = function (flightDist, nextDist, times) {
-  for (var i = 0; i < times.length; i++) {
+  for (let i = 0; i < times.length; i++) {
     times[i] = utils.formatTime(times[i]);
   }
 
@@ -75,7 +76,7 @@ const print = function (flightDist, nextDist, times) {
   } else flightDist = Math.round(flightDist);
 
   // If T/D is entered and T/D has not been passed
-  var todDist;
+  let todDist;
   if (flight.todDist() && flight.todDist() < flightDist)
     todDist = flightDist - flight.todDist();
 
@@ -85,7 +86,7 @@ const print = function (flightDist, nextDist, times) {
   } else nextDist = Math.round(nextDist);
 
   // If times and distances are not defined, print default
-  var DEFAULT_DIST = "--";
+  const DEFAULT_DIST = "--";
 
   info.flightETE(times[0]);
   info.flightETA(times[1]);
@@ -98,7 +99,7 @@ const print = function (flightDist, nextDist, times) {
 };
 
 export default {
-  info: info,
-  update: update,
-  print: print,
+  info,
+  update,
+  print,
 };

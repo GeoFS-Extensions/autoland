@@ -2,19 +2,19 @@ import flight from "../flight";
 import utils from "../utils";
 
 // Glideslope, in degrees
-var glideslope = flight.arrival.runway()[3];
+const glideslope = flight.arrival.runway()[3];
 
 // Threshold lat/lon
-var thresholdCoords = [flight.arrival.runway()[0], flight.arrival.runway()[1]];
+const thresholdCoords = [flight.arrival.runway()[0], flight.arrival.runway()[1]];
 
 // Opposite end lat/lon
 // FIXME: find thresholdCoords of opposite runway
 // | Opposite runway # - Current runway # | = 18, L <-> R, C <-> C
-var oppositeCoords = [];
+const oppositeCoords = [];
 
 // URLs of instruments
-var FILE_PATH = PAGE_PATH + "fmc/images/";
-var url = {
+const FILE_PATH = PAGE_PATH + "fmc/images/";
+const url = {
   attitudeJetILS: FILE_PATH + "attitude-jet-ils.png",
   glideslopeHand: FILE_PATH + "glideslope-indicator.png",
   localizerHand: FILE_PATH + "localizer-indicator.png",
@@ -27,29 +27,29 @@ var url = {
  */
 function glideslopeCalc() {
   // FIXME find the true value for "VALUE"
-  var gs = glideslope;
-  var threshold = thresholdCoords;
-  var current = geofs.aircraft.instance.llaLocation;
+  const gs = glideslope;
+  const threshold = thresholdCoords;
+  const current = geofs.aircraft.instance.llaLocation;
 
   // If either one component is missing, invalid, returns 0
   if (!(threshold[0] && threshold[1] && current[0] && current[1] && current[2]))
     return 0;
 
-  var VALUE = 1; // Constant value to multiply ticks off by
+  const VALUE = 1; // Constant value to multiply ticks off by
 
   // Landing zone calculations and target altitude
-  var altitudeAtAim = geofs.getGroundAltitude(threshold[0], threshold[1]); // Feet
-  var distanceToAim =
+  const altitudeAtAim = geofs.getGroundAltitude(threshold[0], threshold[1]); // Feet
+  const distanceToAim =
     utils.getDistance(current[0], current[1], threshold[0], threshold[1]) +
     500 * utils.FEET_TO_NM; // nm
-  var targetAltitude =
+  const targetAltitude =
     Math.tan(utils.toRadians(gs)) * distanceToAim * utils.NM_TO_FEET +
     altitudeAtAim; // Feet
 
   // Each tick stands for 1/4 degrees off the intended glideslope
-  var quarterDegree =
+  const quarterDegree =
     Math.tan(utils.toRadians(0.25)) * distanceToAim * utils.NM_TO_FEET;
-  var ticksOff = (targetAltitude - current[2]) / quarterDegree;
+  const ticksOff = (targetAltitude - current[2]) / quarterDegree;
 
   // Maximum of 2 ticks on each side
   if (Math.abs(ticksOff) <= 2) return ticksOff * VALUE;
@@ -64,9 +64,9 @@ function glideslopeCalc() {
  */
 function localizerCalc() {
   // FIXME find the true value for "VALUE" and offset distance threshold
-  var threshold = thresholdCoords;
-  var opposite = oppositeCoords;
-  var current = geofs.aircraft.instance.llaLocation;
+  const threshold = thresholdCoords;
+  const opposite = oppositeCoords;
+  const current = geofs.aircraft.instance.llaLocation;
 
   // If either one component is missing, invalid, returns 0
   if (
@@ -74,34 +74,34 @@ function localizerCalc() {
   )
     return 0;
 
-  var VALUE = 1; // Constant to multiply ticks off by
+  const VALUE = 1; // Constant to multiply ticks off by
 
   // Deviation from centerline calculation, achieved by using the sine of the angle in between
-  var distanceToThreshold = utils.getDistance(
+  const distanceToThreshold = utils.getDistance(
     current[0],
     current[1],
     threshold[0],
     threshold[1]
   );
-  var runwayBearing = utils.getBearing(
+  const runwayBearing = utils.getBearing(
     threshold[0],
     threshold[1],
     opposite[0],
     opposite[1]
   );
-  var deltaTheta =
+  const deltaTheta =
     utils.getBearing(current[0], current[1], threshold[0], threshold[1]) -
     runwayBearing;
-  var offsetDistance =
+  const offsetDistance =
     Math.sin(utils.toRadians(deltaTheta)) *
     distanceToThreshold *
     utils.NM_TO_FEET;
 
   // Each tick stands for 3 degrees off the centerline (300 feet at threshold)
-  var maxOffsetDistance =
+  const maxOffsetDistance =
     Math.sin(utils.toRadians(3)) *
     (distanceToThreshold * utils.NM_TO_FEET + 500);
-  var ticksOff = offsetDistance / (300 + maxOffsetDistance);
+  const ticksOff = offsetDistance / (300 + maxOffsetDistance);
 
   // Maximum of 1 tick on each side
   if (Math.abs(ticksOff) <= 1) return ticksOff * VALUE;
@@ -269,7 +269,7 @@ const toggleILS = function () {
 };
 
 export default {
-  thresholdCoords: thresholdCoords,
-  instrument: instrument,
-  toggleILS: toggleILS,
+  thresholdCoords,
+  instrument,
+  toggleILS,
 };

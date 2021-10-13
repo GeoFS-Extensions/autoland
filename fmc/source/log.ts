@@ -13,21 +13,21 @@ const data = ko.observableArray();
  */
 const update = function (other?: string) {
   if (!geofs.pause && !(flight.recorder.playing || flight.recorder.paused)) {
-    var spd = Math.round(geofs.aircraft.instance.animationValue.ktas);
-    var hdg = Math.round(geofs.aircraft.instance.animationValue.heading360);
-    var alt = Math.round(geofs.aircraft.instance.animationValue.altitude);
-    var fps = +geofs.debug.fps;
-    var lat =
+    const spd = Math.round(geofs.aircraft.instance.animationValue.ktas);
+    const hdg = Math.round(geofs.aircraft.instance.animationValue.heading360);
+    const alt = Math.round(geofs.aircraft.instance.animationValue.altitude);
+    const fps = +geofs.debug.fps;
+    const lat =
       Math.round(10000 * geofs.aircraft.instance.llaLocation[0]) / 10000;
-    var lon =
+    const lon =
       Math.round(10000 * geofs.aircraft.instance.llaLocation[1]) / 10000;
-    var date = new Date();
-    var h = date.getUTCHours();
-    var m = date.getUTCMinutes();
-    var time = utils.formatTime(utils.timeCheck(h, m));
+    const date = new Date();
+    const h = date.getUTCHours();
+    const m = date.getUTCMinutes();
+    const time = utils.formatTime(utils.timeCheck(h, m));
     other = other || "--";
 
-    var dataArray = [time, spd, hdg, alt, lat, lon, fps, other];
+    const dataArray = [time, spd, hdg, alt, lat, lon, fps, other];
     data.push(dataArray);
   }
   if (mainTimer !== null) {
@@ -42,8 +42,8 @@ const update = function (other?: string) {
  * Checks for overspeed under 10000 feet AGL for log, set on a timer
  */
 const speed = function () {
-  var kcas = geofs.aircraft.instance.animationValue.kcas;
-  var altitude =
+  const kcas = geofs.aircraft.instance.animationValue.kcas;
+  const altitude =
     geofs.aircraft.instance.animationValue.altitude +
     geofs.groundElevation * METERS_TO_FEET;
   if (kcas > 255 && altitude < 10000) {
@@ -78,10 +78,10 @@ const warn = ko.pureComputed({
 });
 
 export default {
-  data: data,
-  update: update,
-  speed: speed,
-  removeData: removeData,
-  modalWarning: modalWarning,
-  warn: warn,
+  data,
+  update,
+  speed,
+  removeData,
+  modalWarning,
+  warn,
 };

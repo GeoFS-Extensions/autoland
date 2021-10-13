@@ -5,11 +5,9 @@ function getAirway(startFix, airway, endFix) {
   if (!startFix || !endFix)
     log.warn("There must be one waypoint before and after the airway.");
 
-  var airwayList = data.ATS[airway]; // jshint unused: false
+  const airwayList = data.ATS[airway];
 
-  var validList;
+  let validList;
 }
 
-export default function (startFix, airway, endFix) {
-  return getAirway(startFix, airway, endFix);
-}
+export default getAirway;

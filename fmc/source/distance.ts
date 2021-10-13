@@ -10,11 +10,11 @@ import waypoints from "./waypoints";
  * @returns {Number} The route distance
  */
 const route = function (end: number): number {
-  var departure = flight.departure.coords();
-  var arrival = flight.arrival.coords();
-  var start = waypoints.nextWaypoint() || 0;
-  var route = waypoints.route();
-  var pos = geofs.aircraft.instance.llaLocation;
+  const departure = flight.departure.coords();
+  const arrival = flight.arrival.coords();
+  const start = waypoints.nextWaypoint() || 0;
+  const route = waypoints.route();
+  const pos = geofs.aircraft.instance.llaLocation;
 
   // If there is no route
   if (route.length === 0) {
@@ -55,10 +55,10 @@ const route = function (end: number): number {
 
   // If there is a waypoint activated
   else {
-    var total = 0;
+    let total = 0;
 
     // Loops from start to end to get total distance
-    for (var i = start; i < end && i < route.length; i++) {
+    for (let i = start; i < end && i < route.length; i++) {
       total += route[i].distFromPrev();
     }
 
@@ -84,7 +84,7 @@ const route = function (end: number): number {
  * @returns {Number} The distance
  */
 const target = function (deltaAlt: number): number {
-  var targetDist: number;
+  let targetDist: number;
   if (deltaAlt < 0) {
     // average descent rate of 3 nautical miles per thousand feet
     targetDist = (deltaAlt / -1000) * 3;
@@ -102,14 +102,14 @@ const target = function (deltaAlt: number): number {
  * @returns {Number} The turning distance
  */
 const turn = function (angle: number): number {
-  var v = geofs.aircraft.instance.animationValue.kcas;
-  var r = 0.107917 * Math.pow(Math.E, 0.0128693 * v);
-  var a = utils.toRadians(angle);
+  const v = geofs.aircraft.instance.animationValue.kcas;
+  const r = 0.107917 * Math.pow(Math.E, 0.0128693 * v);
+  const a = utils.toRadians(angle);
   return r * Math.tan(a / 2) + 0.2;
 };
 
 export default {
-  route: route,
-  target: target,
-  turn: turn,
+  route,
+  target,
+  turn,
 };

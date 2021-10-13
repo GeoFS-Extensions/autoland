@@ -13,12 +13,12 @@ positioningFMC.then(loadFMC);
 
 // FMC actions init function
 function loadFMC() {
-  var modal = E.modal,
+  const modal = E.modal,
     container = E.container,
     btn = E.btn;
 
   // Applies knockout bindings
-  var vm = new ViewModel();
+  const vm = new ViewModel();
   ko.applyBindings(vm, $(modal)[0]);
   ko.applyBindings(vm, $(btn.fmcBtn)[1]);
   ko.applyBindings(vm, $(container.uiBottomProgInfo)[0]);
@@ -51,10 +51,10 @@ function loadFMC() {
   // Modal tab contents: toggle
   $(container.tabBar).on("click", "a", function (event) {
     event.preventDefault();
-    var c = "is-active";
-    var $this = $(this);
-    var $that = $(container.tabBar).find("." + c);
-    var interactive = $this.attr("interactive");
+    const c = "is-active";
+    const $this = $(this);
+    const $that = $(container.tabBar).find("." + c);
+    const interactive = $this.attr("interactive");
 
     // Interactive actions button
     $(btn.interactive).removeClass(c);

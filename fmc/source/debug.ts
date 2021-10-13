@@ -1,7 +1,7 @@
 import E from "./ui/elements";
 
 // If FMC is production
-var PRODUCTION = false;
+const PRODUCTION = false;
 
 // Stops event propagation
 function stopPropagation(event: Event) {

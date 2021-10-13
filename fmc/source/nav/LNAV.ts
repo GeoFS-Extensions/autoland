@@ -2,7 +2,7 @@ import distance from "../distance";
 import flight from "../flight";
 import waypoints from "../waypoints";
 
-var timer = null;
+let timer = null;
 
 /**
  * Controls LNAV, plane's lateral navigation, set on a timer
@@ -14,7 +14,7 @@ const update = function () {
     return;
   }
 
-  var d = distance.route(waypoints.nextWaypoint() + 1);
+  const d = distance.route(waypoints.nextWaypoint() + 1);
   if (d <= distance.turn(60)) {
     waypoints.activateWaypoint(waypoints.nextWaypoint() + 1);
   }
@@ -26,6 +26,6 @@ const update = function () {
 };
 
 export default {
-  timer: timer,
-  update: update,
+  timer,
+  update,
 };

@@ -399,6 +399,7 @@ export declare class GlassPanel {
   [key: string]: any;
 }
 
+// TODO: probably Record<string, unknown> here
 export declare type jQuery$ = string | Element | Element[] | Object; // things that can be passed to jQuery's $().
 
 export interface API {
@@ -414,6 +415,7 @@ export interface API {
   destroyWorld(): void;
 
   triggerExplicitRendering(): void;
+  // TODO: () => void, but what does it get called with?
   addFrameCallback(a: Function, b?: string, c?: number): number;
   removeFrameCallback(a: number, b?: string): void;
   frameCallbackWrapper(a: number, b: FrameCallback): void;
@@ -825,6 +827,7 @@ export interface GeoFS {
   saveFlight(): void;
   savePreferences(): void;
   resetPreferences(): void;
+  // TODO: () => void, but what gets passed to the callback?
   readPreference(a?: Function): void;
   populateButtonAssignments(): void;
   populateAxesAssignments(): void;
@@ -880,6 +883,7 @@ export interface Vr {
 }
 
 export interface HUD {
+  // TODO
   init(): {};
   stall: Overlay;
   stallAlarmSet: boolean;
@@ -890,8 +894,10 @@ export interface HUD {
 }
 
 export interface Ui {
+  // TODO
   playerMarkers: {};
   playerSymbols: {};
+  // returns void, but what gets passed to these functions
   mouseUpHandler: Function[];
   svgPlanePath: string;
   svgPlaneStyles: {
@@ -914,6 +920,7 @@ export interface Ui {
   toggleButton(a?: any, b?: any): void;
   expandLeft(): void;
   collapseLeft(a?: any): void;
+  // TODO: returns void, what params?
   addMouseUpHandler(a: Function): void;
   runMouseUpHandlers(a: any): void;
   panel: {
@@ -1041,6 +1048,7 @@ export interface Controls {
   };
   mouse: {
     down: boolean;
+    // TODO
     orbit: {};
     offset: {
       ratioX: number;
@@ -1144,6 +1152,7 @@ export interface Instruments {
   margins: number[];
   defaultMargin: number;
   visible: boolean;
+  // TODO
   list: {};
   gaugeOverlayPosition: number[];
   gaugeOverlayOrigin: number[];
@@ -1466,6 +1475,7 @@ declare global {
   let SMOOTHING_FACTOR: number;
   let SIX_STEP_WARNING: string[];
   let PAGE_PATH: string;
+  // TODO: leaflet types are avalible on npm, this should include them
   let L: any;
   let componentHandler: any;
 }

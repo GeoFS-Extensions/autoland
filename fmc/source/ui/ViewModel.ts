@@ -10,17 +10,16 @@ import progress from "../nav/progress";
  * ViewModel function for knockout bindings
  */
 function ViewModel() {
-  var self = this;
+  const self = this;
 
   /*************************
    * General Modal Actions *
    *************************/
-  var _opened = ko.observable(false);
+   const _opened = ko.observable(false);
   // @ts-ignore
   self.opened = ko.pureComputed({
     read: _opened,
     write: function (boolean, _vm) {
-      // jshint ignore:line
       _opened(boolean);
     },
   });
@@ -57,7 +56,7 @@ function ViewModel() {
         self.departureAirport(),
         self.departureRwyName(),
         self.SIDName()
-        // @ts-ignore how did this code even compile
+        // @ts-ignore excuse me?
       ).availableRunways;
     else return get.runway(self.departureAirport(), self.SIDName(), true);
   });
@@ -115,13 +114,13 @@ function ViewModel() {
   self.phase = flight.phase;
   self.phaseLocked = flight.phaseLocked;
 
-  var phaseToText = ["climb", "cruise", "descent"];
+  const phaseToText = ["climb", "cruise", "descent"];
   self.currentPhaseText = ko.pureComputed(function () {
     return phaseToText[flight.phase()];
   });
 
   self.nextPhase = function () {
-    var phase = flight.phase();
+    const phase = flight.phase();
 
     flight.phase(phase === phaseToText.length - 1 ? 0 : phase + 1);
   };
@@ -138,13 +137,12 @@ function ViewModel() {
     self.loadRouteText(undefined);
   };
 
-  var generatedRouteText = ko.observable();
+  const generatedRouteText = ko.observable();
   // @ts-ignore
   self.generateRoute = ko.pureComputed({
     read: generatedRouteText,
     write: function (isGenerate, _vm) {
-      // jshint ignore:line
-      var generatedRoute = isGenerate ? waypoints.toRouteString() : undefined;
+      const generatedRoute = isGenerate ? waypoints.toRouteString() : undefined;
       generatedRouteText(generatedRoute);
     },
   });
@@ -161,15 +159,14 @@ function ViewModel() {
  */
 ko.bindingHandlers.mdlSwitch = {
   update: function (element, _unused, bindings) {
-    // jshint ignore:line
     // Listens for 'checked' binding
-    var isChecked = bindings.get("checked");
+    const isChecked = bindings.get("checked");
     if (isChecked) isChecked();
 
     // Listens for 'disable' binding
     bindings.get("disable");
 
-    var materialSwitch = element.parentNode.MaterialSwitch;
+    const materialSwitch = element.parentNode.MaterialSwitch;
     if (!materialSwitch) return;
 
     materialSwitch.checkDisabled();
@@ -182,12 +179,11 @@ ko.bindingHandlers.mdlSwitch = {
  */
 ko.bindingHandlers.mdlTextfield = {
   update: function (element, _unused, bindings) {
-    // jshint ignore:line
     // Listens for 'value' binding
-    var hasValue = bindings.get("value");
+    const hasValue = bindings.get("value");
     if (hasValue) hasValue();
 
-    var materialTextfield = element.parentNode.MaterialTextfield;
+    const materialTextfield = element.parentNode.MaterialTextfield;
     if (!materialTextfield) return;
 
     materialTextfield.checkDirty();

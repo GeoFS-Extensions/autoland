@@ -6,7 +6,7 @@ import waypoints from "../waypoints";
 import vnavProfile from "../vnav-profile";
 
 // Autopilot++ Dependencies
-var apModes = autopilot_pp.require("build/autopilot").modes;
+const apModes = autopilot_pp.require("build/autopilot").modes;
 
 export default {
   timer: null,
@@ -17,20 +17,20 @@ export default {
   update: function () {
     if (!flight.vnavEnabled()) return;
 
-    var route = waypoints.route();
+    const route = waypoints.route();
 
-    var params = getFlightParameters();
+    const params = getFlightParameters();
 
-    var next = waypoints.nextWptAltRes();
-    var hasRestriction = next !== -1;
+    const next = waypoints.nextWptAltRes();
+    const hasRestriction = next !== -1;
 
-    var todDist = flight.todDist();
-    var cruiseAlt = flight.cruiseAlt();
-    var fieldElev = flight.fieldElev();
-    var todCalc = flight.todCalc();
+    let todDist = flight.todDist();
+    const cruiseAlt = flight.cruiseAlt();
+    const fieldElev = flight.fieldElev();
+    const todCalc = flight.todCalc();
 
-    var currentAlt = geofs.aircraft.instance.animationValue.altitude;
-    var targetAlt, deltaAlt, nextDist, targetDist;
+    const currentAlt = geofs.aircraft.instance.animationValue.altitude;
+    let targetAlt, deltaAlt, nextDist, targetDist;
     if (hasRestriction) {
       targetAlt = route[next].alt();
       deltaAlt = targetAlt - currentAlt;
@@ -48,21 +48,22 @@ export default {
       );
     }
 
-    var spd = params[0],
-      vs,
+    const spd = params[0];
+    let vs,
       alt;
 
     /**********************
      * Flight Phase Logic *
      **********************/
-    var lat1 = geofs.aircraft.instance.llaLocation[0] || null;
-    var lon1 = geofs.aircraft.instance.llaLocation[1] || null;
-    var lat2 = flight.arrival.coords()[0] || null;
-    var lon2 = flight.arrival.coords()[1] || null;
-    var flightDist;
+    const lat1 = geofs.aircraft.instance.llaLocation[0] || null;
+    const lon1 = geofs.aircraft.instance.llaLocation[1] || null;
+    const lat2 = flight.arrival.coords()[0] || null;
+    const lon2 = flight.arrival.coords()[1] || null;
+    let flightDist: number;
+    let valid = true;
 
     // Checks if the whole route is complete
-    for (var i = 0, valid = true; i < route.length; i++) {
+    for (let i = 0; i < route.length; i++) {
       if (!route[i].lat() || !route[i].lon()) valid = false;
     }
     if (valid) flightDist = distance.route(route.length);
@@ -93,7 +94,7 @@ export default {
     if (flight.phase() === 0) {
       // If there is an altitude restriction somewhere on the route
       if (hasRestriction) {
-        var totalDist =
+        const totalDist =
           distance.target(cruiseAlt - currentAlt) +
           distance.target(targetAlt - cruiseAlt);
         debug.log("totalDist: " + totalDist);
@@ -165,21 +166,22 @@ export default {
  * @returns {Array} [speed, vertical speed]
  */
 function getFlightParameters(): Array<any> {
-  var spd, vs;
-  var a = geofs.aircraft.instance.animationValue.altitude;
+  let spd, vs;
+  const a = geofs.aircraft.instance.animationValue.altitude;
 
   // CLIMB
   if (flight.phase() === 0) {
-    var profile = getVNAVProfile().climb;
+    const profile = getVNAVProfile().climb;
+    let index: number;
 
-    for (var index, i = 0; i < profile.length; i++) {
+    for (let i = 0; i < profile.length; i++) {
       if (a > profile[i][0] && a <= profile[i][1]) {
         index = i;
         break;
       }
     }
 
-    var belowStartAlt = index === undefined;
+    const belowStartAlt = index === undefined;
 
     if (flight.spdControl() && !belowStartAlt) {
       spd = profile[index][2];
@@ -190,16 +192,17 @@ function getFlightParameters(): Array<any> {
 
   // DESCENT
   else if (flight.phase() === 2) {
-    var profile = getVNAVProfile().descent;
+    const profile = getVNAVProfile().descent;
+    let index: number;
 
-    for (var index, i = 0; i < profile.length; i++) {
+    for (let i = 0; i < profile.length; i++) {
       if (a > profile[i][0] && a <= profile[i][1]) {
         index = i;
         break;
       }
     }
 
-    var belowLastAlt = index === undefined;
+    const belowLastAlt = index === undefined;
 
     // If current alt below lowest alt in profile
     // SPD and V/S will not be restricted

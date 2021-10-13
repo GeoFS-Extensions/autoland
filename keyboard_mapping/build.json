@@ -3,7 +3,7 @@
   "name": "../node_modules/requirejs/require",
   "include": "init",
   "mainConfigFile": "./config.js",
-  "out": "./dist/keyboard_mapping.js",
+  "out": "../extension/source/scripts/keyboard_mapping.js",
   "optimize": "uglify2",
   "generateSourceMaps": true
 }

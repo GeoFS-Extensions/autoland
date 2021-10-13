@@ -17,8 +17,8 @@ export default function (
   // If there is no departure or arrival airport
   if (!airport) return [];
 
-  var runways = data.runways[airport];
-  var runwayArray = [];
+  const runways = data.runways[airport];
+  const runwayArray = [];
 
   // If plane is in departure
   if (isDeparture) {
@@ -35,7 +35,7 @@ export default function (
 
     // If there is no selected SID
     else {
-      for (var rwy in runways) {
+      for (const rwy in runways) {
         runwayArray.push({
           runway: rwy,
         });
