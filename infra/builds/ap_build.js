@@ -4,6 +4,7 @@ const { chdir } = require("process");
 const homeDir = require("../main_dir");
 const { optimize } = require("requirejs");
 const { appendFileSync } = require("fs-extra");
+const chalk = require("chalk");
 
 let options = {
   baseUrl: ".",
@@ -14,6 +15,10 @@ let options = {
   optimize: "none",
   generateSourceMaps: false,
 };
+
+function scriptTag() {
+  return chalk.hex("#55e09d")("(autopilot_pp) ");
+}
 
 /**
  * Appends the infrastructure to the script file.
@@ -31,12 +36,16 @@ function appendToFile(file) {
 }
 
 /**
- * Builds spoilers arming.
+ * Builds autopilot.
  * @param {boolean} debug Whether the script should be built for debugging.
  */
 function build(debug) {
   // if we want to build the script for debugging
   if (!debug) {
+    console.log(
+      scriptTag() +
+        chalk.hex("#f573a3")("Debug set to false, applying uglify configs...")
+    );
     options.optimize = "uglify2";
     options.generateSourceMaps = true;
   }
@@ -47,15 +56,29 @@ function build(debug) {
 
   // run the typescript compiler in a child process
   try {
+    console.log(
+      scriptTag() +
+        chalk.hex("#b1c6fc")(
+          "Running the typescript compiler in a child process..."
+        )
+    );
     execSync("npx tsc");
   } catch (e) {
-    throw new Error("Compiling ap++ failed.\n\n" + e.stdout.toString());
+    throw new Error(
+      scriptTag() +
+        chalk.hex("#ff0000")(`Compiling failed with exit code`) +
+        chalk.hex("#fff200")(`${e.code}.\n\n`) +
+        e.stdout.toString()
+    );
   }
 
   // optimize the requirejs file
   (async function () {
+    console.log(scriptTag() + "Starting script optimizer...");
     await optimize(options, () => {
+      console.log(scriptTag() + "Script optimized, appending to it...");
       appendToFile(options.out);
+      console.log(scriptTag() + "Script built!");
     });
   })();
 }

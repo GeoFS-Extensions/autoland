@@ -6,19 +6,19 @@ import getWaypoint from "../getwaypoint";
 import shouldntHaveAp from "../shouldntHaveAp";
 
 /* CODE FOR VALIDATION OF INPUTS */
-function validateAltitude(val) {
+function validateAltitude(val: string) {
   return parseInt(val);
 }
 
-function validateHeading(val) {
+function validateHeading(val: string) {
   return util.fixAngle360(parseInt(val));
 }
 
-function validateLat(val) {
+function validateLat(val: string) {
   return util.clamp(parseFloat(val), -90, 90);
 }
 
-function validateLon(val) {
+function validateLon(val: string) {
   return util.clamp(parseFloat(val), -180, 180);
 }
 
@@ -47,7 +47,7 @@ const modeToText = ["Heading mode", "Lat/lon mode", "Waypoint mode"];
 function AutopilotVM() {
   this.on = ap.on;
   this.currentMode = ap.currentMode;
-  this.currentModeText = ko.pureComputed(function () {
+  this.currentModeText = ko.pureComputed<string>(function () {
     const index = ap.currentMode();
     return modeToText[index];
   });
@@ -59,7 +59,7 @@ function AutopilotVM() {
   });
   this.altitudeEnabled = ap.modes.altitude.enabled;
 
-  function formatVs(value) {
+  function formatVs(value: number) {
     let str = Math.abs(value).toFixed(0);
 
     // Pad with zeroes.
@@ -70,7 +70,7 @@ function AutopilotVM() {
     return (value < 0 ? "-" : "") + str;
   }
 
-  this.vs = ko.pureComputed({
+  this.vs = ko.pureComputed<string>({
     read: function () {
       if (ap.modes.vs.enabled()) return formatVs(ap.modes.vs.value());
       // Will be replaced by "-----" as this is the placeholder.
@@ -88,7 +88,7 @@ function AutopilotVM() {
     },
   });
 
-  this.heading = ko.pureComputed({
+  this.heading = ko.pureComputed<string>({
     read: function () {
       let str = ap.modes.heading.value().toString();
       // Pad the value to 3 digits.
@@ -100,7 +100,7 @@ function AutopilotVM() {
 
   this.headingEnabled = ap.modes.heading.enabled;
 
-  this.speed = ko.pureComputed({
+  this.speed = ko.pureComputed<string>({
     read: function () {
       const value = ap.modes.speed.value();
       return value.toFixed(ap.modes.speed.isMach() ? 2 : 0);
@@ -119,7 +119,7 @@ function AutopilotVM() {
   });
 
   this.speedEnabled = ap.modes.speed.enabled;
-  this.speedMode = ko.pureComputed({
+  this.speedMode = ko.pureComputed<string>({
     read: function () {
       return ap.modes.speed.isMach() ? "mach" : "kias";
     },
@@ -137,8 +137,8 @@ function AutopilotVM() {
   this.lon = gc.longitude.extend({ apValidate: validateLon });
 
   // REVIEW: should FMC be allowed to change the displayed ICAO value?
-  const _waypoint = ko.observable();
-  this.waypoint = ko.pureComputed({
+  const _waypoint = ko.observable<string>();
+  this.waypoint = ko.pureComputed<string>({
     read: _waypoint,
     write: function (inputVal) {
       // Wapoint names are uppercase, so make the input uppercase for consistency.

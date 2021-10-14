@@ -22,6 +22,7 @@ function singleFileAction(filename) {
 function build() {
   chdir(join(mainDir, "extension"));
   fs.rmSync("build", { recursive: true, force: true });
+  console.log("(extension) Removed build directory...");
 
   // copy all non-typescript files to the build dir
   const nonTsFiles = sync("source/**/*", { ignore: "**/*.ts", nodir: true });
@@ -31,18 +32,27 @@ function build() {
 
     fs.copySync(value, newPath, { overwrite: true });
   });
+  console.log("(extension) Copied all non-compiled files to build...");
 
   // run the typescript compiler
   try {
+    console.log(
+      "(extension) Running the typescript compiler in a child process..."
+    );
     execSync("npx tsc");
   } catch (e) {
-    throw new Error("Compiling extension failed.\n\n" + e.stdout.toString());
+    throw new Error(
+      `(extension) Compiling failed with exit code ${e.code}.\n\n` +
+        e.stdout.toString()
+    );
   }
 
   // remove the module stuff that we don't need
   sync("build/**/*.js", { ignore: "scripts" }).forEach((value) => {
     singleFileAction(value);
   });
+  console.log("(extension) Removed unneeded module infrastructure...");
+  console.log("(extension) Build complete!");
 }
 
 module.exports = build;

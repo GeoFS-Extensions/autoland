@@ -46,30 +46,27 @@ const Waypoint = function () {
   });
 
   // Latitude
-  const _lat = ko.observable();
-  // FIXME: i can't figure out either of these
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore i can't figure this out at all
-  self.lat = ko.pureComputed({
+  const _lat = ko.observable<number>();
+  // FIX: it might be fixed now, I'm not sure.
+  self.lat = ko.pureComputed<number, boolean>({
     read: _lat,
-    write: function (val, isValid) {
-      val = formatCoords(val);
+    write: function (this: boolean, val) {
+      val = formatCoords(val.toString());
       _lat(!isNaN(val) ? val : undefined);
-      self.valid(Boolean(isValid));
+      self.valid(Boolean(this));
       // self.marker(self.wpt(), L.latLng(val, self.lon()));
     },
   });
 
   // Longitude
-  const _lon = ko.observable();
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  self.lon = ko.pureComputed({
+  const _lon = ko.observable<number>();
+  // FIX: it might be fixed now, I'm not sure.
+  self.lon = ko.pureComputed<number, boolean>({
     read: _lon,
-    write: function (val, isValid) {
-      val = formatCoords(val);
+    write: function (this, val) {
+      val = formatCoords(val.toString());
       _lon(!isNaN(val) ? val : undefined);
-      self.valid(Boolean(isValid));
+      self.valid(Boolean(this));
       // self.marker(self.wpt(), L.latLng(self.lat(), val));
     },
   });

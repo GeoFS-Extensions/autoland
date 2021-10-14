@@ -37,6 +37,9 @@ function appendToFile(file) {
 function build(debug) {
   // if we want to build the script for debugging
   if (!debug) {
+    console.log(
+      "(keyboard_mapping) Debug set to false, applying uglify configs..."
+    );
     options.optimize = "uglify2";
     options.generateSourceMaps = true;
   }
@@ -47,19 +50,26 @@ function build(debug) {
 
   // run the typescript compiler in a child process
   try {
+    console.log(
+      "(keyboard_mapping) Running the typescript compiler in a child process..."
+    );
     execSync("npx tsc");
   } catch (e) {
     throw new Error(
-      "Compiling keyboard mapping failed.\n\n" + e.stdout.toString()
+      `(keyboard_mapping) Compiling failed with exit code ${e.code}.\n\n` +
+        e.stdout.toString()
     );
   }
 
   // optimize the requirejs file
   (async function () {
+    console.log("(keyboard_mapping) Starting script optimizer...");
     await optimize(options, () => {
+      console.log("(keyboard_mapping) Script optimized, appending to it...");
       appendToFile(options.out);
     });
   })();
+  console.log("(keyboard_mapping) Script built!");
 }
 
 module.exports = build;

@@ -4,8 +4,8 @@ import pidControls from "./autopilot/pidControls";
 import gc from "./greatcircle";
 import util from "./util";
 
-const _on = ko.observable(false);
-const on = ko.pureComputed({
+const _on = ko.observable<boolean>(false);
+const on = ko.pureComputed<boolean>({
   read: _on,
   write: function (newValue) {
     // Check if autopilot is enabled for the current aircraft or not.
@@ -15,7 +15,7 @@ const on = ko.pureComputed({
 });
 
 // The type of navigation mode currently set for the autopilot.
-const currentMode = ko.observable(0);
+const currentMode = ko.observable<number>(0);
 
 // Initialise the autopilot when it is turned on and off.
 on.subscribe(function (newValue) {
@@ -69,7 +69,7 @@ let lastGcHeadingUpdate = 0;
  *
  * @param {Number} dt - Time in seconds since the last frame.
  */
-function update(dt) {
+function update(dt: number) {
   const values = geofs.aircraft.instance.animationValue;
 
   // Calculate relative speed of aircraft as correction factor (TAS, not CAS).
@@ -122,7 +122,11 @@ function update(dt) {
     // Coordinated roll rate varies directly with true airspeed.
     // http://www.flightlab.net/Flightlab.net/Download_Course_Notes_files/9_RollingDynamics.pdf
     // NOTE: The current bank angle ("aroll") is negated as GEFS takes right wing up as positive.
-    const result = pidControls.roll.compute(-values.aroll, dt, targetBankAngle);
+    const result: number = pidControls.roll.compute(
+      -values.aroll,
+      dt,
+      targetBankAngle
+    );
     controls.roll = util.exponentialSmoothing(
       "apRoll",
       result / speedRatio,
@@ -172,7 +176,7 @@ function update(dt) {
       apModes.vs.enabled(true);
     }
 
-    let targetClimbRate;
+    let targetClimbRate: number;
     if (manualVsControl) targetClimbRate = vsValue;
     // Automatically calculate vertical speed.
     else
@@ -183,7 +187,7 @@ function update(dt) {
       );
 
     // Set climb angle to match target climb rate.
-    let targetTilt = pidControls.climb.compute(
+    let targetTilt: number = pidControls.climb.compute(
       values.climbrate,
       dt,
       targetClimbRate
@@ -191,7 +195,11 @@ function update(dt) {
     targetTilt = util.clamp(targetTilt, ap.minPitchAngle, ap.maxPitchAngle);
 
     // TODO: add an elevator deflection rate limiter
-    const result = pidControls.pitch.compute(-values.atilt, dt, targetTilt);
+    const result: number = pidControls.pitch.compute(
+      -values.atilt,
+      dt,
+      targetTilt
+    );
     controls.rawPitch = util.exponentialSmoothing(
       "apPitch",
       result / speedRatio,
@@ -208,7 +216,7 @@ function update(dt) {
     // Convert speed input value to KIAS if corrently in Mach mode.
     if (apModes.speed.isMach()) speed = apModes.speed.toKias(speed);
 
-    const result = pidControls.throttle.compute(values.kcas, dt, speed);
+    const result: number = pidControls.throttle.compute(values.kcas, dt, speed);
     controls.throttle = util.clamp(
       util.exponentialSmoothing("apThrottle", result, 0.9),
       0,

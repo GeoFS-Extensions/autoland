@@ -1,8 +1,8 @@
 import * as ko from "knockout";
 import util from "./util";
 
-const lat = ko.observable();
-const lon = ko.observable();
+const lat = ko.observable<number>();
+const lon = ko.observable<number>();
 
 const atan2 = Math.atan2;
 const sin = Math.sin;
@@ -27,10 +27,8 @@ function getHeading() {
   return util.fixAngle360(heading);
 }
 
-const gc = {
+export default {
   latitude: lat,
   longitude: lon,
   getHeading,
 };
-
-export default gc;

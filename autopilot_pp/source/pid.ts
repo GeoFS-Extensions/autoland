@@ -35,7 +35,11 @@ function PID(options: Record<keyof typeof defaults, number>) {
  * Gets the value of the next PID output given an input, setpoint and time since last call.
  * @return {Number}
  */
-PID.prototype.compute = function (input: number, dt: number, setPoint: number) {
+PID.prototype.compute = function (
+  input: number,
+  dt: number,
+  setPoint: number
+): number {
   const kp = this.kp;
   const ti = this.ti;
   const td = this.td;

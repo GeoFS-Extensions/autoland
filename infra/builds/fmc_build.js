@@ -36,6 +36,7 @@ function appendToFile(file) {
 function build(debug) {
   // if we want to build the script for debugging
   if (!debug) {
+    console.log("(fmc) Debug set to false, applying uglify configs...");
     options.optimize = "uglify2";
     options.generateSourceMaps = true;
   }
@@ -46,17 +47,24 @@ function build(debug) {
 
   // run the typescript compiler in a child process
   try {
+    console.log("(fmc) Running the typescript compiler in a child process...");
     execSync("npx tsc");
   } catch (e) {
-    throw new Error("Compiling fmc failed.\n\n" + e.stdout.toString());
+    throw new Error(
+      `(fmc) Compiling failed with exit code ${e.code}.\n\n` +
+        e.stdout.toString()
+    );
   }
 
   // optimize the requirejs file
   (async function () {
+    console.log("(fmc) Starting script optimizer...");
     await optimize(options, () => {
+      console.log("(fmc) Script optimized, appending to it...");
       appendToFile(options.out);
     });
   })();
+  console.log("(fmc) Script built!");
 }
 
 module.exports = build;

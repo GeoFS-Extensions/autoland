@@ -1,9 +1,13 @@
 // Prevent aircraft from exceeding limits of altitude and speed.
 function restrictionsBugfix() {
-  let speedTimer, partsTimer, deleteTimer, deleteTimeout, oldMaxRPM;
+  let speedTimer: number;
+  let partsTimer: number;
+  let deleteTimer: number;
+  let deleteTimeout: number;
+  let oldMaxRPM: number;
   let activated = false;
 
-  const restrictedAircraft = new Set();
+  const restrictedAircraft = new Set<string>();
   restrictedAircraft.add("4"); // KLM 737
   restrictedAircraft.add("5"); // Phenom 100
   restrictedAircraft.add("17"); // MD-11
@@ -12,8 +16,8 @@ function restrictionsBugfix() {
   function checkSpeedAndAltitude() {
     const values = geofs.aircraft.instance.animationValue;
     const maxLimits = geofs.aircraft.instance.setup.maxLimits;
-    const maxMach = maxLimits ? maxLimits[0] : 1;
-    const maxAltitude = maxLimits ? maxLimits[1] : 44444;
+    const maxMach: number = maxLimits ? maxLimits[0] : 1;
+    const maxAltitude: number = maxLimits ? maxLimits[1] : 44444;
     if (values.mach < maxMach && values.altitude < maxAltitude) return;
 
     clearInterval(speedTimer);

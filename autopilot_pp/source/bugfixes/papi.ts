@@ -11,13 +11,13 @@ function papiBugfix() {
       this.location[1]
     );
     this.location[2] = collResult.location[2];
-    const relativeAicraftLla = [
+    const relativeAicraftLla: number[] = [
       aircraft.llaLocation[0],
       aircraft.llaLocation[1],
       this.location[2],
     ];
 
-    const distance = geofs.utils.llaDistanceInMeters(
+    const distance: number = geofs.utils.llaDistanceInMeters(
       relativeAicraftLla,
       this.location,
       this.location

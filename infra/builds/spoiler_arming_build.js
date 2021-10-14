@@ -36,6 +36,9 @@ function appendToFile(file) {
 function build(debug) {
   // if we want to build the script for debugging
   if (!debug) {
+    console.log(
+      "(spoilers_arming) Debug set to false, applying uglify configs..."
+    );
     options.optimize = "uglify2";
     options.generateSourceMaps = true;
   }
@@ -46,19 +49,26 @@ function build(debug) {
 
   // run the typescript compiler in a child process
   try {
+    console.log(
+      "(spoilers_arming) Running the typescript compiler in a child process..."
+    );
     execSync("npx tsc");
   } catch (e) {
     throw new Error(
-      "Compiling spoiler arming failed.\n\n" + e.stdout.toString()
+      `(spoilers_arming) Compiling failed with exit code ${e.code}.\n\n` +
+        e.stdout.toString()
     );
   }
 
   // optimize the requirejs file
   (async function () {
+    console.log("(spoilers_arming) Starting script optimizer...");
     await optimize(options, () => {
+      console.log("(spoilers_arming) Script optimized, appending to it...");
       appendToFile(options.out);
     });
   })();
+  console.log("(spoilers_arming) Script built!");
 }
 
 module.exports = build;

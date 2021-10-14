@@ -13,8 +13,8 @@ function getClosestPoint(list: number[][]) {
   // If the list only contains one element, it will be returned without calling the callback.
   return list.reduce(function (closestPoint, point) {
     // Current location of the aircraft.
-    const acLat = geofs.aircraft.instance.llaLocation[0];
-    const acLon = geofs.aircraft.instance.llaLocation[1];
+    const acLat: number = geofs.aircraft.instance.llaLocation[0];
+    const acLon: number = geofs.aircraft.instance.llaLocation[1];
 
     const deltaLat = util.deg2rad(acLat - point[0]);
     const deltaLon = util.deg2rad(acLon - point[1]);

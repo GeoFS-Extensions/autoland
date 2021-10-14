@@ -3,24 +3,24 @@ import speedConversions from "../speedConversions";
 import util from "../util";
 
 const altitude = {
-  enabled: ko.observable(false),
-  value: ko.observable(0),
+  enabled: ko.observable<boolean>(false),
+  value: ko.observable<number>(0),
 };
 
 const vs = {
-  enabled: ko.observable(false),
-  value: ko.observable(0),
+  enabled: ko.observable<boolean>(false),
+  value: ko.observable<number>(0),
 };
 
 const heading = {
-  enabled: ko.observable(false),
-  value: ko.observable(360),
+  enabled: ko.observable<boolean>(false),
+  value: ko.observable<number>(360),
 };
 
 const speed = {
-  enabled: ko.observable(false),
-  isMach: ko.observable(false),
-  value: ko.observable(0),
+  enabled: ko.observable<boolean>(false),
+  isMach: ko.observable<boolean>(false),
+  value: ko.observable<number>(0),
   toMach: toMach,
   toKias: toKias,
 };
@@ -45,11 +45,9 @@ speed.isMach.subscribe(function (isMach: boolean) {
   speed.value(isMach ? toMach(value) : toKias(value));
 });
 
-const modes = {
+export default {
   altitude,
   vs,
   heading,
   speed,
 };
-
-export default modes;
