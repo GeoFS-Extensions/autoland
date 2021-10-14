@@ -49,8 +49,7 @@ export default {
     }
 
     const spd = params[0];
-    let vs,
-      alt;
+    let vs, alt;
 
     /**********************
      * Flight Phase Logic *

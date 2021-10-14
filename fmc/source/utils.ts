@@ -61,7 +61,7 @@ function getDistance(
   const a =
     Math.sin(dlat / 2) * Math.sin(dlat / 2) +
     Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon / 2) * Math.sin(dlon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return EARTH_RADIUS_NM * c;
 }
 
@@ -88,7 +88,7 @@ function getBearing(
   const x =
     Math.cos(lat1) * Math.sin(lat2) -
     Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
-    const brng = toDegrees(Math.atan2(y, x));
+  const brng = toDegrees(Math.atan2(y, x));
   return brng <= 0 ? brng + 360 : brng;
 }
 
@@ -179,7 +179,8 @@ function getETA(hours: number, minutes: number): number[] {
  */
 function checkZeros(i: number): string {
   let toReturn: string;
-  if (i < 10) toReturn = "0" + i; else toReturn = i.toString();
+  if (i < 10) toReturn = "0" + i;
+  else toReturn = i.toString();
 
   return toReturn;
 }

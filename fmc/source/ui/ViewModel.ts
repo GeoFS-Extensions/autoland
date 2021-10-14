@@ -15,7 +15,7 @@ function ViewModel() {
   /*************************
    * General Modal Actions *
    *************************/
-   const _opened = ko.observable(false);
+  const _opened = ko.observable(false);
   // @ts-ignore
   self.opened = ko.pureComputed({
     read: _opened,

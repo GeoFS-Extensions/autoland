@@ -14,8 +14,8 @@ const autopilot = autopilot_pp.require("build/autopilot"),
   gc = autopilot_pp.require("build/greatcircle"),
   icao = navData.airports;
 
-  const route = ko.observableArray();
-  const nextWaypoint = ko.observable(null);
+const route = ko.observableArray();
+const nextWaypoint = ko.observable(null);
 
 /**
  * Waypoint object to distinguish between each route item
@@ -546,8 +546,9 @@ function loadFromSave(arg: string) {
     }
     // Auto-saves the data once again
     saveData();
-  } else
-    // TODO: make this a bit more friendly
+  }
+  // TODO: make this a bit more friendly
+  else
     log.warn(
       "You did not save the waypoints or you cleared the browser's cache"
     );

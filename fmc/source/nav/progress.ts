@@ -29,7 +29,8 @@ const update = function () {
   const lat2 = flight.arrival.coords()[0];
   const lon2 = flight.arrival.coords()[1];
   const times = [[], [], [], [], []]; // flightETE, flightETA, todETE, todETA, nextETE
-  const nextDist = nextWaypoint === null ? 0 : route[nextWaypoint].distFromPrev();
+  const nextDist =
+    nextWaypoint === null ? 0 : route[nextWaypoint].distFromPrev();
   let flightDist: number;
   let valid = true;
 

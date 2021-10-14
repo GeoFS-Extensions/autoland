@@ -5,7 +5,10 @@ import utils from "../utils";
 const glideslope = flight.arrival.runway()[3];
 
 // Threshold lat/lon
-const thresholdCoords = [flight.arrival.runway()[0], flight.arrival.runway()[1]];
+const thresholdCoords = [
+  flight.arrival.runway()[0],
+  flight.arrival.runway()[1],
+];
 
 // Opposite end lat/lon
 // FIXME: find thresholdCoords of opposite runway

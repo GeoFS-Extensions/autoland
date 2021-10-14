@@ -21,7 +21,7 @@ autopilotAppend += "a.define=define;";
 autopilotAppend += "a.ready=false;";
 
 const prettierBuild = require("./builds/prettier_build");
-const scriptBuild = require("./builds/script_build");
+const keyboardMappingBuild = require("./builds/keyboard_mapping_build");
 const { chdir } = require("process");
 const homeDir = require("./main_dir");
 
@@ -29,7 +29,4 @@ chdir(homeDir);
 
 prettierBuild();
 
-scriptBuild("keyboard_mapping", keyboardMappingAppend);
-scriptBuild("fmc", fmcAppend);
-scriptBuild("spoilers_arming", spoilerArmingAppend);
-scriptBuild("autopilot_pp", autopilotAppend);
+keyboardMappingBuild();

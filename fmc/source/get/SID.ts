@@ -18,8 +18,8 @@ export default function (
 
   const allSID = data.SID[airport] || [];
   const validSID: Array<{
-    name: string,
-    availableRunways?: any[]
+    name: string;
+    availableRunways?: any[];
   }> = [];
 
   // If a SID is already selected
