@@ -1,4 +1,3 @@
-/// <reference path="geofs_types.d.ts" />
 "use strict";
 (function () {
   // Check if game has completed loading
@@ -20,6 +19,8 @@
     )
       return;
     clearInterval(timer);
+
+    /* global require */ // because for some reason eslint was thinking require is undefined.
     require(["./build/ui/main"]);
   }, 250);
 })();

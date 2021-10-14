@@ -1,7 +1,7 @@
 import * as ko from "knockout";
-import keyboardMapping from "../keyboard_mapping_types";
+import { KeyDown } from "../keyboard_mapping_types";
 
-const _keydown = ko.observable<keyboardMapping.KeyDown>(() => {
+const _keydown = ko.observable<KeyDown>(() => {
   void 0;
 });
 const keydown = ko.pureComputed({

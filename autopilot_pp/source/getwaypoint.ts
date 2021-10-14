@@ -4,7 +4,7 @@ const icaos = navData.airports;
 const waypoints = navData.waypoints;
 const navaids = navData.navaids;
 
-function getClosestPoint(list: number[]) {
+function getClosestPoint(list: number[][]) {
   // Duplicate waypoints, calculate closest waypoint to aircraft using the "Spherical Earth
   // projected to a plane" methdo described here:
   // https://en.wikipedia.org/wiki/Geographical_distance#Spherical_Earth_projected_to_a_plane
@@ -42,7 +42,6 @@ function getWaypoint(code: string) {
 
   if (navaids[code]) return navaids[code];
 
-  // @ts-ignore the code works, but it wasn't built with types in mind
   if (waypoints[code]) return getClosestPoint(waypoints[code]);
 
   return null;

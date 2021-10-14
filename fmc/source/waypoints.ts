@@ -47,7 +47,9 @@ const Waypoint = function () {
 
   // Latitude
   const _lat = ko.observable();
-  // @ts-ignore
+  // FIXME: i can't figure out either of these
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore i can't figure this out at all
   self.lat = ko.pureComputed({
     read: _lat,
     write: function (val, isValid) {
@@ -60,6 +62,7 @@ const Waypoint = function () {
 
   // Longitude
   const _lon = ko.observable();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   self.lon = ko.pureComputed({
     read: _lon,

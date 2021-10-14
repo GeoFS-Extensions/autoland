@@ -20,7 +20,7 @@ export default () => {
     },
   };
 
-  var oldInit = instruments.init;
+  const oldInit = instruments.init;
   instruments.init = function (instrumentList) {
     const aircraftWithBadlyImplementedSpoilers = [
       "2871",

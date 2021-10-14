@@ -891,7 +891,7 @@ export interface HUD {
   stallAlarmSet: boolean;
   stallAlarmOn: boolean;
   stallAlarm(a: boolean): void;
-  autopilotIndicator(): void;
+  autopilotIndicator(a: boolean): void;
   [key: string]: any;
 }
 

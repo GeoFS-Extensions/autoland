@@ -45,7 +45,13 @@ function build(debug) {
   chdir(scriptLocation);
 
   // run the typescript compiler in a child process
-  execSync("npx tsc");
+  try {
+    execSync("npx tsc");
+  } catch (e) {
+    throw new Error(
+      "Compiling spoiler arming failed.\n\n" + e.stdout.toString()
+    );
+  }
 
   // optimize the requirejs file
   (async function () {

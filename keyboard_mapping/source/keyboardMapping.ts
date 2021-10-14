@@ -1,5 +1,5 @@
 import * as ko from "knockout";
-import keyboardMapping from "../keyboard_mapping_types";
+import { Keybinds } from "../keyboard_mapping_types";
 
 // geofs uses deprecated code, so here's a fix:
 const whichToCode = {
@@ -27,7 +27,7 @@ const whichToCode = {
   65: "KeyA",
 };
 
-const _keybinds = ko.observable<keyboardMapping.Keybinds>({});
+const _keybinds = ko.observable<Keybinds>({});
 // load the keybinds from local storage
 if (
   !localStorage.getItem("keyboard_mapping_keybinds") ||

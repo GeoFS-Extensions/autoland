@@ -63,7 +63,7 @@ function writeToStorage(toWrite: any, name: string): any {
   } else {
     toSave = { update: toWrite };
   }
-  chrome.storage.sync.set(toSave, () => {});
+  chrome.storage.sync.set(toSave);
   return toWrite;
 }
 

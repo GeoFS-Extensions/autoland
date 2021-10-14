@@ -1,13 +1,8 @@
-import waypoint from "./get/waypoint";
-import ATS from "./get/ATS";
-import SID from "./get/SID";
-import STAR from "./get/STAR";
-import runway from "./get/runway";
-
+// TODO: remove the infrastructure for this
 export default {
-  waypoint: waypoint,
-  ATS: ATS,
-  SID: SID,
-  STAR: STAR,
-  runway: runway,
+  waypoint: undefined,
+  ATS: undefined,
+  SID: undefined,
+  STAR: undefined,
+  runway: undefined,
 };

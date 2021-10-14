@@ -204,10 +204,10 @@ const phase = ko.pureComputed({
 });
 
 const _phaseLocked = ko.observable(false);
-// @ts-ignore
+
 const phaseLocked = ko.pureComputed({
   read: _phaseLocked,
-  write: function (boolean, viewmodel) {
+  write: function (boolean) {
     _phaseLocked(boolean);
   },
 });

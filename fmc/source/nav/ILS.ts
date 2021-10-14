@@ -113,12 +113,11 @@ function localizerCalc() {
 }
 
 // Replaces the current "attitudeJet"
+// attitudeJetILS USED TO BE attitudeJet in the og FMC code; If something breaks, reverting this might help.
 const instrument = {
   stackX: true,
   overlay: {
-    // TODO: figure this guy out
-    // @ts-ignore
-    url: url.attitudeJet,
+    url: url.attitudeJetILS,
     size: {
       x: 200,
       y: 200,
@@ -247,8 +246,7 @@ const instrument = {
 
       // attitude-jet
       {
-        //@ts-ignore
-        url: url.attitudeJet,
+        url: url.attitudeJetILS,
         anchor: {
           x: 100,
           y: 100,

@@ -55,7 +55,7 @@ export default () => {
       }
     });
   } else {
-    var keydownTrigger = controls.keyDown;
+    const keydownTrigger = controls.keyDown;
     controls.keyDown = function (event) {
       if (typeof globalVariables.enabled !== "undefined") {
         if (

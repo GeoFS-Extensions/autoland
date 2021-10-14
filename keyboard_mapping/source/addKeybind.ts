@@ -1,6 +1,6 @@
 import keyDown from "./keyDown";
 import keybinds from "./keyboardMapping";
-import keyboardMapping from "../keyboard_mapping_types";
+import { callback, Keybind } from "../keyboard_mapping_types";
 
 const addedKeybindsLabels = [];
 
@@ -14,8 +14,8 @@ keyboard_mapping.ready = true;
  */
 export default function (
   label: string,
-  callback: keyboardMapping.callback,
-  defaultKeybind: keyboardMapping.Keybind
+  callback: callback,
+  defaultKeybind: Keybind
 ) {
   if (label !== "" && addedKeybindsLabels.includes(label)) {
     // we already have this keybind.

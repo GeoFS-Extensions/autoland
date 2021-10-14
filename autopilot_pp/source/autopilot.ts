@@ -23,8 +23,6 @@ on.subscribe(function (newValue) {
   controls.autopilot.on = newValue;
 
   // Toggle the autopilot indicator provided by GEFS.
-  // TODO:
-  // @ts-ignore that function doesn't accept params, check it out later
   ui.hud.autopilotIndicator(newValue);
 
   if (!newValue) {
@@ -241,8 +239,9 @@ const ap = {
 };
 
 // Properties needed for compatibility with GEFS.
-// @ts-ignore the dev's of ap++ didn't think anybody will use typescript :(
+
 controls.autopilot = {
+  ...controls.autopilot,
   on: false,
   toggle: toggle,
   turnOff: function () {

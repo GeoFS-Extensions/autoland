@@ -7,10 +7,10 @@
   var timer = setInterval(function () {
     if (
       !(
-        geofs &&
-        geofs.aircraft &&
-        geofs.aircraft.instance &&
-        geofs.aircraft.instance.object3d &&
+        window.geofs &&
+        window.geofs.aircraft &&
+        window.geofs.aircraft.instance &&
+        window.geofs.aircraft.instance.object3d &&
         !!localStorage.getItem("settings")
       )
     ) {
@@ -18,6 +18,7 @@
     }
 
     clearInterval(timer);
+    /* global require */ // because for some reason eslint was thinking require is undefined.
     require(["./build/ui/main"]);
   }, 250);
 })();

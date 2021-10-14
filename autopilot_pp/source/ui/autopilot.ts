@@ -53,7 +53,8 @@ function AutopilotVM() {
   });
 
   this.altitude = ap.modes.altitude.value.extend({
-    // @ts-ignore I dont even know
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore This is necessary for the build process to function
     apValidate: validateAltitude,
   });
   this.altitudeEnabled = ap.modes.altitude.enabled;
@@ -89,9 +90,8 @@ function AutopilotVM() {
 
   this.heading = ko.pureComputed({
     read: function () {
-      const str = ap.modes.heading.value();
+      let str = ap.modes.heading.value().toString();
       // Pad the value to 3 digits.
-      // @ts-ignore AP++ devs really hate type checking, huh?
       while (str.length < 3) str = "0" + str;
       return str;
     },
@@ -109,8 +109,7 @@ function AutopilotVM() {
       const target = ap.modes.speed.value;
       const current = target();
       const newValue = ap.modes.speed.isMach()
-        ? //@ts-ignore
-          Math.round(parseFloat(val) + "e2") / 100
+        ? Math.round(Number(val) * 100) / 100
         : parseInt(val);
 
       if (newValue !== current && !isNaN(newValue)) target(newValue);
@@ -128,8 +127,12 @@ function AutopilotVM() {
       ap.modes.speed.isMach(val === "mach");
     },
   });
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   this.lat = gc.latitude.extend({ apValidate: validateLat });
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   this.lon = gc.longitude.extend({ apValidate: validateLon });
 

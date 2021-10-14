@@ -16,10 +16,10 @@ function ViewModel() {
    * General Modal Actions *
    *************************/
   const _opened = ko.observable(false);
-  // @ts-ignore
+
   self.opened = ko.pureComputed({
     read: _opened,
-    write: function (boolean, _vm) {
+    write: function (boolean) {
       _opened(boolean);
     },
   });
@@ -49,6 +49,7 @@ function ViewModel() {
   self.todDist = flight.todDist;
   self.todCalc = flight.todCalc;
 
+  // this is another part of the old infrastructure that i can't be bothered to remove yet
   // List of departure runways based on departure airport and SID
   self.departureRwyList = ko.pureComputed(function () {
     if (self.SIDName())
@@ -56,6 +57,7 @@ function ViewModel() {
         self.departureAirport(),
         self.departureRwyName(),
         self.SIDName()
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore excuse me?
       ).availableRunways;
     else return get.runway(self.departureAirport(), self.SIDName(), true);
@@ -138,10 +140,10 @@ function ViewModel() {
   };
 
   const generatedRouteText = ko.observable();
-  // @ts-ignore
+
   self.generateRoute = ko.pureComputed({
     read: generatedRouteText,
-    write: function (isGenerate, _vm) {
+    write: function (isGenerate) {
       const generatedRoute = isGenerate ? waypoints.toRouteString() : undefined;
       generatedRouteText(generatedRoute);
     },

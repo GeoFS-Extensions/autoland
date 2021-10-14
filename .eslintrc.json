@@ -2,6 +2,9 @@
   "env": {
     "es2021": true
   },
+  "globals": {
+    "requirejs": false
+  },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",

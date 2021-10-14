@@ -5,8 +5,12 @@
 // fundamental physical constants: 2010.
 // https://physics.nist.gov/cuu/Constants/codata.pdf
 const molar = 8.3144621;
+
+// Unused variables:
+/*
 const avogardo = 6.02214129e23;
 const boltzmann = 1.3806487924497035e-23;
+*/
 
 /**
  * Accleration due to gravity at sea level.
@@ -232,15 +236,15 @@ function casToTas(
 
 function easToCas(
   keas: number,
-  pressure: number,
-  temperature?: number
+  pressure: number
+  //temperature?: number
 ): number {
   // check if second argument is altitude (instead of pressure)
   if (arguments.length === 2) {
     const altitude = pressure;
     const condition = standardConditions(altitude);
     pressure = condition[0];
-    temperature = condition[1];
+    // temperature = condition[1];
   }
 
   // mach one at sea level
@@ -261,15 +265,15 @@ function easToCas(
 
 function casToEas(
   kcas: number,
-  pressure: number,
-  temperature?: number
+  pressure: number
+  //temperature?: number
 ): number {
   // check if second argument is altitude (instead of pressure)
   if (arguments.length === 2) {
     const altitude = pressure;
     const condition = standardConditions(altitude);
     pressure = condition[0];
-    temperature = condition[1];
+    // temperature = condition[1];
   }
 
   // mach one at sea level

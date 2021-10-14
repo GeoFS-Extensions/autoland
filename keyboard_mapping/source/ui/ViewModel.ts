@@ -1,6 +1,7 @@
 import keybinds from "../keyboardMapping";
 import keyboardLayout from "../static/keyboardLayout";
-import keyboardMapping from "../../keyboard_mapping_types";
+import { Keybind, Keybinds } from "../../keyboard_mapping_types";
+
 export default class ViewModel {
   private readonly keysContainer: JQuery<HTMLElement> = $(
     ".geofs-keyboard-keys-container"
@@ -41,10 +42,10 @@ export default class ViewModel {
 
   /**
    * Returns the string representation of a keybind
-   * @param {keyboardMapping.Keybind} keybind the keybind to convert
+   * @param {Keybind} keybind the keybind to convert
    * @returns {string} the string representation of a keybind
    */
-  stringFromKeybind = (keybind: keyboardMapping.Keybind): string => {
+  stringFromKeybind = (keybind: Keybind): string => {
     let str = "";
     if (keybind.ctrlKey) str += "CTRL + ";
     if (keybind.shiftKey) str += "SHIFT + ";
@@ -73,9 +74,9 @@ export default class ViewModel {
 
   /**
    * Add keybind inputs if necessary and update the values
-   * @param newKeybinds the current keybinds
+   * @param {Keybinds} newKeybinds the current keybinds
    */
-  updateKeybindInputs = (newKeybinds: keyboardMapping.Keybinds) => {
+  updateKeybindInputs = (newKeybinds: Keybinds) => {
     for (const key of Object.keys(newKeybinds)) {
       if ($(`.keyboard-mapping-key-detect[name="${key}"]`).length == 0) {
         // If this runs, a new keybind has been added, but the input for it doesn't exist yet.
