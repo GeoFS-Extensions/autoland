@@ -377,6 +377,7 @@ export declare class Indicator {
   constructor(a: InstrumentsDefinitions);
   definition: InstrumentsDefinitions;
   visibility: boolean;
+  overlay: Overlay;
   scale(): void;
   show(): void;
   hide(): void;
@@ -399,8 +400,11 @@ export declare class GlassPanel {
   [key: string]: any;
 }
 
-// TODO: probably Record<string, unknown> here
-export declare type jQuery$ = string | Element | Element[] | Object; // things that can be passed to jQuery's $().
+export declare type jQuery$ =
+  | string
+  | Element
+  | Element[]
+  | Record<string, unknown>; // things that can be passed to jQuery's $().
 
 export interface API {
   march2019theTwentyFirst: number;
@@ -409,14 +413,14 @@ export interface API {
   ALTITUDE_RELATIVE: string;
   CLAMP_TO_GROUND: string;
   nativeMouseHandling: boolean;
+  precisionTime: number;
   cssTransform: typeof cssTransform;
 
   initWorld(a: string, b?: any): void;
   destroyWorld(): void;
 
   triggerExplicitRendering(): void;
-  // TODO: () => void, but what does it get called with?
-  addFrameCallback(a: Function, b?: string, c?: number): number;
+  addFrameCallback(a: (a: number) => void, b?: string, c?: number): number; // a in the callback is geofs.api.precisionTime
   removeFrameCallback(a: number, b?: string): void;
   frameCallbackWrapper(a: number, b: FrameCallback): void;
 
@@ -827,8 +831,7 @@ export interface GeoFS {
   saveFlight(): void;
   savePreferences(): void;
   resetPreferences(): void;
-  // TODO: () => void, but what gets passed to the callback?
-  readPreference(a?: Function): void;
+  readPreferences(a?: () => void): void; // the callback isn't passed anything, seems pretty weird
   populateButtonAssignments(): void;
   populateAxesAssignments(): void;
   populateKeyAssignments(): void;
@@ -883,8 +886,7 @@ export interface Vr {
 }
 
 export interface HUD {
-  // TODO
-  init(): {};
+  init(): void;
   stall: Overlay;
   stallAlarmSet: boolean;
   stallAlarmOn: boolean;
@@ -894,11 +896,15 @@ export interface HUD {
 }
 
 export interface Ui {
-  // TODO
-  playerMarkers: {};
-  playerSymbols: {};
-  // returns void, but what gets passed to these functions
-  mouseUpHandler: Function[];
+  playerMarkers: {
+    [key: string]: any;
+  };
+  playerSymbols: {
+    [key: string]: any;
+  };
+  // TODO: what is k.Event?
+  // this same function is in addMouseUpHandler()
+  mouseUpHandlers: Array<(a: typeof $.Event) => void>;
   svgPlanePath: string;
   svgPlaneStyles: {
     [key: string]: {
@@ -913,6 +919,7 @@ export interface Ui {
   };
 
   init(): void;
+  mouseUpHandler(): void;
   showCrashNotification(): void;
   hideCrashNotification(): void;
   toggleFullscreen(): void;
@@ -920,8 +927,7 @@ export interface Ui {
   toggleButton(a?: any, b?: any): void;
   expandLeft(): void;
   collapseLeft(a?: any): void;
-  // TODO: returns void, what params?
-  addMouseUpHandler(a: Function): void;
+  addMouseUpHandler(a: (a: typeof $.Event) => void): void;
   runMouseUpHandlers(a: any): void;
   panel: {
     init(): void;
@@ -1048,8 +1054,11 @@ export interface Controls {
   };
   mouse: {
     down: boolean;
-    // TODO
-    orbit: {};
+    orbit: {
+      ratioX: number;
+      ratioY: number;
+      ratioZ: number;
+    };
     offset: {
       ratioX: number;
       ratioY: number;
@@ -1143,7 +1152,7 @@ export interface Controls {
 
 export interface InstrumentsDefinitions {
   stackX?: boolean;
-  overlay: any; // too complicated for my small brain
+  overlay: any; // might be a boolean?
   [key: string]: any;
 }
 
@@ -1152,8 +1161,21 @@ export interface Instruments {
   margins: number[];
   defaultMargin: number;
   visible: boolean;
-  // TODO
-  list: {};
+  list: {
+    airspeedJet: Indicator;
+    altitude: Indicator;
+    attitudeJet: Indicator;
+    brakes: Indicator;
+    compass: Indicator;
+    flaps: Indicator;
+    gear: Indicator;
+    pfd: Indicator;
+    rpmJet: Indicator;
+    spoilers: Indicator;
+    varioJet: Indicator;
+    wind: Indicator;
+    [key: string]: Indicator;
+  };
   gaugeOverlayPosition: number[];
   gaugeOverlayOrigin: number[];
   definitions: InstrumentsDefinitions;
@@ -1475,7 +1497,6 @@ declare global {
   let SMOOTHING_FACTOR: number;
   let SIX_STEP_WARNING: string[];
   let PAGE_PATH: string;
-  // TODO: leaflet types are avalible on npm, this should include them
-  let L: any;
+  let L: typeof import("../node_modules/@types/leaflet/index");
   let componentHandler: any;
 }

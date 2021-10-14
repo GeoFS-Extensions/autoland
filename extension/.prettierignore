@@ -1,2 +1,3 @@
-**/scripts/*.js
-**/data/*
+source/scripts/*.js
+source/data/*
+build/**

@@ -224,7 +224,7 @@ export default {
   spdControl,
   departure,
   arrival,
-  flightNumber,
+  number: flightNumber,
   cruiseAlt,
   phase,
   phaseLocked,

@@ -1,7 +1,8 @@
 autopilot_pp/build/**/*
 autopilot_pp/dist/*
-extension/**/scripts/*.js
-extension/**/data/*
+extension/source/scripts/*.js
+extension/source/data/*
+extension/build/**
 fmc/**/*.html
 fmc/**/*.css
 fmc/build/**/*

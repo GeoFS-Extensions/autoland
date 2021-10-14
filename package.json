@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "node infra/build.js",
+    "debug": "node infra/build.js --debug",
+    "packaging": "ncu -u",
+    "preinstall": "npm i @types/leaflet@1.5.23",
     "prettier": "prettier --write ."
   },
   "repository": {
@@ -22,17 +25,20 @@
     "@types/chrome": "^0.0.159",
     "@types/fs-extra": "^9.0.13",
     "@types/glob": "^7.1.4",
-    "@types/jquery": "^3.5.6",
-    "@types/requirejs": "^2.1.33",
+    "@types/jquery": "^3.5.7",
+    "@types/leaflet": "^1.5.23",
+    "@types/requirejs": "^2.1.34",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "fs-extra": "^10.0.0",
     "glob": "^7.2.0",
     "knockout": "^3.5.1",
+    "npm-check-updates": "^11.8.5",
     "prettier": "2.4.1",
     "requirejs": "^2.3.6",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.4",
+    "yargs": "^17.2.1"
   }
 }

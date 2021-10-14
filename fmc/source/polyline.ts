@@ -1,5 +1,4 @@
 const polyline = L.polyline([], {
-  geodesic: true,
   color: "#7b7c14",
   weight: 2,
   lineJoin: "round",

@@ -17,24 +17,24 @@ document.addEventListener(
       // airport database
       fetch(links.airports)
         .then((resp) => resp.json())
-        .then((json) => (window.navData.airports = json));
+        .then((json) => (navData.airports = json));
 
       // waypoint database
       fetch(links.waypoints)
         .then((resp) => resp.json())
-        .then((json) => (window.navData.waypoints = json));
+        .then((json) => (navData.waypoints = json));
 
       // navaids database
       fetch(links.navaids)
         .then((resp) => resp.json())
-        .then((json) => (window.navData.navaids = json));
+        .then((json) => (navData.navaids = json));
 
-      window.navData.statusCode = 1;
+      navData.statusCode = 1;
     })();
   }
 );
 
-window.navData = {
+navData = {
   statusCode: 0,
   airports: {},
   navaids: {},

@@ -10,7 +10,7 @@ let options = {
   name: "../node_modules/requirejs/require",
   include: "init",
   mainConfigFile: "./config.js",
-  out: "../extension/source/scripts/keyboard_mapping.js",
+  out: "../extension/source/scripts/spoilers_arming.js",
   optimize: "none",
   generateSourceMaps: false,
 };
@@ -20,18 +20,17 @@ let options = {
  * @param {string} file The string of the file to append to.
  */
 function appendToFile(file) {
-  let keyboardMappingAppend = "\nvar a = window.keyboard_mapping = {};";
-  keyboardMappingAppend += 'a.version="1.0.2";';
-  keyboardMappingAppend += "a.require=require;";
-  keyboardMappingAppend += "a.requirejs=requirejs;";
-  keyboardMappingAppend += "a.define=define;";
-  keyboardMappingAppend += "a.ready=false;";
+  let spoilerArmingAppend = "\nvar a = window.spoilers_arming = {};";
+  spoilerArmingAppend += 'a.version="1.1.2";';
+  spoilerArmingAppend += "a.require=require;";
+  spoilerArmingAppend += "a.requirejs=requirejs;";
+  spoilerArmingAppend += "a.define=define;";
 
-  appendFileSync(file, keyboardMappingAppend);
+  appendFileSync(file, spoilerArmingAppend);
 }
 
 /**
- * Builds keyboard mapping.
+ * Builds spoilers arming.
  * @param {boolean} debug Whether the script should be built for debugging.
  */
 function build(debug) {
@@ -42,7 +41,7 @@ function build(debug) {
   }
 
   // change dirs to the script dir
-  const scriptLocation = join(homeDir, "keyboard_mapping");
+  const scriptLocation = join(homeDir, "spoilers_arming");
   chdir(scriptLocation);
 
   // run the typescript compiler in a child process
