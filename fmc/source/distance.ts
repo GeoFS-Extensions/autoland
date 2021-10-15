@@ -14,7 +14,7 @@ const route = function (end: number): number {
   const arrival = flight.arrival.coords();
   const start = waypoints.nextWaypoint() || 0;
   const route = waypoints.route();
-  const pos = geofs.aircraft.instance.llaLocation;
+  const pos: number[] = geofs.aircraft.instance.llaLocation;
 
   // If there is no route
   if (route.length === 0) {
@@ -102,9 +102,9 @@ const target = function (deltaAlt: number): number {
  * @returns {Number} The turning distance
  */
 const turn = function (angle: number): number {
-  const v = geofs.aircraft.instance.animationValue.kcas;
-  const r = 0.107917 * Math.pow(Math.E, 0.0128693 * v);
-  const a = utils.toRadians(angle);
+  const v: number = geofs.aircraft.instance.animationValue.kcas;
+  const r: number = 0.107917 * Math.pow(Math.E, 0.0128693 * v);
+  const a: number = utils.toRadians(angle);
   return r * Math.tan(a / 2) + 0.2;
 };
 

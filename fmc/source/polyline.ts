@@ -4,19 +4,19 @@ const polyline = L.polyline([], {
   lineJoin: "round",
 });
 
-function setAt(n, coords) {
+function setAt(n: number, coords: L.LatLng | L.LatLng[] | L.LatLng[][]) {
   const list = polyline.getLatLngs();
   list[n] = coords;
   polyline.setLatLngs(list);
 }
 
-function insertAt(n, coords) {
+function insertAt(n: number, coords) {
   const list = polyline.getLatLngs();
   list.splice(n, 0, coords);
   polyline.setLatLngs(list);
 }
 
-function deleteAt(n) {
+function deleteAt(n: number) {
   const list = polyline.getLatLngs();
   list.splice(n, 1);
   polyline.setLatLngs(list);

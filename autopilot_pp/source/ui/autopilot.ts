@@ -5,6 +5,19 @@ import util from "../util";
 import getWaypoint from "../getwaypoint";
 import shouldntHaveAp from "../shouldntHaveAp";
 
+type MDLHTMLElement = HTMLElement & {
+  parentNode: {
+    MaterialSwitch: {
+      checkDisabled: () => void;
+      checkToggleState: () => void;
+    }
+    MaterialRadio: {
+      checkDisabled: () => void;
+      checkToggleState: () => void;
+    }
+  }
+}
+
 /* CODE FOR VALIDATION OF INPUTS */
 function validateAltitude(val: string) {
   return parseInt(val);
@@ -188,7 +201,7 @@ function AutopilotVM() {
 }
 
 // Handle MDL's annoying inputs that needs updating all the time.
-function updateMdlSwitch(element, _notUsed, bindings) {
+function updateMdlSwitch(element: MDLHTMLElement, _notUsed, bindings: ko.AllBindings) {
   // Call these so the update is triggered when these bindings change.
   const isChecked = bindings.get("checked");
   const isEnabled = bindings.get("enable");
@@ -204,9 +217,7 @@ function updateMdlSwitch(element, _notUsed, bindings) {
   materialSwitch.checkToggleState();
 }
 
-function updateMdlRadio(element, _notUsed, bindings) {
-  // jshint unused:false
-
+function updateMdlRadio(element: MDLHTMLElement, _notUsed, bindings: ko.AllBindings) {
   // Call these so the update is triggered when these bindings change.
   const isChecked = bindings.get("checked");
   const isEnabled = bindings.get("enable");

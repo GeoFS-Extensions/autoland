@@ -42,8 +42,8 @@ const update = function (other?: string) {
  * Checks for overspeed under 10000 feet AGL for log, set on a timer
  */
 const speed = function () {
-  const kcas = geofs.aircraft.instance.animationValue.kcas;
-  const altitude =
+  const kcas: number = geofs.aircraft.instance.animationValue.kcas;
+  const altitude: number =
     geofs.aircraft.instance.animationValue.altitude +
     geofs.groundElevation * METERS_TO_FEET;
   if (kcas > 255 && altitude < 10000) {
@@ -66,7 +66,7 @@ const removeData = function () {
 // things used in in ui/ViewModel#28
 const modalWarning: ko.Observable<string> = ko.observable(undefined);
 
-const warn = ko.pureComputed({
+const warn = ko.pureComputed<string>({
   // Prints modal warning, disappears after 5 seconds
   read: modalWarning,
   write: function (warningText) {

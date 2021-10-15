@@ -7,11 +7,11 @@ import vnav from "./nav/VNAV";
 const icao = navData.airports;
 
 // Top Of Descent distance
-const todDist = ko.observable();
+const todDist = ko.observable<number>();
 
 // If VNAV is enabled
-const _vnavEnabled = ko.observable(false);
-const vnavEnabled = ko.pureComputed({
+const _vnavEnabled = ko.observable<boolean>(false);
+const vnavEnabled = ko.pureComputed<boolean>({
   read: _vnavEnabled,
   write: function (boolean) {
     const set = _vnavEnabled;
@@ -31,13 +31,13 @@ const vnavEnabled = ko.pureComputed({
 });
 
 // Speed control
-const spdControl = ko.observable(true);
+const spdControl = ko.observable<boolean>(true);
 
 /**
  * departure object: airport, coords, runway, and SID
  */
-const _departureAirport = ko.observable();
-const _departureCoords = ko.observable([]);
+const _departureAirport = ko.observable<string>();
+const _departureCoords = ko.observable<number[]>([]);
 const _selectedDepartureRwy = ko.observable();
 const _selectedSID = ko.observable();
 
@@ -110,8 +110,8 @@ const departure = {
 /**
  * arrival object: airport, coords, runway, and SID
  */
-const _arrivalAirport = ko.observable();
-const _arrivalCoords = ko.observable([]);
+const _arrivalAirport = ko.observable<string>();
+const _arrivalCoords = ko.observable<number[]>([]);
 const _selectedArrivalRwy = ko.observable();
 const _selectedSTAR = ko.observable();
 
@@ -177,11 +177,11 @@ const arrival = {
 };
 
 // Flight Number
-const flightNumber = ko.observable();
+const flightNumber = ko.observable<string>();
 
 // Cruise altitude
-const _cruiseAlt = ko.observable();
-const cruiseAlt = ko.pureComputed({
+const _cruiseAlt = ko.observable<number>();
+const cruiseAlt = ko.pureComputed<number>({
   read: _cruiseAlt,
   write: function (val) {
     const set = _cruiseAlt;
@@ -194,8 +194,8 @@ const cruiseAlt = ko.pureComputed({
 });
 
 // Flight phase
-const _phase = ko.observable(0);
-const phase = ko.pureComputed({
+const _phase = ko.observable<number>(0);
+const phase = ko.pureComputed<number>({
   read: _phase,
   write: function (index) {
     if (phaseLocked() || index > 3) return;
@@ -203,9 +203,9 @@ const phase = ko.pureComputed({
   },
 });
 
-const _phaseLocked = ko.observable(false);
+const _phaseLocked = ko.observable<boolean>(false);
 
-const phaseLocked = ko.pureComputed({
+const phaseLocked = ko.pureComputed<boolean>({
   read: _phaseLocked,
   write: function (boolean) {
     _phaseLocked(boolean);
@@ -213,10 +213,10 @@ const phaseLocked = ko.pureComputed({
 });
 
 // Automatic TOD calculation
-const todCalc = ko.observable(false);
+const todCalc = ko.observable<boolean>(false);
 
 // Arrival Airport field altitude
-const fieldElev = ko.observable();
+const fieldElev = ko.observable<number>();
 
 export default {
   todDist,
