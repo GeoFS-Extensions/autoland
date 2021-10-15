@@ -1,6 +1,6 @@
 export default {
-  waypoints: navData.waypoints || [],
-  navaids: navData.navaids || [],
+  waypoints: window.navData.waypoints || [],
+  navaids: window.navData.navaids || [],
   STAR: undefined,
   SID: undefined,
   runways: undefined,

@@ -25,7 +25,7 @@ function scriptTag() {
  * @param {string} file The string of the file to append to.
  */
 function appendToFile(file) {
-  let autopilotAppend = "var a = window.autopilot_pp = {};";
+  let autopilotAppend = "\nvar a = window.autopilot_pp = {};";
   autopilotAppend += 'a.version="0.12.0";';
   autopilotAppend += "a.require=require;";
   autopilotAppend += "a.requirejs=requirejs;";

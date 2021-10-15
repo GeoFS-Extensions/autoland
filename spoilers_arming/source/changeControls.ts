@@ -20,8 +20,8 @@ export default () => {
   };
 
   // add the keybind for the spoilers arming
-  if (keyboard_mapping) {
-    const addKeybind = keyboard_mapping.require("addKeybind");
+  if (window.keyboard_mapping) {
+    const addKeybind = window.keyboard_mapping.require("addKeybind");
     addKeybind(
       "Spoilers Arming",
       () => {
@@ -34,7 +34,7 @@ export default () => {
         ctrlKey: false,
         shiftKey: true,
         altKey: false,
-        code: keyboard_mapping.require("keyboardMapping")()[
+        code: window.keyboard_mapping.require("keyboardMapping")()[
           "Airbrake toggle (on/off)"
         ].code,
       }
@@ -43,7 +43,7 @@ export default () => {
     document.addEventListener("keydown", (e: KeyboardEvent) => {
       if (
         e.code ==
-          keyboard_mapping.require("keyboardMapping")()["Spoilers Arming"]
+          window.keyboard_mapping.require("keyboardMapping")()["Spoilers Arming"]
             .code &&
         !e.ctrlKey &&
         !e.altKey &&

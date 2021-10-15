@@ -4,7 +4,7 @@ import lnav from "./nav/LNAV";
 import vnav from "./nav/VNAV";
 
 // Autopilot++ Dependencies
-const icao = navData.airports;
+const icao = window.navData.airports;
 
 // Top Of Descent distance
 const todDist = ko.observable<number>();

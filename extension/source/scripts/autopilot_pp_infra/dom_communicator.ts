@@ -34,7 +34,7 @@ document.addEventListener(
   }
 );
 
-navData = {
+const navData = {
   statusCode: 0,
   airports: {},
   navaids: {},

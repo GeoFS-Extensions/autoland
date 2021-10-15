@@ -81,7 +81,7 @@ export default class ViewModel {
       if ($(`.keyboard-mapping-key-detect[name="${key}"]`).length == 0) {
         // If this runs, a new keybind has been added, but the input for it doesn't exist yet.
         // so, let's create it:
-        if (!spoilers_arming && key === "Spoilers Arming") {
+        if (!window.spoilers_arming && key === "Spoilers Arming") {
           // spoilers arming is not activated currently.
           continue;
         }

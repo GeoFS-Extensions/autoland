@@ -6,7 +6,7 @@ import waypoints from "../waypoints";
 import vnavProfile from "../vnav-profile";
 
 // Autopilot++ Dependencies
-const apModes = autopilot_pp.require("build/autopilot").modes;
+const apModes = window.autopilot_pp.require("build/autopilot").modes;
 
 export default {
   timer: null,

@@ -1,5 +1,5 @@
 export default () => {
-  if (!keyboard_mapping) {
+  if (!window.keyboard_mapping) {
     $(document).off("keydown");
 
     // don't break the game:

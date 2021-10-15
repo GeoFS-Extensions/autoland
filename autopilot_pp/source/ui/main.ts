@@ -2,7 +2,7 @@
 import * as ko from "knockout";
 import ap from "../autopilot";
 import apDisconnectSound from "./apdisconnectsound";
-import AutopilotVM from "./autopilot";
+import AutopilotVM from "./autopilot copy";
 import enableKcas from "../enablekcas";
 import papiBugfix from "../bugfixes/papi";
 import restrictionsBugfix from "../bugfixes/restrictions";
@@ -27,8 +27,8 @@ const $ap = $(".geofs-autopilot")
   .html(uihtml);
 
 // Set ` key for autopilot disconnect, like the red sidestick button.
-if (keyboard_mapping) {
-  const addKeybind = keyboard_mapping.require("addKeybind");
+if (window.keyboard_mapping) {
+  const addKeybind = window.keyboard_mapping.require("addKeybind");
   addKeybind(
     "",
     () => {

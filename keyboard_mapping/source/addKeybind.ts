@@ -4,7 +4,7 @@ import { callback, Keybind } from "../keyboard_mapping_types";
 
 const addedKeybindsLabels = [];
 
-keyboard_mapping.ready = true;
+window.keyboard_mapping.ready = true;
 
 /**
  * Add a new keybind.

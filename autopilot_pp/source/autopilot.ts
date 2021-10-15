@@ -258,5 +258,5 @@ controls.autopilot = {
   update: update,
 };
 
-autopilot_pp.ready = true;
+window.autopilot_pp.ready = true;
 export default ap;

@@ -20,7 +20,7 @@ let options = {
  * @param {string} file The string of the file to append to.
  */
 function appendToFile(file) {
-  let fmcAppend = "var a = window.fmc = {};";
+  let fmcAppend = "\nvar a = window.fmc = {};";
   fmcAppend += 'a.version="0.6.0";';
   fmcAppend += "a.require=require;";
   fmcAppend += "a.requirejs=requirejs;";
