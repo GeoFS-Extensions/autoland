@@ -7,153 +7,151 @@ import waypoints from "../waypoints";
 import progress from "../nav/progress";
 
 /**
- * ViewModel function for knockout bindings
+ * ViewModel class for knockout bindings
  */
-function ViewModel() {
-  const self = this;
+class ViewModel {
+  // Methods
+  nextPhase() {
+    const phase = flight.phase();
+    flight.phase(phase === this.phaseToText.length - 1 ? 0 : phase + 1);
+  };
 
-  /*************************
-   * General Modal Actions *
-   *************************/
-  const _opened = ko.observable(false);
+  loadRoute() {
+    waypoints.toRoute(this.loadRouteText());
+    this.loadRouteText(undefined);
+  };
 
-  self.opened = ko.pureComputed({
-    read: _opened,
-    write: function (boolean) {
-      _opened(boolean);
-    },
+  // Instance Variables
+  private readonly _opened = ko.observable<boolean>(false);
+  readonly opened = ko.pureComputed<boolean>({
+    read: this._opened,
+    write: (boolean: boolean) => {
+      this._opened(boolean);
+    }
   });
 
-  //self.modalWarning = ko.observable();
-  self.modalWarning = log.modalWarning;
+  readonly modalWarning = log.modalWarning;
 
   /***********
    * RTE Tab *
    ***********/
-  self.departureAirport = flight.departure.airport;
-  self.arrivalAirport = flight.arrival.airport;
-  self.flightNumber = flight.number;
-  self.route = waypoints.route;
-  self.nextWaypoint = waypoints.nextWaypoint;
-  self.saveWaypoints = waypoints.saveData;
-  self.retrieveWaypoints = waypoints.loadFromSave;
-  self.addWaypoint = waypoints.addWaypoint;
-  self.activateWaypoint = waypoints.activateWaypoint;
-  self.shiftWaypoint = waypoints.shiftWaypoint;
-  self.removeWaypoint = waypoints.removeWaypoint;
-
+  readonly departureAirport = flight.departure.airport;
+  readonly arrivalAirport = flight.arrival.airport;
+  readonly flightNumber = flight.number;
+  readonly route = waypoints.route;
+  readonly nextWaypoint = waypoints.nextWaypoint;
+  readonly saveWaypoints = waypoints.saveData;
+  readonly retrieveWaypoints = waypoints.loadFromSave;
+  readonly addWaypoint = waypoints.addWaypoint;
+  readonly activateWaypoint = waypoints.activateWaypoint;
+  readonly shiftWaypoint = waypoints.shiftWaypoint;
+  readonly removeWaypoint = waypoints.removeWaypoint;
+  
+  
   /***************
    * DEP/ARR Tab *
    ***************/
-  self.fieldElev = flight.fieldElev;
-  self.todDist = flight.todDist;
-  self.todCalc = flight.todCalc;
+  readonly fieldElev = flight.fieldElev;
+  readonly todDist = flight.todDist;
+  readonly todCalc = flight.todCalc;
 
   // this is another part of the old infrastructure that i can't be bothered to remove yet
   // List of departure runways based on departure airport and SID
-  self.departureRwyList = ko.pureComputed(function () {
-    if (self.SIDName())
+  readonly departureRwyList = ko.pureComputed(() => {
+    if (this.SIDName())
       return get.SID(
-        self.departureAirport(),
-        self.departureRwyName(),
-        self.SIDName()
+        this.departureAirport(),
+        this.departureRwyName(),
+        this.SIDName()
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore excuse me?
       ).availableRunways;
-    else return get.runway(self.departureAirport(), self.SIDName(), true);
+    else return get.runway(this.departureAirport(), this.SIDName(), true);
   });
 
   // Selected departure runway and name
-  self.departureRunway = flight.departure.runway;
-  self.departureRwyName = ko.pureComputed(function () {
-    if (self.departureRunway()) return self.departureRunway().runway;
+  readonly departureRunway = flight.departure.runway;
+  readonly departureRwyName = ko.pureComputed(() => {
+    if (this.departureRunway()) return this.departureRunway().runway;
     else return undefined;
   });
 
   // List of SIDs based on departure airport and runway
-  self.SIDList = ko.pureComputed(function () {
-    return get.SID(self.departureAirport(), self.departureRwyName());
+  readonly SIDList = ko.pureComputed(() => {
+    return get.SID(this.departureAirport(), this.departureRwyName());
   });
 
   // Selected SID name
-  self.SID = flight.departure.SID;
-  self.SIDName = ko.pureComputed(function () {
-    if (self.SID()) return self.SID().name;
+  readonly SID = flight.departure.SID;
+  readonly SIDName = ko.pureComputed(() => {
+    if (this.SID()) return this.SID().name;
     else return undefined;
   });
 
   // List of arrival runways based on arrival airport
-  self.arrivalRwyList = ko.pureComputed(function () {
-    return get.runway(self.arrivalAirport());
+  readonly arrivalRwyList = ko.pureComputed(() => {
+    return get.runway(this.arrivalAirport());
   });
 
   // Selected arrival runway and name
-  self.arrivalRunway = flight.arrival.runway;
-  self.arrivalRunwayName = ko.pureComputed(function () {
-    if (self.arrivalRunway()) return self.arrivalRunway().runway;
+  readonly arrivalRunway = flight.arrival.runway;
+  readonly arrivalRunwayName = ko.pureComputed(() => {
+    if (this.arrivalRunway()) return this.arrivalRunway().runway;
     else return undefined;
   });
 
   // List of STARs based on arrival airport and runway
   // FIXME: STARs do not necessarily need a runway at first
-  self.STARs = ko.pureComputed(function () {
-    return get.STAR(self.arrivalAirport(), self.arrivalRunwayName());
+  readonly STARs = ko.pureComputed(() => {
+    return get.STAR(this.arrivalAirport(), this.arrivalRunwayName());
   });
 
   // Selected STAR name
-  self.STAR = flight.arrival.STAR;
-  self.STARName = ko.pureComputed(function () {
-    if (self.STAR()) return self.STAR().name;
+  readonly STAR = flight.arrival.STAR;
+  readonly STARName = ko.pureComputed(() => {
+    if (this.STAR()) return this.STAR().name;
     else return undefined;
   });
 
   /************
    * VNAV Tab *
    ************/
-  self.vnavEnabled = flight.vnavEnabled;
-  self.cruiseAlt = flight.cruiseAlt;
-  self.spdControl = flight.spdControl;
-  self.phase = flight.phase;
-  self.phaseLocked = flight.phaseLocked;
+  readonly vnavEnabled = flight.vnavEnabled;
+  readonly cruiseAlt = flight.cruiseAlt;
+  readonly spdControl = flight.spdControl;
+  readonly phase = flight.phase;
+  readonly phaseLocked = flight.phaseLocked;
 
-  const phaseToText = ["climb", "cruise", "descent"];
-  self.currentPhaseText = ko.pureComputed(function () {
-    return phaseToText[flight.phase()];
+  private readonly phaseToText = ["climb", "cruise", "descent"];
+  readonly currentPhaseText = ko.pureComputed(() => {
+    return this.phaseToText[flight.phase()];
   });
-
-  self.nextPhase = function () {
-    const phase = flight.phase();
-
-    flight.phase(phase === phaseToText.length - 1 ? 0 : phase + 1);
-  };
 
   /************
    * PROG Tab *
    ************/
-  self.progInfo = progress.info;
+  readonly progInfo = progress.info;
 
-  // LOAD tab
-  self.loadRouteText = ko.observable();
-  self.loadRoute = function () {
-    waypoints.toRoute(self.loadRouteText());
-    self.loadRouteText(undefined);
-  };
+  /************
+   * LOAD Tab *
+   ************/
+  readonly loadRouteText = ko.observable<string>();
 
-  const generatedRouteText = ko.observable();
+  private readonly generatedRouteText = ko.observable<string>();
 
-  self.generateRoute = ko.pureComputed({
-    read: generatedRouteText,
-    write: function (isGenerate) {
+  readonly generateRoute = ko.pureComputed({
+    read: this.generatedRouteText,
+    write: (isGenerate) => {
       const generatedRoute = isGenerate ? waypoints.toRouteString() : undefined;
-      generatedRouteText(generatedRoute);
+      this.generatedRouteText(generatedRoute);
     },
   });
-
+  
   /***********
    * LOG Tab *
    ***********/
-  self.logData = log.data;
-  self.removeLogData = log.removeData;
+   readonly logData = log.data;
+   readonly removeLogData = log.removeData;
 }
 
 /**

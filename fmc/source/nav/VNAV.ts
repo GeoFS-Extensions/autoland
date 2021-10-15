@@ -8,6 +8,89 @@ import vnavProfile from "../vnav-profile";
 // Autopilot++ Dependencies
 const apModes = window.autopilot_pp.require("build/autopilot").modes;
 
+/**
+ * @private
+ * Gets each plane's flight parameters, for VNAV
+ *
+ * @returns {Array} [speed, vertical speed]
+ */
+function getFlightParameters(): number[] {
+  let spd: number, vs: number;
+  const a: number = geofs.aircraft.instance.animationValue.altitude;
+
+  // CLIMB
+  if (flight.phase() === 0) {
+    const profile = getVNAVProfile().climb;
+    let index: number;
+
+    for (let i = 0; i < profile.length; i++) {
+      if (a > profile[i][0] && a <= profile[i][1]) {
+        index = i;
+        break;
+      }
+    }
+
+    const belowStartAlt = index === undefined;
+
+    if (flight.spdControl() && !belowStartAlt) {
+      spd = profile[index][2];
+      if (index < profile.length - 1) vs = profile[index][3];
+      switchSpeedMode(spd);
+    }
+  }
+
+  // DESCENT
+  else if (flight.phase() === 2) {
+    const profile = getVNAVProfile().descent;
+    let index: number;
+
+    for (let i = 0; i < profile.length; i++) {
+      if (a > profile[i][0] && a <= profile[i][1]) {
+        index = i;
+        break;
+      }
+    }
+
+    const belowLastAlt = index === undefined;
+
+    // If current alt below lowest alt in profile
+    // SPD and V/S will not be restricted
+    if (flight.spdControl() && !belowLastAlt) {
+      spd = profile[index][2];
+      vs = profile[index][3];
+      switchSpeedMode(spd);
+    }
+  }
+
+  return [spd, vs];
+}
+
+/**
+ * @private
+ * Gets the climb/descent profile for VNAV
+ *
+ * @returns {Object} The profile needed by VNAV
+ */
+function getVNAVProfile(): { climb: number[][]; descent: number[][] } {
+  return (
+    geofs.aircraft.instance.setup.fmcVnavProfile ||
+    vnavProfile[geofs.aircraft.instance.id] ||
+    vnavProfile.DEFAULT
+  );
+}
+
+/**
+ * @private
+ * Checks if the speed input is mach and switches mode
+ *
+ * @param {Number} spd The speed to be checked
+ */
+function switchSpeedMode(spd: number) {
+  if (!spd) return;
+  if (spd <= 10) apModes.speed.isMach(true);
+  else apModes.speed.isMach(false);
+}
+
 export default {
   timer: null,
 
@@ -29,8 +112,11 @@ export default {
     const fieldElev = flight.fieldElev();
     const todCalc = flight.todCalc();
 
-    const currentAlt = geofs.aircraft.instance.animationValue.altitude;
-    let targetAlt, deltaAlt, nextDist, targetDist;
+    const currentAlt: number = geofs.aircraft.instance.animationValue.altitude;
+    let targetAlt: number;
+    let deltaAlt: number;
+    let nextDist: number;
+    let targetDist: number;
     if (hasRestriction) {
       targetAlt = route[next].alt();
       deltaAlt = targetAlt - currentAlt;
@@ -49,15 +135,16 @@ export default {
     }
 
     const spd = params[0];
-    let vs, alt;
+    let vs: number;
+    let alt: number;
 
     /**********************
      * Flight Phase Logic *
      **********************/
-    const lat1 = geofs.aircraft.instance.llaLocation[0] || null;
-    const lon1 = geofs.aircraft.instance.llaLocation[1] || null;
-    const lat2 = flight.arrival.coords()[0] || null;
-    const lon2 = flight.arrival.coords()[1] || null;
+    const lat1: number = geofs.aircraft.instance.llaLocation[0] || null;
+    const lon1: number = geofs.aircraft.instance.llaLocation[1] || null;
+    const lat2: number = flight.arrival.coords()[0] || null;
+    const lon2: number = flight.arrival.coords()[1] || null;
     let flightDist: number;
     let valid = true;
 
@@ -157,86 +244,3 @@ export default {
     if (alt !== undefined) apModes.altitude.value(alt);
   },
 };
-
-/**
- * @private
- * Gets each plane's flight parameters, for VNAV
- *
- * @returns {Array} [speed, vertical speed]
- */
-function getFlightParameters(): Array<any> {
-  let spd, vs;
-  const a = geofs.aircraft.instance.animationValue.altitude;
-
-  // CLIMB
-  if (flight.phase() === 0) {
-    const profile = getVNAVProfile().climb;
-    let index: number;
-
-    for (let i = 0; i < profile.length; i++) {
-      if (a > profile[i][0] && a <= profile[i][1]) {
-        index = i;
-        break;
-      }
-    }
-
-    const belowStartAlt = index === undefined;
-
-    if (flight.spdControl() && !belowStartAlt) {
-      spd = profile[index][2];
-      if (index < profile.length - 1) vs = profile[index][3];
-      switchSpeedMode(spd);
-    }
-  }
-
-  // DESCENT
-  else if (flight.phase() === 2) {
-    const profile = getVNAVProfile().descent;
-    let index: number;
-
-    for (let i = 0; i < profile.length; i++) {
-      if (a > profile[i][0] && a <= profile[i][1]) {
-        index = i;
-        break;
-      }
-    }
-
-    const belowLastAlt = index === undefined;
-
-    // If current alt below lowest alt in profile
-    // SPD and V/S will not be restricted
-    if (flight.spdControl() && !belowLastAlt) {
-      spd = profile[index][2];
-      vs = profile[index][3];
-      switchSpeedMode(spd);
-    }
-  }
-
-  return [spd, vs];
-}
-
-/**
- * @private
- * Gets the climb/descent profile for VNAV
- *
- * @returns {Object} The profile needed by VNAV
- */
-function getVNAVProfile(): { climb: number[][]; descent: number[][] } {
-  return (
-    geofs.aircraft.instance.setup.fmcVnavProfile ||
-    vnavProfile[geofs.aircraft.instance.id] ||
-    vnavProfile.DEFAULT
-  );
-}
-
-/**
- * @private
- * Checks if the speed input is mach and switches mode
- *
- * @param {Number} spd The speed to be checked
- */
-function switchSpeedMode(spd: number) {
-  if (!spd) return;
-  if (spd <= 10) apModes.speed.isMach(true);
-  else apModes.speed.isMach(false);
-}

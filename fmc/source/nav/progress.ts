@@ -24,11 +24,11 @@ const info = {
 const update = function () {
   const route = waypoints.route();
   const nextWaypoint = waypoints.nextWaypoint();
-  const lat1 = geofs.aircraft.instance.llaLocation[0];
-  const lon1 = geofs.aircraft.instance.llaLocation[1];
+  const lat1: number = geofs.aircraft.instance.llaLocation[0];
+  const lon1: number = geofs.aircraft.instance.llaLocation[1];
   const lat2 = flight.arrival.coords()[0];
   const lon2 = flight.arrival.coords()[1];
-  const times = [[], [], [], [], []]; // flightETE, flightETA, todETE, todETA, nextETE
+  const times: number[][] = [[], [], [], [], []]; // flightETE, flightETA, todETE, todETA, nextETE
   const nextDist =
     nextWaypoint === null ? 0 : route[nextWaypoint].distFromPrev();
   let flightDist: number;
@@ -66,9 +66,10 @@ const update = function () {
  * @param {Number} nextDist The distance to the next waypoint
  * @param {Array} times An array of the time: [hours, minutes]
  */
-const print = function (flightDist, nextDist, times) {
+const print = function (flightDist: number, nextDist: number, times: number[][]) {
+  const formattedTimes: string[] = [];
   for (let i = 0; i < times.length; i++) {
-    times[i] = utils.formatTime(times[i]);
+    formattedTimes.push(utils.formatTime(times[i]));
   }
 
   // Formats flightDist
@@ -77,7 +78,7 @@ const print = function (flightDist, nextDist, times) {
   } else flightDist = Math.round(flightDist);
 
   // If T/D is entered and T/D has not been passed
-  let todDist;
+  let todDist: number;
   if (flight.todDist() && flight.todDist() < flightDist)
     todDist = flightDist - flight.todDist();
 
@@ -89,14 +90,14 @@ const print = function (flightDist, nextDist, times) {
   // If times and distances are not defined, print default
   const DEFAULT_DIST = "--";
 
-  info.flightETE(times[0]);
-  info.flightETA(times[1]);
-  info.todETE(times[2]);
-  info.todETA(times[3]);
-  info.flightDist(flightDist || DEFAULT_DIST);
-  info.todDist(todDist || DEFAULT_DIST);
-  info.nextDist(nextDist || DEFAULT_DIST);
-  info.nextETE(times[4]);
+  info.flightETE(formattedTimes[0]);
+  info.flightETA(formattedTimes[1]);
+  info.todETE(formattedTimes[2]);
+  info.todETA(formattedTimes[3]);
+  info.flightDist(flightDist.toString() || DEFAULT_DIST);
+  info.todDist(todDist.toString() || DEFAULT_DIST);
+  info.nextDist(nextDist.toString() || DEFAULT_DIST);
+  info.nextETE(formattedTimes[4]);
 };
 
 export default {

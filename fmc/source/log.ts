@@ -4,7 +4,7 @@ import utils from "./utils";
 let mainTimer: number = null;
 let speedTimer: number = null;
 
-const data = ko.observableArray();
+const data = ko.observableArray<(string | number)[]>();
 
 /**
  * Updates plane's flight log, set on a timer

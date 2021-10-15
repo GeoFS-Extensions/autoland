@@ -1,10 +1,12 @@
+import { LatLng } from "leaflet";
+
 const polyline = L.polyline([], {
   color: "#7b7c14",
   weight: 2,
   lineJoin: "round",
 });
 
-function setAt(n: number, coords: L.LatLng | L.LatLng[] | L.LatLng[][]) {
+function setAt(n: number, coords: LatLng | LatLng[] | LatLng[][]) {
   const list = polyline.getLatLngs();
   list[n] = coords;
   polyline.setLatLngs(list);

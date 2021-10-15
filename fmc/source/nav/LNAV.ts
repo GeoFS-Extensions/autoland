@@ -2,7 +2,7 @@ import distance from "../distance";
 import flight from "../flight";
 import waypoints from "../waypoints";
 
-let timer = null;
+let timer: number = null;
 
 /**
  * Controls LNAV, plane's lateral navigation, set on a timer

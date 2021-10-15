@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-this-alias */ /* I really dont want to convert it right now, I'll do it later */
 import * as ko from "knockout";
 import debug from "./debug";
 import get from "./get";
@@ -14,124 +13,125 @@ const autopilot = window.autopilot_pp.require("build/autopilot"),
   gc = window.autopilot_pp.require("build/greatcircle"),
   icao = window.navData.airports;
 
-const route = ko.observableArray();
-const nextWaypoint = ko.observable(null);
+const route = ko.observableArray<Waypoint>();
+const nextWaypoint = ko.observable<number>(null);
 
 /**
  * Waypoint object to distinguish between each route item
- *
- * @private
- * @constructor
  */
-const Waypoint = function () {
-  const self = this;
-
+class Waypoint {
   // Waypoint name
-  const _wpt = ko.observable();
-  self.wpt = ko.pureComputed({
-    read: _wpt,
-    write: function (val) {
-      _wpt(val);
+  private readonly _wpt = ko.observable<string>();
+  readonly wpt = ko.pureComputed<string>({
+    read: this._wpt,
+    write: (val: string) => {
+      this._wpt(val);
 
-      const coords = get.waypoint(val, getIndex(self));
-      const isValid = coords && coords[0] && coords[1];
+      const coords = get.waypoint(val, getIndex(this));
+      const isValid: boolean = coords && coords[0] && coords[1];
 
-      self.lat(isValid ? coords[0] : self.lat(), isValid);
-      self.lon(isValid ? coords[1] : self.lon(), isValid);
-      self.info(isValid ? coords[2] : undefined);
+      // @ts-expect-error I do not know how this code even compiled
+      this.lat(isValid ? coords[0] : this.lat(), isValid);
+      // @ts-expect-error I do not know how this code even compiled
+      this.lon(isValid ? coords[1] : this.lon(), isValid);
+      this.info(isValid ? coords[2] : undefined);
 
       // if (!isValid) self.marker(val);
       // else self.marker(val);
-    },
+    }
   });
 
   // Latitude
-  const _lat = ko.observable<number>();
+  private readonly _lat = ko.observable<number>();
   // FIX: it might be fixed now, I'm not sure.
-  self.lat = ko.pureComputed<number, boolean>({
-    read: _lat,
-    write: function (this: boolean, val) {
+  readonly lat = ko.pureComputed<number, boolean>({
+    read: this._lat,
+    //The first arg needs to be called this (knockout.d.ts#223), but we need to use an arrow function to keep
+    // @ts-expect-error the context of this (class instance). Also, it's just weird.
+    write: (_this: Waypoint, val: number, isValid: boolean) => {
       val = formatCoords(val.toString());
-      _lat(!isNaN(val) ? val : undefined);
-      self.valid(Boolean(this));
-      // self.marker(self.wpt(), L.latLng(val, self.lon()));
-    },
+      this._lat(!isNaN(val) ? val : undefined);
+      this.valid(Boolean(isValid));
+      // this.marker(this.wpt(), L.latLng(val, this.lon()));
+    }
   });
 
   // Longitude
-  const _lon = ko.observable<number>();
-  // FIX: it might be fixed now, I'm not sure.
-  self.lon = ko.pureComputed<number, boolean>({
-    read: _lon,
-    write: function (this, val) {
+  private readonly _lon = ko.observable<number>();
+  readonly lon = ko.pureComputed<number, boolean>({
+    read: this._lat,
+    //The first arg needs to be called this (knockout.d.ts#223), but we need to use an arrow function to keep
+    // @ts-expect-error the context of this (class instance). Also, it's just weird.
+    write: (_this: Waypoint, val: number, isValid: boolean) => {
       val = formatCoords(val.toString());
-      _lon(!isNaN(val) ? val : undefined);
-      self.valid(Boolean(this));
-      // self.marker(self.wpt(), L.latLng(self.lat(), val));
+      this._lon(!isNaN(val) ? val : undefined);
+      this.valid(Boolean(isValid));
+      // this.marker(this.wpt(), L.latLng(this.lat(), val));    }
     },
   });
 
   // Restriction altitude
-  self.alt = ko.observable();
+  readonly alt = ko.observable();
 
   // Is waypoint valid
-  self.valid = ko.observable(false);
+  readonly valid = ko.observable<boolean>(false);
 
   // Waypoint info
-  self.info = ko.observable();
+  readonly info = ko.observable();
 
   // Distance from previous waypoint
-  self.distFromPrev = ko.pureComputed(function () {
-    return getInfoFromPrev(self)[0];
+  readonly distFromPrev = ko.pureComputed(() => {
+    return getInfoFromPrev(this)[0];
   });
-
+  
   // Bearing from previous waypoint
-  self.brngFromPrev = ko.pureComputed(function () {
-    return getInfoFromPrev(self)[1];
+  readonly brngFromPrev = ko.pureComputed(() => {
+    return getInfoFromPrev(this)[1];
   });
+  /*
+  var markerSettings = {
+  	map: ui.map,
+  	icon: {
+  		url: PAGE_PATH + 'images/waypoint.png',
+  		scaledSize: new google.maps.Size(24, 24),
+  		anchor: new google.maps.Point(12, 12),
+  		zIndex: 1000
+  	}
+  };
 
-  // var markerSettings = {
-  // 	map: ui.map,
-  // 	icon: {
-  // 		url: PAGE_PATH + 'images/waypoint.png',
-  // 		scaledSize: new google.maps.Size(24, 24),
-  // 		anchor: new google.maps.Point(12, 12),
-  // 		zIndex: 1000
-  // 	}
-  // };
-
-  // var markerIcon =  L.icon({
-  // 	iconUrl: PAGE_PATH + 'images/waypoint.png',
-  // 	iconSize: [24, 24],
-  // 	iconAnchor: [12, 12],
-  // });
+  var markerIcon =  L.icon({
+  	iconUrl: PAGE_PATH + 'images/waypoint.png',
+  	iconSize: [24, 24],
+  	iconAnchor: [12, 12],
+  });
 
   // Waypoint marker
-  // var _marker = ko.observable();
-  // self.marker = ko.pureComputed({
-  // 	read: _marker,
-  // 	write: function (wptName, coords) {
-  // 		var markerOption = {
-  // 			icon: markerIcon,
-  // 			title: wptName
-  // 		};
-  //
-  // 		if (coords && !isNaN(coords.lat) && !isNaN(coords.lng)) {
-  // 			_marker(L.marker(coords, markerOption).addTo(ui.mapInstance));
-  // 			var index = getIndex(self);
-  //
-  // 			// If path at this index exists, amend it
-  // 			if (polyline.path.getLatLngs()[index])
-  // 				polyline.setAt(index, coords);
-  // 			else polyline.insertAt(index, coords);
-  // 		}
-  // 	}
-  // });
-};
+  var _marker = ko.observable();
+  self.marker = ko.pureComputed({
+  	read: _marker,
+  	write: function (wptName, coords) {
+  		var markerOption = {
+  			icon: markerIcon,
+  			title: wptName
+  		};
+  
+  		if (coords && !isNaN(coords.lat) && !isNaN(coords.lng)) {
+  			_marker(L.marker(coords, markerOption).addTo(ui.mapInstance));
+  			var index = getIndex(self);
+  
+  			// If path at this index exists, amend it
+  			if (polyline.path.getLatLngs()[index])
+  				polyline.setAt(index, coords);
+  			else polyline.insertAt(index, coords);
+  		}
+  	}
+  });
+  */
+}
 
 // Makes llaLocation an observable for automatic data updates
-const llaLocation = ko.observable();
-setInterval(function () {
+const llaLocation = ko.observable<number[]>();
+setInterval(() => {
   llaLocation(geofs.aircraft.instance.llaLocation);
 }, 1000);
 
@@ -139,11 +139,11 @@ setInterval(function () {
  * Computes heading and bearing information from previous waypoint to current
  *
  * @param {Waypoint} self Current `Waypoint` object
- * @returns {Array} [distance, bearing]
+ * @returns {Number[]} [distance, bearing]
  *
  * @private
  */
-function getInfoFromPrev(self): Array<any> {
+function getInfoFromPrev(self: Waypoint): number[] {
   let distance: number, bearing: number;
   const index = getIndex(self);
 
@@ -179,16 +179,13 @@ function getInfoFromPrev(self): Array<any> {
  * @param {Waypoint} self Current `Waypoint` object
  * @returns {Number} Index
  */
-function getIndex(self): number {
+function getIndex(self: Waypoint): number {
   let index: number;
-
-  for (let i = 0; index < route().length; index++) {
-    if (self === route()[i]) {
-      index = i;
+  for (index = 0; index < route().length; index++) {
+    if (self === route()[index]) {
       break;
     }
   }
-
   return index;
 }
 
@@ -223,15 +220,15 @@ function move(index1: number, index2: number) {
 /**
  * Turns the waypoints into an array
  *
- * @returns {Array} The array of waypoint names
+ * @returns {string[]} The array of waypoint names
  */
-function makeFixesArray(): Array<any> {
-  const result = [];
+function makeFixesArray(): string[] {
+  const result: string[] = [];
 
   const departureVal = flight.departure.airport();
   if (departureVal) result.push(departureVal);
 
-  route().forEach(function (rte) {
+  route().forEach(rte => {
     result.push(rte.wpt());
   });
 
@@ -257,7 +254,7 @@ function toFixesString(): string {
  * 					using `JSON.stringify` method
  */
 function toRouteString(): string {
-  const normalizedRoute = [];
+  const normalizedRoute: (number | string | boolean)[][] = [];
 
   for (let i = 0; i < route().length; i++) {
     normalizedRoute.push([
@@ -318,9 +315,7 @@ function toRoute(s: string) {
   }
 
   let isWaypoints = true;
-  let a,
-    b,
-    str: string[] = [];
+  let a: number, b: number, str: string[] = [];
 
   str = s.toUpperCase().split(" ");
 
@@ -415,7 +410,7 @@ function removeWaypoint(
  * @param {Number} n The index (starts with 0) to be activated or deactivated
  *		{Boolean} If false, deactivates all waypoints
  */
-function activateWaypoint(n: number | boolean) {
+function activateWaypoint(n: number | false) {
   if (n !== false && nextWaypoint() !== n) {
     if (n < route().length) {
       nextWaypoint(n);
@@ -493,7 +488,7 @@ function saveData() {
  *
  * @param {String} arg The generated route
  */
-function loadFromSave(arg: string) {
+function loadFromSave(arg?: string) {
   /**
    * The argument passed in [optional] or the localStorage is a
    * 3D array in String format. arr is the array after JSON.parse
@@ -547,10 +542,9 @@ function loadFromSave(arg: string) {
     // Auto-saves the data once again
     saveData();
   }
-  // TODO: make this a bit more friendly
   else
     log.warn(
-      "You did not save the waypoints or you cleared the browser's cache"
+      "There is no saved route or the browser's cache was cleared."
     );
 }
 
@@ -562,7 +556,7 @@ function loadFromSave(arg: string) {
  */
 function shiftWaypoint(oldIndex: number, value: number) {
   debug.log(
-    "Waypoint #" + (oldIndex + 1) + "(index=" + oldIndex + ") shifted " + value
+    `Waypoint #${oldIndex + 1} (index=${oldIndex}) shifted ${value}`
   );
 
   const newIndex = oldIndex + value;
