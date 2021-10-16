@@ -2,7 +2,7 @@
 import * as ko from "knockout";
 import ap from "../autopilot";
 import apDisconnectSound from "./apdisconnectsound";
-import AutopilotVM from "./autopilot copy";
+import AutopilotVM from "./autopilot";
 import enableKcas from "../enablekcas";
 import papiBugfix from "../bugfixes/papi";
 import restrictionsBugfix from "../bugfixes/restrictions";
