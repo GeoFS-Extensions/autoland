@@ -66,7 +66,11 @@ const update = function () {
  * @param {Number} nextDist The distance to the next waypoint
  * @param {Array} times An array of the time: [hours, minutes]
  */
-const print = function (flightDist: number, nextDist: number, times: number[][]) {
+const print = function (
+  flightDist: number,
+  nextDist: number,
+  times: number[][]
+) {
   const formattedTimes: string[] = [];
   for (let i = 0; i < times.length; i++) {
     formattedTimes.push(utils.formatTime(times[i]));

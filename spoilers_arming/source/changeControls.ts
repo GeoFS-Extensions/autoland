@@ -43,8 +43,9 @@ export default () => {
     document.addEventListener("keydown", (e: KeyboardEvent) => {
       if (
         e.code ==
-          window.keyboard_mapping.require("keyboardMapping")()["Spoilers Arming"]
-            .code &&
+          window.keyboard_mapping.require("keyboardMapping")()[
+            "Spoilers Arming"
+          ].code &&
         !e.ctrlKey &&
         !e.altKey &&
         !e.shiftKey

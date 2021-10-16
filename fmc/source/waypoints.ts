@@ -38,7 +38,7 @@ class Waypoint {
 
       // if (!isValid) self.marker(val);
       // else self.marker(val);
-    }
+    },
   });
 
   // Latitude
@@ -53,7 +53,7 @@ class Waypoint {
       this._lat(!isNaN(val) ? val : undefined);
       this.valid(Boolean(isValid));
       // this.marker(this.wpt(), L.latLng(val, this.lon()));
-    }
+    },
   });
 
   // Longitude
@@ -83,7 +83,7 @@ class Waypoint {
   readonly distFromPrev = ko.pureComputed(() => {
     return getInfoFromPrev(this)[0];
   });
-  
+
   // Bearing from previous waypoint
   readonly brngFromPrev = ko.pureComputed(() => {
     return getInfoFromPrev(this)[1];
@@ -228,7 +228,7 @@ function makeFixesArray(): string[] {
   const departureVal = flight.departure.airport();
   if (departureVal) result.push(departureVal);
 
-  route().forEach(rte => {
+  route().forEach((rte) => {
     result.push(rte.wpt());
   });
 
@@ -315,7 +315,9 @@ function toRoute(s: string) {
   }
 
   let isWaypoints = true;
-  let a: number, b: number, str: string[] = [];
+  let a: number,
+    b: number,
+    str: string[] = [];
 
   str = s.toUpperCase().split(" ");
 
@@ -541,11 +543,8 @@ function loadFromSave(arg?: string) {
     }
     // Auto-saves the data once again
     saveData();
-  }
-  else
-    log.warn(
-      "There is no saved route or the browser's cache was cleared."
-    );
+  } else
+    log.warn("There is no saved route or the browser's cache was cleared.");
 }
 
 /**
@@ -555,9 +554,7 @@ function loadFromSave(arg?: string) {
  * @param {Number} value Direction (+/-) and quantity moved
  */
 function shiftWaypoint(oldIndex: number, value: number) {
-  debug.log(
-    `Waypoint #${oldIndex + 1} (index=${oldIndex}) shifted ${value}`
-  );
+  debug.log(`Waypoint #${oldIndex + 1} (index=${oldIndex}) shifted ${value}`);
 
   const newIndex = oldIndex + value;
 

@@ -3,7 +3,7 @@ const { join } = require("path");
 const { chdir } = require("process");
 const homeDir = require("../main_dir");
 const { optimize } = require("requirejs");
-const { appendFileSync } = require("fs-extra");
+const { appendFileSync, pathExistsSync } = require("fs-extra");
 const chalk = require("chalk");
 
 let options = {
@@ -74,11 +74,25 @@ function build(debug) {
 
   // optimize the requirejs file
   (async function () {
-    console.log(scriptTag() + "Starting script optimizer...");
+    console.log(
+      scriptTag() + chalk.hex("#d5ff80")("Starting script optimizer...")
+    );
     await optimize(options, () => {
-      console.log(scriptTag() + "Script optimized, appending to it...");
-      appendToFile(options.out);
-      console.log(scriptTag() + "Script built!");
+      // wait for the optimization to actually be done
+      const interval = setInterval(() => {
+        if (
+          !pathExistsSync(
+            join(homeDir, "extension/source/scripts/autopilot_pp.js")
+          )
+        ) return;
+        clearInterval(interval);
+        console.log(
+          scriptTag() +
+            chalk.hex("#d5ff80")("Script optimized, appending to it...")
+        );
+        appendToFile(options.out);
+        console.log(scriptTag() + chalk.hex("#a1f086")("Script built!"));
+      }, 500);
     });
   })();
 }

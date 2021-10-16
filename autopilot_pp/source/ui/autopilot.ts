@@ -10,13 +10,13 @@ type MDLHTMLElement = HTMLElement & {
     MaterialSwitch: {
       checkDisabled: () => void;
       checkToggleState: () => void;
-    }
+    };
     MaterialRadio: {
       checkDisabled: () => void;
       checkToggleState: () => void;
-    }
-  }
-}
+    };
+  };
+};
 
 const apValidate = (target: ko.Observable, fn: (val: string) => number) => {
   return (val: string) => {
@@ -81,7 +81,11 @@ export class AutopilotVM {
   };
 
   // Class variables:
-  static readonly modeToText = ["Heading mode", "Lat/lon mode", "Waypoint mode"];
+  static readonly modeToText = [
+    "Heading mode",
+    "Lat/lon mode",
+    "Waypoint mode",
+  ];
 
   // Instance Variables:
   readonly on = ap.on;
@@ -187,12 +191,11 @@ export class AutopilotVM {
             '" is an invalid or unrecognised ICAO airport code.'
         );
       }
-    }
+    },
   });
 
-
   constructor() {
-  // Make it so when changing to an aircraft in the array the autopilot turns off:
+    // Make it so when changing to an aircraft in the array the autopilot turns off:
     const oldChange = geofs.aircraft.Aircraft.change;
     geofs.aircraft.Aircraft.change = (a, b, c, d) => {
       if (shouldntHaveAp.includes(a)) {
@@ -204,7 +207,11 @@ export class AutopilotVM {
 }
 
 // Handle MDL's annoying inputs that needs updating all the time.
-const updateMdlSwitch = (element: MDLHTMLElement, _notUsed, bindings: ko.AllBindings) => {
+const updateMdlSwitch = (
+  element: MDLHTMLElement,
+  _notUsed,
+  bindings: ko.AllBindings
+) => {
   // Call these so the update is triggered when these bindings change.
   const isChecked = bindings.get("checked");
   const isEnabled = bindings.get("enable");
@@ -220,7 +227,11 @@ const updateMdlSwitch = (element: MDLHTMLElement, _notUsed, bindings: ko.AllBind
   materialSwitch.checkToggleState();
 };
 
-const updateMdlRadio = (element: MDLHTMLElement, _notUsed, bindings: ko.AllBindings) => {
+const updateMdlRadio = (
+  element: MDLHTMLElement,
+  _notUsed,
+  bindings: ko.AllBindings
+) => {
   // Call these so the update is triggered when these bindings change.
   const isChecked = bindings.get("checked");
   const isEnabled = bindings.get("enable");

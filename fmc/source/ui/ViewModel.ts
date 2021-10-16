@@ -14,12 +14,12 @@ class ViewModel {
   nextPhase() {
     const phase = flight.phase();
     flight.phase(phase === this.phaseToText.length - 1 ? 0 : phase + 1);
-  };
+  }
 
   loadRoute() {
     waypoints.toRoute(this.loadRouteText());
     this.loadRouteText(undefined);
-  };
+  }
 
   // Instance Variables
   private readonly _opened = ko.observable<boolean>(false);
@@ -27,7 +27,7 @@ class ViewModel {
     read: this._opened,
     write: (boolean: boolean) => {
       this._opened(boolean);
-    }
+    },
   });
 
   readonly modalWarning = log.modalWarning;
@@ -46,8 +46,7 @@ class ViewModel {
   readonly activateWaypoint = waypoints.activateWaypoint;
   readonly shiftWaypoint = waypoints.shiftWaypoint;
   readonly removeWaypoint = waypoints.removeWaypoint;
-  
-  
+
   /***************
    * DEP/ARR Tab *
    ***************/
@@ -146,12 +145,12 @@ class ViewModel {
       this.generatedRouteText(generatedRoute);
     },
   });
-  
+
   /***********
    * LOG Tab *
    ***********/
-   readonly logData = log.data;
-   readonly removeLogData = log.removeData;
+  readonly logData = log.data;
+  readonly removeLogData = log.removeData;
 }
 
 /**
