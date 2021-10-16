@@ -6,7 +6,16 @@
 "use strict";
 // Make sure code is run after GEFS is ready.
 (function () {
-  var _a;
+  /**
+   * Checks if keyboard mapping is ready.
+   * @returns {boolean} Whether to continue and load.
+   */
+  function checkKeyboardMapping() {
+    var _a;
+    return (_a = window.keyboard_mapping) === null || _a === void 0
+      ? void 0
+      : _a.ready;
+  }
   function load() {
     require(["./build/ui/main"]);
   }
@@ -15,28 +24,17 @@
     window.window.geofs &&
     window.geofs.canvas &&
     window.navData.statusCode == 1 &&
-    ((_a =
-      window === null || window === void 0
-        ? void 0
-        : window.keyboard_mapping) === null || _a === void 0
-      ? void 0
-      : _a.ready)
+    checkKeyboardMapping()
   ) {
     load();
     return;
   }
   var timer = setInterval(function () {
-    var _a;
     if (
       !window.window.geofs ||
       !window.geofs.init ||
       window.navData.statusCode != 1 ||
-      !((_a =
-        window === null || window === void 0
-          ? void 0
-          : window.keyboard_mapping) === null || _a === void 0
-        ? void 0
-        : _a.ready)
+      checkKeyboardMapping()
     )
       return;
     clearInterval(timer);

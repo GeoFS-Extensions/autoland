@@ -5,6 +5,7 @@
  */
 "use strict";
 (function () {
+  // TODO: REVIEW: is this even needed anymore?
   if (!window.Promise) throw new Error("Browser is outdated.");
   // Check if game has completed loading
   var timer = setInterval(function () {
@@ -21,7 +22,6 @@
     )
       return;
     clearInterval(timer);
-    /* global require */ // because for some reason eslint was thinking require is undefined.
     require(["build/ui/main"]);
   }, 250);
 })();

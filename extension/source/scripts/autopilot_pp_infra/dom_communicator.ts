@@ -41,4 +41,6 @@ const navData = {
   waypoints: {},
 };
 
+window.navData = navData;
+
 document.dispatchEvent(new CustomEvent("readyForDataLinks", {}));

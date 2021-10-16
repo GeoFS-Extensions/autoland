@@ -31,7 +31,7 @@ if (argv.debug) {
 }
 
 function emptyDir() {
-  const filesToDelete = sync("extension/**/scripts/*.js*");
+  const filesToDelete = sync("extension/source/scripts/*.js*");
 
   filesToDelete.forEach((value) => {
     removeSync(value);

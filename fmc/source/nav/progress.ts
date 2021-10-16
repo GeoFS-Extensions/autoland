@@ -22,7 +22,7 @@ const info = {
  * Updates the plane's progress during flying, set on a timer
  */
 const update = function () {
-  const route = waypoints.route();
+  const route = waypoints.route;
   const nextWaypoint = waypoints.nextWaypoint();
   const lat1: number = geofs.aircraft.instance.llaLocation[0];
   const lon1: number = geofs.aircraft.instance.llaLocation[1];
