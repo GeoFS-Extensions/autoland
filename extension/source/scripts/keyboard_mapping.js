@@ -2286,466 +2286,6 @@ q(h.afterAdd,F)}})();a.b("utils.setDomNodeChildrenFromArrayMapping",a.a.ec);a.ba
 this.renderTemplateSource=function(b,e,f,g){g=g||w;f=f||{};if(2>a)throw Error("Your version of jQuery.tmpl is too old. Please upgrade to jQuery.tmpl 1.0.0pre or later.");var h=b.data("precompiled");h||(h=b.text()||"",h=v.template(null,"{{ko_with $item.koBindingContext}}"+h+"{{/ko_with}}"),b.data("precompiled",h));b=[e.$data];e=v.extend({koBindingContext:e},f.templateOptions);e=v.tmpl(h,b,e);e.appendTo(g.createElement("div"));v.fragments={};return e};this.createJavaScriptEvaluatorBlock=function(a){return"{{ko_code ((function() { return "+
 a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' id='"+a+"'>"+b+"\x3c/script>")};0<a&&(v.tmpl.tag.ko_code={open:"__.push($1 || '');"},v.tmpl.tag.ko_with={open:"with($1) {",close:"} "})};a.$a.prototype=new a.ca;a.$a.prototype.constructor=a.$a;var b=new a.$a;0<b.Hd&&a.gc(b);a.b("jqueryTmplTemplateEngine",a.$a)})()})})();})();
 
-define('build/speedConversions',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var molar = 8.3144621;
-    var gravity = (function () {
-        var bigG = 6.67408e-11;
-        var earthMass = 5.9722e24;
-        var earthRadius = 6371000;
-        return bigG * (earthMass / Math.pow(earthRadius, 2));
-    })();
-    var airMass = 28.96491498930052e-3;
-    var gamma = 1.4;
-    var knotsToMs = 463 / 900;
-    var msToKnots = 900 / 463;
-    var airGasConstant = molar / airMass;
-    function speedOfSound(temperature) {
-        return Math.sqrt(gamma * airGasConstant * temperature);
-    }
-    var densitySL = 1.225;
-    var pressureSL = 101325;
-    var temperatureSL = 288.15;
-    var machSL = speedOfSound(temperatureSL);
-    function airDensity(pressure, temperature) {
-        return pressure / temperature / airGasConstant;
-    }
-    function tasToMach(ktas, temperature) {
-        return (ktas * knotsToMs) / speedOfSound(temperature);
-    }
-    function casToMach(kcas, pressure, temperature) {
-        if (arguments.length === 2) {
-            var altitude = pressure;
-            var condition = standardConditions(altitude);
-            pressure = condition[0];
-            temperature = condition[1];
-        }
-        return tasToMach(casToTas(kcas, pressure, temperature), temperature);
-    }
-    function machToCas(mach, pressure, temperature) {
-        if (arguments.length === 2) {
-            var altitude = pressure;
-            var condition = standardConditions(altitude);
-            pressure = condition[0];
-            temperature = condition[1];
-        }
-        return tasToCas(mach * msToKnots * speedOfSound(temperature), pressure, temperature);
-    }
-    function tasToEas(ktas, density) {
-        return ktas * Math.sqrt(density / densitySL);
-    }
-    function easToTas(keas, density) {
-        return keas * Math.sqrt(densitySL / density);
-    }
-    function standardConditions(altitude) {
-        var exp = Math.exp;
-        var min = Math.min;
-        var pow = Math.pow;
-        var layers = [
-            [288.15, 0, -0.0065],
-            [216.65, 11000, 0],
-            [216.65, 20000, 0.001],
-            [228.65, 32000, 0.0028],
-            [270.65, 47000, 0],
-            [270.65, 51000, -0.0028],
-            [214.65, 71000, -0.002],
-            [186.946, 84852, 0],
-        ];
-        var pressure = 101325;
-        var temperature = 288.15;
-        layers.some(function (currentLayer, i) {
-            var baseTemperature = currentLayer[0];
-            var layerHeight = currentLayer[1];
-            var nextLayerHeight = layers[min(i + 1, layers.length - 1)][1];
-            var lapseRate = currentLayer[2];
-            var heightDifference = min(altitude, nextLayerHeight) - layerHeight;
-            temperature = baseTemperature + heightDifference * lapseRate;
-            if (lapseRate === 0)
-                pressure *= exp((-gravity * airMass * heightDifference) / molar / baseTemperature);
-            else
-                pressure *= pow(baseTemperature / temperature, (gravity * airMass) / molar / lapseRate);
-            if (nextLayerHeight >= altitude)
-                return true;
-        });
-        return [pressure, temperature];
-    }
-    function tasToCas(ktas, pressure, temperature) {
-        if (arguments.length === 2) {
-            var altitude = pressure;
-            var condition = standardConditions(altitude);
-            pressure = condition[0];
-            temperature = condition[1];
-        }
-        var A0 = machSL * msToKnots;
-        var P0 = pressureSL;
-        var P = pressure;
-        var T0 = temperatureSL;
-        var T = temperature;
-        var sqrt = Math.sqrt;
-        var pow = Math.pow;
-        var Qc = P * (pow((T0 * ktas * ktas) / (5 * T * A0 * A0) + 1, 7 / 2) - 1);
-        return A0 * sqrt(5 * (pow(Qc / P0 + 1, 2 / 7) - 1));
-    }
-    function casToTas(kcas, pressure, temperature) {
-        if (arguments.length === 2) {
-            var altitude = pressure;
-            var condition = standardConditions(altitude);
-            pressure = condition[0];
-            temperature = condition[1];
-        }
-        var A0 = machSL * msToKnots;
-        var P0 = pressureSL;
-        var P = pressure;
-        var T0 = temperatureSL;
-        var T = temperature;
-        var sqrt = Math.sqrt;
-        var pow = Math.pow;
-        var Qc = P0 * (pow((kcas * kcas) / (5 * A0 * A0) + 1, 7 / 2) - 1);
-        return A0 * sqrt(((5 * T) / T0) * (pow(Qc / P + 1, 2 / 7) - 1));
-    }
-    function easToCas(keas, pressure) {
-        if (arguments.length === 2) {
-            var altitude = pressure;
-            var condition = standardConditions(altitude);
-            pressure = condition[0];
-        }
-        var A0 = machSL * msToKnots;
-        var P0 = pressureSL;
-        var sqrt = Math.sqrt;
-        var pow = Math.pow;
-        var Qc = (keas * keas * P0) / 2;
-        return A0 * sqrt(5 * (pow(Qc / P0 + 1, 2 / 7) - 1));
-    }
-    function casToEas(kcas, pressure) {
-        if (arguments.length === 2) {
-            var altitude = pressure;
-            var condition = standardConditions(altitude);
-            pressure = condition[0];
-        }
-        var A0 = machSL * msToKnots;
-        var P0 = pressureSL;
-        var pow = Math.pow;
-        var Qc = P0 * (pow((kcas * kcas) / (5 * A0 * A0) + 1, 7 / 2) - 1);
-        return Math.sqrt((2 * Qc) / P0);
-    }
-    var airspeed = {
-        speedOfSound: speedOfSound,
-        tasToMach: tasToMach,
-        airDensity: airDensity,
-        standardConditions: standardConditions,
-        casToMach: casToMach,
-        machToCas: machToCas,
-        tasToCas: tasToCas,
-        casToTas: casToTas,
-        tasToEas: tasToEas,
-        easToTas: easToTas,
-        casToEas: casToEas,
-        easToCas: easToCas,
-    };
-    exports.default = airspeed;
-});
-
-define('build/util',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var SMOOTH_BUFFER = new Map();
-    function exponentialSmoothing(keyName, newValue, smoothingFactor) {
-        var buffer = SMOOTH_BUFFER.get(keyName);
-        if (!buffer) {
-            SMOOTH_BUFFER.set(keyName, [newValue, smoothingFactor || 2]);
-            return newValue;
-        }
-        smoothingFactor = buffer[1];
-        var S_t = newValue * smoothingFactor + (1 - smoothingFactor) * buffer[0];
-        buffer[0] = S_t;
-        return S_t;
-    }
-    function fixAngle(a) {
-        var result = a % 360;
-        if (result > 180)
-            return result - 360;
-        if (result <= -180)
-            return result + 360;
-        return result;
-    }
-    function fixAngle360(a) {
-        var result = a % 360;
-        return result > 0 ? result : result + 360;
-    }
-    var DEGREES_TO_RADIANS = 0.017453292519943295;
-    function deg2rad(x) {
-        return x * DEGREES_TO_RADIANS;
-    }
-    function rad2deg(x) {
-        return x / DEGREES_TO_RADIANS;
-    }
-    var METRES_PER_SECOND_TO_KNOTS = 1.9438444924406046;
-    function knots2ms(x) {
-        return x / METRES_PER_SECOND_TO_KNOTS;
-    }
-    function ms2knots(x) {
-        return x * METRES_PER_SECOND_TO_KNOTS;
-    }
-    var FEET_TO_METRES = 0.3048;
-    function ft2mtrs(x) {
-        return x * FEET_TO_METRES;
-    }
-    function mtrs2ft(x) {
-        return x / FEET_TO_METRES;
-    }
-    function isPlusZero(arg) {
-        return arg === 0 && 1 / arg === Infinity;
-    }
-    function isMinusZero(arg) {
-        return arg === 0 && 1 / arg === -Infinity;
-    }
-    function clamp(x, min, max) {
-        x = +x;
-        min = +min;
-        max = +max;
-        if (min !== min || max !== max)
-            return NaN;
-        if (x < min)
-            return min;
-        if (x > max)
-            return max;
-        if (x === 0) {
-            if (isPlusZero(min))
-                return 0;
-            if (isMinusZero(max))
-                return -0;
-        }
-        return x;
-    }
-    var util = {
-        exponentialSmoothing: exponentialSmoothing,
-        fixAngle: fixAngle,
-        fixAngle360: fixAngle360,
-        deg2rad: deg2rad,
-        rad2deg: rad2deg,
-        knots2ms: knots2ms,
-        ms2knots: ms2knots,
-        ft2mtrs: ft2mtrs,
-        mtrs2ft: mtrs2ft,
-        clamp: clamp,
-    };
-    exports.default = util;
-});
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define('build/autopilot/modes',["require", "exports", "knockout", "../speedConversions", "../util"], function (require, exports, ko, speedConversions_1, util_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    ko = __importStar(ko);
-    speedConversions_1 = __importDefault(speedConversions_1);
-    util_1 = __importDefault(util_1);
-    var altitude = {
-        enabled: ko.observable(false),
-        value: ko.observable(0),
-    };
-    var vs = {
-        enabled: ko.observable(false),
-        value: ko.observable(0),
-    };
-    var heading = {
-        enabled: ko.observable(false),
-        value: ko.observable(360),
-    };
-    var speed = {
-        enabled: ko.observable(false),
-        isMach: ko.observable(false),
-        value: ko.observable(0),
-        toMach: toMach,
-        toKias: toKias,
-    };
-    function toMach(kias) {
-        var altitude = util_1.default.ft2mtrs(geofs.aircraft.instance.animationValue.altitude);
-        return speedConversions_1.default.casToMach(kias, altitude);
-    }
-    function toKias(mach) {
-        var altitude = util_1.default.ft2mtrs(geofs.aircraft.instance.animationValue.altitude);
-        return speedConversions_1.default.machToCas(mach, altitude);
-    }
-    speed.isMach.subscribe(function (isMach) {
-        var value = speed.value();
-        speed.value(isMach ? toMach(value) : toKias(value));
-    });
-    exports.default = {
-        altitude: altitude,
-        vs: vs,
-        heading: heading,
-        speed: speed,
-    };
-});
-
-define('build/pid',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var defaults = {
-        kp: 0,
-        ti: Infinity,
-        td: 0,
-        min: -Infinity,
-        max: Infinity,
-    };
-    var pidProperties = Object.keys(defaults);
-    pidProperties.forEach(function (prop) {
-        PID.prototype[prop] = defaults[prop];
-    });
-    function PID(options) {
-        if (options) {
-            pidProperties.forEach(function (prop) {
-                this[prop] = options[prop] === undefined ? defaults[prop] : options[prop];
-            }, this);
-        }
-        else {
-            pidProperties.forEach(function (prop) {
-                this[prop] = defaults[prop];
-            }, this);
-        }
-        this.errorSum = 0;
-        this.lastInput = undefined;
-    }
-    PID.prototype.compute = function (input, dt, setPoint) {
-        var kp = this.kp;
-        var ti = this.ti;
-        var td = this.td;
-        var error = setPoint - input;
-        this.errorSum += (error * dt) / ti;
-        var dInput = this.lastInput === undefined ? 0 : (this.lastInput - input) / dt;
-        this.lastInput = input;
-        var output = kp * (error + this.errorSum + td * dInput);
-        if (ti) {
-            if (output > this.max) {
-                this.errorSum += (this.max - output) / kp;
-                return this.max;
-            }
-            if (output < this.min) {
-                this.errorSum += (this.min - output) / kp;
-                return this.min;
-            }
-        }
-        return output;
-    };
-    PID.prototype.init = function (currOutput) {
-        this.errorSum = currOutput / this.kp;
-        this.lastInput = undefined;
-    };
-    exports.default = PID;
-});
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define('build/autopilot/pidControls',["require", "exports", "../pid"], function (require, exports, pid_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    pid_1 = __importDefault(pid_1);
-    var pidSettings = {
-        climb: new pid_1.default({
-            kp: 0.01,
-            ti: 10,
-            td: 0.005,
-            min: -10,
-            max: 10,
-        }),
-        pitch: new pid_1.default({
-            kp: 0.02,
-            ti: 2,
-            td: 0.01,
-            min: -3,
-            max: 3,
-        }),
-        roll: new pid_1.default({
-            kp: 0.02,
-            ti: 100,
-            td: 0.01,
-            min: -1,
-            max: 1,
-        }),
-        throttle: new pid_1.default({
-            kp: 0.015,
-            ti: 2.5,
-            td: 0.1,
-            min: 0,
-            max: 1,
-        }),
-    };
-    exports.default = pidSettings;
-});
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define('build/greatcircle',["require", "exports", "knockout", "./util"], function (require, exports, ko, util_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    ko = __importStar(ko);
-    util_1 = __importDefault(util_1);
-    var lat = ko.observable();
-    var lon = ko.observable();
-    var atan2 = Math.atan2;
-    var sin = Math.sin;
-    var cos = Math.cos;
-    function getHeading() {
-        var coords = geofs.aircraft.instance.llaLocation;
-        var lat1 = util_1.default.deg2rad(coords[0]);
-        var lon1 = util_1.default.deg2rad(coords[1]);
-        var lat2 = util_1.default.deg2rad(lat());
-        var lon2 = util_1.default.deg2rad(lon());
-        if (!isFinite(lat2) || !isFinite(lon2))
-            return;
-        var heading = util_1.default.rad2deg(atan2(sin(lon2 - lon1) * cos(lat2), cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(lon2 - lon1)));
-        return util_1.default.fixAngle360(heading);
-    }
-    exports.default = {
-        latitude: lat,
-        longitude: lon,
-        getHeading: getHeading,
-    };
-});
-
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -2776,625 +2316,285 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define('build/autopilot',["require", "exports", "knockout", "./autopilot/modes", "./autopilot/pidControls", "./greatcircle", "./util"], function (require, exports, ko, modes_1, pidControls_1, greatcircle_1, util_1) {
+define('build/keyboardMapping',["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
+    var _a;
     Object.defineProperty(exports, "__esModule", { value: true });
     ko = __importStar(ko);
-    modes_1 = __importDefault(modes_1);
-    pidControls_1 = __importDefault(pidControls_1);
-    greatcircle_1 = __importDefault(greatcircle_1);
-    util_1 = __importDefault(util_1);
-    var _on = ko.observable(false);
-    var on = ko.pureComputed({
-        read: _on,
-        write: function (newValue) {
-            if (geofs.aircraft.instance.setup.autopilot && newValue)
-                _on(true);
-            else
-                _on(false);
+    var whichToCode = {
+        66: "KeyB",
+        37: "ArrowLeft",
+        39: "ArrowRight",
+        32: "Space",
+        109: "NumpadSubtract",
+        35: "End",
+        46: "Delete",
+        36: "Home",
+        69: "KeyE",
+        71: "KeyG",
+        107: "NumpadAdd",
+        221: "BracketRight",
+        88: "KeyX",
+        186: "Semicolon",
+        34: "PageDown",
+        33: "PageUp",
+        38: "ArrowUp",
+        40: "ArrowDown",
+        219: "BracketLeft",
+        188: "Comma",
+        190: "Period",
+        65: "KeyA",
+    };
+    var _keybinds = ko.observable({});
+    if (!localStorage.getItem("keyboard_mapping_keybinds") ||
+        localStorage.getItem("keyboard_mapping_keybinds") == "undefined") {
+        var tmp = __assign({}, JSON.parse(localStorage.getItem("settings")).keyboard.keys);
+        for (var _i = 0, _b = Object.keys(tmp); _i < _b.length; _i++) {
+            var label = _b[_i];
+            _keybinds(__assign(__assign({}, _keybinds()), (_a = {}, _a[label] = {
+                altKey: false,
+                shiftKey: false,
+                ctrlKey: false,
+                code: whichToCode[tmp[label].keycode],
+            }, _a)));
+        }
+        localStorage.setItem("keyboard_mapping_keybinds", JSON.stringify(_keybinds));
+    }
+    else {
+        _keybinds(JSON.parse(localStorage.getItem("keyboard_mapping_keybinds")));
+    }
+    var keybinds = ko.pureComputed({
+        read: _keybinds,
+        write: function (keybinds) {
+            _keybinds(keybinds);
+            localStorage.setItem("keyboard_mapping_keybinds", JSON.stringify(keybinds));
         },
     });
-    var currentMode = ko.observable(0);
-    on.subscribe(function (newValue) {
-        controls.autopilot.on = newValue;
-        ui.hud.autopilotIndicator(newValue);
-        if (!newValue) {
-            Object.keys(modes_1.default).forEach(function (prop) {
-                modes_1.default[prop].enabled(false);
-            });
-        }
-    });
-    function toggle() {
-        ap.on(!ap.on());
-    }
-    modes_1.default.heading.enabled.subscribe(function (newValue) {
-        if (newValue)
-            pidControls_1.default.roll.init(controls.roll);
-    });
-    modes_1.default.altitude.enabled.subscribe(function (newValue) {
-        if (newValue) {
-            pidControls_1.default.climb.init(geofs.aircraft.instance.animationValue.atilt);
-            pidControls_1.default.pitch.init(util_1.default.clamp(controls.pitch, -1, 1));
-            controls.elevatorTrim = controls.rawPitch;
-            controls.rawPitch = 0;
-        }
-    });
-    modes_1.default.heading.enabled.subscribe(function (newValue) {
-        if (newValue)
-            pidControls_1.default.throttle.init(controls.throttle);
-    });
-    var lastGcHeadingUpdate = 0;
-    function update(dt) {
-        var values = geofs.aircraft.instance.animationValue;
-        var speedRatio = util_1.default.clamp(values.ktas / 100, 0.5, 5);
-        if (geofs.aircraft.instance.groundContact ||
-            ui.hud.stallAlarmOn ||
-            Math.abs(values.aroll) > 45 ||
-            values.atilt > 20 ||
-            values.atilt < -35) {
-            ap.on(false);
-            return;
-        }
-        function updateHeading() {
-            if (ap.currentMode() !== 0 &&
-                performance.now() - lastGcHeadingUpdate > 1000) {
-                var headingToDest = greatcircle_1.default.getHeading();
-                if (isFinite(headingToDest))
-                    modes_1.default.heading.value(Math.round(headingToDest));
-                lastGcHeadingUpdate = performance.now();
-            }
-            var deltaHeading = util_1.default.fixAngle(modes_1.default.heading.value() - values.heading);
-            var maxBankAngle = Math.min(util_1.default.rad2deg(Math.atan(0.0027467328927254283 * values.ktas)), ap.maxBankAngle);
-            var targetBankAngle = util_1.default.clamp(deltaHeading, -maxBankAngle, maxBankAngle);
-            var result = pidControls_1.default.roll.compute(-values.aroll, dt, targetBankAngle);
-            controls.roll = util_1.default.exponentialSmoothing("apRoll", result / speedRatio, 0.9);
-            controls.yaw = util_1.default.exponentialSmoothing("apYaw", controls.roll / 2, 0.1);
-            if (geofs.aircraft.instance.name === "a380")
-                controls.roll *= 3.5;
-        }
-        function updateAltitude() {
-            var deltaAltitude = modes_1.default.altitude.value() - values.altitude;
-            var maxClimbRate = util_1.default.clamp(speedRatio * ap.commonClimbRate, 0, ap.maxClimbRate);
-            var maxDescentRate = util_1.default.clamp(speedRatio * ap.commonDescentRate, ap.maxDescentRate, 0);
-            var vsValue = modes_1.default.vs.value();
-            var manualVsControl = vsValue !== undefined &&
-                (vsValue === 0 ||
-                    (vsValue < 0 ? deltaAltitude < -200 : deltaAltitude > 200));
-            if (modes_1.default.vs.enabled()) {
-                if (!manualVsControl)
-                    modes_1.default.vs.enabled(false);
-            }
-            else if (manualVsControl) {
-                modes_1.default.vs.enabled(true);
-            }
-            var targetClimbRate;
-            if (manualVsControl)
-                targetClimbRate = vsValue;
-            else
-                targetClimbRate = util_1.default.clamp(deltaAltitude * 2.5, maxDescentRate, maxClimbRate);
-            var targetTilt = pidControls_1.default.climb.compute(values.climbrate, dt, targetClimbRate);
-            targetTilt = util_1.default.clamp(targetTilt, ap.minPitchAngle, ap.maxPitchAngle);
-            var result = pidControls_1.default.pitch.compute(-values.atilt, dt, targetTilt);
-            controls.rawPitch = util_1.default.exponentialSmoothing("apPitch", result / speedRatio, 0.9);
-            geofs.debug.watch("targetClimbrate", targetClimbRate);
-            geofs.debug.watch("aTargetTilt", targetTilt);
-        }
-        function updateThrottle() {
-            var speed = modes_1.default.speed.value();
-            if (modes_1.default.speed.isMach())
-                speed = modes_1.default.speed.toKias(speed);
-            var result = pidControls_1.default.throttle.compute(values.kcas, dt, speed);
-            controls.throttle = util_1.default.clamp(util_1.default.exponentialSmoothing("apThrottle", result, 0.9), 0, 1);
-            geofs.debug.watch("throttle", controls.throttle);
-        }
-        if (modes_1.default.heading.enabled())
-            updateHeading();
-        if (modes_1.default.altitude.enabled())
-            updateAltitude();
-        if (modes_1.default.speed.enabled())
-            updateThrottle();
-    }
-    var ap = {
-        on: on,
-        toggle: toggle,
-        update: update,
-        modes: modes_1.default,
-        currentMode: currentMode,
-        maxBankAngle: 25,
-        minPitchAngle: -10,
-        maxPitchAngle: 10,
-        commonClimbRate: 500,
-        commonDescentRate: -750,
-        maxClimbRate: 3000,
-        maxDescentRate: -4000,
+    exports.default = keybinds;
+});
+
+define('build/static/keyboardLayout',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = {
+        Escape: "Escape",
+        F1: "F1",
+        F2: "F2",
+        F3: "F3",
+        F4: "F4",
+        F5: "F5",
+        F6: "F6",
+        F7: "F7",
+        F8: "F8",
+        F9: "F9",
+        F10: "F10",
+        F11: "F11",
+        F12: "F12",
+        PrintScreen: "PrintScreen",
+        ScrollLock: "ScrollLock",
+        Pause: "Pause",
+        Backquote: "Backquote",
+        Digit1: "1",
+        Digit2: "2",
+        Digit3: "3",
+        Digit4: "4",
+        Digit5: "5",
+        Digit6: "6",
+        Digit7: "7",
+        Digit8: "8",
+        Digit9: "9",
+        Digit0: "0",
+        Minus: "-",
+        Equal: "=",
+        Backspace: "Backspace",
+        Insert: "Insert",
+        Home: "Home",
+        PageUp: "PageUp",
+        NumLock: "NumLock",
+        NumpadDivide: "/",
+        NumpadMultiply: "*",
+        NumpadSubtract: "-",
+        Tab: "Tab",
+        KeyQ: "Q",
+        KeyW: "W",
+        KeyE: "E",
+        KeyR: "R",
+        KeyT: "T",
+        KeyY: "Y",
+        KeyU: "U",
+        KeyI: "I",
+        KeyO: "O",
+        KeyP: "P",
+        BracketLeft: "[",
+        BracketRight: "]",
+        Backslash: "\\",
+        Delete: "Delete",
+        End: "End",
+        PageDown: "PageDown",
+        Numpad7: "7",
+        Numpad8: "8",
+        Numpad9: "9",
+        NumpadAdd: "+",
+        CapsLock: "CapsLock",
+        KeyA: "A",
+        KeyS: "S",
+        KeyD: "D",
+        KeyF: "F",
+        KeyG: "G",
+        KeyH: "H",
+        KeyJ: "J",
+        KeyK: "K",
+        KeyL: "L",
+        Semicolon: ";",
+        Quote: "'",
+        Enter: "Enter",
+        Numpad4: "4",
+        Numpad5: "5",
+        Numpad6: "6",
+        ShiftLeft: "Shift",
+        KeyZ: "Z",
+        KeyX: "X",
+        KeyC: "C",
+        KeyV: "V",
+        KeyB: "B",
+        KeyN: "N",
+        KeyM: "M",
+        Comma: ",",
+        Period: ".",
+        Slash: "/",
+        ShiftRight: "Shift",
+        ArrowUp: "UP ARROW",
+        Numpad1: "1",
+        Numpad2: "2",
+        Numpad3: "3",
+        NumpadEnter: "Enter",
+        ControlLeft: "Control",
+        MetaLeft: "Meta",
+        AltLeft: "Alt",
+        Space: "Space",
+        AltRight: "Alt",
+        MetaRight: "Meta",
+        ContextMenu: "ContextMenu",
+        ControlRight: "Control",
+        ArrowLeft: "LEFT ARROW",
+        ArrowDown: "DOWN ARROW",
+        ArrowRight: "RIGHT ARROW",
+        Numpad0: "0",
+        NumpadDecimal: ".",
     };
-    controls.autopilot = __assign(__assign({}, controls.autopilot), { on: false, toggle: toggle, turnOff: function () {
-            ap.on(false);
-        }, update: update });
-    window.autopilot_pp.ready = true;
-    exports.default = ap;
 });
 
-define('build/ui/apdisconnectsound',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var opus = "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Pb1QJQZpzpLqi/hKB0SRFU/jRiYrTF3jkslY91bASj55qmrXo4kkWWo4BAIKtEGzYJVTVs2ChJEiRypmZmfVTMzlHEiUyxxIkSr0cSJEq5pEkSSS1+OX5MUroQAAUsAABTBBKXkO9C4ReoLHGmmuSRKNpa1qMNLma0l8nVgKEyyU4DT/WyxIlMzjgoBAIBASTyjM55w4kkcSokyTV+2t3lGZRkkFVXLY7bEVQARbeoacrQW5avWx2i4sj8gqMOVDUNCTAEnPqyMkUaebI5RIK3DSW//7pGTjAAOzMtF7TB4qYKUKP2WJiQ5U9T3ssM8pOhQn/ZwYMei0Wp6JErn9yJ5HPM/mktNCo5FJS0CYgABAJ1VQrP8lwqGWfIsBoUAkpKCrlySXc3KeTUfJRLZmqOSNRpK6apzQUiR3uRRliRZKgpVMQU1FMy4xMDBVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/7RET0j/HyJUdgLzByOgSo3Q0mGkAAAf4AAAAgAAA/wAAABFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVQ==";
-    exports.default = new Audio("data:audio/ogg;base64," + opus);
-});
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define('build/getwaypoint',["require", "exports", "./util"], function (require, exports, util_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    util_1 = __importDefault(util_1);
-    var icaos = window.navData.airports;
-    var waypoints = window.navData.waypoints;
-    var navaids = window.navData.navaids;
-    function getClosestPoint(list) {
-        var closestDistance = Infinity;
-        return list.reduce(function (closestPoint, point) {
-            var acLat = geofs.aircraft.instance.llaLocation[0];
-            var acLon = geofs.aircraft.instance.llaLocation[1];
-            var deltaLat = util_1.default.deg2rad(acLat - point[0]);
-            var deltaLon = util_1.default.deg2rad(acLon - point[1]);
-            var meanLat = 0.5 * util_1.default.deg2rad(acLat + point[0]);
-            var x = deltaLat;
-            var y = deltaLon * Math.cos(meanLat);
-            var relativeDistance = x * x + y * y;
-            if (relativeDistance < closestDistance) {
-                closestDistance = relativeDistance;
-                return point;
-            }
-            return closestPoint;
-        });
-    }
-    function getWaypoint(code) {
-        if (icaos[code])
-            return icaos[code];
-        if (navaids[code])
-            return navaids[code];
-        if (waypoints[code])
-            return getClosestPoint(waypoints[code]);
-        return null;
-    }
-    exports.default = getWaypoint;
-});
-
-define('build/shouldntHaveAp',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var shouldntHaveAp = [
-        "53",
-        "51",
-        "50",
-        "41",
-        "3049",
-        "2953",
-        "2852",
-        "2844",
-    ];
-    exports.default = shouldntHaveAp;
-});
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-define('build/ui/autopilot',["require", "exports", "knockout", "../greatcircle", "../autopilot", "../util", "../getwaypoint", "../shouldntHaveAp"], function (require, exports, ko, greatcircle_1, autopilot_1, util_1, getwaypoint_1, shouldntHaveAp_1) {
+define('build/ui/ViewModel',["require", "exports", "../keyboardMapping", "../static/keyboardLayout"], function (require, exports, keyboardMapping_1, keyboardLayout_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.AutopilotVM = void 0;
-    ko = __importStar(ko);
-    greatcircle_1 = __importDefault(greatcircle_1);
-    autopilot_1 = __importDefault(autopilot_1);
-    util_1 = __importDefault(util_1);
-    getwaypoint_1 = __importDefault(getwaypoint_1);
-    shouldntHaveAp_1 = __importDefault(shouldntHaveAp_1);
-    var apValidate = function (target, fn) {
-        return function (val) {
-            var current = target();
-            var newValue = fn(val);
-            if (newValue !== current && !isNaN(newValue))
-                target(newValue);
-            else
-                target.notifySubscribers(newValue);
-        };
-    };
-    ko.extenders.apValidate = function (target, fn) {
-        var result = ko.pureComputed({
-            read: target,
-            write: apValidate(target, fn),
-        });
-        return result;
-    };
-    var AutopilotVM = (function () {
-        function AutopilotVM() {
+    keyboardMapping_1 = __importDefault(keyboardMapping_1);
+    keyboardLayout_1 = __importDefault(keyboardLayout_1);
+    var ViewModel = (function () {
+        function ViewModel() {
             var _this = this;
-            this.toggle = function () {
-                if (!shouldntHaveAp_1.default.includes(geofs.aircraft.instance.id)) {
-                    autopilot_1.default.toggle();
+            this.keysContainer = $(".geofs-keyboard-keys-container");
+            this.reset = function () {
+                _this.keysContainer.empty();
+            };
+            this.stringFromKeybind = function (keybind) {
+                var str = "";
+                if (keybind.ctrlKey)
+                    str += "CTRL + ";
+                if (keybind.shiftKey)
+                    str += "SHIFT + ";
+                if (keybind.altKey)
+                    str += "ALT + ";
+                str +=
+                    keybind.code.includes("Control") ||
+                        keybind.code.includes("Shift") ||
+                        keybind.code.includes("Alt")
+                        ? ""
+                        : keyboardLayout_1.default[keybind.code] || keybind.code;
+                return str;
+            };
+            this.addKeybind = function (key) {
+                _this.keysContainer.append("\n          <div class=\"mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-dirty is-upgraded\" data-upgraded=\",MaterialTextfield\">\n              <input class=\"keyboard-mapping-key-detect mdl-textfield__input\" type=\"text\" name=\"" + key + "\" />\n              <label class=\"mdl-textfield__label\" for=\"" + key + "\">" + key + "</label>\n          </div>\n    ");
+            };
+            this.updateKeybindInputs = function (newKeybinds) {
+                for (var _i = 0, _a = Object.keys(newKeybinds); _i < _a.length; _i++) {
+                    var key = _a[_i];
+                    if ($(".keyboard-mapping-key-detect[name=\"" + key + "\"]").length == 0) {
+                        if (!window.spoilers_arming && key === "Spoilers Arming") {
+                            continue;
+                        }
+                        _this.addKeybind(key);
+                    }
+                    $(".keyboard-mapping-key-detect[name=\"" + key + "\"]").val(_this.stringFromKeybind(newKeybinds[key]));
+                    if (!_this.stringFromKeybind(newKeybinds[key]).endsWith(" + ")) {
+                        $(".keyboard-mapping-key-detect[name=\"" + key + "\"]").data("originalValue", _this.stringFromKeybind(newKeybinds[key]));
+                    }
                 }
             };
-            this.nextMode = function () {
-                var mode = autopilot_1.default.currentMode();
-                autopilot_1.default.currentMode(mode === AutopilotVM.modeToText.length - 1 ? 0 : mode + 1);
-            };
-            this.on = autopilot_1.default.on;
-            this.currentMode = autopilot_1.default.currentMode;
-            this.currentModeText = ko.pureComputed(function () {
-                var index = autopilot_1.default.currentMode();
-                return AutopilotVM.modeToText[index];
-            });
-            this.altitude = autopilot_1.default.modes.altitude.value.extend({
-                apValidate: this.validateAltitude,
-            });
-            this.altitudeEnabled = autopilot_1.default.modes.altitude.enabled;
-            this.vs = ko.pureComputed({
-                read: function () {
-                    if (autopilot_1.default.modes.vs.enabled()) {
-                        return _this.formatVs(autopilot_1.default.modes.vs.value());
+            this.handleKeyDown = function (e) {
+                var _a;
+                if ($(e.target).hasClass("keyboard-mapping-key-detecting")) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.code !== "Escape") {
+                        (0, keyboardMapping_1.default)(__assign(__assign({}, (0, keyboardMapping_1.default)()), (_a = {}, _a[$(e.target).attr("name")] = {
+                            ctrlKey: e.ctrlKey,
+                            shiftKey: e.shiftKey,
+                            altKey: e.altKey,
+                            code: e.code,
+                        }, _a)));
                     }
-                    return "";
-                },
-                write: function (val) {
-                    var target = autopilot_1.default.modes.vs.value;
-                    var current = target();
-                    var newValue = parseInt(val);
-                    if (newValue !== newValue) {
-                        newValue = undefined;
+                    if (!(e.code.includes("Control") ||
+                        e.code.includes("Shift") ||
+                        e.code.includes("Alt"))) {
+                        $(e.target).trigger("blur");
                     }
-                    if (newValue !== current)
-                        target(newValue);
-                    else
-                        target.notifySubscribers(newValue);
-                },
-            });
-            this.heading = ko.pureComputed({
-                read: function () {
-                    var str = autopilot_1.default.modes.heading.value().toString();
-                    while (str.length < 3)
-                        str = "0" + str;
-                    return str;
-                },
-                write: apValidate(autopilot_1.default.modes.heading.value, this.validateHeading),
-            });
-            this.headingEnabled = autopilot_1.default.modes.heading.enabled;
-            this.speed = ko.pureComputed({
-                read: function () {
-                    var value = autopilot_1.default.modes.speed.value();
-                    return value.toFixed(autopilot_1.default.modes.speed.isMach() ? 2 : 0);
-                },
-                write: function (val) {
-                    var target = autopilot_1.default.modes.speed.value;
-                    var current = target();
-                    var newValue = autopilot_1.default.modes.speed.isMach()
-                        ? Math.round(Number(val) * 100) / 100
-                        : parseInt(val);
-                    if (newValue !== current && !isNaN(newValue))
-                        target(newValue);
-                    else
-                        target.notifySubscribers(newValue);
-                },
-            });
-            this.speedEnabled = autopilot_1.default.modes.speed.enabled;
-            this.speedMode = ko.pureComputed({
-                read: function () {
-                    return autopilot_1.default.modes.speed.isMach() ? "mach" : "kias";
-                },
-                write: function (val) {
-                    autopilot_1.default.modes.speed.isMach(val === "mach");
-                },
-            });
-            this.lat = greatcircle_1.default.latitude.extend({ apValidate: this.validateLat });
-            this.lon = greatcircle_1.default.longitude.extend({ apValidate: this.validateLon });
-            this._waypoint = ko.observable();
-            this.waypoint = ko.pureComputed({
-                read: this._waypoint,
-                write: function (inputVal) {
-                    var code = inputVal.trim().toUpperCase();
-                    var coord = (0, getwaypoint_1.default)(code);
-                    if (coord) {
-                        greatcircle_1.default.latitude(coord[0]);
-                        greatcircle_1.default.longitude(coord[1]);
-                        if (inputVal !== code)
-                            _this._waypoint(code);
-                        else
-                            _this._waypoint.notifySubscribers(code);
-                    }
-                    else {
-                        _this._waypoint("");
-                        alert('Code "' +
-                            inputVal +
-                            '" is an invalid or unrecognised ICAO airport code.');
-                    }
-                },
-            });
-            var oldChange = geofs.aircraft.Aircraft.change;
-            geofs.aircraft.Aircraft.change = function (a, b, c, d) {
-                if (shouldntHaveAp_1.default.includes(a)) {
-                    autopilot_1.default.on(false);
                 }
-                return oldChange(a, b, c, d);
             };
+            this.handleFocus = function (e) {
+                $(".keyboard-mapping-key-detecting", _this.keysContainer).each(function (index, element) {
+                    $(element).val($(element).data("originalValue"));
+                    $(element).removeClass("keyboard-mapping-key-detecting");
+                });
+                $(e.target).data("originalValue", $(e.target).val());
+                $(e.target).val("");
+                $(e.target).addClass("keyboard-mapping-key-detecting");
+            };
+            this.handleBlur = function (e) {
+                if ($(e.target).hasClass("keyboard-mapping-key-detecting")) {
+                    if ($(e.target).val() === "" ||
+                        $(e.target).val().toString().endsWith(" + ")) {
+                        $(e.target).val($(e.target).data("originalValue"));
+                    }
+                    $(e.target).removeClass("keyboard-mapping-key-detecting");
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
+            };
+            $('[data-toggle-panel=".geofs-preference-list"]').trigger("click");
+            this.reset();
+            this.keysContainer.on("click focus", ".keyboard-mapping-key-detect", this.handleFocus);
+            this.keysContainer.on("keydown", ".keyboard-mapping-key-detect", this.handleKeyDown);
+            this.keysContainer.on("blur", ".keyboard-mapping-key-detect", this.handleBlur);
+            keyboardMapping_1.default.subscribe(this.updateKeybindInputs);
+            this.updateKeybindInputs((0, keyboardMapping_1.default)());
         }
-        AutopilotVM.prototype.formatVs = function (value) {
-            var str = Math.abs(value).toFixed(0);
-            while (str.length < 4)
-                str = "0" + str;
-            return (value < 0 ? "-" : "") + str;
-        };
-        AutopilotVM.prototype.validateAltitude = function (val) {
-            return parseInt(val);
-        };
-        AutopilotVM.prototype.validateHeading = function (val) {
-            return util_1.default.fixAngle360(parseInt(val));
-        };
-        AutopilotVM.prototype.validateLat = function (val) {
-            return util_1.default.clamp(parseFloat(val), -90, 90);
-        };
-        AutopilotVM.prototype.validateLon = function (val) {
-            return util_1.default.clamp(parseFloat(val), -180, 180);
-        };
-        AutopilotVM.modeToText = [
-            "Heading mode",
-            "Lat/lon mode",
-            "Waypoint mode",
-        ];
-        return AutopilotVM;
+        return ViewModel;
     }());
-    exports.AutopilotVM = AutopilotVM;
-    var updateMdlSwitch = function (element, _notUsed, bindings) {
-        var isChecked = bindings.get("checked");
-        var isEnabled = bindings.get("enable");
-        if (isChecked)
-            isChecked();
-        if (isEnabled)
-            isEnabled();
-        var materialSwitch = element.parentNode.MaterialSwitch;
-        if (!materialSwitch)
-            return;
-        materialSwitch.checkDisabled();
-        materialSwitch.checkToggleState();
-    };
-    var updateMdlRadio = function (element, _notUsed, bindings) {
-        var isChecked = bindings.get("checked");
-        var isEnabled = bindings.get("enable");
-        if (isChecked)
-            isChecked();
-        if (isEnabled)
-            isEnabled();
-        var materialRadio = element.parentNode.MaterialRadio;
-        if (!materialRadio)
-            return;
-        materialRadio.checkDisabled();
-        materialRadio.checkToggleState();
-    };
-    ko.bindingHandlers.mdlSwitch = { update: updateMdlSwitch };
-    ko.bindingHandlers.mdlRadio = { update: updateMdlRadio };
-    exports.default = AutopilotVM;
-});
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define('build/enablekcas',["require", "exports", "./speedConversions", "./util"], function (require, exports, speedConversions_1, util_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    speedConversions_1 = __importDefault(speedConversions_1);
-    util_1 = __importDefault(util_1);
-    function setKcas() {
-        var animationValue = geofs.aircraft.instance.animationValue;
-        animationValue.kcas = speedConversions_1.default.tasToCas(animationValue.ktas, util_1.default.ft2mtrs(animationValue.altitude));
-    }
-    function enableKcas() {
-        var timer = setInterval(function () {
-            if (geofs &&
-                geofs.aircraft.instance &&
-                geofs.aircraft.instance.animationValue) {
-                setKcas();
-                ["airspeed", "airspeedJet", "airspeedSupersonic"].forEach(function (prop) {
-                    instruments.definitions[prop].overlay.overlays[0].animations[0].value =
-                        "kcas";
-                    if (instruments.list && instruments.list[prop]) {
-                        instruments.list[prop].overlay.children[0].definition.animations[0].value = "kcas";
-                    }
-                });
-                clearInterval(timer);
-                setInterval(setKcas, 16);
-            }
-        }, 16);
-    }
-    exports.default = enableKcas;
-});
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define('build/bugfixes/papi',["require", "exports", "../util"], function (require, exports, util_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    util_1 = __importDefault(util_1);
-    function papiBugfix() {
-        var papiValues = [3.5, 19 / 6, 17 / 6, 2.5];
-        var aircraft = geofs.aircraft.instance;
-        function setPapi() {
-            var collResult = geofs.getGroundAltitude(this.location[0], this.location[1]);
-            this.location[2] = collResult.location[2];
-            var relativeAicraftLla = [
-                aircraft.llaLocation[0],
-                aircraft.llaLocation[1],
-                this.location[2],
-            ];
-            var distance = geofs.utils.llaDistanceInMeters(relativeAicraftLla, this.location, this.location);
-            var height = aircraft.llaLocation[2] - this.location[2];
-            var path = util_1.default.rad2deg(Math.atan2(height, distance));
-            var lights = this.lights;
-            papiValues.forEach(function (slope, i) {
-                var belowAngle = path < slope;
-                lights[i].red.setVisibility(belowAngle);
-                lights[i].white.setVisibility(!belowAngle);
-            });
-        }
-        geofs.fx.papi.prototype.refresh = function () {
-            var _this = this;
-            this.papiInterval = setInterval(function () {
-                setPapi.call(_this);
-            }, 1000);
-        };
-        Object.keys(geofs.fx.litRunways).forEach(function (id) {
-            var runway = geofs.fx.litRunways[id];
-            runway.papis.forEach(function (papi) {
-                clearInterval(papi.papiInterval);
-                papi.refresh();
-            });
-        });
-    }
-    exports.default = papiBugfix;
-});
-
-define('build/bugfixes/restrictions',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    function restrictionsBugfix() {
-        var speedTimer;
-        var partsTimer;
-        var deleteTimer;
-        var deleteTimeout;
-        var oldMaxRPM;
-        var activated = false;
-        var restrictedAircraft = new Set();
-        restrictedAircraft.add("4");
-        restrictedAircraft.add("5");
-        restrictedAircraft.add("17");
-        restrictedAircraft.add("10");
-        function checkSpeedAndAltitude() {
-            var values = geofs.aircraft.instance.animationValue;
-            var maxLimits = geofs.aircraft.instance.setup.maxLimits;
-            var maxMach = maxLimits ? maxLimits[0] : 1;
-            var maxAltitude = maxLimits ? maxLimits[1] : 44444;
-            if (values.mach < maxMach && values.altitude < maxAltitude)
-                return;
-            clearInterval(speedTimer);
-            speedTimer = undefined;
-            activated = true;
-            geofs.aircraft.instance.airfoils.forEach(function (airfoil) {
-                if (airfoil.area)
-                    airfoil.area /= 128;
-                else if (airfoil.liftFactor)
-                    airfoil.liftFactor /= 128;
-            });
-            new geofs.fx.ParticuleEmitter({
-                anchor: { worldPosition: [0, 0, 0] },
-                duration: 30000,
-                rate: 0.05,
-                life: 2000,
-                startScale: 1,
-                endScale: 50,
-                startOpacity: 100,
-                endOpacity: 1,
-                texture: "darkSmoke",
-            });
-            geofs.aircraft.instance.engines.forEach(function (engine) {
-                engine.thrust /= 16384;
-            });
-            oldMaxRPM = geofs.aircraft.instance.setup.maxRPM;
-            geofs.aircraft.instance.setup.maxRPM =
-                geofs.aircraft.instance.setup.minRPM + 1;
-            partsTimer = setInterval(function () {
-                geofs.aircraft.instance.object3d._children.forEach(function (object) {
-                    var position = object._localposition;
-                    for (var i = 0; i < 2; i++)
-                        position[i] *= 1.01;
-                });
-            }, 100);
-            deleteTimeout = setTimeout(function () {
-                clearInterval(partsTimer);
-                var i = 0;
-                var parts = geofs.aircraft.instance.object3d._children;
-                deleteTimer = setInterval(function () {
-                    i++;
-                    if (i === parts.length) {
-                        parts[0].visible = false;
-                        clearInterval(deleteTimer);
-                    }
-                    else
-                        parts[i].visible = false;
-                }, 300);
-            }, 12000);
-        }
-        function matchesName() {
-            var maxLimits = geofs.aircraft.instance.setup.maxLimits;
-            return restrictedAircraft.has(geofs.aircraft.instance.id) || maxLimits;
-        }
-        function addRestrictions() {
-            if (matchesName())
-                speedTimer = setInterval(checkSpeedAndAltitude, 5000);
-        }
-        var oldReset = geofs.aircraft.Aircraft.prototype.reset;
-        geofs.aircraft.Aircraft.prototype.reset = function (bOnTheGround) {
-            clearTimeout(deleteTimeout);
-            clearInterval(deleteTimer);
-            clearInterval(partsTimer);
-            clearInterval(speedTimer);
-            if (activated) {
-                geofs.aircraft.instance.airfoils.forEach(function (airfoil) {
-                    if (airfoil.area)
-                        airfoil.area *= 128;
-                    else if (airfoil.liftFactor)
-                        airfoil.liftFactor *= 128;
-                });
-                geofs.aircraft.instance.engines.forEach(function (engine) {
-                    engine.thrust *= 16384;
-                });
-                geofs.aircraft.instance.setup.maxRPM = oldMaxRPM;
-                activated = false;
-            }
-            addRestrictions();
-            oldReset.call(this, bOnTheGround);
-        };
-        var setupLoadTimer = setInterval(function () {
-            if (geofs.aircraft.instance.setup) {
-                clearInterval(setupLoadTimer);
-                addRestrictions();
-            }
-        }, 1000);
-    }
-    exports.default = restrictionsBugfix;
-});
-
-define('build/ui/ui.html',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = "<div id=\"Qantas94Heavy-ap-nav\" class=\"mdl-grid mdl-grid--no-spacing\">\n  <div class=\"mdl-cell mdl-cell--2-col\">\n    <h6>Autopilot</h6>\n  </div>\n  <div class=\"mdl-cell mdl-cell--5-col\">\n    <button\n      id=\"Qantas94Heavy-ap-toggle\"\n      class=\"mdl-button mdl-js-button mdl-button--raised\"\n      data-bind=\"css: { 'mdl-button--colored': on },\n                       click: toggle, text: on() ? 'Engaged' : 'Disengaged'\"\n    ></button>\n  </div>\n\n  <div class=\"mdl-cell mdl-cell--5-col\">\n    <button\n      class=\"mdl-button mdl-js-button mdl-button--raised\"\n      data-bind=\"click: nextMode, text: currentModeText\"\n    ></button>\n  </div>\n</div>\n\n<div id=\"Qantas94Heavy-ap-displays\">\n  <div class=\"mdl-grid mdl-grid--no-spacing\">\n    <div class=\"mdl-cell mdl-cell--6-col\">\n      <div class=\"Qantas94Heavy-switch-container\">\n        <label class=\"mdl-switch mdl-js-switch\">\n          <input\n            type=\"checkbox\"\n            class=\"mdl-switch__input\"\n            data-bind=\"checked: altitudeEnabled, enable: on, mdlSwitch: true\"\n          />\n        </label>\n      </div>\n\n      <div class=\"Qantas94Heavy-input-container\">\n        <label>\n          Altitude\n          <input type=\"number\" min=\"0\" step=\"500\" data-bind=\"value: altitude\" />\n        </label>\n      </div>\n    </div>\n\n    <div class=\"mdl-cell mdl-cell--6-col\">\n      <div class=\"Qantas94Heavy-input-container\">\n        <label>\n          V/S\n          <input\n            type=\"number\"\n            placeholder=\"-----\"\n            step=\"50\"\n            data-bind=\"value: vs\"\n          />\n        </label>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"mdl-grid mdl-grid--no-spacing\">\n    <div class=\"mdl-cell mdl-cell--6-col\">\n      <div class=\"Qantas94Heavy-switch-container\">\n        <label class=\"mdl-switch mdl-js-switch\">\n          <input\n            type=\"checkbox\"\n            class=\"mdl-switch__input\"\n            data-bind=\"checked: headingEnabled, enable: on, mdlSwitch: true\"\n          />\n        </label>\n      </div>\n\n      <!-- Heading mode -->\n      <div\n        class=\"Qantas94Heavy-input-container\"\n        data-bind=\"visible: currentMode() === 0\"\n      >\n        <label>\n          Heading\n          <input\n            type=\"number\"\n            min=\"1\"\n            max=\"360\"\n            step=\"1\"\n            data-bind=\"value: heading\"\n          />\n        </label>\n      </div>\n\n      <!-- Lat/lon mode -->\n      <div\n        class=\"Qantas94Heavy-input-container\"\n        data-bind=\"visible: currentMode() === 1\"\n      >\n        <label>\n          Latitude\n          <input type=\"number\" data-bind=\"value: lat\" />\n        </label>\n      </div>\n\n      <!-- Waypoint mode -->\n      <div\n        class=\"Qantas94Heavy-input-container\"\n        data-bind=\"visible: currentMode() === 2\"\n      >\n        <label>\n          Waypoint\n          <input type=\"text\" data-bind=\"value: waypoint\" />\n        </label>\n      </div>\n    </div>\n\n    <!-- Lat/lon mode -->\n    <div\n      class=\"mdl-cell mdl-cell--6-col\"\n      data-bind=\"visible: currentMode() === 1\"\n    >\n      <div class=\"Qantas94Heavy-input-container\">\n        <label>\n          Longitude\n          <input type=\"number\" data-bind=\"value: lon\" />\n        </label>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"mdl-grid mdl-grid--no-spacing\">\n    <div class=\"mdl-cell mdl-cell--6-col\">\n      <div class=\"Qantas94Heavy-switch-container\">\n        <label class=\"mdl-switch mdl-js-switch\">\n          <input\n            type=\"checkbox\"\n            class=\"mdl-switch__input\"\n            data-bind=\"checked: speedEnabled, enable: on, mdlSwitch: true\"\n          />\n        </label>\n      </div>\n      <div class=\"Qantas94Heavy-input-container\">\n        <label>\n          Speed\n          <input\n            type=\"number\"\n            placeholder=\"0\"\n            min=\"0\"\n            step=\"10\"\n            data-bind=\"value: speed\"\n          />\n        </label>\n      </div>\n    </div>\n\n    <div class=\"mdl-cell mdl-cell--3-col\">\n      <label\n        class=\"mdl-radio mdl-js-radio mdl-js-ripple-effect\"\n        for=\"Qantas94Heavy-spd-kias\"\n      >\n        <input\n          type=\"radio\"\n          id=\"Qantas94Heavy-spd-kias\"\n          class=\"mdl-radio__button\"\n          name=\"options\"\n          value=\"kias\"\n          data-bind=\"checked: speedMode, mdlRadio: true\"\n        />\n        <span class=\"mdl-radio__label\">KIAS</span>\n      </label>\n    </div>\n\n    <div class=\"mdl-cell mdl-cell--3-col\">\n      <label\n        class=\"mdl-radio mdl-js-radio mdl-js-ripple-effect\"\n        for=\"Qantas94Heavy-spd-mach\"\n      >\n        <input\n          type=\"radio\"\n          id=\"Qantas94Heavy-spd-mach\"\n          class=\"mdl-radio__button\"\n          name=\"options\"\n          value=\"mach\"\n          data-bind=\"checked: speedMode, mdlRadio: true\"\n        />\n        <span class=\"mdl-radio__label\">Mach</span>\n      </label>\n    </div>\n  </div>\n</div>\n";
-});
-
-define('build/ui/ui.css',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = "#Qantas94Heavy-ap {\n  position: absolute;\n  bottom: 0;\n  box-sizing: border-box;\n  height: 150px;\n  width: 100%;\n  padding: 0 10px 10px;\n  box-shadow: 0px 0px 16px #888 inset;\n}\n\n#Qantas94Heavy-ap-nav > div {\n  text-align: right;\n}\n\n#Qantas94Heavy-ap-nav h6 {\n  margin: 10px 0;\n  line-height: 26px;\n}\n\n#Qantas94Heavy-ap-nav button {\n  margin: 10px 0;\n  width: 150px;\n  height: 26px;\n  line-height: 26px;\n  font-size: 12px;\n  padding: 0 5px;\n  text-align: center;\n  clear: both;\n}\n\n#Qantas94Heavy-ap label {\n  float: right;\n}\n\n#Qantas94Heavy-ap-displays {\n  width: 100%;\n  margin: 0 10px 0 5px;\n}\n\n#Qantas94Heavy-ap-displays > div {\n  overflow: hidden;\n  margin: 3px 0;\n}\n\n#Qantas94Heavy-ap-displays input {\n  font-size: 18px;\n  padding: 0px;\n  width: 70px;\n  line-height: 18px;\n  text-align: right;\n  font-family: monospace;\n  color: #f93;\n  text-shadow: 0px 0px 8px #f93;\n  background-color: #000;\n  border: 2px inset;\n}\n\n#Qantas94Heavy-spd-container {\n  padding-right: 15px;\n}\n\n#Qantas94Heavy-spd-container > div {\n  width: 50%;\n}\n\n.Qantas94Heavy-pull-left {\n  float: left;\n}\n\n.Qantas94Heavy-pull-right {\n  float: right;\n}\n\n.Qantas94Heavy-switch-container {\n  width: 20%;\n  float: left;\n}\n\n.Qantas94Heavy-input-container {\n  overflow: auto;\n  width: 150px;\n}\n";
+    exports.default = ViewModel;
 });
 
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
@@ -3416,119 +2616,621 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-define('build/ui/main',["require", "exports", "knockout", "../autopilot", "./apdisconnectsound", "./autopilot", "../enablekcas", "../bugfixes/papi", "../bugfixes/restrictions", "./ui.html", "./ui.css"], function (require, exports, ko, autopilot_1, apdisconnectsound_1, autopilot_2, enablekcas_1, papi_1, restrictions_1, ui_html_1, ui_css_1) {
+define('build/keyDown',["require", "exports", "knockout"], function (require, exports, ko) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     ko = __importStar(ko);
-    autopilot_1 = __importDefault(autopilot_1);
-    apdisconnectsound_1 = __importDefault(apdisconnectsound_1);
-    autopilot_2 = __importDefault(autopilot_2);
-    enablekcas_1 = __importDefault(enablekcas_1);
-    papi_1 = __importDefault(papi_1);
-    restrictions_1 = __importDefault(restrictions_1);
-    ui_html_1 = __importDefault(ui_html_1);
-    ui_css_1 = __importDefault(ui_css_1);
-    function stopImmediatePropagation(event) {
-        event.stopImmediatePropagation();
+    var _keydown = ko.observable(function () {
+        void 0;
+    });
+    var keydown = ko.pureComputed({
+        read: _keydown,
+        write: function (keydown) {
+            _keydown(keydown);
+            controls.keyDown = keydown;
+        },
+    });
+    $(document).off("keydown", controls.keyDown);
+    $(document).on("keydown", function (event) {
+        keydown()(event);
+    });
+    exports.default = keydown;
+});
+
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define('build/addKeybind',["require", "exports", "./keyDown", "./keyboardMapping"], function (require, exports, keyDown_1, keyboardMapping_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    keyDown_1 = __importDefault(keyDown_1);
+    keyboardMapping_1 = __importDefault(keyboardMapping_1);
+    var addedKeybindsLabels = [];
+    window.keyboard_mapping.ready = true;
+    function default_1(label, callback, defaultKeybind) {
+        var _a;
+        if (label !== "" && addedKeybindsLabels.includes(label)) {
+            keyboardMapping_1.default.notifySubscribers();
+            return;
+        }
+        if (label !== "") {
+            (0, keyboardMapping_1.default)(__assign(__assign({}, (0, keyboardMapping_1.default)()), (_a = {}, _a[label] = defaultKeybind, _a)));
+            addedKeybindsLabels.push(label);
+        }
+        var oldKeyDown = (0, keyDown_1.default)();
+        (0, keyDown_1.default)(function (event) {
+            var keybind = (0, keyboardMapping_1.default)()[label] || defaultKeybind;
+            if (keybind.code === "" || event.code === keybind.code) {
+                if (event.altKey === keybind.altKey &&
+                    event.ctrlKey === keybind.ctrlKey &&
+                    event.shiftKey === keybind.shiftKey) {
+                    callback(event);
+                    if (keybind.code === "" &&
+                        event.ctrlKey &&
+                        !event.shiftKey &&
+                        !event.altKey) {
+                        oldKeyDown(event);
+                    }
+                }
+                else {
+                    oldKeyDown(event);
+                }
+            }
+            else {
+                oldKeyDown(event);
+            }
+        });
     }
-    $("<style>").text(ui_css_1.default).appendTo("head");
-    var $ap = $(".geofs-autopilot")
-        .removeClass("geofs-autopilot")
-        .prop("id", "Qantas94Heavy-ap")
-        .on("keydown", stopImmediatePropagation)
-        .html(ui_html_1.default);
-    if (window.keyboard_mapping) {
-        var addKeybind = window.keyboard_mapping.require("addKeybind");
-        addKeybind("", function () {
-            controls.autopilot.turnOff();
+    exports.default = default_1;
+});
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define('build/addDefaultKeybinds',["require", "exports", "./addKeybind", "./keyboardMapping"], function (require, exports, addKeybind_1, keyboardMapping_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    addKeybind_1 = __importDefault(addKeybind_1);
+    keyboardMapping_1 = __importDefault(keyboardMapping_1);
+    function default_1() {
+        (0, addKeybind_1.default)("Toggle Autopilot", function () {
+            controls.setters.toggleAutoPilot.set();
+        }, (0, keyboardMapping_1.default)()["Toggle Autopilot"] || {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyA",
+        });
+        (0, addKeybind_1.default)("Bank left", function (event) {
+            controls.states.left = !0;
+            event.returnValue = !1;
+            controls.keyboard.override = !0;
+        }, (0, keyboardMapping_1.default)()["Bank left"] || {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "ArrowLeft",
+        });
+        (0, addKeybind_1.default)("Bank right", function (event) {
+            controls.states.right = !0;
+            event.returnValue = !1;
+            controls.keyboard.override = !0;
+        }, (0, keyboardMapping_1.default)()["Bank right"] || {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "ArrowRight",
+        });
+        (0, addKeybind_1.default)("Pitch down", function (event) {
+            controls.states.up = !0;
+            event.returnValue = !1;
+            controls.keyboard.override = !0;
+        }, (0, keyboardMapping_1.default)()["Pitch down"] || {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "ArrowUp",
+        });
+        (0, addKeybind_1.default)("Pitch up", function (event) {
+            controls.states.down = !0;
+            event.returnValue = !1;
+            controls.keyboard.override = !0;
+        }, (0, keyboardMapping_1.default)()["Pitch up"] || {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "ArrowDown",
+        });
+        (0, addKeybind_1.default)("Steer left", function (event) {
+            controls.states.rudderLeft = !0;
+            event.returnValue = !1;
+            controls.keyboard.overrideRudder = !0;
+        }, (0, keyboardMapping_1.default)()["Steer left"] || {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Comma",
+        });
+        (0, addKeybind_1.default)("Steer right", function (event) {
+            controls.states.rudderRight = !0;
+            event.returnValue = !1;
+            controls.keyboard.overrideRudder = !0;
+        }, (0, keyboardMapping_1.default)()["Steer right"] || {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Period",
+        });
+        (0, addKeybind_1.default)("Increase throttle", function (event) {
+            controls.states.increaseThrottle = !0;
+            event.returnValue = !1;
+        }, (0, keyboardMapping_1.default)()["Increase throttle"] || {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "NumpadAdd",
+        });
+        (0, addKeybind_1.default)("" + "", function (event) {
+            controls.states.increaseThrottle = !0;
+            event.returnValue = !1;
         }, {
             ctrlKey: false,
             shiftKey: false,
             altKey: false,
-            code: "Backquote",
+            code: "PageUp",
+        });
+        (0, addKeybind_1.default)("Decrease throttle", function (event) {
+            controls.states.increaseThrottle = !0;
+            event.returnValue = !1;
+        }, (0, keyboardMapping_1.default)()["Decrease throttle"] || {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "NumpadSubtract",
+        });
+        (0, addKeybind_1.default)("" + "", function (event) {
+            controls.states.decreaseThrottle = !0;
+            event.returnValue = !1;
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "PageDown",
+        });
+        (0, addKeybind_1.default)("Brakes", function () {
+            controls.setters.setBrakes.set();
+        }, (0, keyboardMapping_1.default)()["Brakes"] || {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Space",
+        });
+        (0, addKeybind_1.default)("Parking brake", function () {
+            controls.setters.toggleParkingBrake.set();
+        }, (0, keyboardMapping_1.default)()["Parking brake"] || {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Semicolon",
+        });
+        (0, addKeybind_1.default)("Engine switch (on/off)", function () {
+            geofs.aircraft.instance.engine.on
+                ? geofs.aircraft.instance.stopEngine()
+                : geofs.aircraft.instance.startEngine();
+        }, (0, keyboardMapping_1.default)()["Engine switch (on/off)"] || {
+            ctrlKey: false,
+            altKey: false,
+            shiftKey: false,
+            code: "KeyE",
+        });
+        (0, addKeybind_1.default)("Gear toggle (up/down)", function () {
+            controls.setters.setGear.set();
+        }, (0, keyboardMapping_1.default)()["Gear toggle (up/down)"] || {
+            ctrlKey: false,
+            altKey: false,
+            shiftKey: false,
+            code: "KeyG",
+        });
+        (0, addKeybind_1.default)("Lower flaps", function () {
+            controls.setters.setFlapsDown.set();
+        }, (0, keyboardMapping_1.default)()["Lower flaps"] || {
+            ctrlKey: false,
+            altKey: false,
+            shiftKey: false,
+            code: "BracketLeft",
+        });
+        (0, addKeybind_1.default)("Raise flaps", function () {
+            controls.setters.setFlapsUp.set();
+        }, (0, keyboardMapping_1.default)()["Raise flaps"] || {
+            ctrlKey: false,
+            altKey: false,
+            shiftKey: false,
+            code: "BracketRight",
+        });
+        (0, addKeybind_1.default)("Airbrake toggle (on/off)", function () {
+            controls.setters.setAirbrakes.set();
+        }, (0, keyboardMapping_1.default)()["Airbrake toggle (on/off)"] || {
+            ctrlKey: false,
+            altKey: false,
+            shiftKey: false,
+            code: "KeyB",
+        });
+        (0, addKeybind_1.default)("Optional Animated Part toggle (on/off)", function () {
+            controls.setters.setOptionalAnimatedPart.set();
+        }, (0, keyboardMapping_1.default)()["Optional Animated Part toggle (on/off)"] || {
+            ctrlKey: false,
+            altKey: false,
+            shiftKey: false,
+            code: "KeyX",
+        });
+        (0, addKeybind_1.default)("Elevator trim down", function () {
+            controls.setters.setElevatorTrimDown.set();
+        }, (0, keyboardMapping_1.default)()["Elevator trim down"] || {
+            ctrlKey: false,
+            altKey: false,
+            shiftKey: false,
+            code: "End",
+        });
+        (0, addKeybind_1.default)("Elevator trim up", function () {
+            controls.setters.setElevatorTrimUp.set();
+        }, (0, keyboardMapping_1.default)()["Elevator trim up"] || {
+            ctrlKey: false,
+            altKey: false,
+            shiftKey: false,
+            code: "Home",
+        });
+        (0, addKeybind_1.default)("Elevator trim neutral", function () {
+            controls.setters.setElevatorTrimNeutral.set();
+        }, (0, keyboardMapping_1.default)()["Elevator trim neutral"] || {
+            ctrlKey: false,
+            altKey: false,
+            shiftKey: false,
+            code: "Delete",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.recenter();
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Enter",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.controlKeyPressed = !0;
+        }, {
+            ctrlKey: true,
+            shiftKey: false,
+            altKey: false,
+            code: "",
+        });
+        (0, addKeybind_1.default)("", function (event) {
+            flight.recorder.playing &&
+                (flight.recorder.exitPlayback(), event.preventDefault());
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Escape",
+        });
+        (0, addKeybind_1.default)("", function () {
+            flight.recorder.enterPlayback();
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyV",
+        });
+        (0, addKeybind_1.default)("", function () {
+            audio.toggleMute();
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyS",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.togglePause();
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyP",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.cycle();
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyC",
+        });
+        (0, addKeybind_1.default)("", function () {
+            ui.panel.toggle(".geofs-map-list");
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyN",
+        });
+        (0, addKeybind_1.default)("", function () {
+            ui.panel.toggle(".geofs-preference-list");
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyO",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.flyToCamera();
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Tab",
+        });
+        (0, addKeybind_1.default)("", function () {
+            instruments.toggle();
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyH",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.setMode("mouse");
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyM",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.setMode("keyboard");
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyK",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.setMode("joystick");
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyJ",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.animations.orbitHorizontal.active =
+                !geofs.camera.animations.orbitHorizontal.active;
+        }, {
+            ctrlKey: true,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyQ",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.resetFlight();
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyR",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.animations.orbitVertical.active =
+                !geofs.camera.animations.orbitVertical.active;
+        }, {
+            ctrlKey: true,
+            shiftKey: false,
+            altKey: false,
+            code: "KeyW",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.setRotation(45);
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Numpad1",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.setRotation(0);
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Numpad2",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.setRotation(-45);
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Numpad3",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.setRotation(90);
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Numpad4",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.setToNeutral();
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Numpad5",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.setRotation(-90);
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Numpad6",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.setRotation(135);
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Numpad7",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.setRotation(180);
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Numpad8",
+        });
+        (0, addKeybind_1.default)("", function () {
+            geofs.camera.setRotation(-135);
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Numpad9",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.throttle = 0;
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Digit0",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.throttle = 1 / 9;
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Digit1",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.throttle = 2 / 9;
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Digit2",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.throttle = 3 / 9;
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Digit3",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.throttle = 4 / 9;
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Digit4",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.throttle = 5 / 9;
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Digit5",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.throttle = 6 / 9;
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Digit6",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.throttle = 7 / 9;
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Digit7",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.throttle = 8 / 9;
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Digit8",
+        });
+        (0, addKeybind_1.default)("", function () {
+            controls.throttle = 9 / 9;
+        }, {
+            ctrlKey: false,
+            shiftKey: false,
+            altKey: false,
+            code: "Digit9",
         });
     }
-    else {
-        document.addEventListener("keydown", function (e) {
-            if ("code" in e) {
-                if (e.code === "Backquote")
-                    controls.autopilot.turnOff();
-            }
-            else if (e.which === 192)
-                controls.autopilot.turnOff();
-        });
-    }
-    autopilot_1.default.on.subscribe(function (newValue) {
-        if (!newValue && geofs.preferences.sound)
-            apdisconnectsound_1.default.play();
-    });
-    (0, papi_1.default)();
-    (0, restrictions_1.default)();
-    (0, enablekcas_1.default)();
-    var viewModel = new autopilot_2.default();
-    ko.applyBindings(viewModel, $ap[0]);
-    componentHandler.upgradeElements($ap[0]);
-    exports.default = viewModel;
+    exports.default = default_1;
 });
 
-/*!
- * @license Copyright (c) Karl Cheng 2013-17
- * Licensed under the GNU General Public Licence, version 3 or later.
- * See the LICENSE.md file for details.
- */
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+define('build/ui/main',["require", "exports", "./ViewModel", "../addDefaultKeybinds"], function (require, exports, ViewModel_1, addDefaultKeybinds_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    ViewModel_1 = __importDefault(ViewModel_1);
+    addDefaultKeybinds_1 = __importDefault(addDefaultKeybinds_1);
+    (0, addDefaultKeybinds_1.default)();
+    new ViewModel_1.default();
+});
 
-// Make sure code is run after GEFS is ready.
+
+
 (function () {
-  var _a;
-  function load() {
-    require(["./build/ui/main"]);
-  }
-  // Check if window.geofs.init has already been called.
-  if (
-    window.window.geofs &&
-    window.geofs.canvas &&
-    window.navData.statusCode == 1 &&
-    ((_a =
-      window === null || window === void 0
-        ? void 0
-        : window.keyboard_mapping) === null || _a === void 0
-      ? void 0
-      : _a.ready)
-  ) {
-    load();
-    return;
-  }
+  if (!window.Promise) throw new Error("Browser is outdated.");
+
+  // Check if game has completed loading
   var timer = setInterval(function () {
-    var _a;
     if (
-      !window.window.geofs ||
-      !window.geofs.init ||
-      window.navData.statusCode != 1 ||
-      !((_a =
-        window === null || window === void 0
-          ? void 0
-          : window.keyboard_mapping) === null || _a === void 0
-        ? void 0
-        : _a.ready)
-    )
+      !(
+        window.geofs &&
+        window.geofs.aircraft &&
+        window.geofs.aircraft.instance &&
+        window.geofs.aircraft.instance.object3d &&
+        !!localStorage.getItem("settings")
+      )
+    ) {
       return;
-    clearInterval(timer);
-    // The original window.geofs.init function might have already run between two checks.
-    if (window.geofs.canvas) load();
-    else {
-      var oldInit = window.geofs.init;
-      window.geofs.init = function () {
-        oldInit();
-        load();
-      };
     }
-  }, 16);
+
+    clearInterval(timer);
+    /* global require */ // because for some reason eslint was thinking require is undefined.
+    require(["./build/ui/main"]);
+  }, 250);
 })();
 
 define("init", function(){});
 
 
-var a = window.autopilot_pp = {};a.version="0.12.0";a.require=require;a.requirejs=requirejs;a.define=define;a.ready=false;
+var a = window.keyboard_mapping = {};a.version="1.0.2";a.require=require;a.requirejs=requirejs;a.define=define;a.ready=false;

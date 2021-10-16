@@ -36,10 +36,10 @@ function appendToFile(file) {
 }
 
 /**
- * Builds autopilot.
+ * Builds autopilot++.
  * @param {boolean} debug Whether the script should be built for debugging.
  */
-function build(debug) {
+async function build(debug) {
   // if we want to build the script for debugging
   if (!debug) {
     console.log(
@@ -73,28 +73,34 @@ function build(debug) {
   }
 
   // optimize the requirejs file
-  (async function () {
-    console.log(
-      scriptTag() + chalk.hex("#d5ff80")("Starting script optimizer...")
-    );
-    await optimize(options, () => {
-      // wait for the optimization to actually be done
-      const interval = setInterval(() => {
-        if (
-          !pathExistsSync(
-            join(homeDir, "extension/source/scripts/autopilot_pp.js")
+  console.log(
+    scriptTag() + chalk.hex("#d5ff80")("Starting script optimizer...")
+  );
+  return new Promise((resolve, reject) => {
+    try {
+      optimize(options, () => {
+        // wait for the optimization to actually be done
+        const interval = setInterval(() => {
+          if (
+            !pathExistsSync(
+              join(homeDir, "extension/source/scripts/autopilot_pp.js")
+            )
           )
-        ) return;
-        clearInterval(interval);
-        console.log(
-          scriptTag() +
-            chalk.hex("#d5ff80")("Script optimized, appending to it...")
-        );
-        appendToFile(options.out);
-        console.log(scriptTag() + chalk.hex("#a1f086")("Script built!"));
-      }, 500);
-    });
-  })();
+            return;
+          clearInterval(interval);
+          console.log(
+            scriptTag() +
+              chalk.hex("#d5ff80")("Script optimized, appending to it...")
+          );
+          appendToFile(options.out);
+          console.log(scriptTag() + chalk.hex("#a1f086")("Script built!"));
+          resolve();
+        }, 500);
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
 }
 
 module.exports = build;

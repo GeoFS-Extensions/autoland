@@ -41,20 +41,23 @@ function emptyDir() {
 chdir(homeDir);
 
 emptyDir();
-// prettierBuild();
+prettierBuild();
 
 console.log(chalk.yellow("Starting script builds..."));
-apBuild(argv.debug);
-// fmcBuild(argv.debug);
-// keyboardMappingBuild(argv.debug);
-// spoilersArmingBuild(argv.debug);
-
-// const timer = setInterval(() => {
-//   if (
-//     pathExistsSync(join(homeDir, "extension/source/scripts/spoilers_arming.js"))
-//   ) {
-//     clearInterval(timer);
-//     console.log(chalk.yellow("Scripts built, starting extension build..."));
-//     extensionBuild();
-//   }
-// }, 500);
+apBuild(argv.debug)
+  .then(() => fmcBuild(argv.debug))
+  .then(() => keyboardMappingBuild(argv.debug))
+  .then(() => spoilersArmingBuild(argv.debug))
+  .then(() => {
+    const timer = setInterval(() => {
+      if (
+        pathExistsSync(
+          join(homeDir, "extension/source/scripts/spoilers_arming.js")
+        )
+      ) {
+        clearInterval(timer);
+        console.log(chalk.yellow("Scripts built, starting extension build..."));
+        extensionBuild();
+      }
+    }, 500);
+  });
