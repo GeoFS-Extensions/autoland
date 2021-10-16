@@ -4,6 +4,11 @@ const { sync } = require("glob");
 const { join } = require("path");
 const { chdir } = require("process");
 const mainDir = require("../main_dir");
+const chalk = require("chalk");
+
+function tag() {
+  return chalk.hex("#f7cd72")("(extension) ");
+}
 
 function singleFileAction(filename) {
   let fileContent = fs
@@ -21,10 +26,13 @@ function singleFileAction(filename) {
 
 function build() {
   chdir(join(mainDir, "extension"));
+  console.log(tag() + chalk.hex("#f573a3")("Removing build directory..."));
   fs.rmSync("build", { recursive: true, force: true });
-  console.log("(extension) Removed build directory...");
 
   // copy all non-typescript files to the build dir
+  console.log(
+    tag() + chalk.hex("#b1c6fc")("Copying all non-compiled files to build...")
+  );
   const nonTsFiles = sync("source/**/*", { ignore: "**/*.ts", nodir: true });
   nonTsFiles.forEach((value) => {
     // replaces first 6 characters ("source")
@@ -32,27 +40,33 @@ function build() {
 
     fs.copySync(value, newPath, { overwrite: true });
   });
-  console.log("(extension) Copied all non-compiled files to build...");
 
   // run the typescript compiler
   try {
     console.log(
-      "(extension) Running the typescript compiler in a child process..."
+      tag() +
+        chalk.hex("#d5ff80")(
+          "Running the typescript compiler in a child process..."
+        )
     );
     execSync("npx tsc");
   } catch (e) {
     throw new Error(
-      `(extension) Compiling failed with exit code ${e.code}.\n\n` +
+      tag() +
+        chalk.hex("#ff0000")(`Compiling failed with exit code`) +
+        chalk.hex("#fff200")(`${e.code}.\n\n`) +
         e.stdout.toString()
     );
   }
 
   // remove the module stuff that we don't need
+  console.log(
+    tag() + chalk.hex("#82ffda")("Removing unneeded module infrastructure...")
+  );
   sync("build/**/*.js", { ignore: "scripts" }).forEach((value) => {
     singleFileAction(value);
   });
-  console.log("(extension) Removed unneeded module infrastructure...");
-  console.log("(extension) Build complete!");
+  console.log(tag() + chalk.hex("#a8ff82")("Build complete!"));
 }
 
 module.exports = build;

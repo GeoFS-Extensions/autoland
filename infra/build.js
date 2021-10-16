@@ -49,15 +49,6 @@ apBuild(argv.debug)
   .then(() => keyboardMappingBuild(argv.debug))
   .then(() => spoilersArmingBuild(argv.debug))
   .then(() => {
-    const timer = setInterval(() => {
-      if (
-        pathExistsSync(
-          join(homeDir, "extension/source/scripts/spoilers_arming.js")
-        )
-      ) {
-        clearInterval(timer);
-        console.log(chalk.yellow("Scripts built, starting extension build..."));
-        extensionBuild();
-      }
-    }, 500);
+    console.log(chalk.yellow("Scripts built, starting extension build..."));
+    extensionBuild();
   });
