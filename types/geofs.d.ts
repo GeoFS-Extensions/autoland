@@ -1497,6 +1497,7 @@ declare global {
   let SMOOTHING_FACTOR: number;
   let SIX_STEP_WARNING: string[];
   let PAGE_PATH: string;
+  // TODO: REVIEW: @types/leaflet declares a global var, do we need this?
   let L: typeof import("../node_modules/@types/leaflet/index");
   let componentHandler: any;
 }
