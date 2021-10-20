@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@types/chrome": "0.0.159",
-    "@types/jquery": "3.5.7",
+    "@types/jquery": "3.5.8",
     "@typescript-eslint/eslint-plugin": "5.1.0",
     "@typescript-eslint/parser": "5.1.0",
     "cws-publish": "2.0.6",
