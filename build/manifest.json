@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "GeoFS Plugins",
-  "version": "3.2.1.21",
+  "version": "3.2.1.22",
   "description": "Adding new functionalities to the GeoFS Flight Simulator.",
   "action": { "default_popup": "ui/popup/popup.html" },
   "author": "Nicolas Rodriguez, Guy Adler",
