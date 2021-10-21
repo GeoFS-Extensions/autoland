@@ -9,8 +9,8 @@ import lnav from "./nav/LNAV";
 import progress from "./nav/progress";
 
 // Autopilt++ Dependencies
-const autopilot = window.autopilot_pp.require("build/autopilot"),
-  gc = window.autopilot_pp.require("build/greatcircle"),
+const autopilot = window.autopilot_pp.require("build/autopilot").default,
+  gc = window.autopilot_pp.require("build/greatcircle").default,
   icao = window.navData.airports;
 
 const route = ko.observableArray<Waypoint>();
