@@ -34,7 +34,9 @@ document.addEventListener(
   }
 );
 
-const navData = {
+
+/* because it sometimes causes problems for reasons I can not understand: */ // eslint-disable-next-line prefer-const
+let navData = {
   statusCode: 0,
   airports: {},
   navaids: {},
