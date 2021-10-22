@@ -1,8 +1,8 @@
 import * as ko from "knockout";
-import distance from "../distance";
-import flight from "../flight";
-import utils from "../utils";
-import waypoints from "../waypoints";
+import { distance } from "../distance";
+import { flight } from "../flight";
+import { utils } from "../utils";
+import { waypoints } from "../waypoints";
 
 let timer: number = null;
 
@@ -104,7 +104,7 @@ const print = function (
   info.nextETE(formattedTimes[4]);
 };
 
-export default {
+export const progress = {
   info,
   update,
   print,

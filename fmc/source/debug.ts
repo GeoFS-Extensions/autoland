@@ -1,4 +1,4 @@
-import E from "./ui/elements";
+import { E } from "./ui/elements";
 
 // If FMC is production
 const PRODUCTION = false;
@@ -8,7 +8,7 @@ function stopPropagation(event: Event) {
   event.stopImmediatePropagation();
 }
 
-export default {
+export const debug = {
   /**
    * Stops input key propagation
    */

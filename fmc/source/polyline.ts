@@ -1,31 +1,31 @@
 import { LatLng } from "leaflet";
 
-const polyline = L.polyline([], {
+const path = L.polyline([], {
   color: "#7b7c14",
   weight: 2,
   lineJoin: "round",
 });
 
 function setAt(n: number, coords: LatLng | LatLng[] | LatLng[][]) {
-  const list = polyline.getLatLngs();
+  const list = path.getLatLngs();
   list[n] = coords;
-  polyline.setLatLngs(list);
+  path.setLatLngs(list);
 }
 
 function insertAt(n: number, coords) {
-  const list = polyline.getLatLngs();
+  const list = path.getLatLngs();
   list.splice(n, 0, coords);
-  polyline.setLatLngs(list);
+  path.setLatLngs(list);
 }
 
 function deleteAt(n: number) {
-  const list = polyline.getLatLngs();
+  const list = path.getLatLngs();
   list.splice(n, 1);
-  polyline.setLatLngs(list);
+  path.setLatLngs(list);
 }
 
-export default {
-  path: polyline,
+export const polyline = {
+  path,
   setAt,
   insertAt,
   deleteAt,

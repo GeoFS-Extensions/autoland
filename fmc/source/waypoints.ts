@@ -1,18 +1,18 @@
 import * as ko from "knockout";
-import debug from "./debug";
-import get from "./get";
-import flight from "./flight";
-import log from "./log";
-// import polyline from './polyline';
-import utils from "./utils";
-import lnav from "./nav/LNAV";
-import progress from "./nav/progress";
+import { debug } from "./debug";
+import { get } from "./get";
+import { flight } from "./flight";
+import { log } from "./log";
+// import { polyline } from './polyline';
+import { utils } from "./utils";
+import { lnav } from "./nav/LNAV";
+import { progress } from "./nav/progress";
 
 // Autopilt++ Dependencies
 const autopilot = window.autopilot_pp.require("build/autopilot").default,
   gc = window.autopilot_pp.require("build/greatcircle").default,
   icao = window.navData.airports;
-
+ 
 const route = ko.observableArray<Waypoint>();
 const nextWaypoint = ko.observable<number>(null);
 
@@ -22,19 +22,18 @@ const nextWaypoint = ko.observable<number>(null);
 class Waypoint {
   // Waypoint name
   private readonly _wpt = ko.observable<string>();
+  private isValid: boolean;
   readonly wpt = ko.pureComputed<string>({
     read: this._wpt,
     write: (val: string) => {
       this._wpt(val);
 
       const coords = get.waypoint(val, getIndex(this));
-      const isValid: boolean = coords && coords[0] && coords[1];
+      this.isValid = Boolean(coords && coords[0] && coords[1]);
 
-      // @ts-expect-error I do not know how this code even compiled
-      this.lat(isValid ? coords[0] : this.lat(), isValid);
-      // @ts-expect-error I do not know how this code even compiled
-      this.lon(isValid ? coords[1] : this.lon(), isValid);
-      this.info(isValid ? coords[2] : undefined);
+      this.lat(this.isValid ? coords[0] : this.lat());
+      this.lon(this.isValid ? coords[1] : this.lon());
+      this.info(this.isValid ? coords[2] : undefined);
 
       // if (!isValid) self.marker(val);
       // else self.marker(val);
@@ -43,29 +42,25 @@ class Waypoint {
 
   // Latitude
   private readonly _lat = ko.observable<number>();
-  // FIX: it might be fixed now, I'm not sure.
-  readonly lat = ko.pureComputed<number, boolean>({
+
+  readonly lat = ko.pureComputed<number, Waypoint>({
     read: this._lat,
-    //The first arg needs to be called this (knockout.d.ts#223), but we need to use an arrow function to keep
-    // @ts-expect-error the context of this (class instance). Also, it's just weird.
-    write: (_this: Waypoint, val: number, isValid: boolean) => {
+    write: (val: number) => {
       val = formatCoords(val.toString());
       this._lat(!isNaN(val) ? val : undefined);
-      this.valid(Boolean(isValid));
+      this.valid(Boolean(this.isValid));
       // this.marker(this.wpt(), L.latLng(val, this.lon()));
     },
   });
 
   // Longitude
   private readonly _lon = ko.observable<number>();
-  readonly lon = ko.pureComputed<number, boolean>({
+  readonly lon = ko.pureComputed<number, Waypoint>({
     read: this._lat,
-    //The first arg needs to be called this (knockout.d.ts#223), but we need to use an arrow function to keep
-    // @ts-expect-error the context of this (class instance). Also, it's just weird.
-    write: (_this: Waypoint, val: number, isValid: boolean) => {
+    write: (val: number) => {
       val = formatCoords(val.toString());
       this._lon(!isNaN(val) ? val : undefined);
-      this.valid(Boolean(isValid));
+      this.valid(Boolean(this.isValid));
       // this.marker(this.wpt(), L.latLng(this.lat(), val));    }
     },
   });
@@ -573,7 +568,9 @@ function shiftWaypoint(oldIndex: number, value: number) {
   }
 }
 
-export default {
+const getCoords = get.waypoint;
+
+export const waypoints = {
   route,
   nextWaypoint,
   makeFixesArray,
@@ -585,9 +582,9 @@ export default {
   removeWaypoint,
   activateWaypoint,
   printWaypointInfo,
-  nextWptAltRes: getNextWaypointWithAltRestriction,
   saveData,
   loadFromSave,
   shiftWaypoint,
-  getCoords: get.waypoint,
+  nextWptAltRes: getNextWaypointWithAltRestriction, 
+  getCoords
 };

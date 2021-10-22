@@ -1,11 +1,11 @@
-import E from "./elements";
+import { E } from "./elements";
 import button from "../html/button.html";
 import externalDist from "../html/externaldist.html";
 import modal from "../html/modal.html";
 import tabContents from "../html/tab-contents/main";
 import mainCSS from "../style/main";
 
-export default new Promise<void>(function (resolve) {
+export const positioningFMC = new Promise<void>(function (resolve) {
   // Main FMC stylesheet
   $("<style>").addClass("fmc-stylesheet").text(mainCSS).appendTo("head");
 

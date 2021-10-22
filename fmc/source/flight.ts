@@ -1,7 +1,7 @@
 import * as ko from "knockout";
-import get from "./get";
-import lnav from "./nav/LNAV";
-import vnav from "./nav/VNAV";
+import { get } from "./get";
+import { lnav } from "./nav/LNAV";
+import { vnav } from "./nav/VNAV";
 
 // Autopilot++ Dependencies
 const icao = window.navData.airports;
@@ -218,7 +218,7 @@ const todCalc = ko.observable<boolean>(false);
 // Arrival Airport field altitude
 const fieldElev = ko.observable<number>();
 
-export default {
+export const flight = {
   todDist,
   vnavEnabled,
   spdControl,

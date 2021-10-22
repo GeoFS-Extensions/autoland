@@ -1,6 +1,6 @@
-import flight from "./flight";
-import utils from "./utils";
-import waypoints from "./waypoints";
+import { flight } from "./flight";
+import { utils } from "./utils";
+import { waypoints } from "./waypoints";
 
 /**
  * Computes the full route distance with waypoints
@@ -108,7 +108,7 @@ const turn = function (angle: number): number {
   return r * Math.tan(a / 2) + 0.2;
 };
 
-export default {
+export const distance = {
   route,
   target,
   turn,

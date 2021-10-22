@@ -1,6 +1,6 @@
-import distance from "../distance";
-import flight from "../flight";
-import waypoints from "../waypoints";
+import { distance } from "../distance";
+import { flight } from "../flight";
+import { waypoints } from "../waypoints";
 
 let timer: number = null;
 
@@ -25,7 +25,7 @@ const update = function () {
   else timer = setInterval(update, 5000);
 };
 
-export default {
+export const lnav = {
   timer,
   update,
 };

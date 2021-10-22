@@ -1,5 +1,5 @@
-import flight from "../flight";
-import utils from "../utils";
+import { flight } from "../flight";
+import { utils } from "../utils";
 
 // Glideslope, in degrees
 const glideslope = flight.arrival.runway()[3];
@@ -269,7 +269,7 @@ const toggleILS = function () {
   // TO BE IMPLEMENTED
 };
 
-export default {
+export const ILS = {
   thresholdCoords,
   instrument,
   toggleILS,

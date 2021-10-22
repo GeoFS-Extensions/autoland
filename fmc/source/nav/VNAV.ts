@@ -1,9 +1,9 @@
-import debug from "../debug";
-import distance from "../distance";
-import flight from "../flight";
-import utils from "../utils";
-import waypoints from "../waypoints";
-import vnavProfile from "../vnav-profile";
+import { debug } from "../debug";
+import { distance } from "../distance";
+import { flight } from "../flight";
+import { utils } from "../utils";
+import { waypoints } from "../waypoints";
+import { vnavProfile } from "../vnav-profile";
 
 // Autopilot++ Dependencies
 const apModes = window.autopilot_pp.require("build/autopilot").default.modes;
@@ -91,7 +91,7 @@ function switchSpeedMode(spd: number) {
   else apModes.speed.isMach(false);
 }
 
-export default {
+export const vnav = {
   timer: null,
 
   /**

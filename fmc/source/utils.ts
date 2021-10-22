@@ -1,4 +1,4 @@
-import debug from "./debug";
+import { debug } from "./debug";
 
 // Earth's radius in nautical miles, used to calculate Great Circle Distance
 const EARTH_RADIUS_NM = 3440.06;
@@ -185,7 +185,7 @@ function checkZeros(i: number): string {
   return toReturn;
 }
 
-export default {
+export const utils = {
   EARTH_RADIUS_NM,
   FEET_TO_NM,
   NM_TO_FEET,

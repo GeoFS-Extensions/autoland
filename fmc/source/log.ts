@@ -1,5 +1,5 @@
 import * as ko from "knockout";
-import utils from "./utils";
+import { utils } from "./utils";
 
 let mainTimer: number = null;
 let speedTimer: number = null;
@@ -77,7 +77,7 @@ const warn = ko.pureComputed<string>({
   },
 });
 
-export default {
+export const log = {
   data,
   update,
   speed,

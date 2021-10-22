@@ -1,4 +1,4 @@
-export default {
+export const vnavProfile = {
   "4": {
     climb: [
       [-100, 5000, 210, 2400],

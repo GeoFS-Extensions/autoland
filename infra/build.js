@@ -40,18 +40,18 @@ function emptyDir() {
 
 chdir(homeDir);
 
-// emptyDir();
-// prettierBuild();
+emptyDir();
+prettierBuild();
 
-navDataBuild();
+//navDataBuild();
 
-// console.log(chalk.yellow("Starting script builds..."));
-// apBuild(argv.debug)
-//   .then(() => fmcBuild(argv.debug))
-//   .then(() => keyboardMappingBuild(argv.debug))
-//   .then(() => spoilersArmingBuild(argv.debug))
-//   .then(() => navDataBuild())
-//   .then(() => {
-//     console.log(chalk.yellow("Scripts built, starting extension build..."));
-//     extensionBuild();
-//   });
+console.log(chalk.yellow("Starting script builds..."));
+apBuild(argv.debug)
+  .then(() => fmcBuild(argv.debug))
+  .then(() => keyboardMappingBuild(argv.debug))
+  .then(() => spoilersArmingBuild(argv.debug))
+  .then(() => navDataBuild())
+  .then(() => {
+    console.log(chalk.yellow("Scripts built, starting extension build..."));
+    extensionBuild();
+  });

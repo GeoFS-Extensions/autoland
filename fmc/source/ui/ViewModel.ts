@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-this-alias */ /* I'll fix this later */
 import * as ko from "knockout";
-import flight from "../flight";
-import get from "../get";
-import log from "../log";
-import waypoints from "../waypoints";
-import progress from "../nav/progress";
+import { flight } from "../flight";
+import { get } from "../get";
+import { log } from "../log";
+import { waypoints } from "../waypoints";
+import { progress } from "../nav/progress";
 
 /**
  * ViewModel class for knockout bindings
  */
-class ViewModel {
+export class ViewModel {
   // Methods
   nextPhase() {
     const phase = flight.phase();
@@ -191,5 +190,3 @@ ko.bindingHandlers.mdlTextfield = {
     materialTextfield.checkValidity();
   },
 };
-
-export default ViewModel;

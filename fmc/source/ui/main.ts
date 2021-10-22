@@ -1,11 +1,11 @@
 import * as ko from "knockout";
-import ViewModel from "./ViewModel";
-import positioningFMC from "./position";
-import log from "../log";
-// import polyline from '../polyline';
-import waypoints from "../waypoints";
-import progress from "../nav/progress";
-import E from "./elements";
+import { ViewModel } from "./ViewModel";
+import { positioningFMC } from "./position";
+import { log } from "../log";
+// import { polyline } from '../polyline';
+import { waypoints } from "../waypoints";
+import { progress } from "../nav/progress";
+import { E } from "./elements";
 import "../redefine";
 
 // If UI is properly placed, load FMC

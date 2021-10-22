@@ -1,4 +1,4 @@
-export default {
+export const E = {
   modal: ".fmc-modal",
   container: {
     tabBar: ".fmc-modal .fmc-modal__tab-bar",

@@ -1,4 +1,4 @@
-import log from "./log";
+import { log } from "./log";
 
 // Adds a confirm window to prevent accidental reset
 geofs.resetFlight = function () {
