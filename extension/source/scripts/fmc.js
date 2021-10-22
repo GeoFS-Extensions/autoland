@@ -2773,7 +2773,7 @@ define('build/waypoints',["require", "exports", "knockout", "./debug", "./get", 
             });
             this._lon = ko.observable();
             this.lon = ko.pureComputed({
-                read: this._lat,
+                read: this._lon,
                 write: function (val) {
                     val = formatCoords(val.toString());
                     _this._lon(!isNaN(val) ? val : undefined);

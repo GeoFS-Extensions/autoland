@@ -56,7 +56,7 @@ class Waypoint {
   // Longitude
   private readonly _lon = ko.observable<number>();
   readonly lon = ko.pureComputed<number, Waypoint>({
-    read: this._lat,
+    read: this._lon,
     write: (val: number) => {
       val = formatCoords(val.toString());
       this._lon(!isNaN(val) ? val : undefined);
