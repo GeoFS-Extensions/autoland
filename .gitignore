@@ -119,3 +119,6 @@ dist
 
 # Build folders
 **/build
+
+# Raw OurAirports navdata
+data/*

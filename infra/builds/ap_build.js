@@ -38,6 +38,7 @@ function appendToFile(file) {
 /**
  * Builds autopilot++.
  * @param {boolean} debug Whether the script should be built for debugging.
+ * @returns {Promise<void>}
  */
 async function build(debug) {
   // if we want to build the script for debugging
