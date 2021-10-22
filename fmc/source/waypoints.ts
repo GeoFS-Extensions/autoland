@@ -1,6 +1,6 @@
 import * as ko from "knockout";
 import { debug } from "./debug";
-import { get } from "./get";
+import { waypoint } from "./get";
 import { flight } from "./flight";
 import { log } from "./log";
 // import { polyline } from './polyline';
@@ -28,7 +28,7 @@ class Waypoint {
     write: (val: string) => {
       this._wpt(val);
 
-      const coords = get.waypoint(val, getIndex(this));
+      const coords = waypoint(val, getIndex(this));
       this.isValid = Boolean(coords && coords[0] && coords[1]);
 
       this.lat(this.isValid ? coords[0] : this.lat());
@@ -568,8 +568,6 @@ function shiftWaypoint(oldIndex: number, value: number) {
   }
 }
 
-const getCoords = get.waypoint;
-
 export const waypoints = {
   route,
   nextWaypoint,
@@ -586,5 +584,5 @@ export const waypoints = {
   loadFromSave,
   shiftWaypoint,
   nextWptAltRes: getNextWaypointWithAltRestriction, 
-  getCoords
+  getCoords: waypoint
 };

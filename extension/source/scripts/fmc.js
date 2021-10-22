@@ -2708,9 +2708,9 @@ define('build/nav/progress',["require", "exports", "knockout", "../distance", ".
         info.flightETA(formattedTimes[1]);
         info.todETE(formattedTimes[2]);
         info.todETA(formattedTimes[3]);
-        info.flightDist(flightDist.toString() || DEFAULT_DIST);
-        info.todDist(todDist.toString() || DEFAULT_DIST);
-        info.nextDist(nextDist.toString() || DEFAULT_DIST);
+        info.flightDist(!isNaN(flightDist) && flightDist.toString() || DEFAULT_DIST);
+        info.todDist(typeof todDist !== 'undefined' && todDist.toString() || DEFAULT_DIST);
+        info.nextDist(typeof nextDist !== 'undefined' && nextDist.toString() || DEFAULT_DIST);
         info.nextETE(formattedTimes[4]);
     };
     exports.progress = {
@@ -2755,7 +2755,7 @@ define('build/waypoints',["require", "exports", "knockout", "./debug", "./get", 
                 read: this._wpt,
                 write: function (val) {
                     _this._wpt(val);
-                    var coords = get_1.get.waypoint(val, getIndex(_this));
+                    var coords = (0, get_1.waypoint)(val, getIndex(_this));
                     _this.isValid = Boolean(coords && coords[0] && coords[1]);
                     _this.lat(_this.isValid ? coords[0] : _this.lat());
                     _this.lon(_this.isValid ? coords[1] : _this.lon());
@@ -3047,7 +3047,6 @@ define('build/waypoints',["require", "exports", "knockout", "./debug", "./get", 
             }
         }
     }
-    var getCoords = get_1.get.waypoint;
     exports.waypoints = {
         route: route,
         nextWaypoint: nextWaypoint,
@@ -3064,7 +3063,7 @@ define('build/waypoints',["require", "exports", "knockout", "./debug", "./get", 
         loadFromSave: loadFromSave,
         shiftWaypoint: shiftWaypoint,
         nextWptAltRes: getNextWaypointWithAltRestriction,
-        getCoords: getCoords
+        getCoords: get_1.waypoint
     };
 });
 
@@ -3104,7 +3103,8 @@ define('build/get/waypoint',["require", "exports", "../data", "../utils", "../wa
 define('build/get',["require", "exports", "./get/waypoint"], function (require, exports, waypoint_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.get = void 0;
+    exports.get = exports.waypoint = void 0;
+    Object.defineProperty(exports, "waypoint", { enumerable: true, get: function () { return waypoint_1.waypoint; } });
     exports.get = {
         waypoint: waypoint_1.waypoint,
         ATS: undefined,
