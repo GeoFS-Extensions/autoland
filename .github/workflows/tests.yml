@@ -1,0 +1,65 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: "0 2 * * *"
+
+jobs:
+  job_1:
+    name: Code style check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "17.x"
+
+      - name: Install packages
+        run: npm i
+
+      - name: Prettier
+        run: sudo npx prettier --check .
+
+  job_2:
+    name: Lint code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "17.x"
+
+      - name: Install packages
+        run: npm i
+
+      - name: Lint
+        run: sudo npx eslint .
+
+  job_3:
+    name: Security
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          config-file: ./.github/codeql/codeql-configuration.yml
+          languages: javascript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
