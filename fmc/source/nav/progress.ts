@@ -41,11 +41,13 @@ const update = function () {
   if (valid) flightDist = distance.route(route.length);
   else flightDist = utils.getDistance(lat1, lon1, lat2, lon2);
 
+  // Calculates the time for the next waypoint
+  times[4] = utils.getETE(nextDist, false);
+
   // Calculates times if aircraft is flying and has an arrival airport
   if (!geofs.aircraft.instance.groundContact && flight.arrival.airport()) {
     times[0] = utils.getETE(flightDist, true);
     times[1] = utils.getETA(times[0][0], times[0][1]);
-    times[4] = utils.getETE(nextDist, false);
     if (flightDist - flight.todDist() > 0) {
       times[2] = utils.getETE(flightDist - flight.todDist(), false);
       times[3] = utils.getETA(times[2][0], times[2][1]);

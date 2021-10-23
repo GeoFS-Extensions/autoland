@@ -2671,10 +2671,10 @@ define('build/nav/progress',["require", "exports", "knockout", "../distance", ".
             flightDist = distance_1.distance.route(route.length);
         else
             flightDist = utils_1.utils.getDistance(lat1, lon1, lat2, lon2);
+        times[4] = utils_1.utils.getETE(nextDist, false);
         if (!geofs.aircraft.instance.groundContact && flight_1.flight.arrival.airport()) {
             times[0] = utils_1.utils.getETE(flightDist, true);
             times[1] = utils_1.utils.getETA(times[0][0], times[0][1]);
-            times[4] = utils_1.utils.getETE(nextDist, false);
             if (flightDist - flight_1.flight.todDist() > 0) {
                 times[2] = utils_1.utils.getETE(flightDist - flight_1.flight.todDist(), false);
                 times[3] = utils_1.utils.getETA(times[2][0], times[2][1]);
