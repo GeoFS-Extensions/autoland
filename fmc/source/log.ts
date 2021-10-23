@@ -28,7 +28,7 @@ const update = function (other?: string) {
     other = other || "--";
 
     const dataArray = [time, spd, hdg, alt, lat, lon, fps, other];
-    data.push(dataArray);
+    data.unshift(dataArray);
   }
   if (mainTimer !== null) {
     clearInterval(mainTimer);

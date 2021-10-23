@@ -117,8 +117,7 @@ function getClimbrate(deltaAlt: number, nextDist: number): number {
  */
 function formatTime(time: number[]): string {
   if (isNaN(time[0]) || isNaN(time[1])) return "--:--";
-  time[1] = Number(checkZeros(time[1]));
-  return time[0] + ":" + time[1];
+  return checkZeros(time[0]) + ":" + checkZeros(time[1]);
 }
 
 /**
