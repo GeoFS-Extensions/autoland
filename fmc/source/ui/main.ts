@@ -72,4 +72,5 @@ function loadFMC() {
   progress.update();
   log.update();
   log.speed();
+  window.fmc.ready = true;
 }

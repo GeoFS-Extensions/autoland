@@ -29,6 +29,7 @@ declare global {
       require: Require;
       define: RequireDefine;
       requirejs: Require;
+      ready: boolean;
     };
     keyboard_mapping: {
       version: string;

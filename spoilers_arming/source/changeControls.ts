@@ -9,6 +9,11 @@ export default () => {
       if (globalVariables.enabled()) {
         if (!geofs.aircraft.instance.groundContact) {
           controls.spoilersArming = !controls.spoilersArming;
+          if (window.fmc?.ready) {
+            const log = window.fmc.require('build/log').log;
+            const msg = `${controls.spoilersArming ? 'Armed' : 'Disarmed'} Spoilers Arming`;
+            log.update(msg);
+          }
         } else {
           controls.spoilersArming = false;
         }
@@ -50,10 +55,15 @@ export default () => {
         !e.ctrlKey &&
         !e.altKey &&
         !e.shiftKey
-      ) {
-        // spoilers will be activated.
-        globalVariables.enabled(false);
-        controls.spoilersArming = false;
+        ) {
+          // spoilers will be activated.
+          globalVariables.enabled(false);
+          if (controls.spoilersArming && window.fmc?.ready) {
+            const log = window.fmc.require('build/log').log;
+            const msg = 'Disarmed Spoilers Arming';
+            log.update(msg);
+          }
+          controls.spoilersArming = false;
       }
     });
   } else {
@@ -71,6 +81,11 @@ export default () => {
             globalVariables.enabled(false);
             controls.spoilersArming = false;
             controls.setters.setAirbrakes.set();
+            if (window.fmc?.ready) {
+              const log = window.fmc.require('build/log').log;
+              const msg = 'Disarmed Spoilers Arming';
+              log.update(msg);
+            }
           }
         } else {
           keydownTrigger(event);

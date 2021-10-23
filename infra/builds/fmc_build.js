@@ -30,6 +30,7 @@ async function appendToFile(file) {
   fmcAppend += "a.require=require;";
   fmcAppend += "a.requirejs=requirejs;";
   fmcAppend += "a.define=define;";
+  fmcAppend += "a.ready=false";
 
   appendFileSync(file, fmcAppend);
 }
