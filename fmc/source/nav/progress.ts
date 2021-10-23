@@ -100,9 +100,15 @@ const print = function (
   info.flightETA(formattedTimes[1]);
   info.todETE(formattedTimes[2]);
   info.todETA(formattedTimes[3]);
-  info.flightDist(!isNaN(flightDist) && flightDist.toString() || DEFAULT_DIST);
-  info.todDist(typeof todDist !== 'undefined' && todDist.toString() || DEFAULT_DIST);
-  info.nextDist(typeof nextDist !== 'undefined' && nextDist.toString() || DEFAULT_DIST);
+  info.flightDist(
+    (!isNaN(flightDist) && flightDist.toString()) || DEFAULT_DIST
+  );
+  info.todDist(
+    (typeof todDist !== "undefined" && todDist.toString()) || DEFAULT_DIST
+  );
+  info.nextDist(
+    (typeof nextDist !== "undefined" && nextDist.toString()) || DEFAULT_DIST
+  );
   info.nextETE(formattedTimes[4]);
 };
 

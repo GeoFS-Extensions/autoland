@@ -1,7 +1,6 @@
-import { data } from '../data';
-import { utils } from '../utils';
-import { waypoints } from '../waypoints';
-
+import { data } from "../data";
+import { utils } from "../utils";
+import { waypoints } from "../waypoints";
 
 const icao = window.navData.airports;
 
@@ -13,35 +12,35 @@ const icao = window.navData.airports;
  * @returns {Array} The coordinates array
  */
 export const waypoint = (fix: string, index: number): number[] => {
-    const coords = icao[fix];
-    if (coords) return coords;
-    
-    const navaid = data.navaids[fix];
-    if (navaid) return navaid;
+  const coords = icao[fix];
+  if (coords) return coords;
 
-    const list = data.waypoints[fix];
-    if (list) {
-        let closestDist = Infinity,
-        closestIndex = 0;
+  const navaid = data.navaids[fix];
+  if (navaid) return navaid;
 
-        for (let i = 0; i < list.length; i++) {
-        // Sets current coords to the previous waypoint in the list if applicable
-        // Else, current coords set to current position
-        const curLat = geofs.aircraft.instance.llaLocation[0];
-        const curLon = geofs.aircraft.instance.llaLocation[1];
-        const lat = index === 0 ? curLat : waypoints.route()[index - 1].lat();
-        const lon = index === 0 ? curLon : waypoints.route()[index - 1].lon();
+  const list = data.waypoints[fix];
+  if (list) {
+    let closestDist = Infinity,
+      closestIndex = 0;
 
-        const relativeDist = utils.getDistance(list[i][0], list[i][1], lat, lon);
+    for (let i = 0; i < list.length; i++) {
+      // Sets current coords to the previous waypoint in the list if applicable
+      // Else, current coords set to current position
+      const curLat = geofs.aircraft.instance.llaLocation[0];
+      const curLon = geofs.aircraft.instance.llaLocation[1];
+      const lat = index === 0 ? curLat : waypoints.route()[index - 1].lat();
+      const lon = index === 0 ? curLon : waypoints.route()[index - 1].lon();
 
-        if (relativeDist < closestDist) {
-            closestDist = relativeDist;
-            closestIndex = i;
-        }
-        }
+      const relativeDist = utils.getDistance(list[i][0], list[i][1], lat, lon);
 
-        return list[closestIndex];
+      if (relativeDist < closestDist) {
+        closestDist = relativeDist;
+        closestIndex = i;
+      }
     }
 
-    return undefined;
+    return list[closestIndex];
+  }
+
+  return undefined;
 };

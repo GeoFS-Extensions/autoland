@@ -12,7 +12,7 @@ import { progress } from "./nav/progress";
 const autopilot = window.autopilot_pp.require("build/autopilot").default,
   gc = window.autopilot_pp.require("build/greatcircle").default,
   icao = window.navData.airports;
- 
+
 const route = ko.observableArray<Waypoint>();
 const nextWaypoint = ko.observable<number>(null);
 
@@ -583,6 +583,6 @@ export const waypoints = {
   saveData,
   loadFromSave,
   shiftWaypoint,
-  nextWptAltRes: getNextWaypointWithAltRestriction, 
-  getCoords: waypoint
+  nextWptAltRes: getNextWaypointWithAltRestriction,
+  getCoords: waypoint,
 };

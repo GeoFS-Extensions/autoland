@@ -1,4 +1,4 @@
-import { data } from '../data';
+import { data } from "../data";
 
 /**
  * Get all SID info for airport and departure runway
@@ -8,8 +8,12 @@ import { data } from '../data';
  * @param {String} selectedSIDName Allows SID to be selected before a runway
  * @returns {Array} The array of SID
  */
-export const SID = (airport: string, runway?: string, selectedSIDName?: string): any[] => {
-    // If there is no departure airport
+export const SID = (
+  airport: string,
+  runway?: string,
+  selectedSIDName?: string
+): any[] => {
+  // If there is no departure airport
   if (!airport) return [];
 
   const allSID = data.SID[airport] || [];

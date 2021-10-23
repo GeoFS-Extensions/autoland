@@ -52,5 +52,9 @@ controls.setters.setFlapsDown.set = function () {
 const oldAirbrakes = controls.setters.setAirbrakes.set;
 controls.setters.setAirbrakes.set = function () {
   oldAirbrakes();
-  log.update(controls.airbrakes.target == 1 ? 'Activated airbrakes' : 'Deactivated airbrakes');
+  log.update(
+    controls.airbrakes.target == 1
+      ? "Activated airbrakes"
+      : "Deactivated airbrakes"
+  );
 };
