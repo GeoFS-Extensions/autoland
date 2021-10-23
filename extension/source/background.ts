@@ -11,8 +11,8 @@ type scripts = keyof options;
 
 /**
  * Sorts scripts for adding.
- * @param {scripts} toSort The scripts to sort through.
- * @returns {scripts} The sorted scripts.
+ * @param {scripts[]} toSort The scripts to sort through.
+ * @returns {scripts[]} The sorted scripts.
  */
 function sortOptions(toSort: scripts[]): scripts[] {
   const listOfImportance: scripts[] = [
@@ -29,7 +29,7 @@ function sortOptions(toSort: scripts[]): scripts[] {
 /**
  * Gets data from chrome storage.
  * @param {string} name The name of the data in chrome storage.
- * @returns {any} The data in chrome storage.
+ * @returns {Promise<any>} The data in chrome storage.
  */
 function getStorageData(name: string): Promise<any> {
   return new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ function getStorageData(name: string): Promise<any> {
  * @param {string} name The name to save the object to.
  * @returns The object given that was saved to storage.
  */
-function writeToStorage(toWrite: any, name: string): typeof toWrite {
+function writeToStorage<T>(toWrite: T, name: string): T {
   const toSave: { [key: string]: any } = {};
   toSave[name] = toWrite;
   chrome.storage.sync.set(toSave);
@@ -85,17 +85,18 @@ async function readOptions(): Promise<options> {
         ap: false,
         fmc: false,
         spoilerarming: false,
-        keyboardmapping: true, // defaults to true (#59(v3.3.0) Make keyboard mapping a default)
+        keyboardmapping: true, // defaults to true (#59)
       };
       writeToStorage(data, "options");
     }
   });
-  return data as options;
+  return data;
 }
 
-let options: options;
-(async () => {
-  options = await readOptions();
+let options = (function () {
+  let temp: options;
+  readOptions().then((options) => (temp = options));
+  return temp;
 })();
 
 function addScripts(toInject: scripts[], tabId: number) {
@@ -115,7 +116,7 @@ function addScripts(toInject: scripts[], tabId: number) {
       }
 
       // we have the needed permissions, add the scripts
-      sortOptions(toInject);
+      toInject = sortOptions(toInject);
       toInject.forEach((value) => {
         injectScript(value, tabId);
       });

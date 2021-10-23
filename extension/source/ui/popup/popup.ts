@@ -56,7 +56,7 @@ async function readStorage(name: string): Promise<any> {
   return data;
 }
 
-function writeToStorage(toWrite: any, name: string): any {
+function writeToStorage<T>(toWrite: T, name: string): T {
   let toSave;
   if (name == "options") {
     toSave = { options: toWrite };
