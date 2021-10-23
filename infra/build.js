@@ -10,7 +10,6 @@ const spoilersArmingBuild = require("./builds/spoiler_arming_build");
 const fmcBuild = require("./builds/fmc_build");
 const apBuild = require("./builds/ap_build");
 const extensionBuild = require("./builds/extension_build");
-const navDataBuild = require("./builds/nav_data_build");
 
 const argv = yargs.option("debug", {
   description: "Build scripts in debug mode",
@@ -43,14 +42,11 @@ chdir(homeDir);
 emptyDir();
 prettierBuild();
 
-//navDataBuild();
-
 console.log(chalk.yellow("Starting script builds..."));
 apBuild(argv.debug)
   .then(() => fmcBuild(argv.debug))
   .then(() => keyboardMappingBuild(argv.debug))
   .then(() => spoilersArmingBuild(argv.debug))
-  .then(() => navDataBuild())
   .then(() => {
     console.log(chalk.yellow("Scripts built, starting extension build..."));
     extensionBuild();

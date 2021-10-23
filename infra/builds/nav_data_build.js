@@ -1,56 +1,73 @@
 const { join } = require("path");
 const chalk = require("chalk");
 const homeDir = require("../main_dir");
-const { sync } = require("glob");
-const { removeSync, createWriteStream, createFileSync } = require("fs-extra");
-const { get } = require("https");
-const { readFileSync } = require("fs");
+const { writeJSONSync } = require("fs-extra");
 const download = require("download");
 
+/**
+ * @param {string} url
+ * @param {string} path
+ * @returns {Promise<string>}
+ */
 async function downloadFile(url, path) {
   return new Promise((resolve, reject) => {
-    try {
-      get(url, (res) => {
-        if (res.statusCode == 200) {
-          createFileSync(path);
-          const file = createWriteStream(path);
-          res.pipe(file);
-          const interval = setInterval(() => {
-            if (readFileSync(path, "utf-8").length > 0) {
-              clearInterval(interval);
-              resolve();
-            }
-          });
-        }
-      });
-    } catch (e) {
-      reject(e);
-    }
+    download(url, path)
+      .then((buf) => {
+        resolve(buf.toString());
+      })
+      .catch((e) => reject(e));
   });
+}
+
+async function airportsList() {
+  let rawData = await downloadFile("https://ourairports.com/data/airports.csv");
+  let rawDataArray = rawData.split("\n");
+  rawDataArray.shift();
+
+  /** @type {{ [key: string]: number[] }} */
+  let toSave = {};
+
+  rawDataArray.forEach((value) => {
+    if (value[0] == undefined) return;
+    const airport = value.split(",");
+
+    const name = airport[1].substring(1).substring(0, airport[1].length - 2);
+    toSave[name] = [Number(airport[4]), Number(airport[5])];
+  });
+
+  writeJSONSync(
+    join(homeDir, "extension", "source", "data", "airports.json"),
+    toSave
+  );
+}
+
+async function navaidsList() {
+  let rawData = await downloadFile("https://ourairports.com/data/navaids.csv");
+  let rawDataArray = rawData.split("\n");
+  rawDataArray.shift();
+
+  /** @type {{ [key: string]: number[] }} */
+  let toSave = {};
+
+  rawDataArray.forEach((value) => {
+    if (value[0] == undefined) return;
+    const navaid = value.split(",");
+
+    const name = navaid[2].substring(1).substring(0, navaid[2].length - 2);
+    toSave[name] = [Number(navaid[6]), Number(navaid[7])];
+  });
+
+  writeJSONSync(
+    join(homeDir, "extension", "source", "data", "navaids.json"),
+    toSave
+  );
 }
 
 async function build() {
   console.log(chalk.yellow("Attempting nav data build..."));
 
-  const dataFolderPath = join(homeDir, "data");
-  // delete everything in the data folder
-  sync(dataFolderPath + "/**/*").forEach((value) => {
-    removeSync(value);
-  });
-  // download airports.csv files from ourairports
-  downloadFile(
-    "https://ourairports.com/data/airports.csv",
-    join(dataFolderPath, "airports.csv")
-  )
-    .then(() => {
-      downloadFile(
-        "https://ourairports.com/data/navaids.csv",
-        join(dataFolderPath, "navaids.csv")
-      );
-    })
-    .then(() => {
-      console.log("test");
-    });
+  await airportsList();
+  await navaidsList();
 }
 
-module.exports = build;
+build();
