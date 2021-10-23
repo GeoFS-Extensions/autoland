@@ -1,0 +1,6 @@
+name: CodeQL Configuration
+
+paths:
+  - "./build"
+paths-ignore:
+  - "./build/scripts"
