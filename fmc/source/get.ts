@@ -1,10 +1,5 @@
-import { waypoint } from './get/waypoint';
-
-export {waypoint};
-export const get = {
-  waypoint,
-  ATS: undefined,
-  SID: undefined,
-  STAR: undefined,
-  runway: undefined,
-};
+export { waypoint } from './get/waypoint';
+export { ATS } from './get/ATS';
+export { SID } from './get/SID';
+export { STAR } from './get/STAR';
+export { runway } from './get/runway';

@@ -2293,10 +2293,10 @@ define('build/data',["require", "exports"], function (require, exports) {
     exports.data = {
         waypoints: window.navData.waypoints || {},
         navaids: window.navData.navaids || {},
-        STAR: undefined,
-        SID: undefined,
-        runways: undefined,
-        ATS: undefined,
+        STAR: {},
+        SID: {},
+        runways: {},
+        ATS: {},
     };
 });
 
@@ -3100,18 +3100,131 @@ define('build/get/waypoint',["require", "exports", "../data", "../utils", "../wa
     exports.waypoint = waypoint;
 });
 
-define('build/get',["require", "exports", "./get/waypoint"], function (require, exports, waypoint_1) {
+define('build/get/ATS',["require", "exports", "../log"], function (require, exports, log_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.get = exports.waypoint = void 0;
-    Object.defineProperty(exports, "waypoint", { enumerable: true, get: function () { return waypoint_1.waypoint; } });
-    exports.get = {
-        waypoint: waypoint_1.waypoint,
-        ATS: undefined,
-        SID: undefined,
-        STAR: undefined,
-        runway: undefined,
+    exports.ATS = void 0;
+    function getAirway(startFix, airway, endFix) {
+        if (!startFix || !endFix)
+            log_1.log.warn("There must be one waypoint before and after the airway.");
+    }
+    var ATS = function (startFix, airway, endFix) {
+        return getAirway(startFix, airway, endFix);
     };
+    exports.ATS = ATS;
+});
+
+define('build/get/SID',["require", "exports", "../data"], function (require, exports, data_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.SID = void 0;
+    var SID = function (airport, runway, selectedSIDName) {
+        if (!airport)
+            return [];
+        var allSID = data_1.data.SID[airport] || [];
+        var validSID = [];
+        if (selectedSIDName) {
+            if (!runway) {
+                var availableRunways_1 = [];
+                allSID.forEach(function (obj) {
+                    if (obj.name === selectedSIDName)
+                        availableRunways_1.push(obj.runway);
+                });
+                validSID.push({
+                    name: selectedSIDName,
+                    availableRunways: availableRunways_1,
+                });
+            }
+            else {
+                allSID.forEach(function (obj) {
+                    if (obj.name === selectedSIDName && obj.runway === runway)
+                        validSID.push(obj);
+                });
+            }
+        }
+        else {
+            if (!runway) {
+                var tempSIDArray_1 = [];
+                allSID.forEach(function (obj) {
+                    if (tempSIDArray_1.indexOf(obj.name) === -1)
+                        tempSIDArray_1.push(obj.name);
+                });
+                tempSIDArray_1.forEach(function (element) {
+                    validSID.push({ name: element });
+                });
+            }
+            else {
+                allSID.forEach(function (obj) {
+                    if (obj.runway === runway)
+                        validSID.push(obj);
+                });
+            }
+        }
+        return validSID;
+    };
+    exports.SID = SID;
+});
+
+define('build/get/STAR',["require", "exports", "../data"], function (require, exports, data_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.STAR = void 0;
+    var STAR = function (airport, runway) {
+        if (!airport || !runway)
+            return [];
+        var allSTAR = data_1.data.STAR[airport];
+        var validSTAR = [];
+        if (Array.isArray(allSTAR))
+            allSTAR.forEach(function (obj) {
+                if (obj.runway === runway)
+                    validSTAR.push(obj);
+            });
+        return validSTAR;
+    };
+    exports.STAR = STAR;
+});
+
+define('build/get/runway',["require", "exports", "../data", "./SID"], function (require, exports, data_1, SID_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.runway = void 0;
+    var runway = function (airport, selected, isDeparture) {
+        if (!airport)
+            return [];
+        var runways = data_1.data.runways[airport];
+        var runwayArray = [];
+        if (isDeparture) {
+            if (selected) {
+                (0, SID_1.SID)(airport, undefined, selected)[0].availableRunways.forEach(function (rwy) {
+                    runwayArray.push({
+                        runway: rwy,
+                    });
+                });
+            }
+            else {
+                for (var rwy in runways) {
+                    runwayArray.push({
+                        runway: rwy,
+                    });
+                }
+            }
+        }
+        else {
+        }
+        return runwayArray;
+    };
+    exports.runway = runway;
+});
+
+define('build/get',["require", "exports", "./get/waypoint", "./get/ATS", "./get/SID", "./get/STAR", "./get/runway"], function (require, exports, waypoint_1, ATS_1, SID_1, STAR_1, runway_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.runway = exports.STAR = exports.SID = exports.ATS = exports.waypoint = void 0;
+    Object.defineProperty(exports, "waypoint", { enumerable: true, get: function () { return waypoint_1.waypoint; } });
+    Object.defineProperty(exports, "ATS", { enumerable: true, get: function () { return ATS_1.ATS; } });
+    Object.defineProperty(exports, "SID", { enumerable: true, get: function () { return SID_1.SID; } });
+    Object.defineProperty(exports, "STAR", { enumerable: true, get: function () { return STAR_1.STAR; } });
+    Object.defineProperty(exports, "runway", { enumerable: true, get: function () { return runway_1.runway; } });
 });
 
 define('build/vnav-profile',["require", "exports"], function (require, exports) {
@@ -3398,13 +3511,13 @@ define('build/flight',["require", "exports", "knockout", "./get", "./nav/LNAV", 
     var _departureRwys = ko.pureComputed(function () {
         var depArpt = departure.airport();
         var depSID = departure.SID() ? departure.SID().name : undefined;
-        return get_1.get.runway(depArpt, depSID, true);
+        return (0, get_1.runway)(depArpt, depSID, true);
     });
     var _SIDs = ko.pureComputed(function () {
         var depArpt = departure.airport();
         var depRwy = departure.runway() ? departure.runway().runway : undefined;
         var depSID = departure.SID() ? departure.SID().name : undefined;
-        return get_1.get.SID(depArpt, depRwy, depSID);
+        return (0, get_1.SID)(depArpt, depRwy, depSID);
     });
     var departure = {
         airport: ko.pureComputed({
@@ -3453,10 +3566,10 @@ define('build/flight',["require", "exports", "knockout", "./get", "./nav/LNAV", 
     var _selectedArrivalRwy = ko.observable();
     var _selectedSTAR = ko.observable();
     var _arrivalRwys = ko.pureComputed(function () {
-        return get_1.get.runway(arrival.airport());
+        return (0, get_1.runway)(arrival.airport());
     });
     var _STARs = ko.pureComputed(function () {
-        return get_1.get.SID(arrival.airport(), arrival.runway() ? arrival.runway().runway : false);
+        return (0, get_1.SID)(arrival.airport(), arrival.runway() ? arrival.runway().runway : false);
     });
     var arrival = {
         airport: ko.pureComputed({
@@ -3598,9 +3711,9 @@ define('build/ui/ViewModel',["require", "exports", "knockout", "../flight", "../
             this.todCalc = flight_1.flight.todCalc;
             this.departureRwyList = ko.pureComputed(function () {
                 if (_this.SIDName())
-                    return get_1.get.SID(_this.departureAirport(), _this.departureRwyName(), _this.SIDName()).availableRunways;
+                    return (0, get_1.SID)(_this.departureAirport(), _this.departureRwyName(), _this.SIDName()).availableRunways;
                 else
-                    return get_1.get.runway(_this.departureAirport(), _this.SIDName(), true);
+                    return (0, get_1.runway)(_this.departureAirport(), _this.SIDName(), true);
             });
             this.departureRunway = flight_1.flight.departure.runway;
             this.departureRwyName = ko.pureComputed(function () {
@@ -3610,7 +3723,7 @@ define('build/ui/ViewModel',["require", "exports", "knockout", "../flight", "../
                     return undefined;
             });
             this.SIDList = ko.pureComputed(function () {
-                return get_1.get.SID(_this.departureAirport(), _this.departureRwyName());
+                return (0, get_1.SID)(_this.departureAirport(), _this.departureRwyName());
             });
             this.SID = flight_1.flight.departure.SID;
             this.SIDName = ko.pureComputed(function () {
@@ -3620,7 +3733,7 @@ define('build/ui/ViewModel',["require", "exports", "knockout", "../flight", "../
                     return undefined;
             });
             this.arrivalRwyList = ko.pureComputed(function () {
-                return get_1.get.runway(_this.arrivalAirport());
+                return (0, get_1.runway)(_this.arrivalAirport());
             });
             this.arrivalRunway = flight_1.flight.arrival.runway;
             this.arrivalRunwayName = ko.pureComputed(function () {
@@ -3630,7 +3743,7 @@ define('build/ui/ViewModel',["require", "exports", "knockout", "../flight", "../
                     return undefined;
             });
             this.STARs = ko.pureComputed(function () {
-                return get_1.get.STAR(_this.arrivalAirport(), _this.arrivalRunwayName());
+                return (0, get_1.STAR)(_this.arrivalAirport(), _this.arrivalRunwayName());
             });
             this.STAR = flight_1.flight.arrival.STAR;
             this.STARName = ko.pureComputed(function () {

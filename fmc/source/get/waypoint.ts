@@ -5,6 +5,13 @@ import { waypoints } from '../waypoints';
 
 const icao = window.navData.airports;
 
+/**
+ * Gets coordinates for ICAO Airports, Waypoints, or Navaids
+ *
+ * @param {String} fix The name of the fix
+ * @param {Number} index Index of the route
+ * @returns {Array} The coordinates array
+ */
 export const waypoint = (fix: string, index: number): number[] => {
     const coords = icao[fix];
     if (coords) return coords;

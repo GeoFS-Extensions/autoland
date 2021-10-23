@@ -1,5 +1,5 @@
 import * as ko from "knockout";
-import { get } from "./get";
+import { runway, SID } from "./get";
 import { lnav } from "./nav/LNAV";
 import { vnav } from "./nav/VNAV";
 
@@ -46,14 +46,14 @@ const _departureRwys = ko.pureComputed(function () {
   const depArpt = departure.airport();
   const depSID = departure.SID() ? departure.SID().name : undefined;
 
-  return get.runway(depArpt, depSID, true);
+  return runway(depArpt, depSID, true);
 });
 const _SIDs = ko.pureComputed(function () {
   const depArpt = departure.airport();
   const depRwy = departure.runway() ? departure.runway().runway : undefined;
   const depSID = departure.SID() ? departure.SID().name : undefined;
 
-  return get.SID(depArpt, depRwy, depSID);
+  return SID(depArpt, depRwy, depSID);
 });
 
 const departure = {
@@ -117,10 +117,10 @@ const _selectedSTAR = ko.observable();
 
 // List of runways and STARs
 const _arrivalRwys = ko.pureComputed(function () {
-  return get.runway(arrival.airport());
+  return runway(arrival.airport());
 });
 const _STARs = ko.pureComputed(function () {
-  return get.SID(
+  return SID(
     arrival.airport(),
     arrival.runway() ? arrival.runway().runway : false
   );

@@ -1,6 +1,6 @@
 import * as ko from "knockout";
 import { flight } from "../flight";
-import { get } from "../get";
+import { SID, runway, STAR } from "../get";
 import { log } from "../log";
 import { waypoints } from "../waypoints";
 import { progress } from "../nav/progress";
@@ -57,14 +57,14 @@ export class ViewModel {
   // List of departure runways based on departure airport and SID
   readonly departureRwyList = ko.pureComputed(() => {
     if (this.SIDName())
-      return get.SID(
+      return SID(
         this.departureAirport(),
         this.departureRwyName(),
         this.SIDName()
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore excuse me?
       ).availableRunways;
-    else return get.runway(this.departureAirport(), this.SIDName(), true);
+    else return runway(this.departureAirport(), this.SIDName(), true);
   });
 
   // Selected departure runway and name
@@ -76,7 +76,7 @@ export class ViewModel {
 
   // List of SIDs based on departure airport and runway
   readonly SIDList = ko.pureComputed(() => {
-    return get.SID(this.departureAirport(), this.departureRwyName());
+    return SID(this.departureAirport(), this.departureRwyName());
   });
 
   // Selected SID name
@@ -88,7 +88,7 @@ export class ViewModel {
 
   // List of arrival runways based on arrival airport
   readonly arrivalRwyList = ko.pureComputed(() => {
-    return get.runway(this.arrivalAirport());
+    return runway(this.arrivalAirport());
   });
 
   // Selected arrival runway and name
@@ -101,7 +101,7 @@ export class ViewModel {
   // List of STARs based on arrival airport and runway
   // FIXME: STARs do not necessarily need a runway at first
   readonly STARs = ko.pureComputed(() => {
-    return get.STAR(this.arrivalAirport(), this.arrivalRunwayName());
+    return STAR(this.arrivalAirport(), this.arrivalRunwayName());
   });
 
   // Selected STAR name
