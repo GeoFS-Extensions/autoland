@@ -43,6 +43,7 @@ controls.setters.setFlapsUp.set = function () {
 // Tracks flaps down event to log
 const oldFlapsDown = controls.setters.setFlapsDown.set;
 controls.setters.setFlapsDown.set = function () {
+  oldFlapsDown();
   if (geofs.aircraft.instance.setup.flapsPositions) {
     log.update("Flaps lowered to " + controls.flaps.positionTarget);
   } else log.update("Flaps lowered to " + controls.flaps.target);

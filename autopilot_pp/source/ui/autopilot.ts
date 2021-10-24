@@ -3,7 +3,7 @@ import gc from "../greatcircle";
 import ap from "../autopilot";
 import util from "../util";
 import getWaypoint from "../getwaypoint";
-import shouldntHaveAp from "../shouldntHaveAp";
+import shouldntHaveAp from "../shouldnthaveap";
 
 type MDLHTMLElement = HTMLElement & {
   parentNode: {
