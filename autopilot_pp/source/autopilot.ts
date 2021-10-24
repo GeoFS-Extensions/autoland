@@ -1,6 +1,6 @@
 import * as ko from "knockout";
 import apModes from "./autopilot/modes";
-import pidControls from "./autopilot/pidControls";
+import pidControls from "./autopilot/pidcontrols";
 import gc from "./greatcircle";
 import util from "./util";
 
