@@ -66,7 +66,7 @@ async function build(debug) {
   } catch (e) {
     throw new Error(
       scriptTag() +
-        chalk.hex("#ff0000")(`Compiling failed with exit code`) +
+        chalk.hex("#ff0000")(`Compiling failed with exit code `) +
         chalk.hex("#fff200")(`${e.code}.\n\n`) +
         e.stdout.toString()
     );
