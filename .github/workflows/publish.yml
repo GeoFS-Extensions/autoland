@@ -1,0 +1,36 @@
+name: Publish to CWS
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  job_1:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Build extension
+        run: |
+          npm i
+          npm run build
+      - name: Zip extension
+        uses: vimtor/action-zip@v1
+        with:
+          files: build/
+
+      - name: Publish to CWS
+        run: |
+          npx cws-publish $client_id $client_secret $refresh_token $zip_file $extension_id
+        env:
+          client_id: ${{ secrets.CWS_UPLOAD_CLIENT_ID }}
+          client_secret: ${{ secrets.CWS_UPLOAD_CLIENT_SECRET }}
+          refresh_token: ${{ secrets.CWS_UPLOAD_REFRESH_TOKEN }}
+          zip_file: result.zip
+          extension_id: flhbafggaeidplgimldpkkhkeikejlfd

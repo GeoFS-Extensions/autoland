@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "node infra/build.js",
-    "data": "node nav_data_build.js",
+    "data": "node infra/builds/nav_data_build.js",
     "debug": "node infra/build.js --debug",
     "packaging": "ncu -u && npm i",
     "postinstall": "npm i @types/leaflet@1.5.23",
@@ -32,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
     "chalk": "^4.1.2",
+    "cws-publish": "^2.0.6",
     "download": "^8.0.0",
     "eslint": "^8.1.0",
     "eslint-config-prettier": "^8.3.0",

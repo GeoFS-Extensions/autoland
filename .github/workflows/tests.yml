@@ -42,10 +42,13 @@ jobs:
       - name: Install packages
         run: npm i
 
-      - name: Lint
+      - name: ESLint
         run: sudo npx eslint .
 
-  job_3:
+      - name: TSC
+        run: npm run build
+
+  job_4:
     name: Security
     runs-on: ubuntu-latest
 
