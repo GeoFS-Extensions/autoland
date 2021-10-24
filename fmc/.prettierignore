@@ -1,4 +1,3 @@
 **/*.html
 **/*.css
 build/**/*
-dist/*
