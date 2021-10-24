@@ -9,7 +9,7 @@ on:
 jobs:
   job_1:
     name: Code style check
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout
@@ -24,11 +24,11 @@ jobs:
         run: npm i
 
       - name: Prettier
-        run: sudo npx prettier --check .
+        run: npx prettier --check .
 
   job_2:
     name: Lint code
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout
@@ -43,11 +43,11 @@ jobs:
         run: npm i
 
       - name: Lint
-        run: sudo npx eslint .
+        run: npx eslint .
 
   job_3:
     name: Security
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
