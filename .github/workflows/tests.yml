@@ -58,7 +58,8 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "17.x"
+          # builds are failing on 17.x, so falling back to 16.x for now
+          node-version: "16.x"
 
       - name: Build
         run: |
