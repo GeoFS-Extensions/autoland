@@ -48,7 +48,7 @@ export declare class Object3D {
   setScaleOffset(a: any, b: any): void;
   getPosition(): number[];
   getLocalPosition(): number[];
-  resetAnimatedTrasnform(): void;
+  resetAnimatedTransform(): void;
   resetRotationMatrix(): void;
   setVectorWorldPosition(a: any): any;
   compute(a: any): void;
@@ -282,7 +282,7 @@ export declare class Aircraft {
   object3d: Object3D;
   brakesOn: boolean;
   groundContact: boolean;
-  lastLlaLocaiton: number[];
+  lastLlaLocation: number[];
   collResult: {
     location: number[];
     normal: number[];
@@ -668,7 +668,7 @@ interface Camera {
     [key: string]: any;
   };
   currentMode: number;
-  urrentModeName: string;
+  currentModeName: string;
   currentDefinition: { [key: string]: any };
   lastCurrentMode: number;
   worldPosition: number[];
@@ -1424,7 +1424,7 @@ interface Multiplater {
   sendUpdate(): void;
   blockUser(a: string): void;
   banUser(a: string): void;
-  laodModels(a: any): any[];
+  loadModels(a: any): any[];
   setNbUsers(a: number): void;
   setChatMessage(a: string): void;
 

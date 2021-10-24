@@ -1,4 +1,3 @@
-import { data } from "../data";
 import { log } from "../log";
 
 function getAirway(startFix, airway, endFix) {
