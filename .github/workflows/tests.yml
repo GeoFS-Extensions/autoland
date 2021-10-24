@@ -58,8 +58,7 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v2
         with:
-          # builds are failing on 17.x, so falling back to 16.x for now
-          node-version: "16.x"
+          node-version: "17.x"
 
       - name: Build
         run: |
@@ -69,7 +68,6 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
-          config-file: ./.github/codeql/codeql-configuration.yml
           languages: javascript
 
       - name: Perform CodeQL Analysis

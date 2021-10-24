@@ -1,4 +1,4 @@
-import speedConversions from "./speedConversions";
+import speedConversions from "./speedconversions";
 import util from "./util";
 
 /** @private */

@@ -1,5 +1,5 @@
 import * as ko from "knockout";
-import speedConversions from "../speedConversions";
+import speedConversions from "../speedconversions";
 import util from "../util";
 
 const altitude = {
