@@ -46,7 +46,7 @@ jobs:
         run: sudo npx eslint .
 
       - name: TSC
-        run: npm run build
+        run: npx tsc
 
   job_4:
     name: Security
