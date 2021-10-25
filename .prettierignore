@@ -2,8 +2,6 @@ autopilot_pp/build/**/*
 extension/source/scripts/*.js
 extension/source/data/*
 extension/build/**
-fmc/**/*.html
-fmc/**/*.css
 fmc/build/**/*
 keyboard_mapping/build/**/*
 spoilers_arming/build/**/*

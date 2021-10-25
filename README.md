@@ -5,6 +5,8 @@
     <img alt="tests" src="https://img.shields.io/github/workflow/status/GeoFS-Extensions/autoland/Tests?label=Tests&style=flat-square"></a>
   <a href="https://github.com/prettier/prettier">
     <img alt="prettier style" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"></a>
+  <a href="https://twitter.com/acdlite/status/974390255393505280">
+    <img alt="blazing fast" src="https://img.shields.io/badge/speed-blazing%20%F0%9F%94%A5-brightgreen.svg?style=flat-square"><a>
 </p>
 
 > Making GeoFS easier.

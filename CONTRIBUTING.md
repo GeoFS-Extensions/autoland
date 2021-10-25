@@ -44,12 +44,11 @@ everyone is a beginner at first :smile_cat:
 
 Make sure you update the version number in `manifest.json`. Here's how to do that:
 
-- The last digit (e.g. 3.2.3.**14**) is for CI releases, and you should reset that number to 0.
-- The second to last digit (e.g. 3.2.**3**.14) is for patches. If you're fixing a bug, increment this number. (e.g. 3.2.4.0)
-- The second digit (e.g. 3.**2**.3.14) is for new features. If you're adding a new option, or adding a new functionality to
-  a script, increment this digit and reset the digits right of it to 0. (3.3.0.0)
-- The first digit (e.g. **3**.2.3.14) is for very major releases. If your change doesn't fall into the other catagories,
-  increment this digit and reset the digits right of it to 0. You should also open a discussion for this. (e.g. 4.0.0.0)
+- The second to last digit (e.g. 3.2.**3**) is for patches. If you're fixing a bug, increment this number. (e.g. 3.2.4)
+- The second digit (e.g. 3.**2**.3) is for new features. If you're adding a new option, or adding a new functionality to
+  a script, increment this digit and reset the digits right of it to 0. (3.3.0)
+- The first digit (e.g. **3**.2.3) is for very major releases. If your change doesn't fall into the other catagories,
+  increment this digit and reset the digits right of it to 0. You should also open a discussion for this. (e.g. 4.0.0)
 
 ### Make a Pull Request
 
