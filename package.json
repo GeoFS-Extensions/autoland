@@ -17,7 +17,7 @@
     "test": "npx prettier --check . && npx eslint ."
   },
   "devDependencies": {
-    "@types/chrome": "0.0.160",
+    "@types/chrome": "0.0.161",
     "@types/jquery": "3.5.8",
     "@typescript-eslint/eslint-plugin": "5.1.0",
     "@typescript-eslint/parser": "5.1.0",
