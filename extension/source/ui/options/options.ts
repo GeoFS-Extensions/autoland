@@ -1,4 +1,4 @@
-export = {};
+export default {};
 
 interface HTMLSwitch extends HTMLElement {
   checked: boolean;

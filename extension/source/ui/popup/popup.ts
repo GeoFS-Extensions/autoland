@@ -1,4 +1,4 @@
-export = {};
+export default {};
 
 interface PopupState {
   ap: boolean;

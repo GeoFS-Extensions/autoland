@@ -37,6 +37,7 @@ function emptyDir() {
   });
 }
 
+// TODO: using console.time() and console.timeEnd() from here to the console.log says 2.1 seconds, this can be optimized
 chdir(homeDir);
 
 emptyDir();

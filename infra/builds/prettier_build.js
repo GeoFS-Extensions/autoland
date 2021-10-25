@@ -26,7 +26,7 @@ function buildPrettierIgnoreFile() {
     filesToCompile.forEach((value) => {
       let contents = readFileSync(value, { encoding: "utf-8" }).split("\n");
       contents.forEach((singleFileContent) => {
-        singleFileContent.replace(/[\n\r]/g, "");
+        singleFileContent.replaceAll(/[\n\r]/g, "");
         toReturn.push(generateGlobalIgnorePattern(singleFileContent, value));
       });
     });

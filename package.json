@@ -2,14 +2,15 @@
   "name": "autoland",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "build": "node infra/build.js",
+    "build": "node infra/build.js && npm run prettier",
     "data": "node infra/builds/nav_data_build.js",
     "debug": "node infra/build.js --debug",
     "packaging": "ncu -u && npm i",
     "postinstall": "npm i @types/leaflet@1.5.23",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "test": "eslint . && prettier --check . && tsc"
   },
   "repository": {
     "type": "git",
@@ -23,14 +24,14 @@
   },
   "homepage": "https://github.com/GeoFS-Extensions/autoland#readme",
   "dependencies": {
-    "@types/chrome": "^0.0.160",
+    "@types/chrome": "^0.0.161",
     "@types/fs-extra": "^9.0.13",
     "@types/glob": "^7.2.0",
     "@types/jquery": "^3.5.8",
     "@types/leaflet": "^1.5.23",
     "@types/requirejs": "^2.1.34",
-    "@typescript-eslint/eslint-plugin": "^5.1.0",
-    "@typescript-eslint/parser": "^5.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
     "chalk": "^4.1.2",
     "cws-publish": "^2.0.6",
     "download": "^8.0.0",

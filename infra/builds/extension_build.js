@@ -16,8 +16,13 @@ function singleFileAction(filename) {
     .split("\n");
   let toWrite = [];
   fileContent.forEach((value) => {
-    value.replaceAll(/\r/g, "");
-    if (!value.includes("module.exports = {};")) {
+    value.replaceAll(/[\n\r]/g, "");
+    if (
+      !value.includes("exports.default = {};") ||
+      !value.includes(
+        'Object.defineProperty(exports, "__esModule", { value: true });'
+      )
+    ) {
       toWrite.push(value);
     }
   });

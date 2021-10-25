@@ -1,4 +1,4 @@
-export = {};
+export default {};
 
 /**
  * Requests the tabs permission from the user.

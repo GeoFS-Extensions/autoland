@@ -1,4 +1,4 @@
-export = {};
+export default {};
 
 interface options {
   ap: boolean;
