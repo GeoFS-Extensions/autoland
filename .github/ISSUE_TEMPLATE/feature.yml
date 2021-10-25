@@ -1,0 +1,26 @@
+name: Feature request
+description: Request a feature
+title: "[Feature]: "
+labels:
+  - "enhancement"
+assignees:
+  - "nicolas377"
+  - "Guy-Adler"
+body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the feature you're suggesting.
+      options:
+        - label: I have searched the existing issues
+          required: true
+  - type: textarea
+    validations:
+      required: false
+    attributes:
+      label: Description
+      description: Explain your suggestion.
+  - type: textarea
+    attributes:
+      label: Are there alternatives you've considered?
+      description: If so, please list them.

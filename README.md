@@ -13,4 +13,6 @@
 
 GeoFS Plugins (formerly GeoFS Autoland) is a [chrome extension](https://chrome.google.com/webstore/detail/flhbafggaeidplgimldpkkhkeikejlfd) combining multiple scripts into one easy-to-use interface. This is the repository that hosts all the source code for the extension. We've tried to make this repository as easy as possible to navigate.
 
+GeoFS Plugins is based on the brilliant work of [Karl Cheng](https://github.com/Qantas94Heavy), [Harry Xue](https://github.com/harryxue1999), and [Ethan Shields](https://github.com/SuperCheese21). Without their work, this project would not exist. The original projects that now make up GeoFS Plugins have long since been abandoned, but their work was still used by the GeoFS community. GeoFS Plugins is just picking up where these projects left off.
+
 If you want to contribute, check out our [contributing guide](CONTRIBUTING.md). It contains plenty of useful information on how to contribute to this project. Also, check out GitHub's [Open Source Guide](https://opensource.guide/).
