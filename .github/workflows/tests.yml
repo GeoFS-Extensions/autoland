@@ -8,36 +8,17 @@ on:
 
 jobs:
   job_1:
-    name: Build
+    name: Code style check
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup node v16
+      - name: Setup node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "16.x"
-
-      - name: Install packages
-        run: npm i
-
-      - name: Build
-        run: npm run build
-
-  job_2:
-    name: Prettier
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup node v16
-        uses: actions/setup-node@v2
-        with:
-          node-version: "16.x"
+          node-version: "17.x"
 
       - name: Install packages
         run: npm i
@@ -45,24 +26,27 @@ jobs:
       - name: Prettier
         run: sudo npx prettier --check .
 
-  job_3:
-    name: Lint
+  job_2:
+    name: Lint code
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup node v16
+      - name: Setup node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "16.x"
+          node-version: "17.x"
 
       - name: Install packages
         run: npm i
 
-      - name: Lint
+      - name: ESLint
         run: sudo npx eslint .
+
+      - name: TSC
+        run: npx tsc
 
   job_4:
     name: Security
@@ -72,19 +56,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          # We must fetch at least the immediate parents so that if this is
-          # a pull request then we can checkout the head.
           fetch-depth: 2
 
-      # Initializes the CodeQL tools for scanning.
+      - name: Setup node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "17.x"
+
+      - name: Build
+        run: |
+          npm i
+          npm run build
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
-          config-file: ./.github/codeql/codeql-configuration.yml
           languages: javascript
-        # Override language selection by uncommenting this and choosing your languages
-        # with:
-        #   languages: go, javascript, csharp, python, cpp, java
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1

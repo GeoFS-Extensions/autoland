@@ -1,2 +1,7 @@
-node_modules
-**/scripts/*.js
+autopilot_pp/build/**/*
+extension/source/scripts/*.js
+extension/source/data/*
+extension/build/**
+fmc/build/**/*
+keyboard_mapping/build/**/*
+spoilers_arming/build/**/*

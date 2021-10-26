@@ -1,0 +1,7 @@
+{
+  "env": {
+    "browser": true,
+    "webextensions": true
+  },
+  "ignorePatterns": ["**/scripts/*.js"]
+}

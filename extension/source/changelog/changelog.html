@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="./changelog.css" />
+  </head>
+  <body>
+    <h1>Changelog</h1>
+    <div id="3.3.0">
+      <h3>3.3.0</h3>
+      <ul>
+        <li><b>Moved all the code to a monorepo.</b></li>
+        <!-- #104 -->
+      </ul>
+    </div>
+    <div id="3.2.1">
+      <h3>3.2.1</h3>
+      <ul>
+        <li><b>Added Keyboard Mapping</b></li>
+        <!-- #59 -->
+        <li>Made Keyboard Mapping load on default</li>
+        <!-- #70 -->
+        <li>Fixed scripts being injected multiple times</li>
+        <!-- autopilot-pp#18 -->
+        <li>
+          Autopilot++ is no longer available for rockets, gliders, and hot air
+          balloons
+        </li>
+      </ul>
+    </div>
+    <div id="3.2.0">
+      <h3>3.2.0</h3>
+      <ul>
+        <li>
+          <b>
+            <!-- #42 -->
+            Optimized AP++ file size by loading nav data from chrome extension.
+          </b>
+        </li>
+        <li>
+          <b>Added support for GeoFS betas.</b>
+        </li>
+        <li>
+          Prevented scripts from injecting when there's no permission to do so.
+        </li>
+        <li>
+          <!-- #56 -->
+          Made sure scripts were injected in the right order.
+        </li>
+        <li>Fixed issue where VNAV broke below 1500 feet.</li>
+        <li>Made updates quieter.</li>
+      </ul>
+    </div>
+    <div id="3.1.1">
+      <h3>3.1.1</h3>
+      <ul>
+        <li>
+          <b>Added documentation for Spoiler Arming in the oninstall page.</b>
+        </li>
+      </ul>
+    </div>
+    <div id="3.1.0">
+      <h3>3.1.0</h3>
+      <ul>
+        <li><b>Added Spoilers Arming.</b></li>
+        <li>Fixed problem where FMC would load before AP++ and break.</li>
+        <li>Added locally built versions of ap++ and fmc.</li>
+        <li>Plenty of small quality of life improvements.</li>
+      </ul>
+    </div>
+    <div id="3.0.2">
+      <h3>3.0.2</h3>
+      <ul>
+        <li>
+          <b
+            >Changes to user preferences now either reload a open GeoFS page or
+            add new scripts to the page.</b
+          >
+        </li>
+        <li>Swapped declaration links in the permission request.</li>
+        <li>Explained how to use the extension in the install page.</li>
+      </ul>
+    </div>
+    <div id="3.0.1">
+      <h3>3.0.1</h3>
+      <ul>
+        <li>
+          <b>Fixed issue where host permission was needed to load scripts.</b>
+        </li>
+        <li>Added documentation to all functions via JSdoc.</li>
+        <li>Prevented overlapping functions in the source code.</li>
+        <li>Added this changelog.</li>
+        <li>
+          Made a checkPermissions function to simplify the popup permissions
+          check.
+        </li>
+        <li>
+          Remove the message listener from background.ts, nothing is sending
+          messages to it.
+        </li>
+      </ul>
+    </div>
+    <div id="3.0.0">
+      <h3>3.0.0</h3>
+      <ul>
+        <li>Created chrome extension.</li>
+        <li>Added ap++ and fmc to the extension.</li>
+      </ul>
+    </div>
+  </body>
+</html>

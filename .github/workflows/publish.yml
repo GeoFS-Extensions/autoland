@@ -19,12 +19,13 @@ jobs:
       - name: Build extension
         run: |
           npm i
+          npm run data
           npm run build
 
       - name: Zip extension
         uses: vimtor/action-zip@v1
         with:
-          files: build/
+          files: extension/build/
 
       - name: Publish to CWS
         run: |

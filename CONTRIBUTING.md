@@ -4,7 +4,7 @@ First off, thanks for considering contributing to this project! It's people like
 
 ### Where do I go from here?
 
-If you've noticed a bug or have a feature request, [make one]! It's
+If you've noticed a bug or have a feature request, [make an issue]! It's
 generally best if you get confirmation of your bug or approval for your feature
 request this way before starting to code.
 
@@ -21,7 +21,7 @@ git checkout -b 325-condense-storage-entries
 
 ### Get the test suite running
 
-Make sure you're using a v16 version of node.js (v16) with a current version of `node.js`:
+Make sure you're using a current version of node.js (v16) with a current version of `npm`:
 
 Now install the development dependencies:
 
@@ -44,12 +44,11 @@ everyone is a beginner at first :smile_cat:
 
 Make sure you update the version number in `manifest.json`. Here's how to do that:
 
-- The last digit (e.g. 3.2.3.**14**) is for CI releases, and you should reset that number to 0.
-- The second to last digit (e.g. 3.2.**3**.14) is for patches. If you're fixing a bug, increment this number. (e.g. 3.2.4.0)
-- The second digit (e.g. 3.**2**.3.14) is for new features. If you're adding a new option, or adding a new functionality to
-  a script, increment this digit and reset the digits right of it to 0. (3.3.0.0)
-- The first digit (e.g. **3**.2.3.14) is for very major releases. If your change doesn't fall into the other catagories,
-  increment this digit and reset the digits right of it to 0. You should also open a discussion for this. (e.g. 4.0.0.0)
+- The second to last digit (e.g. 3.2.**3**) is for patches. If you're fixing a bug, increment this number. (e.g. 3.2.4)
+- The second digit (e.g. 3.**2**.3) is for new features. If you're adding a new option, or adding a new functionality to
+  a script, increment this digit and reset the digits right of it to 0. (3.3.0)
+- The first digit (e.g. **3**.2.3) is for very major releases. If your change doesn't fall into the other catagories,
+  increment this digit and reset the digits right of it to 0. You should also open a discussion for this. (e.g. 4.0.0)
 
 ### Make a Pull Request
 
@@ -71,9 +70,8 @@ git push --set-upstream origin 325-add-japanese-translations
 
 Finally, go to GitHub and [make a Pull Request][] :D
 
-Github Actions will run a test suite against your PR. We care about quality, so your PR won't be merged until all tests pass.
+GitHub Actions will run a test suite against your PR. We care about quality, so your PR won't be merged until all tests pass.
 We'll also manually test the extension before approving your PR.
-The tests can mostly be satisfied by using the `npm run build` script.
 
 ### Keeping your Pull Request updated
 
@@ -106,7 +104,7 @@ Any maintainer is allowed to merge a PR if all of these conditions are met.
 Thanks to the [Active Admin Contributing guide] for inspiring this Contributing guide!
 
 [active admin contributing guide]: https://github.com/activeadmin/activeadmin/blob/HEAD/CONTRIBUTING.md
-[make one]: https://github.com/GeoFS-Extensions/autoland/issues/new/choose
+[make an issue]: issues/new/choose
 [fork this project]: https://help.github.com/articles/fork-a-repo
 [loading in unpacked mode]: https://stackoverflow.com/a/24577660
 [make a pull request]: https://help.github.com/articles/creating-a-pull-request

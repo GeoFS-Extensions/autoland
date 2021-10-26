@@ -1,0 +1,7 @@
+export default `<!-- MAP tab contents -->
+<section class="mdl-layout__tab-panel fmc-map">
+    <div class="page-content">
+        <div class="fmc-map-container"></div>
+    </div>
+</section>
+`;
