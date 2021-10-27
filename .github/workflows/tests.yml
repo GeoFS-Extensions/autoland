@@ -63,11 +63,6 @@ jobs:
         with:
           node-version: "17.x"
 
-      - name: Build
-        run: |
-          npm i
-          npm run build
-
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
