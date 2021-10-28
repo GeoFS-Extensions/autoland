@@ -3,7 +3,7 @@ import globalVariables from "./globalVariables";
 export default () => {
   instruments.definitions.spoilersArming = {
     overlay: {
-      url: "https://raw.githubusercontent.com/GeoFS-Extensions/autoland/118-options-not-defined/spoilers_arming/images/spoilersArm.png",
+      url: "https://raw.githubusercontent.com/GeoFS-Extensions/autoland/main/spoilers_arming/images/spoilersArm.png",
       alignment: { x: "right", y: "bottom" },
       size: { x: 100, y: 21 },
       position: { x: 20, y: 195 },

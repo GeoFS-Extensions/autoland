@@ -93,10 +93,9 @@ async function readOptions(): Promise<options> {
   return data;
 }
 
-let options = (function () {
-  let temp: options;
-  readOptions().then((options) => (temp = options));
-  return temp;
+let options: options;
+(async () => {
+  options = await readOptions();
 })();
 
 function addScripts(toInject: scripts[], tabId: number) {

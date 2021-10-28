@@ -17,12 +17,7 @@ function singleFileAction(filename) {
   let toWrite = [];
   fileContent.forEach((value) => {
     value.replaceAll(/[\n\r]/g, "");
-    if (
-      !value.includes("exports.default = {};") ||
-      !value.includes(
-        'Object.defineProperty(exports, "__esModule", { value: true });'
-      )
-    ) {
+    if (!value.includes("exports")) {
       toWrite.push(value);
     }
   });
