@@ -2,7 +2,7 @@ const { execSync } = require("child_process");
 const { join } = require("path");
 const { chdir } = require("process");
 const homeDir = require("../main_dir");
-const webpack = require('webpack');
+const webpack = require("webpack");
 const chalk = require("chalk");
 
 function scriptTag() {
@@ -64,23 +64,23 @@ async function build(debug) {
             }
             return;
           }
-    
+
           const info = stats.toJson();
-    
+
           if (stats.hasErrors()) {
             reject(info.errors);
           }
-        
+
           if (stats.hasWarnings()) {
             console.warn(info.warnings);
           }
-    
+
           if (!(stats.hasWarnings() || stats.hasErrors())) {
-            console.log(stats.toString({colors: true}));
+            console.log(stats.toString({ colors: true }));
           }
         }
-        
-        compiler.close(closeErr => {
+
+        compiler.close((closeErr) => {
           if (closeErr) {
             reject(closeErr);
           }
