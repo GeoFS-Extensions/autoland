@@ -1,10 +1,10 @@
-const path = require('path');
+const path = require("path");
 
-module.exports =  {
-  entry: './init.js',
+module.exports = {
+  entry: "./init.js",
   mode: "production",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'fmc.js'
+    path: path.resolve(__dirname, "dist"),
+    filename: "fmc.js",
   },
 };

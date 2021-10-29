@@ -392,7 +392,7 @@ function removeWaypoint(
   } else {
     // route()[n].marker().remove();
     // polyline.removeAt(n);
-    if (typeof n === 'number') {
+    if (typeof n === "number") {
       route.splice(n, 1);
     }
   }

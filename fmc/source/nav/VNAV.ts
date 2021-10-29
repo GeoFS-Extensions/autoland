@@ -6,7 +6,8 @@ import { waypoints } from "../waypoints";
 import { vnavProfile } from "../vnav-profile";
 
 // Autopilot++ Dependencies
-const apModes = window.autopilot_pp.require("./build/autopilot.js").default.modes;
+const apModes = window.autopilot_pp.require("./build/autopilot.js").default
+  .modes;
 
 /**
  * @private
