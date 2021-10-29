@@ -44,11 +44,13 @@ emptyDir();
 prettierBuild();
 
 console.log(chalk.yellow("Starting script builds..."));
-apBuild(argv.debug)
-  .then(() => fmcBuild(argv.debug))
-  .then(() => keyboardMappingBuild(argv.debug))
-  .then(() => spoilersArmingBuild(argv.debug))
-  .then(() => {
-    console.log(chalk.yellow("Scripts built, starting extension build..."));
-    extensionBuild();
-  });
+
+Promise.all([
+  apBuild(argv.debug),
+  fmcBuild(argv.debug),
+  keyboardMappingBuild(argv.debug),
+  spoilersArmingBuild(argv.debug),
+]).then(() => {
+  console.log(chalk.yellow("Scripts built, starting extension build..."));
+  extensionBuild();
+});
