@@ -4,12 +4,6 @@ function checkKeyboardMapping() {
   return _a === null || _a === void 0 ? false : _a.ready;
 }
 
-function load() {
-  require("./build/ui/main");
-  /* global __webpack_require__ */ // Added by webpack.
-  window.autopilot_pp.require = __webpack_require__;
-}
-
 var timer = setInterval(function () {
   if (
     !(
@@ -21,8 +15,13 @@ var timer = setInterval(function () {
       window.navData.statusCode === 1 &&
       checkKeyboardMapping()
     )
-  )
+    )
     return;
   clearInterval(timer);
-  load();
+  window.autopilot_pp = {};
+  window.autopilot_pp.version="0.12.0";
+  window.autopilot_pp.ready=false;
+  require("./build/ui/main");
+  /* global __webpack_require__ */ // Added by webpack.
+  window.autopilot_pp.require = __webpack_require__;
 }, 250);
