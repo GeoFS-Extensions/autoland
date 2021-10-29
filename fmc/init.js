@@ -19,6 +19,9 @@ var timer = setInterval(function () {
   )
     return;
   clearInterval(timer);
+  window.fmc = {};
+  window.fmc.version="0.6.0";
+  window.fmc.ready=false;
   require("./build/ui/main");
   /* global __webpack_require__ */ // Added by webpack.
   window.fmc.require = __webpack_require__;
