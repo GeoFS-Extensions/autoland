@@ -18,4 +18,6 @@ var timer = setInterval(function () {
   clearInterval(timer);
   /* global require */ // because for some reason eslint was thinking require is undefined.
   require("./build/ui/main");
+  /* global __webpack_require__ */ // Added by webpack.
+  window.keyboard_mapping.require = __webpack_require__;
 }, 250);
