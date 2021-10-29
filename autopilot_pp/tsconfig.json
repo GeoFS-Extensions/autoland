@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "CommonJS",
     "lib": ["DOM", "es2016"],
     "types": ["jquery", "requirejs"],
     "alwaysStrict": true,

@@ -5,7 +5,9 @@ function checkKeyboardMapping() {
 }
 
 function load() {
-  require(["./build/ui/main"]);
+  require("./build/ui/main");
+  /* global __webpack_require__ */ // Added by webpack.
+  window.autopilot_pp.require = __webpack_require__;
 }
 
 var timer = setInterval(function () {
