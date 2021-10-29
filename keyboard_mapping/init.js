@@ -19,8 +19,7 @@ var timer = setInterval(function () {
   window.keyboard_mapping = {};
   window.keyboard_mapping.version = "1.0.2";
   window.keyboard_mapping.ready = false;
-  /* global require */ // because for some reason eslint was thinking require is undefined.
-  require("./build/ui/main");
-  /* global __webpack_require__ */ // Added by webpack.
+
+  require("./source/ui/main");
   window.keyboard_mapping.require = __webpack_require__;
 }, 250);

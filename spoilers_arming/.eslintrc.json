@@ -3,6 +3,7 @@
     "browser": true
   },
   "globals": {
-    "require": false
+    "require": false,
+    "__webpack_require__": false
   }
 }

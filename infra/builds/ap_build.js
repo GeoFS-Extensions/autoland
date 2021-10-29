@@ -56,6 +56,18 @@ async function build(debug) {
       path: join(homeDir, "extension/source/scripts"),
       filename: "autopilot_pp.js",
     },
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          use: "ts-loader",
+          exclude: /node_modules/,
+        },
+      ],
+    },
+    resolve: {
+      extensions: [".tsx", ".ts", ".js"],
+    },
   });
 
   return new Promise((resolve, reject) => {
@@ -78,10 +90,6 @@ async function build(debug) {
 
           if (stats.hasWarnings()) {
             console.warn(info.warnings);
-          }
-
-          if (!(stats.hasWarnings() || stats.hasErrors())) {
-            console.log(stats.toString({ colors: true }));
           }
         }
 

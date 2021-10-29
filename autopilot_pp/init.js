@@ -1,8 +1,4 @@
 "use strict";
-function checkKeyboardMapping() {
-  var _a = window.keyboard_mapping;
-  return _a === null || _a === void 0 ? false : _a.ready;
-}
 
 var timer = setInterval(function () {
   if (
@@ -13,7 +9,7 @@ var timer = setInterval(function () {
       window.geofs.aircraft.instance &&
       window.geofs.aircraft.instance.object3d &&
       window.navData.statusCode === 1 &&
-      checkKeyboardMapping()
+      window.keyboard_mapping?.ready
     )
   )
     return;
@@ -21,7 +17,6 @@ var timer = setInterval(function () {
   window.autopilot_pp = {};
   window.autopilot_pp.version = "0.12.0";
   window.autopilot_pp.ready = false;
-  require("./build/ui/main");
-  /* global __webpack_require__ */ // Added by webpack.
+  require("./source/ui/main");
   window.autopilot_pp.require = __webpack_require__;
 }, 250);

@@ -17,7 +17,7 @@ var timer = setInterval(function () {
   clearInterval(timer);
   window.spoilers_arming = {};
   window.spoilers_arming.version = "1.1.2";
-  require("./build/ui/main");
-  /* global __webpack_require__ */ // Added by webpack.
+  require("./source/ui/main");
+  // Added by webpack.
   window.spoilers_arming.require = __webpack_require__;
 }, 250);

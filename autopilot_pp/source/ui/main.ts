@@ -29,7 +29,7 @@ const $ap = $(".geofs-autopilot")
 // Set ` key for autopilot disconnect, like the red sidestick button.
 if (window.keyboard_mapping) {
   const addKeybind = window.keyboard_mapping.require(
-    "./build/addKeybind.js"
+    "./build/addKeybind.ts"
   ).default;
   addKeybind(
     "",
