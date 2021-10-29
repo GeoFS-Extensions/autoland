@@ -2,37 +2,11 @@ const { execSync } = require("child_process");
 const { join } = require("path");
 const { chdir } = require("process");
 const homeDir = require("../main_dir");
-const { optimize } = require("requirejs");
-const { appendFileSync, pathExistsSync } = require("fs-extra");
+const webpack = require("webpack");
 const chalk = require("chalk");
-
-let options = {
-  baseUrl: ".",
-  name: "../node_modules/requirejs/require",
-  include: "init",
-  mainConfigFile: "./config.js",
-  out: "../extension/source/scripts/keyboard_mapping.js",
-  optimize: "none",
-  generateSourceMaps: false,
-};
 
 function scriptTag() {
   return chalk.hex("#55e09d")("(keyboard_mapping) ");
-}
-
-/**
- * Appends the infrastructure to the script file.
- * @param {string} file The string of the file to append to.
- */
-function appendToFile(file) {
-  let keyboardMappingAppend = "\nvar a = window.keyboard_mapping = {};";
-  keyboardMappingAppend += 'a.version="1.0.2";';
-  keyboardMappingAppend += "a.require=require;";
-  keyboardMappingAppend += "a.requirejs=requirejs;";
-  keyboardMappingAppend += "a.define=define;";
-  keyboardMappingAppend += "a.ready=false;";
-
-  appendFileSync(file, keyboardMappingAppend);
 }
 
 /**
@@ -46,8 +20,6 @@ async function build(debug) {
       scriptTag() +
         chalk.hex("#f573a3")("Debug set to false, applying uglify configs...")
     );
-    options.optimize = "uglify2";
-    options.generateSourceMaps = true;
   }
 
   // change dirs to the script dir
@@ -73,32 +45,50 @@ async function build(debug) {
   }
 
   // optimize the requirejs file
+  const compiler = webpack({
+    entry: join(homeDir, "keyboard_mapping/init.js"),
+    mode: !debug ? "production" : "development",
+    output: {
+      path: join(homeDir, "extension/source/scripts"),
+      filename: "keyboard_mapping.js",
+    },
+  });
   return new Promise((resolve, reject) => {
     try {
-      console.log(
-        scriptTag() + chalk.hex("#d5ff80")("Starting script optimizer...")
-      );
-      optimize(options, () => {
-        // wait for the optimization to actually be done
-        const interval = setInterval(() => {
-          if (
-            !pathExistsSync(
-              join(homeDir, "extension/source/scripts/keyboard_mapping.js")
-            )
-          )
+      compiler.run((err, stats) => {
+        if (err || stats.hasErrors) {
+          if (err) {
+            reject(err.stack || err);
+            if (err.details) {
+              reject(err.details);
+            }
             return;
-          clearInterval(interval);
-          console.log(
-            scriptTag() +
-              chalk.hex("#d5ff80")("Script optimized, appending to it...")
-          );
-          appendToFile(options.out);
-          console.log(scriptTag() + chalk.hex("#a1f086")("Script built!"));
+          }
+    
+          const info = stats.toJson();
+    
+          if (stats.hasErrors()) {
+            reject(info.errors);
+          }
+        
+          if (stats.hasWarnings()) {
+            console.warn(info.warnings);
+          }
+    
+          if (!(stats.hasWarnings() || stats.hasErrors())) {
+            console.log(stats.toString({colors: true}));
+          }
+        }
+        
+        compiler.close(closeErr => {
+          if (closeErr) {
+            reject(closeErr);
+          }
           resolve();
-        }, 500);
+        });
       });
-    } catch (e) {
-      reject(e);
+    } catch (err) {
+      reject(err);
     }
   });
 }
