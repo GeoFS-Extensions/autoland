@@ -14,7 +14,7 @@ var timer = setInterval(function () {
       window.geofs.aircraft.instance &&
       window.geofs.aircraft.instance.object3d &&
       window.navData.statusCode == 1 &&
-      window.autopilot_pp.ready
+      window.autopilot_pp?.ready
     )
   )
     return;

@@ -1,4 +1,3 @@
-const { execSync } = require("child_process");
 const { join } = require("path");
 const { chdir } = require("process");
 const homeDir = require("../main_dir");
@@ -15,40 +14,12 @@ function scriptTag() {
  * @returns {Promise<void>}
  */
 async function build(debug) {
-  // if we want to build the script for debugging
-  if (!debug) {
-    console.log(
-      scriptTag() +
-        chalk.hex("#f573a3")("Debug set to false, applying uglify configs...")
-    );
-  }
-
   // change dirs to the script dir
   const scriptLocation = join(homeDir, "autopilot_pp");
   chdir(scriptLocation);
 
-  // run the typescript compiler in a child process
-  try {
-    console.log(
-      scriptTag() +
-        chalk.hex("#b1c6fc")(
-          "Running the typescript compiler in a child process..."
-        )
-    );
-    execSync("npx tsc");
-  } catch (e) {
-    throw new Error(
-      scriptTag() +
-        chalk.hex("#ff0000")(`Compiling failed with exit code `) +
-        chalk.hex("#fff200")(`${e.code}.\n\n`) +
-        e.stdout.toString()
-    );
-  }
-
-  // optimize the requirejs file
-  console.log(
-    scriptTag() + chalk.hex("#d5ff80")("Starting script optimizer...")
-  );
+  // optimize the file
+  console.log(scriptTag() + chalk.hex("#d5ff80")("Starting to build..."));
   const compiler = webpack({
     entry: join(homeDir, "autopilot_pp/init.js"),
     mode: !debug ? "production" : "development",
@@ -97,6 +68,7 @@ async function build(debug) {
           if (closeErr) {
             reject(closeErr);
           }
+          console.log(scriptTag() + chalk.hex("#a1f086")("Script built!"));
           resolve();
         });
       });

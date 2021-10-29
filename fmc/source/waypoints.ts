@@ -28,7 +28,7 @@ class Waypoint {
     write: (val: string) => {
       this._wpt(val);
 
-      const coords = waypoint(val, getIndex(this));
+      const coords = waypoint(route, val, getIndex(this));
       this.isValid = Boolean(coords && coords[0] && coords[1]);
 
       this.lat(this.isValid ? coords[0] : this.lat());
@@ -152,7 +152,7 @@ function getInfoFromPrev(self: Waypoint): number[] {
     bearing = utils.getBearing(pos[0], pos[1], self.lat(), self.lon());
   }
 
-  // Else, calculates info from preceeding waypoint
+  // Else, calculates info from preceding waypoint
   else if (index) {
     const prev = route()[index - 1];
 

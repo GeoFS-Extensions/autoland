@@ -66,7 +66,6 @@ function build() {
   const files = sync(join(mainDir, "extension/build/**/*.js"), {
     ignore: "**/scripts/*.js",
   });
-  console.log(files);
   files.forEach((value) => {
     singleFileAction(value);
   });
