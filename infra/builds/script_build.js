@@ -32,6 +32,8 @@ async function build(script, debug) {
     output: {
       path: join(homeDir, "extension/source/scripts"),
       filename: `${script}.js`,
+      pathinfo: true,
+      chunkFilename: "[name].js",
     },
     module: {
       rules: [
@@ -44,6 +46,12 @@ async function build(script, debug) {
     },
     resolve: {
       extensions: [".tsx", ".ts", ".js"],
+    },
+    devtool: false,
+    optimization: {
+      minimize: false,
+      chunkIds: "named",
+      concatenateModules: false,
     },
   });
 
