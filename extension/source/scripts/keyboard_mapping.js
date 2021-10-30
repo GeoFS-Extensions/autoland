@@ -1,10 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 315:
-/*!****************************************************************!*\
-  !*** ../node_modules/knockout/build/output/knockout-latest.js ***!
-  \****************************************************************/
+/***/ "../node_modules/knockout/build/output/knockout-latest.js":
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -153,18 +150,15 @@ a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' 
 
 /***/ }),
 
-/***/ 360:
-/*!**************************************!*\
-  !*** ./source/addDefaultKeybinds.ts ***!
-  \**************************************/
+/***/ "./source/addDefaultKeybinds.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _addKeybind__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addKeybind */ 66);
-/* harmony import */ var _keyboardMapping__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./keyboardMapping */ 535);
+/* harmony import */ var _addKeybind__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./source/addKeybind.ts");
+/* harmony import */ var _keyboardMapping__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./source/keyboardMapping.ts");
 
 
 /* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
@@ -658,18 +652,15 @@ a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' 
 
 /***/ }),
 
-/***/ 66:
-/*!******************************!*\
-  !*** ./source/addKeybind.ts ***!
-  \******************************/
+/***/ "./source/addKeybind.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _keyDown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./keyDown */ 532);
-/* harmony import */ var _keyboardMapping__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./keyboardMapping */ 535);
+/* harmony import */ var _keyDown__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./source/keyDown.ts");
+/* harmony import */ var _keyboardMapping__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./source/keyboardMapping.ts");
 
 
 const addedKeybindsLabels = [];
@@ -711,17 +702,14 @@ window.keyboard_mapping.ready = true;
 
 /***/ }),
 
-/***/ 532:
-/*!***************************!*\
-  !*** ./source/keyDown.ts ***!
-  \***************************/
+/***/ "./source/keyDown.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! knockout */ 315);
+/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/knockout/build/output/knockout-latest.js");
 /* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(knockout__WEBPACK_IMPORTED_MODULE_0__);
 
 const _keydown = knockout__WEBPACK_IMPORTED_MODULE_0__.observable(() => {
@@ -743,17 +731,14 @@ $(document).on("keydown", (event) => {
 
 /***/ }),
 
-/***/ 535:
-/*!***********************************!*\
-  !*** ./source/keyboardMapping.ts ***!
-  \***********************************/
+/***/ "./source/keyboardMapping.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! knockout */ 315);
+/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/knockout/build/output/knockout-latest.js");
 /* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(knockout__WEBPACK_IMPORTED_MODULE_0__);
 
 const whichToCode = {
@@ -814,10 +799,7 @@ const keybinds = knockout__WEBPACK_IMPORTED_MODULE_0__.pureComputed({
 
 /***/ }),
 
-/***/ 837:
-/*!*****************************************!*\
-  !*** ./source/static/keyboardLayout.ts ***!
-  \*****************************************/
+/***/ "./source/static/keyboardLayout.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -934,18 +916,15 @@ const keybinds = knockout__WEBPACK_IMPORTED_MODULE_0__.pureComputed({
 
 /***/ }),
 
-/***/ 106:
-/*!********************************!*\
-  !*** ./source/ui/ViewModel.ts ***!
-  \********************************/
+/***/ "./source/ui/ViewModel.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (/* binding */ ViewModel)
 /* harmony export */ });
-/* harmony import */ var _keyboardMapping__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../keyboardMapping */ 535);
-/* harmony import */ var _static_keyboardLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../static/keyboardLayout */ 837);
+/* harmony import */ var _keyboardMapping__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./source/keyboardMapping.ts");
+/* harmony import */ var _static_keyboardLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./source/static/keyboardLayout.ts");
 
 
 class ViewModel {
@@ -1047,16 +1026,13 @@ class ViewModel {
 
 /***/ }),
 
-/***/ 573:
-/*!***************************!*\
-  !*** ./source/ui/main.ts ***!
-  \***************************/
+/***/ "./source/ui/main.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ViewModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ViewModel */ 106);
-/* harmony import */ var _addDefaultKeybinds__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../addDefaultKeybinds */ 360);
+/* harmony import */ var _ViewModel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./source/ui/ViewModel.ts");
+/* harmony import */ var _addDefaultKeybinds__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./source/addDefaultKeybinds.ts");
 
 
 (0,_addDefaultKeybinds__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)();
@@ -1137,9 +1113,6 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!*****************!*\
-  !*** ./init.js ***!
-  \*****************/
 
 if (!window.Promise) throw new Error("Browser is outdated.");
 
@@ -1162,7 +1135,7 @@ var timer = setInterval(function () {
   window.keyboard_mapping.version = "1.0.2";
   window.keyboard_mapping.ready = false;
 
-  __webpack_require__(/*! ./source/ui/main */ 573);
+  __webpack_require__("./source/ui/main.ts");
   window.keyboard_mapping.require = __webpack_require__;
 }, 250);
 
@@ -1170,3 +1143,4 @@ var timer = setInterval(function () {
 
 /******/ })()
 ;
+//# sourceMappingURL=keyboard_mapping.js.map

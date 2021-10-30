@@ -1,10 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 315:
-/*!****************************************************************!*\
-  !*** ../node_modules/knockout/build/output/knockout-latest.js ***!
-  \****************************************************************/
+/***/ "../node_modules/knockout/build/output/knockout-latest.js":
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -153,17 +150,14 @@ a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' 
 
 /***/ }),
 
-/***/ 21:
-/*!**********************************!*\
-  !*** ./source/changeControls.ts ***!
-  \**********************************/
+/***/ "./source/changeControls.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _globalVariables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./globalVariables */ 715);
+/* harmony import */ var _globalVariables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./source/globalVariables.ts");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
     controls.spoilersArming = false;
@@ -255,17 +249,14 @@ a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' 
 
 /***/ }),
 
-/***/ 857:
-/*!*************************************!*\
-  !*** ./source/changeInstruments.ts ***!
-  \*************************************/
+/***/ "./source/changeInstruments.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _globalVariables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./globalVariables */ 715);
+/* harmony import */ var _globalVariables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./source/globalVariables.ts");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
     instruments.definitions.spoilersArming = {
@@ -309,17 +300,14 @@ a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' 
 
 /***/ }),
 
-/***/ 715:
-/*!***********************************!*\
-  !*** ./source/globalVariables.ts ***!
-  \***********************************/
+/***/ "./source/globalVariables.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! knockout */ 315);
+/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/knockout/build/output/knockout-latest.js");
 /* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(knockout__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -329,10 +317,7 @@ a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' 
 
 /***/ }),
 
-/***/ 930:
-/*!********************************!*\
-  !*** ./source/removeEvents.ts ***!
-  \********************************/
+/***/ "./source/removeEvents.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -354,18 +339,15 @@ a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' 
 
 /***/ }),
 
-/***/ 573:
-/*!***************************!*\
-  !*** ./source/ui/main.ts ***!
-  \***************************/
+/***/ "./source/ui/main.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _globalVariables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../globalVariables */ 715);
-/* harmony import */ var _removeEvents__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../removeEvents */ 930);
-/* harmony import */ var _changeControls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../changeControls */ 21);
-/* harmony import */ var _changeInstruments__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../changeInstruments */ 857);
+/* harmony import */ var _globalVariables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./source/globalVariables.ts");
+/* harmony import */ var _removeEvents__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("./source/removeEvents.ts");
+/* harmony import */ var _changeControls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./source/changeControls.ts");
+/* harmony import */ var _changeInstruments__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("./source/changeInstruments.ts");
 
 
 
@@ -466,9 +448,6 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!*****************!*\
-  !*** ./init.js ***!
-  \*****************/
 
 // Check if game has completed loading
 var timer = setInterval(function () {
@@ -488,7 +467,7 @@ var timer = setInterval(function () {
   clearInterval(timer);
   window.spoilers_arming = {};
   window.spoilers_arming.version = "1.1.2";
-  __webpack_require__(/*! ./source/ui/main */ 573);
+  __webpack_require__("./source/ui/main.ts");
   // Added by webpack.
   window.spoilers_arming.require = __webpack_require__;
 }, 250);
@@ -497,3 +476,4 @@ var timer = setInterval(function () {
 
 /******/ })()
 ;
+//# sourceMappingURL=spoilers_arming.js.map

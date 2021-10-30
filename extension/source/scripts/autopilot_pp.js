@@ -1,10 +1,7 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 315:
-/*!****************************************************************!*\
-  !*** ../node_modules/knockout/build/output/knockout-latest.js ***!
-  \****************************************************************/
+/***/ "../node_modules/knockout/build/output/knockout-latest.js":
 /***/ ((module, exports, __webpack_require__) => {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -153,22 +150,19 @@ a+" })()) }}"};this.addTemplate=function(a,b){w.write("<script type='text/html' 
 
 /***/ }),
 
-/***/ 137:
-/*!*****************************!*\
-  !*** ./source/autopilot.ts ***!
-  \*****************************/
+/***/ "./source/autopilot.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! knockout */ 315);
+/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/knockout/build/output/knockout-latest.js");
 /* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(knockout__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _autopilot_modes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./autopilot/modes */ 62);
-/* harmony import */ var _autopilot_pidcontrols__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./autopilot/pidcontrols */ 241);
-/* harmony import */ var _greatcircle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./greatcircle */ 211);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./util */ 712);
+/* harmony import */ var _autopilot_modes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./source/autopilot/modes.ts");
+/* harmony import */ var _autopilot_pidcontrols__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("./source/autopilot/pidcontrols.ts");
+/* harmony import */ var _greatcircle__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("./source/greatcircle.ts");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("./source/util.ts");
 
 
 
@@ -313,20 +307,17 @@ window.autopilot_pp.ready = true;
 
 /***/ }),
 
-/***/ 62:
-/*!***********************************!*\
-  !*** ./source/autopilot/modes.ts ***!
-  \***********************************/
+/***/ "./source/autopilot/modes.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! knockout */ 315);
+/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/knockout/build/output/knockout-latest.js");
 /* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(knockout__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _speedconversions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../speedconversions */ 693);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../util */ 712);
+/* harmony import */ var _speedconversions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./source/speedconversions.ts");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("./source/util.ts");
 
 
 
@@ -371,17 +362,14 @@ speed.isMach.subscribe((isMach) => {
 
 /***/ }),
 
-/***/ 241:
-/*!*****************************************!*\
-  !*** ./source/autopilot/pidcontrols.ts ***!
-  \*****************************************/
+/***/ "./source/autopilot/pidcontrols.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _pid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../pid */ 816);
+/* harmony import */ var _pid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./source/pid.ts");
 
 const pidSettings = {
     climb: new _pid__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z({
@@ -418,17 +406,14 @@ const pidSettings = {
 
 /***/ }),
 
-/***/ 0:
-/*!*********************************!*\
-  !*** ./source/bugfixes/papi.ts ***!
-  \*********************************/
+/***/ "./source/bugfixes/papi.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util */ 712);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./source/util.ts");
 
 function papiBugfix() {
     const papiValues = [3.5, 19 / 6, 17 / 6, 2.5];
@@ -469,10 +454,7 @@ function papiBugfix() {
 
 /***/ }),
 
-/***/ 300:
-/*!*****************************************!*\
-  !*** ./source/bugfixes/restrictions.ts ***!
-  \*****************************************/
+/***/ "./source/bugfixes/restrictions.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -588,18 +570,15 @@ function restrictionsBugfix() {
 
 /***/ }),
 
-/***/ 123:
-/*!******************************!*\
-  !*** ./source/enablekcas.ts ***!
-  \******************************/
+/***/ "./source/enablekcas.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _speedconversions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./speedconversions */ 693);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ 712);
+/* harmony import */ var _speedconversions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./source/speedconversions.ts");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./source/util.ts");
 
 
 function setKcas() {
@@ -629,17 +608,14 @@ function enableKcas() {
 
 /***/ }),
 
-/***/ 452:
-/*!*******************************!*\
-  !*** ./source/getwaypoint.ts ***!
-  \*******************************/
+/***/ "./source/getwaypoint.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ 712);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./source/util.ts");
 
 const icaos = window.navData.airports;
 const waypoints = window.navData.waypoints;
@@ -676,19 +652,16 @@ function getWaypoint(code) {
 
 /***/ }),
 
-/***/ 211:
-/*!*******************************!*\
-  !*** ./source/greatcircle.ts ***!
-  \*******************************/
+/***/ "./source/greatcircle.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! knockout */ 315);
+/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/knockout/build/output/knockout-latest.js");
 /* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(knockout__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ 712);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./source/util.ts");
 
 
 const lat = knockout__WEBPACK_IMPORTED_MODULE_0__.observable();
@@ -716,10 +689,7 @@ function getHeading() {
 
 /***/ }),
 
-/***/ 816:
-/*!***********************!*\
-  !*** ./source/pid.ts ***!
-  \***********************/
+/***/ "./source/pid.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -781,10 +751,7 @@ PID.prototype.init = function (currOutput) {
 
 /***/ }),
 
-/***/ 356:
-/*!**********************************!*\
-  !*** ./source/shouldnthaveap.ts ***!
-  \**********************************/
+/***/ "./source/shouldnthaveap.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -806,10 +773,7 @@ const shouldntHaveAp = [
 
 /***/ }),
 
-/***/ 693:
-/*!************************************!*\
-  !*** ./source/speedconversions.ts ***!
-  \************************************/
+/***/ "./source/speedconversions.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -975,10 +939,7 @@ const airspeed = {
 
 /***/ }),
 
-/***/ 184:
-/*!****************************************!*\
-  !*** ./source/ui/apdisconnectsound.ts ***!
-  \****************************************/
+/***/ "./source/ui/apdisconnectsound.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -991,10 +952,7 @@ const opus = "SUQzAwAAAAAAIVRYWFgAAAAXAAAAU29mdHdhcmUATGF2ZjU3LjU2LjEwMf/7lEQAAA
 
 /***/ }),
 
-/***/ 603:
-/*!********************************!*\
-  !*** ./source/ui/autopilot.ts ***!
-  \********************************/
+/***/ "./source/ui/autopilot.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1002,13 +960,13 @@ const opus = "SUQzAwAAAAAAIVRYWFgAAAAXAAAAU29mdHdhcmUATGF2ZjU3LjU2LjEwMf/7lEQAAA
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* unused harmony export AutopilotVM */
-/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! knockout */ 315);
+/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/knockout/build/output/knockout-latest.js");
 /* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(knockout__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _greatcircle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../greatcircle */ 211);
-/* harmony import */ var _autopilot__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../autopilot */ 137);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util */ 712);
-/* harmony import */ var _getwaypoint__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../getwaypoint */ 452);
-/* harmony import */ var _shouldnthaveap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shouldnthaveap */ 356);
+/* harmony import */ var _greatcircle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./source/greatcircle.ts");
+/* harmony import */ var _autopilot__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("./source/autopilot.ts");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("./source/util.ts");
+/* harmony import */ var _getwaypoint__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("./source/getwaypoint.ts");
+/* harmony import */ var _shouldnthaveap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("./source/shouldnthaveap.ts");
 
 
 
@@ -1198,10 +1156,7 @@ knockout__WEBPACK_IMPORTED_MODULE_0__.bindingHandlers.mdlRadio = { update: updat
 
 /***/ }),
 
-/***/ 573:
-/*!***************************!*\
-  !*** ./source/ui/main.ts ***!
-  \***************************/
+/***/ "./source/ui/main.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1209,16 +1164,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! knockout */ 315);
+/* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("../node_modules/knockout/build/output/knockout-latest.js");
 /* harmony import */ var knockout__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(knockout__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _autopilot__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../autopilot */ 137);
-/* harmony import */ var _apdisconnectsound__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./apdisconnectsound */ 184);
-/* harmony import */ var _autopilot__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./autopilot */ 603);
-/* harmony import */ var _enablekcas__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../enablekcas */ 123);
-/* harmony import */ var _bugfixes_papi__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../bugfixes/papi */ 0);
-/* harmony import */ var _bugfixes_restrictions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../bugfixes/restrictions */ 300);
-/* harmony import */ var _ui_html__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ui.html */ 833);
-/* harmony import */ var _ui_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui.css */ 803);
+/* harmony import */ var _autopilot__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./source/autopilot.ts");
+/* harmony import */ var _apdisconnectsound__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("./source/ui/apdisconnectsound.ts");
+/* harmony import */ var _autopilot__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("./source/ui/autopilot.ts");
+/* harmony import */ var _enablekcas__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("./source/enablekcas.ts");
+/* harmony import */ var _bugfixes_papi__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("./source/bugfixes/papi.ts");
+/* harmony import */ var _bugfixes_restrictions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("./source/bugfixes/restrictions.ts");
+/* harmony import */ var _ui_html__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("./source/ui/ui.html.ts");
+/* harmony import */ var _ui_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("./source/ui/ui.css.ts");
 
 
 
@@ -1274,10 +1229,7 @@ componentHandler.upgradeElements($ap[0]);
 
 /***/ }),
 
-/***/ 803:
-/*!*****************************!*\
-  !*** ./source/ui/ui.css.ts ***!
-  \*****************************/
+/***/ "./source/ui/ui.css.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1371,10 +1323,7 @@ componentHandler.upgradeElements($ap[0]);
 
 /***/ }),
 
-/***/ 833:
-/*!******************************!*\
-  !*** ./source/ui/ui.html.ts ***!
-  \******************************/
+/***/ "./source/ui/ui.html.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1569,10 +1518,7 @@ componentHandler.upgradeElements($ap[0]);
 
 /***/ }),
 
-/***/ 712:
-/*!************************!*\
-  !*** ./source/util.ts ***!
-  \************************/
+/***/ "./source/util.ts":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1737,9 +1683,6 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!*****************!*\
-  !*** ./init.js ***!
-  \*****************/
 
 
 var timer = setInterval(function () {
@@ -1759,7 +1702,7 @@ var timer = setInterval(function () {
   window.autopilot_pp = {};
   window.autopilot_pp.version = "0.12.0";
   window.autopilot_pp.ready = false;
-  __webpack_require__(/*! ./source/ui/main */ 573);
+  __webpack_require__("./source/ui/main.ts");
   window.autopilot_pp.require = __webpack_require__;
 }, 250);
 
@@ -1767,3 +1710,4 @@ var timer = setInterval(function () {
 
 /******/ })()
 ;
+//# sourceMappingURL=autopilot_pp.js.map
