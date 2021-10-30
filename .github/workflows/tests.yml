@@ -49,7 +49,7 @@ jobs:
         run: sudo npx tsc
 
       - name: Catch-all build
-        run: sudo npm run suite
+        run: npm run build
 
   job_4:
     name: Security
