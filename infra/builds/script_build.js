@@ -4,26 +4,34 @@ const homeDir = require("../main_dir");
 const webpack = require("webpack");
 const chalk = require("chalk");
 
-function scriptTag() {
-  return chalk.hex("#55e09d")("(fmc) ");
+/**
+ * Generates the script tag.
+ * @param {string} script The script name
+ * @returns a colored header to include before messages.
+ */
+function scriptTag(script) {
+  return chalk.hex("#55e09d")(`(${script}) `);
 }
 
 /**
- * Builds fmc.
+ * Builds a script.
+ * @param {string} script The script name.
  * @param {boolean} debug Whether the script should be built for debugging.
+ * @returns {Promise<void>} a promise that will be resolved when the script is built.
  */
-async function build(debug) {
+async function build(script, debug) {
   // change dirs to the script dir
-  chdir(join(homeDir, "fmc"));
+  const scriptLocation = join(homeDir, script);
+  chdir(scriptLocation);
 
   // optimize the file
-  console.log(scriptTag() + chalk.hex("#d5ff80")("Starting to build..."));
+  console.log(scriptTag(script) + chalk.hex("#d5ff80")("Starting to build..."));
   const compiler = webpack({
-    entry: join(homeDir, "fmc/init.js"),
+    entry: join(homeDir, `${script}/init.js`),
     mode: !debug ? "production" : "development",
     output: {
       path: join(homeDir, "extension/source/scripts"),
-      filename: "fmc.js",
+      filename: `${script}.js`,
     },
     module: {
       rules: [
@@ -38,6 +46,7 @@ async function build(debug) {
       extensions: [".tsx", ".ts", ".js"],
     },
   });
+
   return new Promise((resolve, reject) => {
     try {
       compiler.run((err, stats) => {
@@ -65,7 +74,9 @@ async function build(debug) {
           if (closeErr) {
             reject(closeErr);
           }
-          console.log(scriptTag() + chalk.hex("#a1f086")("Script built!"));
+          console.log(
+            scriptTag(script) + chalk.hex("#a1f086")("Script built!")
+          );
           resolve();
         });
       });
