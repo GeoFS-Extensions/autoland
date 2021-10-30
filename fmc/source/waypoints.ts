@@ -399,7 +399,6 @@ function removeWaypoint(
 
   if (nextWaypoint() === n || isRemoveAll) {
     activateWaypoint(false);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore I'm not sure what's causing this error (only when compiling).
   } else if (nextWaypoint() === Number(n) + 1) activateWaypoint(n);
   else if (nextWaypoint() > n) nextWaypoint(nextWaypoint() - 1);

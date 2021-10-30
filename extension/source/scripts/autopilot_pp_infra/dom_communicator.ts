@@ -34,6 +34,7 @@ document.addEventListener(
   }
 );
 
+// TODO
 /* because it sometimes causes problems for reasons I can not understand: */ // eslint-disable-next-line prefer-const
 let navData = {
   statusCode: 0,

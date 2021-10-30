@@ -61,7 +61,6 @@ export class ViewModel {
         this.departureAirport(),
         this.departureRwyName(),
         this.SIDName()
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore excuse me?
       ).availableRunways;
     else return runway(this.departureAirport(), this.SIDName(), true);
