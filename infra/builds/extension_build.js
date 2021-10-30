@@ -16,7 +16,7 @@ function singleFileAction(filename) {
     .split("\n");
   let toWrite = [];
   fileContent.forEach((value) => {
-    value.replaceAll(/[\n\r]/g, "");
+    value.replace(/[\n\r]/g, "");
     if (!value.includes("exports")) {
       toWrite.push(value);
     }
@@ -36,7 +36,7 @@ function build() {
   const nonTsFiles = sync("source/**/*", { ignore: "**/*.ts", nodir: true });
   nonTsFiles.forEach((value) => {
     // replaces first 6 characters ("source")
-    const newPath = value.replaceAll(/^.{6}/g, "build");
+    const newPath = value.replace(/^.{6}/g, "build");
 
     fs.copySync(value, newPath, { overwrite: true });
   });
