@@ -46,7 +46,10 @@ jobs:
         run: sudo npx eslint .
 
       - name: TSC
-        run: npx tsc
+        run: sudo npx tsc
+
+      - name: Catch-all build
+        run: sudo npm run suite
 
   job_4:
     name: Security
