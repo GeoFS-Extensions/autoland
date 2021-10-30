@@ -45,10 +45,9 @@ async function build(script, debug) {
     resolve: {
       extensions: [".tsx", ".ts", ".js"],
     },
-    devtool: "source-map",
     optimization: {
-      minimize: false,
       moduleIds: "named",
+      mangleExports: false,
       concatenateModules: false,
     },
   });
