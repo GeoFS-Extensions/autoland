@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "module": "amd",
-    "target": "es5",
+    "target": "ESNext",
     "lib": ["DOM", "es2020"],
     "types": ["jquery", "requirejs"],
     "alwaysStrict": true,

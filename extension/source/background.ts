@@ -94,9 +94,12 @@ async function readOptions(): Promise<options> {
 }
 
 let options: options;
-(async () => {
-  options = await readOptions();
-})();
+// (async () => {
+//   options = await readOptions();
+// })();
+readOptions().then((tmp) => {
+  options = tmp;
+});
 
 function addScripts(toInject: scripts[], tabId: number) {
   chrome.permissions.contains(

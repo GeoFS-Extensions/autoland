@@ -4,4 +4,5 @@ extension/source/data/*
 extension/build/**
 fmc/build/**/*
 keyboard_mapping/build/**/*
+node_modules/ts-loader//test/**
 spoilers_arming/build/**/*

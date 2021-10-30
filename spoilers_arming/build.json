@@ -1,9 +1,0 @@
-{
-  "baseUrl": ".",
-  "name": "../node_modules/requirejs/require",
-  "include": "init",
-  "mainConfigFile": "./config.js",
-  "out": "./dist/spoilers_arming.js",
-  "optimize": "uglify2",
-  "generateSourceMaps": true
-}

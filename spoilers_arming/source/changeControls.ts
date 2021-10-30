@@ -10,7 +10,7 @@ export default () => {
         if (!geofs.aircraft.instance.groundContact) {
           controls.spoilersArming = !controls.spoilersArming;
           if (window.fmc?.ready) {
-            const log = window.fmc.require("build/log").log;
+            const log = window.fmc.require("./source/log.ts").log;
             const msg = `${
               controls.spoilersArming ? "Armed" : "Disarmed"
             } Spoilers Arming`;
@@ -28,8 +28,9 @@ export default () => {
 
   // add the keybind for the spoilers arming
   if (window.keyboard_mapping) {
-    const addKeybind =
-      window.keyboard_mapping.require("build/addKeybind").default;
+    const addKeybind = window.keyboard_mapping.require(
+      "./source/addKeybind.ts"
+    ).default;
     addKeybind(
       "Spoilers Arming",
       () => {
@@ -43,7 +44,7 @@ export default () => {
         shiftKey: true,
         altKey: false,
         code: window.keyboard_mapping
-          .require("build/keyboardMapping")
+          .require("./source/keyboardMapping.ts")
           .default()["Airbrake toggle (on/off)"].code,
       }
     );
@@ -51,9 +52,9 @@ export default () => {
     document.addEventListener("keydown", (e: KeyboardEvent) => {
       if (
         e.code ==
-          window.keyboard_mapping.require("build/keyboardMapping").default()[
-            "Spoilers Arming"
-          ].code &&
+          window.keyboard_mapping
+            .require("./source/keyboardMapping.ts")
+            .default()["Spoilers Arming"].code &&
         !e.ctrlKey &&
         !e.altKey &&
         !e.shiftKey
@@ -61,7 +62,7 @@ export default () => {
         // spoilers will be activated.
         globalVariables.enabled(false);
         if (controls.spoilersArming && window.fmc?.ready) {
-          const log = window.fmc.require("build/log").log;
+          const log = window.fmc.require("./source/log.ts").log;
           const msg = "Disarmed Spoilers Arming";
           log.update(msg);
         }
@@ -84,7 +85,7 @@ export default () => {
             controls.spoilersArming = false;
             controls.setters.setAirbrakes.set();
             if (window.fmc?.ready) {
-              const log = window.fmc.require("build/log").log;
+              const log = window.fmc.require("./source/log.ts").log;
               const msg = "Disarmed Spoilers Arming";
               log.update(msg);
             }

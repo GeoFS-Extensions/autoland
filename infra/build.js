@@ -5,11 +5,8 @@ const { chdir } = require("process");
 const chalk = require("chalk");
 const homeDir = require("./main_dir");
 const prettierBuild = require("./builds/prettier_build");
-const keyboardMappingBuild = require("./builds/keyboard_mapping_build");
-const spoilersArmingBuild = require("./builds/spoiler_arming_build");
-const fmcBuild = require("./builds/fmc_build");
-const apBuild = require("./builds/ap_build");
 const extensionBuild = require("./builds/extension_build");
+const scriptBuild = require("./builds/script_build");
 
 const argv = yargs.option("debug", {
   description: "Build scripts in debug mode",
@@ -44,11 +41,13 @@ emptyDir();
 prettierBuild();
 
 console.log(chalk.yellow("Starting script builds..."));
-apBuild(argv.debug)
-  .then(() => fmcBuild(argv.debug))
-  .then(() => keyboardMappingBuild(argv.debug))
-  .then(() => spoilersArmingBuild(argv.debug))
-  .then(() => {
-    console.log(chalk.yellow("Scripts built, starting extension build..."));
-    extensionBuild();
-  });
+
+Promise.all([
+  scriptBuild("autopilot_pp", argv.debug),
+  scriptBuild("fmc", argv.debug),
+  scriptBuild("spoilers_arming", argv.debug),
+  scriptBuild("keyboard_mapping", argv.debug),
+]).then(() => {
+  console.log(chalk.yellow("Scripts built, starting extension build..."));
+  extensionBuild();
+});

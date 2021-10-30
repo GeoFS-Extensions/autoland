@@ -1,21 +1,19 @@
 "use strict";
-(function () {
-  // Check if game has completed loading
-  var timer = setInterval(function () {
-    var _a;
-    if (
-      !((window.geofs &&
-        window.geofs.aircraft &&
-        window.geofs.aircraft.instance &&
-        window.geofs.aircraft.instance.object3d &&
-        // transpiled version of window.keyboard_mapping?.ready
-        (_a = window.keyboard_mapping) === null) ||
-      _a === void 0
-        ? void 0
-        : _a.ready)
+// Check if game has completed loading
+var timer = setInterval(function () {
+  if (
+    !(
+      window.geofs &&
+      window.geofs.aircraft &&
+      window.geofs.aircraft.instance &&
+      window.geofs.aircraft.instance.object3d &&
+      window.keyboard_mapping?.ready
     )
-      return;
-    clearInterval(timer);
-    require(["./build/ui/main"]);
-  }, 250);
-})();
+  )
+    return;
+  clearInterval(timer);
+  window.spoilers_arming = {};
+  window.spoilers_arming.version = "1.1.2";
+  require("./source/ui/main");
+  window.spoilers_arming.require = __webpack_require__;
+}, 250);

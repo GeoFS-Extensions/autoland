@@ -8,9 +8,9 @@ import { utils } from "./utils";
 import { lnav } from "./nav/LNAV";
 import { progress } from "./nav/progress";
 
-// Autopilt++ Dependencies
-const autopilot = window.autopilot_pp.require("build/autopilot").default,
-  gc = window.autopilot_pp.require("build/greatcircle").default,
+// Autopilot++ Dependencies
+const autopilot = window.autopilot_pp.require("./source/autopilot.ts").default,
+  gc = window.autopilot_pp.require("./source/greatcircle.ts").default,
   icao = window.navData.airports;
 
 const route = ko.observableArray<Waypoint>();
@@ -28,7 +28,7 @@ class Waypoint {
     write: (val: string) => {
       this._wpt(val);
 
-      const coords = waypoint(val, getIndex(this));
+      const coords = waypoint(route, val, getIndex(this));
       this.isValid = Boolean(coords && coords[0] && coords[1]);
 
       this.lat(this.isValid ? coords[0] : this.lat());
@@ -152,7 +152,7 @@ function getInfoFromPrev(self: Waypoint): number[] {
     bearing = utils.getBearing(pos[0], pos[1], self.lat(), self.lon());
   }
 
-  // Else, calculates info from preceeding waypoint
+  // Else, calculates info from preceding waypoint
   else if (index) {
     const prev = route()[index - 1];
 
@@ -392,11 +392,15 @@ function removeWaypoint(
   } else {
     // route()[n].marker().remove();
     // polyline.removeAt(n);
-    route.splice(n, 1);
+    if (typeof n === "number") {
+      route.splice(n, 1);
+    }
   }
 
   if (nextWaypoint() === n || isRemoveAll) {
     activateWaypoint(false);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore I'm not sure what's causing this error (only when compiling).
   } else if (nextWaypoint() === Number(n) + 1) activateWaypoint(n);
   else if (nextWaypoint() > n) nextWaypoint(nextWaypoint() - 1);
 }
@@ -404,7 +408,7 @@ function removeWaypoint(
 /**
  * Activates a waypoint or deactivates if the waypoint is already activated
  *
- * @param {Number} n The index (starts with 0) to be activated or deactivated
+ * @param {Number | false} n The index (starts with 0) to be activated or deactivated
  *		{Boolean} If false, deactivates all waypoints
  */
 function activateWaypoint(n: number | false) {

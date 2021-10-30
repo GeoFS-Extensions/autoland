@@ -4,22 +4,24 @@
  * https://github.com/geofs-plugins/fmc-requirejs/blob/master/LICENSE.md
  */
 "use strict";
-(function () {
-  // Check if game has completed loading
-  var timer = setInterval(function () {
-    if (
-      !(
-        window.L &&
-        window.geofs &&
-        window.geofs.aircraft &&
-        window.geofs.aircraft.instance &&
-        window.geofs.aircraft.instance.object3d &&
-        window.navData.statusCode == 1 &&
-        window.autopilot_pp.ready
-      )
+// Check if game has completed loading
+var timer = setInterval(function () {
+  if (
+    !(
+      window.L &&
+      window.geofs &&
+      window.geofs.aircraft &&
+      window.geofs.aircraft.instance &&
+      window.geofs.aircraft.instance.object3d &&
+      window.navData.statusCode == 1 &&
+      window.autopilot_pp?.ready
     )
-      return;
-    clearInterval(timer);
-    require(["build/ui/main"]);
-  }, 250);
-})();
+  )
+    return;
+  clearInterval(timer);
+  window.fmc = {};
+  window.fmc.version = "0.6.0";
+  window.fmc.ready = false;
+  require("./source/ui/main");
+  window.fmc.require = __webpack_require__;
+}, 250);

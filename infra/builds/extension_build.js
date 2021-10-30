@@ -63,7 +63,10 @@ function build() {
   console.log(
     tag() + chalk.hex("#82ffda")("Removing unneeded module infrastructure...")
   );
-  sync("build/**/*.js", { ignore: "scripts" }).forEach((value) => {
+  const files = sync(join(mainDir, "extension/build/**/*.js"), {
+    ignore: "**/scripts/*.js",
+  });
+  files.forEach((value) => {
     singleFileAction(value);
   });
   console.log(tag() + chalk.hex("#a8ff82")("Build complete!"));
