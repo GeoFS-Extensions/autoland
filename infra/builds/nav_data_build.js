@@ -9,9 +9,9 @@ const download = require("download");
  * @param {string} path
  * @returns {Promise<string>}
  */
-async function downloadFile(url, path) {
+async function downloadFile(url) {
   return new Promise((resolve, reject) => {
-    download(url, path)
+    download(url)
       .then((buf) => {
         resolve(buf.toString());
       })
@@ -43,7 +43,7 @@ async function airportsList() {
       `Data processed, ${Object.keys(toSave).length} airports...`
     )
   );
-  console.log(chalk.hex("#d5ff80")("Saving data..."));
+  console.log(chalk.hex("#d5ff80")("Saving airports..."));
 
   writeJSONSync(
     join(homeDir, "extension", "source", "data", "airports.json"),
@@ -76,7 +76,7 @@ async function navaidsList() {
       `Data processed, ${Object.keys(toSave).length} navaids...`
     )
   );
-  console.log(chalk.hex("#d5ff80")("Saving data..."));
+  console.log(chalk.hex("#d5ff80")("Saving navaids..."));
 
   writeJSONSync(
     join(homeDir, "extension", "source", "data", "navaids.json"),
@@ -88,8 +88,7 @@ async function navaidsList() {
 async function build() {
   console.log(chalk.yellow("Attempting nav data build..."));
 
-  await airportsList();
-  await navaidsList();
+  await Promise.all([airportsList(), navaidsList()]);
 }
 
 build();

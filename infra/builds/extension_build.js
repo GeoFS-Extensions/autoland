@@ -53,8 +53,7 @@ function build() {
   } catch (e) {
     throw new Error(
       tag() +
-        chalk.hex("#ff0000")(`Compiling failed with exit code`) +
-        chalk.hex("#fff200")(`${e.code}.\n\n`) +
+        chalk.hex("#ff0000")(`Compiling failed.\n\n`) +
         e.stdout.toString()
     );
   }

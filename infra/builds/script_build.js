@@ -66,12 +66,12 @@ async function build(script, debug) {
 
           const info = stats.toJson();
 
-          if (stats.hasErrors()) {
-            reject(info.errors);
-          }
-
           if (stats.hasWarnings()) {
             console.warn(info.warnings);
+          }
+
+          if (stats.hasErrors()) {
+            reject(info.errors);
           }
         }
 

@@ -34,7 +34,6 @@ function emptyDir() {
   });
 }
 
-// TODO: using console.time() and console.timeEnd() from here to the console.log says 2.1 seconds, this can be optimized
 chdir(homeDir);
 
 emptyDir();
@@ -47,7 +46,11 @@ Promise.all([
   scriptBuild("fmc", argv.debug),
   scriptBuild("spoilers_arming", argv.debug),
   scriptBuild("keyboard_mapping", argv.debug),
-]).then(() => {
-  console.log(chalk.yellow("Scripts built, starting extension build..."));
-  extensionBuild();
-});
+])
+  .then(() => {
+    console.log(chalk.yellow("Scripts built, starting extension build..."));
+    extensionBuild();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
