@@ -1,7 +1,7 @@
 {
   "env": {
     "browser": true,
-    "es5": true
+    "node": true
   },
   "globals": {
     "__webpack_require__": false
