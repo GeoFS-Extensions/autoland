@@ -28,7 +28,7 @@ async function build(script, debug) {
   console.log(scriptTag(script) + chalk.hex("#d5ff80")("Starting to build..."));
   const compiler = webpack({
     entry: join(homeDir, `${script}/init.js`),
-    mode: !debug ? "production" : "development",
+    mode: debug ? "development" : "production",
     output: {
       path: join(homeDir, "extension/source/scripts"),
       filename: `${script}.js`,
@@ -50,6 +50,7 @@ async function build(script, debug) {
       mangleExports: false,
       concatenateModules: false,
     },
+    devtool: debug ? "source-map" : false,
   });
 
   return new Promise((resolve, reject) => {
