@@ -50,7 +50,6 @@ async function build(script, debug) {
       mangleExports: false,
       concatenateModules: false,
     },
-    devtool: debug ? "source-map" : false,
   });
 
   return new Promise((resolve, reject) => {
