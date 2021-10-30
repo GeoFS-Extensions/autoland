@@ -1,6 +1,6 @@
 export default {};
 
-interface HTMLSwitch extends HTMLElement {
+interface HtmlSwitch extends HTMLElement {
   checked: boolean;
 }
 
@@ -34,7 +34,7 @@ async function readStorage(name: string): Promise<any> {
 }
 
 document.getElementById("devModeSwitch").addEventListener("change", () => {
-  if ((document.getElementById("devModeSwitch") as HTMLSwitch).checked) {
+  if ((document.getElementById("devModeSwitch") as HtmlSwitch).checked) {
     chrome.storage.sync.set({ devModeEnabled: true });
   } else {
     chrome.storage.sync.set({ devModeEnabled: false });
@@ -44,6 +44,6 @@ document.getElementById("devModeSwitch").addEventListener("change", () => {
 window.onload = async () => {
   const devModeEnabled: boolean = await readStorage("devModeEnabled");
   if (devModeEnabled) {
-    (document.getElementById("devModeSwitch") as HTMLSwitch).checked = true;
+    (document.getElementById("devModeSwitch") as HtmlSwitch).checked = true;
   }
 };

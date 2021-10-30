@@ -1,21 +1,21 @@
 export default {};
 
-interface options {
+interface Options {
   ap: boolean;
   fmc: boolean;
   spoilerarming: boolean;
   keyboardmapping: boolean;
 }
 
-type scripts = keyof options;
+type Scripts = keyof Options;
 
 /**
  * Sorts scripts for adding.
- * @param {scripts[]} toSort The scripts to sort through.
- * @returns {scripts[]} The sorted scripts.
+ * @param {Scripts[]} toSort The scripts to sort through.
+ * @returns {Scripts[]} The sorted scripts.
  */
-function sortOptions(toSort: scripts[]): scripts[] {
-  const listOfImportance: scripts[] = [
+function sortOptions(toSort: Scripts[]): Scripts[] {
+  const listOfImportance: Scripts[] = [
     "keyboardmapping",
     "ap",
     "fmc",
@@ -57,10 +57,10 @@ function writeToStorage<T>(toWrite: T, name: string): T {
 
 /**
  * Checks if the given options are valid.
- * @param {options} options The options to check.
- * @returns {options} A valid version of the options (or the current options if they are valid).
+ * @param {Options} options The options to check.
+ * @returns {Options} A valid version of the options (or the current options if they are valid).
  */
-function optionsAreValid(toCheck: options): options {
+function optionsAreValid(toCheck: Options): Options {
   // FMC can't be on when AP++ is off
   if (!toCheck.ap && toCheck.fmc) {
     toCheck.fmc = false;
@@ -71,10 +71,10 @@ function optionsAreValid(toCheck: options): options {
 
 /**
  * Reads valid user selected options from memory. If there are no saved options, returns a default and saves the default.
- * @returns {Promise<options>} A promise that resolves to user options.
+ * @returns {Promise<Options>} A promise that resolves to user options.
  */
-async function readOptions(): Promise<options> {
-  let data: options;
+async function readOptions(): Promise<Options> {
+  let data: Options;
   await getStorageData("options").then((storage) => {
     if (storage.options) {
       // there are prefs saved, test them
@@ -93,15 +93,12 @@ async function readOptions(): Promise<options> {
   return data;
 }
 
-let options: options;
-// (async () => {
-//   options = await readOptions();
-// })();
+let options: Options;
 readOptions().then((tmp) => {
   options = tmp;
 });
 
-function addScripts(toInject: scripts[], tabId: number) {
+function addScripts(toInject: Scripts[], tabId: number) {
   chrome.permissions.contains(
     {
       permissions: ["tabs"],
@@ -131,7 +128,7 @@ function addScripts(toInject: scripts[], tabId: number) {
  * @param {scripts} type The script to add.
  * @param {number} tabId The ID of the tab to add the script to.
  */
-async function injectScript(type: scripts, tabId: number) {
+async function injectScript(type: Scripts, tabId: number) {
   if (type == "ap") {
     chrome.scripting.executeScript({
       target: { tabId: tabId, allFrames: true },
@@ -170,9 +167,9 @@ chrome.storage.onChanged.addListener(async (changes) => {
     const newOptions = await readOptions();
 
     // add and remove scripts without reloading geo
-    const keys = Object.keys(newOptions) as scripts[];
+    const keys = Object.keys(newOptions) as Scripts[];
     let reload = false;
-    const toLoad: scripts[] = [];
+    const toLoad: Scripts[] = [];
     for (const key of keys) {
       if (newOptions[key] !== options[key]) {
         if (newOptions[key]) toLoad.push(key);
@@ -218,8 +215,8 @@ function addScriptsListener() {
         }
 
         // the tab is definitely a geo tab, now add the scripts
-        const keys = Object.keys(options) as scripts[];
-        const toInject: scripts[] = [];
+        const keys = Object.keys(options) as Scripts[];
+        const toInject: Scripts[] = [];
 
         keys.forEach((value) => {
           if (options[value]) {
@@ -252,7 +249,7 @@ chrome.runtime.onInstalled.addListener((details) => {
         ap: false,
         fmc: false,
         spoilerarming: false,
-      } as options,
+      } as Options,
       "options"
     );
     writeToStorage(false, "devModeEnabled");

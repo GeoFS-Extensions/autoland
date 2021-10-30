@@ -56,13 +56,15 @@ async function readStorage(name: string): Promise<any> {
   return data;
 }
 
+/**
+ * Saves something to chrome storage.
+ * @param {any} toWrite A JSON object containing the data to save.
+ * @param {string} name The name to save the object to.
+ * @returns The object given that was saved to storage.
+ */
 function writeToStorage<T>(toWrite: T, name: string): T {
-  let toSave;
-  if (name == "options") {
-    toSave = { options: toWrite };
-  } else {
-    toSave = { update: toWrite };
-  }
+  const toSave: { [key: string]: any } = {};
+  toSave[name] = toWrite;
   chrome.storage.sync.set(toSave);
   return toWrite;
 }
