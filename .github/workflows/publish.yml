@@ -14,7 +14,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: release
+
+      - name: Setup node v16
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
 
       - name: Build extension
         run: |
