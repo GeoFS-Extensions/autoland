@@ -18,14 +18,20 @@ export default function (
   defaultKeybind: Keybind
 ) {
   if (label !== "" && addedKeybindsLabels.includes(label)) {
-    // we already have this keybind.
+    // we already have this keybind in keyDown.
     // notify all subscribers for them to update, and return.
     keybinds.notifySubscribers();
     return;
   }
   // Add the keybind
   if (label !== "") {
-    keybinds({ ...keybinds(), [label]: defaultKeybind });
+    if (!Object.keys(keybinds()).includes(label)) {
+      keybinds({ ...keybinds(), [label]: defaultKeybind });
+    } else {
+      // we will not override the keybind, but it does exist.
+      // notify all subscribers for them to update, and add it to keyDown.
+      keybinds.notifySubscribers();
+    }
     addedKeybindsLabels.push(label);
   }
 

@@ -1,6 +1,6 @@
 import keybinds from "../keyboardMapping";
 import keyboardLayout from "../static/keyboardLayout";
-import { Keybind, Keybinds } from "../../keyboard_mapping_types";
+import { Keybind } from "../../keyboard_mapping_types";
 
 export default class ViewModel {
   private readonly keysContainer: JQuery<HTMLElement> = $(
@@ -30,7 +30,7 @@ export default class ViewModel {
     // every time keybinds observable changes, change the value of the keybind input
     keybinds.subscribe(this.updateKeybindInputs);
     // initialize all the keybind inputs:
-    this.updateKeybindInputs(keybinds());
+    this.updateKeybindInputs();
   }
 
   /**
@@ -74,10 +74,10 @@ export default class ViewModel {
 
   /**
    * Add keybind inputs if necessary and update the values
-   * @param {Keybinds} newKeybinds the current keybinds
+   * @param {Keybinds} _newKeybinds the current keybinds
    */
-  updateKeybindInputs = (newKeybinds: Keybinds) => {
-    for (const key of Object.keys(newKeybinds)) {
+  updateKeybindInputs = () => {
+    for (const key of Object.keys(keybinds())) {
       if ($(`.keyboard-mapping-key-detect[name="${key}"]`).length == 0) {
         // If this runs, a new keybind has been added, but the input for it doesn't exist yet.
         // so, let's create it:
@@ -89,13 +89,13 @@ export default class ViewModel {
       }
       // set the value of the element to the keybind
       $(`.keyboard-mapping-key-detect[name="${key}"]`).val(
-        this.stringFromKeybind(newKeybinds[key])
+        this.stringFromKeybind(keybinds()[key])
       );
 
-      if (!this.stringFromKeybind(newKeybinds[key]).endsWith(" + ")) {
+      if (!this.stringFromKeybind(keybinds()[key]).endsWith(" + ")) {
         $(`.keyboard-mapping-key-detect[name="${key}"]`).data(
           "originalValue",
-          this.stringFromKeybind(newKeybinds[key])
+          this.stringFromKeybind(keybinds()[key])
         );
       }
     }
