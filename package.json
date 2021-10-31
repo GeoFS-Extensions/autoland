@@ -7,8 +7,7 @@
     "build": "node infra/build.js && npm run prettier",
     "data": "node infra/builds/nav_data_build.js",
     "debug": "node infra/build.js --debug && npm run prettier",
-    "packaging": "ncu -u && npm i",
-    "postinstall": "npm i @types/leaflet@1.5.23",
+    "packaging": "ncu -u --reject @types/leaflet && npm i",
     "prettier": "prettier --write .",
     "suite": "npm run packaging && npm run data && npm run build && npm run test",
     "test": "eslint . && prettier --check . && tsc"
