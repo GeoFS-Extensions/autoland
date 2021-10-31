@@ -48,9 +48,6 @@ jobs:
       - name: TSC
         run: sudo npx tsc
 
-      - name: Catch-all build
-        run: npm run build
-
   job_4:
     name: Security
     runs-on: ubuntu-latest
