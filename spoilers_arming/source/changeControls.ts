@@ -50,14 +50,14 @@ export default () => {
     );
     // Add an event handling the pressing of the airbrakes toggle key
     document.addEventListener("keydown", (e: KeyboardEvent) => {
+      const keybind = window.keyboard_mapping
+        .require("./source/keyboardMapping.ts")
+        .default()["Airbrake toggle (on/off)"];
       if (
-        e.code ==
-          window.keyboard_mapping
-            .require("./source/keyboardMapping.ts")
-            .default()["Spoilers Arming"].code &&
-        !e.ctrlKey &&
-        !e.altKey &&
-        !e.shiftKey
+        e.code == keybind.code &&
+        e.ctrlKey == keybind.ctrlKey &&
+        e.altKey == keybind.altKey &&
+        e.shiftKey == keybind.shiftKey
       ) {
         // spoilers will be activated.
         globalVariables.enabled(false);
