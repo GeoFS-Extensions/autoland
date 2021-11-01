@@ -11,3 +11,4 @@ export interface Keybinds {
 }
 
 export type KeyDown = (event: KeyboardEvent) => void;
+export type KeyUp = (event: KeyboardEvent) => void;

@@ -4,6 +4,7 @@ import keybinds from "./keyboardMapping";
 // adds all the default geofs keybinds.
 export default function () {
   addKeybind(
+    "keyDown",
     "Toggle Autopilot",
     () => {
       controls.setters.toggleAutoPilot.set();
@@ -16,6 +17,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Bank left",
     (event) => {
       controls.states.left = !0;
@@ -30,6 +32,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Bank right",
     (event) => {
       controls.states.right = !0;
@@ -44,6 +47,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Pitch down",
     (event) => {
       controls.states.up = !0;
@@ -58,6 +62,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Pitch up",
     (event) => {
       controls.states.down = !0;
@@ -72,6 +77,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Steer left",
     (event) => {
       controls.states.rudderLeft = !0;
@@ -86,6 +92,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Steer right",
     (event) => {
       controls.states.rudderRight = !0;
@@ -100,6 +107,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Increase throttle",
     (event) => {
       controls.states.increaseThrottle = !0;
@@ -113,6 +121,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     `${/* Increase throttle*/ ""}`,
     (event) => {
       controls.states.increaseThrottle = !0;
@@ -126,6 +135,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Decrease throttle",
     (event) => {
       controls.states.increaseThrottle = !0;
@@ -139,6 +149,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     `${/* Decrease throttle*/ ""}`,
     (event) => {
       controls.states.decreaseThrottle = !0;
@@ -152,6 +163,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Brakes",
     () => {
       controls.setters.setBrakes.set();
@@ -164,6 +176,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Parking brake",
     () => {
       controls.setters.toggleParkingBrake.set();
@@ -176,6 +189,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Engine switch (on/off)",
     () => {
       geofs.aircraft.instance.engine.on
@@ -190,6 +204,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Gear toggle (up/down)",
     () => {
       controls.setters.setGear.set();
@@ -202,6 +217,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Lower flaps",
     () => {
       controls.setters.setFlapsDown.set();
@@ -214,6 +230,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Raise flaps",
     () => {
       controls.setters.setFlapsUp.set();
@@ -226,6 +243,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Airbrake toggle (on/off)",
     () => {
       controls.setters.setAirbrakes.set();
@@ -238,6 +256,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Optional Animated Part toggle (on/off)",
     () => {
       controls.setters.setOptionalAnimatedPart.set();
@@ -250,6 +269,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Elevator trim down",
     () => {
       controls.setters.setElevatorTrimDown.set();
@@ -262,6 +282,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Elevator trim up",
     () => {
       controls.setters.setElevatorTrimUp.set();
@@ -274,6 +295,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "Elevator trim neutral",
     () => {
       controls.setters.setElevatorTrimNeutral.set();
@@ -287,6 +309,7 @@ export default function () {
   );
   // Nameless Keybinds:
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.recenter();
@@ -299,6 +322,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.controlKeyPressed = !0;
@@ -311,6 +335,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     (event) => {
       flight.recorder.playing &&
@@ -324,6 +349,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       flight.recorder.enterPlayback();
@@ -336,6 +362,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       audio.toggleMute();
@@ -348,6 +375,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.togglePause();
@@ -360,6 +388,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.cycle();
@@ -372,6 +401,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       ui.panel.toggle(".geofs-map-list");
@@ -384,6 +414,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       ui.panel.toggle(".geofs-preference-list");
@@ -396,6 +427,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.flyToCamera();
@@ -408,6 +440,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       instruments.toggle();
@@ -420,6 +453,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.setMode("mouse");
@@ -432,6 +466,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.setMode("keyboard");
@@ -444,6 +479,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.setMode("joystick");
@@ -456,6 +492,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.animations.orbitHorizontal.active =
@@ -469,6 +506,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.resetFlight();
@@ -481,6 +519,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.animations.orbitVertical.active =
@@ -494,6 +533,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.setRotation(45);
@@ -506,6 +546,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.setRotation(0);
@@ -518,6 +559,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.setRotation(-45);
@@ -530,6 +572,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.setRotation(90);
@@ -542,6 +585,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.setToNeutral();
@@ -554,6 +598,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.setRotation(-90);
@@ -566,6 +611,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.setRotation(135);
@@ -578,6 +624,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.setRotation(180);
@@ -590,6 +637,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       geofs.camera.setRotation(-135);
@@ -603,6 +651,7 @@ export default function () {
   );
   // Throttle shortcuts:
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.throttle = 0;
@@ -615,6 +664,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.throttle = 1 / 9;
@@ -627,6 +677,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.throttle = 2 / 9;
@@ -639,6 +690,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.throttle = 3 / 9;
@@ -651,6 +703,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.throttle = 4 / 9;
@@ -663,6 +716,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.throttle = 5 / 9;
@@ -675,6 +729,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.throttle = 6 / 9;
@@ -687,6 +742,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.throttle = 7 / 9;
@@ -699,6 +755,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.throttle = 8 / 9;
@@ -711,6 +768,7 @@ export default function () {
     }
   );
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.throttle = 9 / 9;
