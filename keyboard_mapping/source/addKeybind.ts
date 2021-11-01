@@ -1,13 +1,14 @@
 import keyDown from "./keyDown";
 import keyUp from "./keyUp";
 import keybinds from "./keyboardMapping";
+import KeybindSet from './static/keybindSet';
 import { callback, Keybind } from "../keyboard_mapping_types";
 
 const addedKeybindsLabels = [];
 
 window.keyboard_mapping.ready = true;
 
-const currentlyPressedKeybinds = new Set<Keybind>();
+const currentlyPressedKeybinds = new KeybindSet();
 
 /**
  * Add a new keybind.
