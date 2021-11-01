@@ -63,7 +63,7 @@ export default class KeybindSet<T extends Keybind> extends Set<T> {
    * @returns {KeybindSet<T>} The set.
    */
   filter(callback: (item: T) => boolean): this {
-    this.forEach(item => {
+    this.forEach((item) => {
       if (callback(item)) {
         this.delete(item);
       }
@@ -78,8 +78,8 @@ export default class KeybindSet<T extends Keybind> extends Set<T> {
    * @return {KeybindSet<T>} This set.
    */
   join(...sets: KeybindSet<T>[]): this {
-    sets.forEach(set => {
-      set.forEach(item => {
+    sets.forEach((set) => {
+      set.forEach((item) => {
         this.add(item);
       });
     });
@@ -94,7 +94,7 @@ export default class KeybindSet<T extends Keybind> extends Set<T> {
    */
   every(callback: (item: T) => boolean): boolean {
     let meet = false;
-    this.forEach(item => {
+    this.forEach((item) => {
       meet = callback(item);
     });
     return meet;
@@ -105,9 +105,9 @@ export default class KeybindSet<T extends Keybind> extends Set<T> {
    * @param {(item: T) => boolean} callback The function to test against
    * @returns {boolean} true if at least one of the elements meets the condition, false otherwise.
    */
-   some(callback: (item: T) => boolean): boolean {
+  some(callback: (item: T) => boolean): boolean {
     let meet = false;
-    this.forEach(item => {
+    this.forEach((item) => {
       if (callback(item)) meet = true;
     });
     return meet;

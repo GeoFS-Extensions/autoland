@@ -1,7 +1,7 @@
 import keyDown from "./keyDown";
 import keyUp from "./keyUp";
 import keybinds from "./keyboardMapping";
-import KeybindSet from './static/keybindSet';
+import KeybindSet from "./static/keybindSet";
 import { callback, Keybind } from "../keyboard_mapping_types";
 
 const addedKeybindsLabels = [];
