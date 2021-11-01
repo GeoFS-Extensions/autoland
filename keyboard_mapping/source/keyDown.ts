@@ -1,8 +1,8 @@
 import * as ko from "knockout";
 import { KeyDown } from "../keyboard_mapping_types";
 
-const _keydown = ko.observable<KeyDown>(() => {
-  void 0;
+const _keydown = ko.observable<KeyDown>((event) => {
+  event; // here so ts wont be annoyed
 });
 const keydown = ko.pureComputed({
   read: _keydown,
