@@ -58,6 +58,14 @@ function addKeybind(
       // Detect if the keybind is pressed:
       const keybind = keybinds()[label] || defaultKeybind; // get the active keybind for it (might be different than the default)
 
+      // Add the pressed keybin to the set of pressed keybinds.
+      currentlyPressedKeybinds.add({
+        altKey: event.altKey,
+        ctrlKey: event.ctrlKey,
+        shiftKey: event.shiftKey,
+        code: event.code,
+      });
+
       if (keybind.code === "" || event.code === keybind.code) {
         if (
           event.altKey === keybind.altKey &&
@@ -85,7 +93,18 @@ function addKeybind(
   } else {
     const oldKeyUp = keyUp();
     keyUp((event) => {
-      // blah blah blah
+      // Remove all the keybinds that are no longer pressed:
+      currentlyPressedKeybinds.filter((item) => {
+        if (event.code.includes("Alt")) {
+          return item.altKey === false;
+        } else if (event.code.includes("Control")) {
+          return item.ctrlKey === false;
+        } else if (event.code.includes("Shift")) {
+          return item.shiftKey === false;
+        } else {
+          return item.code !== event.code;
+        }
+      });
       oldKeyUp(event);
     });
   }

@@ -74,7 +74,6 @@ export default class ViewModel {
 
   /**
    * Add keybind inputs if necessary and update the values
-   * @param {Keybinds} _newKeybinds the current keybinds
    */
   updateKeybindInputs = () => {
     for (const key of Object.keys(keybinds())) {

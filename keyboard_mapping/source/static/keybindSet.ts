@@ -64,7 +64,7 @@ export default class KeybindSet<T extends Keybind> extends Set<T> {
    */
   filter(callback: (item: T) => boolean): this {
     this.forEach((item) => {
-      if (callback(item)) {
+      if (!callback(item)) {
         this.delete(item);
       }
     });

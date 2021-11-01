@@ -32,6 +32,7 @@ if (window.keyboard_mapping) {
     "./source/addKeybind.ts"
   ).default;
   addKeybind(
+    "keyDown",
     "",
     () => {
       controls.autopilot.turnOff();
