@@ -60,16 +60,17 @@ export default class KeybindSet<T extends Keybind> extends Set<T> {
   /**
    * Filter the set to include only the elements that pass a callback.
    * @param {(value: T) => boolean} callback The function to filter on.
-   * @returns {KeybindSet<T>} The set.
+   * @returns {KeybindSet<T>} The removed values.
    */
-  filter(callback: (item: T) => boolean): this {
+  filter(callback: (item: T) => boolean): KeybindSet<T> {
+    const removed: KeybindSet<T> = new KeybindSet();
     this.forEach((item) => {
       if (!callback(item)) {
         this.delete(item);
+        removed.add(item);
       }
     });
-    //Array.prototype.
-    return this;
+    return removed;
   }
 
   /**
