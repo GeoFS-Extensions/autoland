@@ -69,7 +69,6 @@ function addKeybind(
         shiftKey: event.shiftKey,
         code: event.code,
       });
-      console.log(JSON.stringify(currentlyPressedKeybinds, null, 2));
       if (keybind.code === "" || event.code === keybind.code) {
         if (
           event.altKey === keybind.altKey &&
@@ -96,25 +95,27 @@ function addKeybind(
     });
   } else {
     const oldKeyUp = keyUp();
-    keyUp((event) => {
+    keyUp((event, releasedKeybinds) => {
       // Remove all the keybinds that are no longer pressed:
-      const releasedKeybinds = currentlyPressedKeybinds.filter((item) => {
-        if (event.code.includes("Alt")) {
-          return item.altKey === false;
-        } else if (event.code.includes("Control")) {
-          return item.ctrlKey === false;
-        } else if (event.code.includes("Shift")) {
-          return item.shiftKey === false;
-        } else {
-          return item.code !== event.code;
-        }
-      });
+      releasedKeybinds =
+        releasedKeybinds ||
+        currentlyPressedKeybinds.filter((item) => {
+          if (event.code.includes("Alt")) {
+            return item.altKey === false;
+          } else if (event.code.includes("Control")) {
+            return item.ctrlKey === false;
+          } else if (event.code.includes("Shift")) {
+            return item.shiftKey === false;
+          } else {
+            return item.code !== event.code;
+          }
+        });
       const keybind = keybinds()[label] || defaultKeybind; // If the label exists it will be the keyup of it. otherwise it will be a standalone keyup.
       if (releasedKeybinds.has(keybind)) {
         // The keybind was released.
         callback(event);
       } else {
-        oldKeyUp(event);
+        oldKeyUp(event, releasedKeybinds);
       }
     });
   }
