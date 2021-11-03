@@ -32,6 +32,7 @@ export default () => {
       "./source/addKeybind.ts"
     ).default;
     addKeybind(
+      "keyDown",
       "Spoilers Arming",
       () => {
         if (typeof globalVariables.enabled !== "undefined") {

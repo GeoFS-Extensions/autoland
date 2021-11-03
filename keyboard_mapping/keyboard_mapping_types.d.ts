@@ -1,3 +1,5 @@
+import KeybindSet from "./source/static/keybindSet";
+
 export type callback = (event: KeyboardEvent) => void;
 export interface Keybind {
   code: string;
@@ -11,3 +13,7 @@ export interface Keybinds {
 }
 
 export type KeyDown = (event: KeyboardEvent) => void;
+export type KeyUp = (
+  event: KeyboardEvent,
+  releasedKeybinds?: KeybindSet<Keybind>
+) => void;
