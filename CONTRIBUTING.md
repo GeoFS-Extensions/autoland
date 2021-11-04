@@ -19,11 +19,11 @@ A good branch name would be (where issue #325 is the ticket you're working on):
 git checkout -b 325-condense-storage-entries
 ```
 
-### Get the test suite running
+### Get the suite running
 
-Make sure you're using a current version of node.js (v16) with a current version of `npm`:
+Make sure you're using a current version of node.js (v16 LTS or v17) with a current version of `npm`:
 
-Now install the development dependencies:
+Now install the dependencies:
 
 ```sh
 npm install
@@ -37,6 +37,12 @@ npm run build
 
 The build script will make a extension ready for [loading in unpacked mode] to a Chromium browser.
 
+There is also a script to update navdata, dependencies, build the extension. Here's the command to run the suite:
+
+```sh
+npm run suite
+```
+
 ### Implement your fix or feature
 
 At this point, you're ready to make your changes! Feel free to ask for help;
@@ -44,7 +50,7 @@ everyone is a beginner at first :smile_cat:
 
 Make sure you update the version number in `manifest.json`. Here's how to do that:
 
-- The second to last digit (e.g. 3.2.**3**) is for patches. If you're fixing a bug, increment this number. (e.g. 3.2.4)
+- The last digit (e.g. 3.2.**3**) is for patches. If you're fixing a bug, increment this number. (e.g. 3.2.4)
 - The second digit (e.g. 3.**2**.3) is for new features. If you're adding a new option, or adding a new functionality to
   a script, increment this digit and reset the digits right of it to 0. (3.3.0)
 - The first digit (e.g. **3**.2.3) is for very major releases. If your change doesn't fall into the other catagories,

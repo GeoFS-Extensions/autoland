@@ -43,7 +43,7 @@ body:
       required: true
     attributes:
       label: Browser
-      description: The OS that you were running when you discovered the problem. Include the version number
+      description: The browser that you were running when you discovered the problem. Include the version number.
   - type: input
     validations:
       required: true
