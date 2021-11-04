@@ -24,7 +24,8 @@ jobs:
       - name: Build extension
         run: |
           npm i
-          npm run suite
+          npm run data
+          npm run build
 
       - name: Zip extension
         uses: vimtor/action-zip@v1
