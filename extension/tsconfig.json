@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "none",
+    "target": "esnext",
+    "lib": ["DOM", "es2020"],
+    "types": ["jquery", "requirejs", "chrome"],
+    "alwaysStrict": true,
+    "outDir": "build",
+    "removeComments": true
+  },
+  "files": ["../types/geofs.d.ts", "../types/scripts.d.ts"],
+  "include": ["source/**/*"]
+}

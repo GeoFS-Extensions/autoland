@@ -1,2 +1,5 @@
-node_modules
-**/scripts/*.js
+extension/source/scripts/*.js
+extension/source/data/*
+extension/build/**
+fmc/**/*.html
+fmc/**/*.css

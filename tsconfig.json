@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "module": "none",
     "target": "ESNext",
-    "noImplicitAny": true,
-    "lib": ["DOM", "es2015"],
-    "alwaysStrict": true,
-    "stripInternal": true
+    "noEmit": true,
+    "types": ["requirejs", "jquery", "chrome", "knockout"],
+    "moduleResolution": "node"
   },
-  "include": ["build/**/*", "geofs_types.d.ts"]
+  "include": ["**/*"],
+  "exclude": ["node_modules"]
 }

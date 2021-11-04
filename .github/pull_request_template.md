@@ -1,6 +1,6 @@
 Please fill in this template.
 
 - [ ] Use a meaningful title for the pull request.
-- [ ] Test the change in your own code. (Compile and run.)
-- [ ] Run `npm build`.
+- [ ] Test the change. (Compile and use the built extension.)
+- [ ] Run `npm run build`.
 - [ ] Run `npm test`.
