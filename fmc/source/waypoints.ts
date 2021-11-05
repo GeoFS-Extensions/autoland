@@ -512,7 +512,7 @@ function loadFromSave(arg?: string) {
     const rte = arr[3];
 
     // JSON.stringify turns undefined into null; this loop turns it back
-    // TODO: can this be optimized?
+    // TODO: we might need to turn this into turning undefined into null
     for (let i = 0; i < rte.length; i++) {
       for (let j = 0; j < rte[i].length; j++) {
         if (rte[i][j] === null) rte[i][j] = undefined;
