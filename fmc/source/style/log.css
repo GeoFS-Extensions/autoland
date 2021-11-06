@@ -13,6 +13,10 @@ div.fmc-log-container tr:hover {
 
 div.fmc-log-container th {
   text-align: left;
+  top: 0;
+  position: sticky;
+  background-color: #fff;
+  z-index: 10;
 }
 
 div.fmc-log-container td {
