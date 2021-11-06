@@ -1,5 +1,0 @@
-export default `div.fmc-map-container {
-    height: 405px;
-    width: 700px;
-}
-`;
