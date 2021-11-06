@@ -1,4 +1,4 @@
-export default `button.fmc-btn,
+button.fmc-btn,
 button.fmc-btn:hover,
 button.fmc-btn:active,
 button.fmc-btn:focus:not(:active) {
@@ -15,4 +15,3 @@ button.fmc-btn__fade {
 button.fmc-btn__fade:hover {
 	opacity: 0.8;
 }
-`;

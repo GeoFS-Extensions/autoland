@@ -1,4 +1,4 @@
-export default `div.fmc-legs-container {
+div.fmc-legs-container {
     max-height: 340px;
     min-height: 70px;
     width: 665px;
@@ -64,4 +64,3 @@ table.fmc-legs-data-table .alt-target {
     font-size: 20px;
     margin-top: 20px;
 }
-`;

@@ -1,4 +1,4 @@
-export default `div.fmc-dep-arr-container {
+div.fmc-dep-arr-container {
     overflow: hidden;
 }
 
@@ -34,4 +34,3 @@ div.fmc-auto-tod-container .mdl-switch__label {
     font-weight: bold;
     cursor: default !important;
 }
-`;

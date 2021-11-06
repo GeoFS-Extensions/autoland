@@ -1,4 +1,4 @@
-export default `div.fmc-vnav-toggle-container {
+div.fmc-vnav-toggle-container {
     margin-left: 60px;
 }
 
@@ -96,4 +96,3 @@ div.fmc-vnav-phase-container .lock-phase.locked:hover {
 div.fmc-vnav-phase-container .lock-phase.locked:active {
     background: rgba(255, 0, 0, 0.4);
 }
-`;

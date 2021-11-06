@@ -1,4 +1,4 @@
-export default `div.fmc-wpt-list-container {
+div.fmc-wpt-list-container {
 	padding-bottom: 9px;
 	margin-top: -23px;
 	max-height: 277px;
@@ -77,4 +77,3 @@ tr.wpt-row button {
 button[action="activate-wpt"] .material-icons {
 	color: blue;
 }
-`;

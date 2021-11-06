@@ -1,4 +1,4 @@
-export default `div.fmc-load-container .mdl-textfield {
+div.fmc-load-container .mdl-textfield {
     width: 420px;
     overflow: hidden;
 }
@@ -30,4 +30,3 @@ div.fmc-load-container .fmc-generate-rte-container textarea {
 button.interactive.load-tab {
     float: right;
 }
-`;

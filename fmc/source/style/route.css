@@ -1,4 +1,4 @@
-export default `div.fmc-dep-arr-table-container {
+div.fmc-dep-arr-table-container {
 	margin-top: -10px;
 }
 
@@ -24,4 +24,3 @@ div.fmc-modal__actions button[action="add-wpt"] {
 	width: 35px; height: 35px;
 	float: right;
 }
-`;

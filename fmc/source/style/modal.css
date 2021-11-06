@@ -1,4 +1,4 @@
-export default `/* modal.html */
+/* modal.html */
 a.fmc-btn__fade {
 	transition: font-size 0.3s ease-in-out,
 				font-weight 0.3s ease-in-out,
@@ -128,4 +128,3 @@ div.fmc-modal__actions .interactive {
 div.fmc-modal__actions .interactive.is-active {
 	display: inline-block;
 }
-`;

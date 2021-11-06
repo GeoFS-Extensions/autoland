@@ -1,4 +1,4 @@
-export default `#Qantas94Heavy-ap {
+#Qantas94Heavy-ap {
   position: absolute;
   bottom: 0;
   box-sizing: border-box;
@@ -80,4 +80,3 @@ export default `#Qantas94Heavy-ap {
   overflow: auto;
   width: 150px;
 }
-`;

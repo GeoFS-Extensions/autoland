@@ -1,4 +1,4 @@
-export default `div.fmc-prog-info {
+div.fmc-prog-info {
     display: inline-block;
 }
 
@@ -56,4 +56,3 @@ div.fmc-prog-info.next-wpt-info .time-info {
     width: 50px;
     text-align: center;
 }
-`;
