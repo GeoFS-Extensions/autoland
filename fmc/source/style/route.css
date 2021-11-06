@@ -1,26 +1,27 @@
 div.fmc-dep-arr-table-container {
-	margin-top: -10px;
+  margin-top: -10px;
 }
 
 div.fmc-dep-arr-table-container table {
-	width: 100%;
+  width: 100%;
 }
 
 div.fmc-dep-arr-table-container .material-icons {
-	vertical-align: middle;
-	margin-right: 5px;
+  vertical-align: middle;
+  margin-right: 5px;
 }
 
 div.fmc-dep-arr-table-container div {
-	width: 80%;
+  width: 80%;
 }
 
 div.fmc-wpt-add-container {
-	float: right;
+  float: right;
 }
 
 div.fmc-modal__actions button[action="add-wpt"] {
-	min-width: 35px;
-	width: 35px; height: 35px;
-	float: right;
+  min-width: 35px;
+  width: 35px;
+  height: 35px;
+  float: right;
 }
