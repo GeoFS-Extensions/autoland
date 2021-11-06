@@ -46,7 +46,7 @@ class Waypoint {
   readonly lat = ko.pureComputed<number, Waypoint>({
     read: this._lat,
     write: (val: number) => {
-      val = formatCoords(val.toString());
+      val = formatCoords(val);
       this._lat(!isNaN(val) ? val : undefined);
       this.valid(Boolean(this.isValid));
       // this.marker(this.wpt(), L.latLng(val, this.lon()));
@@ -58,7 +58,7 @@ class Waypoint {
   readonly lon = ko.pureComputed<number, Waypoint>({
     read: this._lon,
     write: (val: number) => {
-      val = formatCoords(val.toString());
+      val = formatCoords(val);
       this._lon(!isNaN(val) ? val : undefined);
       this.valid(Boolean(this.isValid));
       // this.marker(this.wpt(), L.latLng(this.lat(), val));    }
@@ -273,11 +273,11 @@ function toRouteString(): string {
 /**
  * Turns the coordinate entered from minutes-seconds format to decimal format
  *
- * @param {String} a Coordinate in minutes-seconds format
+ * @param {String} b Coordinate in minutes-seconds format
  * @returns {Number} Coordinate in decimal format
  */
-function formatCoords(a: string): number {
-  a = String(a);
+function formatCoords(b: any): number {
+  const a = String(b);
 
   if (a.indexOf(" ") > -1) {
     const array = a.split(" ");
@@ -512,7 +512,7 @@ function loadFromSave(arg?: string) {
     const rte = arr[3];
 
     // JSON.stringify turns undefined into null; this loop turns it back
-    // TODO: we might need to turn this into turning undefined into null
+    // TODO: can this be optimized?
     for (let i = 0; i < rte.length; i++) {
       for (let j = 0; j < rte[i].length; j++) {
         if (rte[i][j] === null) rte[i][j] = undefined;
