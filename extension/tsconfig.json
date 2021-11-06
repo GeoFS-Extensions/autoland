@@ -3,7 +3,7 @@
     "module": "none",
     "target": "esnext",
     "lib": ["DOM", "es2020"],
-    "types": ["jquery", "requirejs", "chrome"],
+    "types": ["jquery", "requirejs", "chrome", "chai", "mocha"],
     "alwaysStrict": true,
     "outDir": "build",
     "removeComments": true
