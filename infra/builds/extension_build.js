@@ -10,20 +10,6 @@ function tag() {
   return chalk.hex("#f7cd72")("(extension) ");
 }
 
-function singleFileAction(filename) {
-  let fileContent = fs
-    .readFileSync(filename, { encoding: "utf-8" })
-    .split("\n");
-  let toWrite = [];
-  fileContent.forEach((value) => {
-    value.replace(/[\n\r]/g, "");
-    if (!value.includes("exports")) {
-      toWrite.push(value);
-    }
-  });
-  fs.writeFileSync(filename, toWrite.join("\n"));
-}
-
 function build() {
   chdir(join(mainDir, "extension"));
   console.log(tag() + chalk.hex("#f573a3")("Removing build directory..."));
@@ -58,16 +44,6 @@ function build() {
     );
   }
 
-  // remove the module stuff that we don't need
-  console.log(
-    tag() + chalk.hex("#82ffda")("Removing unneeded module infrastructure...")
-  );
-  const files = sync(join(mainDir, "extension/build/**/*.js"), {
-    ignore: "**/scripts/*.js",
-  });
-  files.forEach((value) => {
-    singleFileAction(value);
-  });
   console.log(tag() + chalk.hex("#a8ff82")("Build complete!"));
 }
 

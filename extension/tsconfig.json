@@ -1,13 +1,14 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "module": "none",
-    "target": "esnext",
+    "noEmit": true,
     "lib": ["DOM", "es2020"],
-    "types": ["jquery", "requirejs", "chrome", "chai", "mocha"],
+    "types": ["jquery", "requirejs", "chrome"],
     "alwaysStrict": true,
     "outDir": "build",
-    "removeComments": true
+    "removeComments": true,
+    "moduleResolution": "node"
   },
-  "files": ["../types/geofs.d.ts", "../types/scripts.d.ts"],
-  "include": ["source/**/*"]
+  "include": ["source/**/*.ts"],
+  "files": ["../types/geofs.d.ts", "../types/scripts.d.ts"]
 }

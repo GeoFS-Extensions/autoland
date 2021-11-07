@@ -3,5 +3,8 @@
     "browser": true,
     "webextensions": true
   },
-  "ignorePatterns": ["**/scripts/*.js"]
+  "ignorePatterns": ["source/scripts", "build"],
+  "rules": {
+    "prefer-arrow-callback": "warn"
+  }
 }
