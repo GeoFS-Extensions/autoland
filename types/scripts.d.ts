@@ -31,9 +31,9 @@ declare global {
     };
     navData: {
       statusCode: number;
-      airports: { [key: string]: number[] };
-      waypoints: { [key: string]: number[][] };
-      navaids: { [key: string]: number[] };
+      airports: { [key: string]: [number, number] };
+      waypoints: { [key: string]: [number, number][] };
+      navaids: { [key: string]: [number, number] };
     };
   }
 }

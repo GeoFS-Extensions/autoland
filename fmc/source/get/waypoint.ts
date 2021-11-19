@@ -15,7 +15,7 @@ export const waypoint = (
   route: ko.ObservableArray,
   fix: string,
   index: number
-): number[] => {
+): [number, number] => {
   const coords = icao[fix];
   if (coords) return coords;
 

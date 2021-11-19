@@ -2,7 +2,7 @@ import * as ko from "knockout";
 import { ViewModel } from "./ViewModel";
 import { positioningFMC } from "./position";
 import { log } from "../log";
-// import { polyline } from '../polyline';
+import { polyline } from "../polyline";
 import { waypoints } from "../waypoints";
 import { progress } from "../nav/progress";
 import { E } from "./elements";
@@ -25,18 +25,18 @@ function loadFMC() {
 
   // Inits waypoint field
   // HACK: opens nav tab to make sure map imagery loads
-  // new Promise(function (resolve) {
-  // 	ui.panel.toggle('.geofs-map-list');
-  // 	ui.createMap();
-  // 	var timer = setInterval(function () {
-  // 		if (!ui.map) return;
-  // 		clearInterval(timer);
-  // 		resolve();
-  // 	}, 250);
-  // }).then(function () {
-  // polyline.path.addTo(ui.mapInstance);
-  waypoints.addWaypoint();
-  // });
+  new Promise<void>((resolve) => {
+    ui.panel.toggle(".geofs-map-list");
+    ui.createMap();
+    const timer = setInterval(function () {
+      if (!ui?.mapInstance?.apiMap?.map) return;
+      clearInterval(timer);
+      resolve();
+    }, 250);
+  }).then(function () {
+    polyline.path.addTo(ui?.mapInstance?.apiMap?.map);
+    waypoints.addWaypoint();
+  });
 
   /* ---- UI actions binding ---- */
 

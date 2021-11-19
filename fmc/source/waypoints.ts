@@ -3,7 +3,7 @@ import { debug } from "./debug";
 import { waypoint } from "./get";
 import { flight } from "./flight";
 import { log } from "./log";
-// import { polyline } from './polyline';
+import { polyline } from "./polyline";
 import { utils } from "./utils";
 import { lnav } from "./nav/LNAV";
 import { progress } from "./nav/progress";
@@ -16,10 +16,53 @@ const autopilot = window.autopilot_pp.require("./source/autopilot.ts").default,
 const route = ko.observableArray<Waypoint>();
 const nextWaypoint = ko.observable<number>(null);
 
+const MARKER_ICON = L.icon({
+  iconUrl: PAGE_PATH + "images/waypoint.png",
+  iconSize: [24, 24],
+  iconAnchor: [12, 12],
+});
+
+const MARKER_SETTINGS = {
+  map: ui.mapInstance,
+  icon: {
+    url: PAGE_PATH + "images/waypoint.png",
+    // scaledSize: new google.maps.Size(24, 24),
+    // anchor: new google.maps.Point(12, 12),
+    zIndex: 1000,
+  },
+};
+
 /**
  * Waypoint object to distinguish between each route item
  */
 class Waypoint {
+  // waypoints marker
+  private readonly _marker = ko.observable<
+    L.Marker | { wptName: string; coords: L.LatLngExpression }
+  >();
+  readonly marker = ko.pureComputed({
+    read: this._marker,
+    write: ({ wptName, coords }: { wptName: string; coords: L.LatLng }) => {
+      const markerOption = {
+        icon: MARKER_ICON,
+        title: wptName,
+      };
+
+      if (coords && !isNaN(coords.lat) && !isNaN(coords.lng)) {
+        this._marker(L.marker(coords, markerOption).addTo(ui.mapInstance));
+        const index = getIndex(this);
+
+        // If path at this index exists, amend it
+        if (polyline.path.getLatLngs()[index]) polyline.setAt(index, coords);
+        else polyline.insertAt(index, coords);
+      }
+
+      // ? this.updatePath(true);
+    },
+  });
+
+  // ? private readonly path = ko.observable(new Path());
+
   // Waypoint name
   private readonly _wpt = ko.observable<string>();
   private isValid: boolean;
@@ -33,10 +76,12 @@ class Waypoint {
 
       this.lat(this.isValid ? coords[0] : this.lat());
       this.lon(this.isValid ? coords[1] : this.lon());
-      this.info(this.isValid ? coords[2] : undefined);
+      //? this.info(this.isValid ? coords[2] : undefined); // We will never have coords[2], coords is always [number, number]
+      //? You can test it by using the regex /\[{1,2}[-0-9.]+,[-0-9.]+,/g and seeing that it returns nothing.
 
-      // if (!isValid) self.marker(val);
-      // else self.marker(val);
+      if (!this.isValid)
+        this.marker({ wptName: val, coords: [undefined, undefined] });
+      else this.marker({ wptName: val, coords: coords });
     },
   });
 
@@ -49,7 +94,10 @@ class Waypoint {
       val = formatCoords(val);
       this._lat(!isNaN(val) ? val : undefined);
       this.valid(Boolean(this.isValid));
-      // this.marker(this.wpt(), L.latLng(val, this.lon()));
+      this.marker({
+        wptName: this.wpt(),
+        coords: L.latLng(val, this.lon()),
+      });
     },
   });
 
@@ -61,7 +109,10 @@ class Waypoint {
       val = formatCoords(val);
       this._lon(!isNaN(val) ? val : undefined);
       this.valid(Boolean(this.isValid));
-      // this.marker(this.wpt(), L.latLng(this.lat(), val));    }
+      this.marker({
+        wptName: this.wpt(),
+        coords: L.latLng(this.lat(), val),
+      });
     },
   });
 
@@ -83,45 +134,6 @@ class Waypoint {
   readonly brngFromPrev = ko.pureComputed(() => {
     return getInfoFromPrev(this)[1];
   });
-  /*
-  var markerSettings = {
-  	map: ui.map,
-  	icon: {
-  		url: PAGE_PATH + 'images/waypoint.png',
-  		scaledSize: new google.maps.Size(24, 24),
-  		anchor: new google.maps.Point(12, 12),
-  		zIndex: 1000
-  	}
-  };
-
-  var markerIcon =  L.icon({
-  	iconUrl: PAGE_PATH + 'images/waypoint.png',
-  	iconSize: [24, 24],
-  	iconAnchor: [12, 12],
-  });
-
-  // Waypoint marker
-  var _marker = ko.observable();
-  self.marker = ko.pureComputed({
-  	read: _marker,
-  	write: function (wptName, coords) {
-  		var markerOption = {
-  			icon: markerIcon,
-  			title: wptName
-  		};
-  
-  		if (coords && !isNaN(coords.lat) && !isNaN(coords.lng)) {
-  			_marker(L.marker(coords, markerOption).addTo(ui.mapInstance));
-  			var index = getIndex(self);
-  
-  			// If path at this index exists, amend it
-  			if (polyline.path.getLatLngs()[index])
-  				polyline.setAt(index, coords);
-  			else polyline.insertAt(index, coords);
-  		}
-  	}
-  });
-  */
 }
 
 // Makes llaLocation an observable for automatic data updates
@@ -207,9 +219,9 @@ function move(index1: number, index2: number) {
   route(tempRoute);
 
   // Moves map path
-  // var cur = polyline.path.getLatLngs()[index1];
-  // polyline.deleteAt(index1);
-  // polyline.insertAt(index2, cur);
+  const cur = polyline.path.getLatLngs()[index1];
+  polyline.deleteAt(index1);
+  polyline.insertAt(index2, cur);
 }
 
 /**
@@ -384,14 +396,16 @@ function removeWaypoint(
 ) {
   const isRemoveAll = (event && event.shiftKey) || typeof n === "boolean";
   if (isRemoveAll) {
-    // route().forEach(function(e) {
-    // 	e.marker().remove();
-    // });
+    route().forEach(function (e) {
+      // @ts-ignore idk what to do about this
+      e.marker().remove();
+    });
     route.removeAll();
-    // polyline.path.setLatLngs([]);
+    polyline.path.setLatLngs([]);
   } else {
-    // route()[n].marker().remove();
-    // polyline.removeAt(n);
+    // @ts-ignore idk what to do about this
+    route()[n].marker().remove();
+    polyline.deleteAt(n);
     if (typeof n === "number") {
       route.splice(n, 1);
     }
