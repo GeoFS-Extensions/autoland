@@ -1,14 +1,14 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
     "noEmit": true,
     "lib": ["DOM", "es2020"],
-    "types": ["jquery", "requirejs", "chrome"],
+    "types": ["jquery", "chrome"],
     "alwaysStrict": true,
     "outDir": "build",
     "removeComments": true,
     "moduleResolution": "node"
   },
   "include": ["source/**/*.ts"],
+  "exclude": ["tests/**.*.ts"],
   "files": ["../types/geofs.d.ts", "../types/scripts.d.ts"]
 }

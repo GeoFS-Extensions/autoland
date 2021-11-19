@@ -1,16 +1,20 @@
-interface ScriptPrefs extends Record<string, unknown> {
+export interface ScriptPrefs {
   ap: boolean;
   fmc: boolean;
   spoilersArming: boolean;
   keyboardMapping: boolean;
 }
 
-interface UpdateInfo extends Record<string, unknown> {
-  shouldBeUpdated: boolean;
-  new?: string;
-}
+export type UpdateInfo =
+  | {
+      shouldBeUpdated: true;
+      new: string;
+    }
+  | {
+      shouldBeUpdated: false;
+    };
 
-export interface StorageEntry extends Record<string, unknown> {
+export interface StorageEntry {
   devModeEnabled: boolean;
   scriptPrefs: ScriptPrefs;
   updateInfo: UpdateInfo;
