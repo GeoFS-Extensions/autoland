@@ -20,7 +20,7 @@ function createDataFake(): StorageEntry {
 }
 
 /**
- * Creates a frest fake of the chrome api.
+ * Creates a fresh fake of the chrome api.
  * @param fakeConstructor Should be passed as `jest.fn`, not calling the function. Will be used to create api function fakes.
  */
 export function createChromeFake(fakeConstructor: typeof jest.fn) {

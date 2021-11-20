@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["DOM", "es2016"],
-    "types": ["jquery", "requirejs"],
+    "types": ["jquery"],
     "alwaysStrict": true,
     "esModuleInterop": true,
     "outDir": "build",

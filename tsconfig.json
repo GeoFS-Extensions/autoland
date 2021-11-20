@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "noEmit": true,
-    "types": ["jquery", "chrome", "knockout"],
+    "types": ["jquery", "chrome", "knockout", "jest"],
     "moduleResolution": "node"
   },
   "include": ["**/*"],
