@@ -121,7 +121,7 @@ function build(devMode) {
   console.log(
     tag() +
       chalk.hex("#91eba9")(
-        `Found ${tsFiles.length} files to be compiled, starting compilation...`
+        `Found ${tsFiles.length} ts files to be compiled, starting compilation...`
       )
   );
 
@@ -143,13 +143,24 @@ function build(devMode) {
       });
     })
   ).then(() => {
+    console.log(
+      tag() +
+        chalk.hex("#e4e685")(
+          "TS compilation complete, pruning unneeded files..."
+        )
+    );
     // delete remaining .ts files
     sync(
       join(__dirname + "../../../" + "extension/build/" + "**/*.ts")
     ).forEach((value) => {
       fs.removeSync(value);
     });
+    console.log(
+      tag() + chalk.hex("#e4e685")("Pruning complete, compiling css files...")
+    );
     compileAllCss();
+    console.log(tag() + chalk.hex("#e4e685")("CSS compilation complete..."));
+    console.log(tag() + chalk.hex("#e6c485")("Build complete!"));
   });
 }
 

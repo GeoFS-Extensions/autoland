@@ -18,7 +18,6 @@ function generateGlobalIgnorePattern(localIgnorePattern, patternLocation) {
  * Exists because prettier doesn't recognize .prettierignore files that aren't at its start working dir.
  */
 function buildPrettierIgnoreFile() {
-  // TODO: this takes about 2 seconds on windows, we need to optimize this
   const filesToCompile = sync("**/.prettierignore", {
     ignore: [".prettierignore", "**/node_modules/**"],
   });
