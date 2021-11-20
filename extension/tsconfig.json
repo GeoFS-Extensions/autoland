@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "noEmit": true,
     "lib": ["DOM", "es2020"],
     "types": ["chrome"],
     "moduleResolution": "node"

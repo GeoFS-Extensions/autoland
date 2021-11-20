@@ -19,7 +19,7 @@ function scriptTag(script) {
  * @param {boolean} debug Whether the script should be built for debugging.
  * @returns {Promise<void>} a promise that will be resolved when the script is built.
  */
-async function build(script, debug) {
+function build(script, debug) {
   // change dirs to the script dir
   const scriptLocation = join(homeDir, script);
   chdir(scriptLocation);

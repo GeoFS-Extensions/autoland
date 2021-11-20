@@ -10,7 +10,7 @@
     "packaging": "ncu -u --reject @types/leaflet && npm i",
     "prettier": "prettier --write .",
     "suite": "npm run packaging && npm run data && npm run build && npm run test",
-    "test": "eslint . && prettier --check . && tsc"
+    "test": "eslint . && npm run prettier -- --check && tsc"
   },
   "repository": {
     "type": "git",
@@ -49,7 +49,7 @@
     "tailwindcss": "^2.2.19",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.2",
-    "webpack": "^5.64.1",
+    "webpack": "^5.64.2",
     "yargs": "^17.2.1"
   }
 }

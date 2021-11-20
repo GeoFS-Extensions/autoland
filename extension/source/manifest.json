@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "GeoFS Plugins",
-  "version": "3.4.0",
+  "version": "3.4.0-dev",
   "default_locale": "en",
   "icons": { "772": "icon.png" },
   "action": { "default_popup": "" },

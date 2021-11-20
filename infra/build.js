@@ -9,7 +9,7 @@ const extensionBuild = require("./builds/extension_build");
 const scriptBuild = require("./builds/script_build");
 
 const argv = yargs.option("debug", {
-  description: "Build scripts in debug mode",
+  description: "Build in debug mode",
   type: "boolean",
   default: false,
 }).argv;
@@ -49,7 +49,7 @@ Promise.all([
 ])
   .then(() => {
     console.log(chalk.yellow("Scripts built, starting extension build..."));
-    extensionBuild();
+    extensionBuild(argv.debug);
   })
   .catch((err) => {
     console.log(err);

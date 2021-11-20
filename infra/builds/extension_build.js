@@ -1,8 +1,8 @@
-const { execSync } = require("child_process");
 const fs = require("fs-extra");
+const webpack = require("webpack");
 const { sync } = require("glob");
-const { join } = require("path");
-const { chdir } = require("process");
+const { join, resolve } = require("path");
+const { chdir, cwd } = require("process");
 const mainDir = require("../main_dir");
 const chalk = require("chalk");
 
@@ -10,41 +10,101 @@ function tag() {
   return chalk.hex("#f7cd72")("(extension) ");
 }
 
-function build() {
+/**
+ * @param {string} value The path to the **.ts** file to compile.
+ * @param {boolean} devMode Whether to build in dev mode.
+ * The file must have a corresponding .config.js file.
+ * The .config.js file should export a function that returns a webpack config.
+ */
+function compileSingleScript(value, devMode) {
+  const configFilePath = resolve(value.replace(/..$/g, "config.js"));
+  /** @type {(devMode: boolean) => import("webpack").Configuration} */
+  const configFunction = require(configFilePath);
+
+  const compiler = webpack(configFunction(devMode));
+
+  return new Promise((resolve, reject) => {
+    try {
+      compiler.run((err, stats) => {
+        if (err || stats.hasErrors) {
+          if (err) {
+            reject(err.stack || err);
+            if (err.details) {
+              reject(err.details);
+            }
+            return;
+          }
+
+          const info = stats.toJson();
+
+          if (stats.hasWarnings()) {
+            console.warn(info.warnings);
+          }
+
+          if (stats.hasErrors()) {
+            reject(info.errors);
+          }
+        }
+
+        compiler.close((closeErr) => {
+          if (closeErr) {
+            reject(closeErr);
+          }
+          resolve();
+        });
+      });
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+function build(devMode) {
   chdir(join(mainDir, "extension"));
   console.log(tag() + chalk.hex("#f573a3")("Removing build directory..."));
   fs.rmSync("build", { recursive: true, force: true });
 
-  // copy all non-typescript files to the build dir
-  console.log(
-    tag() + chalk.hex("#b1c6fc")("Copying all non-compiled files to build...")
+  // copy everything from source to build
+  console.log(tag() + chalk.hex("#f573a3")("Copying to build directory..."));
+  fs.copySync(join(cwd(), "source"), join(cwd(), "build"));
+
+  // find the ts files
+  console.log(tag() + chalk.hex("#91eba9")("Finding ts files..."));
+  const tsFiles = sync("build/**/*.ts").filter((value) =>
+    fs.existsSync(value.replace(/..$/g, "config.js"))
   );
-  const nonTsFiles = sync("source/**/*", { ignore: "**/*.ts", nodir: true });
-  nonTsFiles.forEach((value) => {
-    // replaces first 6 characters ("source")
-    const newPath = value.replace(/^.{6}/g, "build");
+  console.log(
+    tag() +
+      chalk.hex("#91eba9")(
+        `Found ${tsFiles.length} files to be compiled, starting compilation...`
+      )
+  );
 
-    fs.copySync(value, newPath, { overwrite: true });
+  // return a promise that runs the webpack compiler, then deletes the ts files, then resolves
+  return Promise.all(
+    tsFiles.map((value) => {
+      return new Promise((resolve, reject) => {
+        compileSingleScript(value, devMode)
+          .then(() => {
+            // delete the ts and .config.js files
+            sync(join(value + "/../*.{ts,config.js}")).forEach((value) => {
+              fs.removeSync(value);
+            });
+            resolve();
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    })
+  ).then(() => {
+    // delete remaining .ts files
+    sync(
+      join(__dirname + "../../../" + "extension/build/" + "**/*.ts")
+    ).forEach((value) => {
+      fs.removeSync(value);
+    });
   });
-
-  // run the typescript compiler
-  try {
-    console.log(
-      tag() +
-        chalk.hex("#d5ff80")(
-          "Running the typescript compiler in a child process..."
-        )
-    );
-    execSync("npx tsc");
-  } catch (e) {
-    throw new Error(
-      tag() +
-        chalk.hex("#ff0000")(`Compiling failed.\n\n`) +
-        e.stdout.toString()
-    );
-  }
-
-  console.log(tag() + chalk.hex("#a8ff82")("Build complete!"));
 }
 
 module.exports = build;
