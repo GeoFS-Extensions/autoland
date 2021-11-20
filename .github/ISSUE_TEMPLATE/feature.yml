@@ -16,7 +16,7 @@ body:
           required: true
   - type: textarea
     validations:
-      required: false
+      required: true
     attributes:
       label: Description
       description: Explain your suggestion.
