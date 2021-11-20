@@ -1,10 +1,13 @@
+const chalk = require("chalk");
+const cssnano = require("cssnano");
 const fs = require("fs-extra");
+const postcss = require("postcss");
+const tailwind = require("tailwindcss");
 const webpack = require("webpack");
 const { sync } = require("glob");
 const { join, resolve } = require("path");
 const { chdir, cwd } = require("process");
-const mainDir = require("../main_dir");
-const chalk = require("chalk");
+const homeDir = require("../main_dir");
 
 function tag() {
   return chalk.hex("#f7cd72")("(extension) ");
@@ -59,8 +62,50 @@ function compileSingleScript(value, devMode) {
   });
 }
 
+function compileAllCss() {
+  chdir(join(homeDir, "extension/build"));
+  // find all the css files
+  const toCompile = sync("**/*.css");
+
+  return Promise.all(
+    toCompile.map((value) => {
+      compileSingleCssFile(value);
+    })
+  );
+}
+
+function compileSingleCssFile(path) {
+  const rawCss = fs.readFileSync(path, "utf-8");
+  return new Promise((resolve, reject) => {
+    postcss([
+      tailwind({
+        purge: {
+          enabled: true,
+          content: [resolve(path.replace(".css", ".html"))],
+        },
+        darkMode: false,
+        theme: {
+          extend: {},
+        },
+        variants: {
+          extend: {},
+        },
+        plugins: [],
+      }),
+      cssnano(),
+    ])
+      .process(rawCss, {
+        from: undefined,
+      })
+      .then((result) => {
+        fs.writeFileSync(path, result.css);
+      })
+      .catch((err) => reject(err));
+  });
+}
+
 function build(devMode) {
-  chdir(join(mainDir, "extension"));
+  chdir(join(homeDir, "extension"));
   console.log(tag() + chalk.hex("#f573a3")("Removing build directory..."));
   fs.rmSync("build", { recursive: true, force: true });
 
@@ -104,6 +149,7 @@ function build(devMode) {
     ).forEach((value) => {
       fs.removeSync(value);
     });
+    compileAllCss();
   });
 }
 

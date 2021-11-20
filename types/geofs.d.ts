@@ -904,7 +904,7 @@ export interface Ui {
   };
   // TODO: what is k.Event?
   // this same function is in addMouseUpHandler()
-  mouseUpHandlers: Array<(a: typeof $.Event) => void>;
+  mouseUpHandlers: ((a: typeof $.Event) => void)[];
   svgPlanePath: string;
   svgPlaneStyles: {
     [key: string]: {

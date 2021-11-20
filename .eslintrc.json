@@ -11,11 +11,12 @@
   "parserOptions": {
     "ecmaVersion": 12
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
+    "@typescript-eslint/ban-ts-comment": "warn",
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "@typescript-eslint/no-explicit-any": 0,
-    "semi": ["error", "always"],
-    "@typescript-eslint/ban-ts-comment": "warn"
+    "prettier/prettier": "error",
+    "semi": ["error", "always"]
   }
 }
