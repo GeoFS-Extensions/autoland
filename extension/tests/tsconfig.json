@@ -1,8 +1,0 @@
-{
-  "compilerOptions": {
-    "noEmit": true,
-    "types": ["jest", "node", "chrome"],
-    "esModuleInterop": true
-  },
-  "include": ["**/*.test.ts"]
-}
