@@ -62,43 +62,47 @@ function compileSingleScript(value, devMode) {
   });
 }
 
-function compileAllCss() {
+function compileAllCss(devMode) {
   chdir(join(homeDir, "extension/build"));
   // find all the css files
   const toCompile = sync("**/*.css");
 
   return Promise.all(
     toCompile.map((value) => {
-      compileSingleCssFile(value);
+      compileSingleCssFile(value, devMode);
     })
   );
 }
 
-function compileSingleCssFile(path) {
+function compileSingleCssFile(path, devMode) {
   const rawCss = fs.readFileSync(path, "utf-8");
+  /** @type {any[]} */
+  const plugins = [
+    tailwind({
+      mode: "jit",
+      purge: {
+        enabled: true,
+        content: [join(homeDir, "extension/build/**/*.html")],
+      },
+      darkMode: false,
+      theme: {
+        extend: {},
+      },
+      variants: {
+        extend: {},
+      },
+      plugins: [],
+    }),
+  ];
+  if (!devMode) plugins.push(cssnano());
   return new Promise((resolve, reject) => {
-    postcss([
-      tailwind({
-        purge: {
-          enabled: true,
-          content: [resolve(path.replace(".css", ".html"))],
-        },
-        darkMode: false,
-        theme: {
-          extend: {},
-        },
-        variants: {
-          extend: {},
-        },
-        plugins: [],
-      }),
-      cssnano(),
-    ])
+    postcss(plugins)
       .process(rawCss, {
         from: undefined,
       })
       .then((result) => {
         fs.writeFileSync(path, result.css);
+        resolve();
       })
       .catch((err) => reject(err));
   });
@@ -158,7 +162,7 @@ function build(devMode) {
     console.log(
       tag() + chalk.hex("#e4e685")("Pruning complete, compiling css files...")
     );
-    compileAllCss();
+    compileAllCss(devMode);
     console.log(tag() + chalk.hex("#e4e685")("CSS compilation complete..."));
     console.log(tag() + chalk.hex("#e6c485")("Build complete!"));
   });

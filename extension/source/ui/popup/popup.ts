@@ -1,3 +1,3 @@
-import { StorageEntry, readStorageData } from "../../common";
+import { readStorageData } from "../../common";
 
 console.log(readStorageData());

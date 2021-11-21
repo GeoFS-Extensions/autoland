@@ -3,7 +3,7 @@
   "name": "GeoFS Plugins",
   "version": "3.4.0-dev",
   "default_locale": "en",
-  "icons": { "772": "icon.png" },
+  "icons": { "772": "images/icon.png" },
   "action": { "default_popup": "" },
   "background": {
     "service_worker": "service_worker.js"
