@@ -7,25 +7,101 @@
     <title>Thanks for installing!</title>
   </head>
   <body>
-    <h1 class="m-2 text-center font-bold bg-blue-200 rounded">
+    <h1 class="m-2 text-center text-xl font-semibold bg-blue-200 rounded">
       Welcome to GeoFS Plugins!
     </h1>
-    <article class="w-1/2 border-2 rounded">
+    <article class="w-1/2 border-2 rounded float-left mb-2">
       <h2 class="font-bold text-center">Installation</h2>
       <div class="flex-initial">
-        <p>
-          First, there's one thing we need you to do. In order for this
-          extension to run properly, we require one permission.
+        <p class="mx-1">
+          <b>Wait!</b> There's just one thing we need you to do for this
+          extension to run properly.
         </p>
-        <p>
+        <p class="mx-1">
           This extension requires the
           <code class="bg-gray-200 rounded">scripting</code> permission in order
-          to inject scripts into GeoFS.
+          to inject scripts into GeoFS. Using that permission is a big deal,
+          since injecting scripts is one of the riskiest things a chrome
+          extension can do.
+        </p>
+        <p class="mx-1">
+          We're commited to security, and the extension you're using right now
+          has passed multiple rigorous security reviews. We do that to bring you
+          peace of mind in using this extension.
+        </p>
+        <p class="mx-1">With that in mind, here's how to finish setup:</p>
+        <p class="mx-1">Click the button below:</p>
+        <button class="m-1 bg-green-200 rounded hover:ring-2 font-sans">
+          <p class="p-0.5">Add Permissions</p>
+        </button>
+        <p class="mx-1">You will see a popup that looks something like this:</p>
+        <img
+          class="mx-1 border-2 rounded max-w-full"
+          src="../../images/permission_popup.png"
+          alt="Popup to grant permissions"
+        />
+        <p class="mx-1">
+          Go ahead and click the "Allow" button. That will finish setup, and
+          you'll be ready to use all of the extension's features!
         </p>
       </div>
-      <button class="m-1 bg-green-200 rounded hover:ring-2">
-        Add Permissions
-      </button>
+    </article>
+    <article class="w-1/2 border-2 rounded float-right mb-2">
+      <h2 class="font-bold text-center">Usage</h2>
+      <p class="mx-1">
+        Now that you're all set up, it's time to get going! Before you get
+        started, you can access this page from the settings page, by clicking
+        <code class="bg-gray-200 rounded">"View Install page"</code> button.
+      </p>
+      <!-- TODO: put a demo image here after settings page is done -->
+      <p class="mx-1">
+        Let's start out by toggling some scripts. First, open
+        <a href="https://www.geo-fs.com/geofs.php" target="_blank">GeoFS</a> in
+        a new tab. Then, click the icon in the top right of your screen.
+      </p>
+      <!-- TODO: put a demo image here later -->
+      <p class="mx-1">
+        Now that the popup is open, let's see what's up.
+        <!-- TODO: put more details on the popup here once its done -->
+        Take some time and familiarize yourself with the controls here. You'll
+        be using them a lot to customize your experience.
+      </p>
+      <p class="mx-1">
+        There's limited space in the popup, so we have to put a lot of other
+        settings in a separate page. Let's take a look around the settings page.
+        Click the settings icon in the popup.
+        <!-- TODO: demo image here -->
+        <!-- TODO: put more details on the settings page here once its done -->
+      </p>
+      <!-- TODO: put a diagram of the popup here -->
+    </article>
+    <article class="w-1/2 border-2 rounded float-left mb-2">
+      <h2 class="font-bold text-center">Context</h2>
+      <p class="mx-1">
+        For anyone that doesn't know anything about this extension or GeoFS,
+        let's rewind the clock. Keep in mind this is a very brief summary, and
+        isn't the full story.
+      </p>
+      <p class="mx-1">
+        Back in 2010, Xavier Tassin released GEFS (Google Earth Flight
+        Simulator). In 2016, in light of the termination of the plugin GEFS
+        used, GEFS migrated to CesiumJS, an open source virtual globe platform.
+        It was then when GEFS becaume GeoFS. This is when its community started
+        taking off. Developers started creating plugins for GeoFS. Two major
+        players in the field of GeoFS plugins were
+        <a href="https://github.com/harryxue1999" class="hover:underline"
+          >Harry Xue</a
+        >
+        and
+        <a href="https://github.com/Qantas94Heavy" class="hover:underline"
+          >Karl Cheng</a
+        >. They both created plugins that were later abandoned, AP++ and FMC. In
+        summer of 2020, a project emerged, which was at the time called GeoFS
+        Autoland. This project eventually evolved into current-day GeoFS
+        Plugins. This extension builds on top of the now unmaintained plugins,
+        through more detailed control and the addition of new features and
+        scripts.
+      </p>
     </article>
   </body>
 </html>
