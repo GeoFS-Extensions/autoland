@@ -27,7 +27,7 @@ async function build(script, debug) {
   // optimize the file
   console.log(scriptTag(script) + chalk.hex("#d5ff80")("Starting to build..."));
   const compiler = webpack({
-    entry: join(homeDir, `${script}/init.js`),
+    entry: join(homeDir, script, `/source/init.ts`),
     mode: debug ? "development" : "production",
     output: {
       path: join(homeDir, "extension/source/scripts"),

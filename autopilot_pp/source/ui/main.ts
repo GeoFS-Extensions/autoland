@@ -65,8 +65,6 @@ enableKcas();
 const viewModel = new AutopilotVM();
 ko.applyBindings(viewModel, $ap[0]);
 
-// when AP++ is injected, a content script is injected with it that fetches the json and adds it to the global context
-
 // GEFS's use of the Material Design Lite library requires that components dynamically added
 // are 'upgraded' manually.
 /* global componentHandler */

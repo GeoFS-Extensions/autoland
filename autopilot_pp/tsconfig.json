@@ -5,9 +5,7 @@
     "types": ["jquery", "requirejs"],
     "alwaysStrict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
-    "outDir": "build",
-    "removeComments": true
+    "moduleResolution": "node"
   },
   "files": [
     "../types/geofs.d.ts",
