@@ -1,8 +1,4 @@
-const { sync } = require("glob");
-const { join } = require("path");
-const { readFileSync, writeFileSync } = require("fs-extra");
-const mainDir = require("../main_dir");
-
+let sync, join, readFileSync, writeFileSync, mainDir;
 /**
  * Generates a pattern to be used in the the global .prettierignore file based on a local prettier ignore pattern and its location.
  * @param {string} localIgnorePattern Pattern from the .prettierignore file. Should be one line with no linebreak characters.
@@ -37,4 +33,12 @@ function buildPrettierIgnoreFile() {
   writeFileSync(join(mainDir, ".prettierignore"), toWrite.join("\n"));
 }
 
-module.exports = buildPrettierIgnoreFile;
+module.exports = async () => {
+  sync = require("glob").sync;
+  join = require("path").join;
+  const fsExtra = require("fs-extra");
+  [readFileSync, writeFileSync] = [fsExtra.readFileSync, fsExtra.writeFileSync];
+  mainDir = require("../main_dir.js");
+
+  buildPrettierIgnoreFile();
+};

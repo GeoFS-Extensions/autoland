@@ -16,11 +16,7 @@
   <!-- FMC Modal layout -->
   <div class="fmc-modal__layout-container">
     <div
-      class="
-        fmc-modal__layout
-        mdl-layout mdl-js-layout
-        mdl-layout--fixed-header mdl-layout--fixed-tabs
-      "
+      class="fmc-modal__layout mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs"
     >
       <!-- Tabs -->
       <div class="fmc-modal__header">
@@ -93,40 +89,20 @@
   <!-- Modal actions: interactive -->
   <div class="fmc-modal__actions">
     <button
-      class="
-        mdl-button mdl-js-button
-        mdl-button--raised
-        interactive
-        save-wpt-data
-        wpt-tab
-        is-active
-      "
+      class="mdl-button mdl-js-button mdl-button--raised interactive save-wpt-data wpt-tab is-active"
       data-bind="click: saveWaypoints"
     >
       Save Waypoints
     </button>
     <button
-      class="
-        mdl-button mdl-js-button
-        mdl-button--raised
-        interactive
-        retrieve-wpt
-        wpt-tab
-        is-active
-      "
+      class="mdl-button mdl-js-button mdl-button--raised interactive retrieve-wpt wpt-tab is-active"
       data-bind="click: retrieveWaypoints.bind($data,undefined)"
     >
       Retrieve Waypoints
     </button>
     <button
       action="add-wpt"
-      class="
-        mdl-button mdl-js-button
-        mdl-button--fab mdl-button--colored
-        interactive
-        wpt-tab
-        is-active
-      "
+      class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored interactive wpt-tab is-active"
       data-bind="click: addWaypoint"
     >
       <i class="material-icons">add</i>
@@ -159,37 +135,19 @@
       </button>
     </div>
     <button
-      class="
-        mdl-button mdl-js-button
-        mdl-button--raised
-        interactive
-        clear-rte
-        load-tab
-      "
+      class="mdl-button mdl-js-button mdl-button--raised interactive clear-rte load-tab"
       data-bind="click: generateRoute.bind($data,false)"
     >
       Clear
     </button>
     <button
-      class="
-        mdl-button mdl-js-button
-        mdl-button--raised
-        interactive
-        generate-rte
-        load-tab
-      "
+      class="mdl-button mdl-js-button mdl-button--raised interactive generate-rte load-tab"
       data-bind="click: generateRoute.bind($data,true)"
     >
       Generate Route
     </button>
     <button
-      class="
-        mdl-button mdl-js-button
-        mdl-button--raised
-        interactive
-        remove-log-data
-        log-tab
-      "
+      class="mdl-button mdl-js-button mdl-button--raised interactive remove-log-data log-tab"
       data-bind="click: removeLogData"
     >
       Remove Log Data
