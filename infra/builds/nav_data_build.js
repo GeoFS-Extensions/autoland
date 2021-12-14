@@ -1,8 +1,4 @@
-const { join } = require("path");
-const chalk = require("chalk");
-const homeDir = require("../main_dir");
-const { writeJSONSync } = require("fs-extra");
-const download = require("download");
+let join, chalk, homeDir, writeJSONSync, download;
 
 /**
  * @param {string} url
@@ -91,4 +87,11 @@ async function build() {
   await Promise.all([airportsList(), navaidsList()]);
 }
 
-build();
+(async () => {
+  join = require("path").join;
+  chalk = (await import("chalk")).default;
+  homeDir = require("../main_dir.js");
+  writeJSONSync = require("fs-extra").writeJSONSync;
+  download = require("download");
+  build();
+})();

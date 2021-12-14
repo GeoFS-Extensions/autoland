@@ -1,8 +1,4 @@
-const { join } = require("path");
-const { chdir } = require("process");
-const homeDir = require("../main_dir");
-const webpack = require("webpack");
-const chalk = require("chalk");
+let join, chdir, homeDir, webpack, chalk;
 
 /**
  * Generates the script tag.
@@ -99,4 +95,12 @@ async function build(script, debug) {
   });
 }
 
-module.exports = build;
+module.exports = async (script, debug) => {
+  join = require("path").join;
+  chdir = require("process").chdir;
+  homeDir = require("../main_dir.js");
+  webpack = require("webpack");
+  chalk = (await import("chalk")).default;
+
+  await build(script, debug);
+};
