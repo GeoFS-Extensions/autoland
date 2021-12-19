@@ -1,3 +1,5 @@
+Since this project is now deprecated, we will not be accepting any new pull requests.
+
 ## Contributing
 
 First off, thanks for considering contributing to this project! It's people like you that make this project a great tool.

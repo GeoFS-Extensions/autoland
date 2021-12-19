@@ -1,10 +1,4 @@
-const { execSync } = require("child_process");
-const fs = require("fs-extra");
-const { sync } = require("glob");
-const { join } = require("path");
-const { chdir } = require("process");
-const mainDir = require("../main_dir");
-const chalk = require("chalk");
+let execSync, fs, sync, join, chdir, mainDir, chalk;
 
 function tag() {
   return chalk.hex("#f7cd72")("(extension) ");
@@ -71,4 +65,14 @@ function build() {
   console.log(tag() + chalk.hex("#a8ff82")("Build complete!"));
 }
 
-module.exports = build;
+module.exports = async () => {
+  execSync = require("child_process").execSync;
+  fs = require("fs-extra");
+  sync = require("glob").sync;
+  join = require("path").join;
+  chdir = require("process").chdir;
+  mainDir = require("../main_dir.js");
+  chalk = (await import("chalk")).default;
+
+  build();
+};

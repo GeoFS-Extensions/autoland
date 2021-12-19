@@ -1,8 +1,4 @@
-const { join } = require("path");
-const { chdir } = require("process");
-const homeDir = require("../main_dir");
-const webpack = require("webpack");
-const chalk = require("chalk");
+let join, chdir, homeDir, webpack, chalk;
 
 /**
  * Generates the script tag.
@@ -27,7 +23,7 @@ async function build(script, debug) {
   // optimize the file
   console.log(scriptTag(script) + chalk.hex("#d5ff80")("Starting to build..."));
   const compiler = webpack({
-    entry: join(homeDir, `${script}/init.js`),
+    entry: join(homeDir, script, `/source/init.ts`),
     mode: debug ? "development" : "production",
     output: {
       path: join(homeDir, "extension/source/scripts"),
@@ -39,6 +35,14 @@ async function build(script, debug) {
           test: /\.tsx?$/,
           use: "ts-loader",
           exclude: /node_modules/,
+        },
+        {
+          test: /\.html$/i,
+          loader: "html-loader",
+        },
+        {
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"],
         },
       ],
     },
@@ -91,4 +95,12 @@ async function build(script, debug) {
   });
 }
 
-module.exports = build;
+module.exports = async (script, debug) => {
+  join = require("path").join;
+  chdir = require("process").chdir;
+  homeDir = require("../main_dir.js");
+  webpack = require("webpack");
+  chalk = (await import("chalk")).default;
+
+  await build(script, debug);
+};

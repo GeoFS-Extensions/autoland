@@ -6,7 +6,7 @@ interface Options {
   spoilerarming: boolean;
   keyboardmapping: boolean;
 }
-
+let options: Options;
 type Scripts = keyof Options;
 
 /**
@@ -93,11 +93,6 @@ async function readOptions(): Promise<Options> {
   return data;
 }
 
-let options: Options;
-readOptions().then((tmp) => {
-  options = tmp;
-});
-
 function addScripts(toInject: Scripts[], tabId: number) {
   chrome.permissions.contains(
     {
@@ -154,6 +149,7 @@ async function injectScript(type: Scripts, tabId: number) {
       scriptTag.src = chrome.runtime.getURL(`scripts/${name}.js`);
       scriptTag.type = "module";
       scriptTag.onload = () => {
+        console.log(`${name} script loaded`);
         scriptTag.remove();
       };
       (document.head || document.documentElement).appendChild(scriptTag);
@@ -161,39 +157,6 @@ async function injectScript(type: Scripts, tabId: number) {
     args: [type],
   });
 }
-// update cache when storage changes
-chrome.storage.onChanged.addListener(async (changes) => {
-  if (changes["options"]) {
-    const newOptions = await readOptions();
-
-    // add and remove scripts without reloading geo
-    const keys = Object.keys(newOptions) as Scripts[];
-    let reload = false;
-    const toLoad: Scripts[] = [];
-    for (const key of keys) {
-      if (newOptions[key] !== options[key]) {
-        if (newOptions[key]) toLoad.push(key);
-        else reload = true;
-      }
-    }
-    chrome.permissions.contains({ permissions: ["tabs"] }, async (result) => {
-      if (result) {
-        const [tab] = await chrome.tabs.query({
-          url: "https://www.geo-fs.com/geofs.php",
-        });
-        if (!tab) {
-          return;
-        }
-        if (reload) {
-          options = newOptions;
-          chrome.tabs.reload(tab.id);
-        } else {
-          addScripts(toLoad, tab.id);
-        }
-      }
-    });
-  }
-});
 
 /**
  * Adds the needed scripts listeners. Checks to make sure the extension has the tabs permission before adding the listener.
@@ -229,32 +192,68 @@ function addScriptsListener() {
   });
 }
 
-// add listener when permissions are updated
-chrome.permissions.onAdded.addListener(() => {
+readOptions().then((tmp) => {
+  options = tmp;
+  // update cache when storage changes
+  chrome.storage.onChanged.addListener(async (changes) => {
+    if (changes["options"]) {
+      const newOptions = await readOptions();
+
+      // add and remove scripts without reloading geo
+      const keys = Object.keys(newOptions) as Scripts[];
+      let reload = false;
+      const toLoad: Scripts[] = [];
+      for (const key of keys) {
+        if (newOptions[key] !== options[key]) {
+          if (newOptions[key]) toLoad.push(key);
+          else reload = true;
+        }
+      }
+      options = newOptions;
+      chrome.permissions.contains({ permissions: ["tabs"] }, async (result) => {
+        if (result) {
+          const [tab] = await chrome.tabs.query({
+            url: "https://www.geo-fs.com/geofs.php",
+          });
+          if (!tab) {
+            return;
+          }
+          if (reload) {
+            chrome.tabs.reload(tab.id);
+          } else {
+            addScripts(toLoad, tab.id);
+          }
+        }
+      });
+    }
+  });
   addScriptsListener();
-});
 
-addScriptsListener();
+  // add listener when permissions are updated
+  chrome.permissions.onAdded.addListener(() => {
+    addScriptsListener();
+  });
 
-chrome.runtime.onUpdateAvailable.addListener((details) => {
-  writeToStorage({ shouldBeUpdated: true, new: details.version }, "update");
-});
+  chrome.runtime.onUpdateAvailable.addListener((details) => {
+    writeToStorage({ shouldBeUpdated: true, new: details.version }, "update");
+  });
 
-chrome.runtime.onInstalled.addListener((details) => {
-  writeToStorage({ shouldBeUpdated: false }, "update");
+  chrome.runtime.onInstalled.addListener((details) => {
+    writeToStorage({ shouldBeUpdated: false }, "update");
 
-  if (details.reason == "install") {
-    writeToStorage(
-      {
-        ap: false,
-        fmc: false,
-        spoilerarming: false,
-      } as Options,
-      "options"
-    );
-    writeToStorage(false, "devModeEnabled");
-    chrome.tabs.create({
-      url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
-    });
-  }
+    if (details.reason == "install") {
+      writeToStorage(
+        {
+          ap: false,
+          fmc: false,
+          spoilerarming: false,
+        } as Options,
+        "options"
+      );
+      writeToStorage(false, "devModeEnabled");
+      chrome.tabs.create({
+        url: chrome.runtime.getURL("ui/oninstall/oninstall.html"),
+      });
+    }
+  });
 });

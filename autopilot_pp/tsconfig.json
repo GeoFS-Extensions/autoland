@@ -5,10 +5,12 @@
     "types": ["jquery", "requirejs"],
     "alwaysStrict": true,
     "esModuleInterop": true,
-    "moduleResolution": "node",
-    "outDir": "build",
-    "removeComments": true
+    "moduleResolution": "node"
   },
-  "files": ["../types/geofs.d.ts", "../types/scripts.d.ts"],
+  "files": [
+    "../types/geofs.d.ts",
+    "../types/scripts.d.ts",
+    "../types/declaration.d.ts"
+  ],
   "include": ["source/**/*"]
 }
